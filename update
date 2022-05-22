@@ -1,13 +1,8 @@
 V1.4 20211114:
 新版本使用.Net 5.0运行 提升了500%的性能 
-1.[N]No setting gui&file
-2.[N]No download function
-____________________
-V1.2更新日志 20211002:
-1.[R]重建关于&设置UI 添加设置文件编辑框
-2.[A]添加U盘快捷面板
 3.[A]添加一言分类设置 附API接口 Doc:https://developer.hitokoto.cn/sentence/
 4.[-]Soft Discussion Group:926325805
+
 Developed by Cokee 
 Website:https://home.cokee.xyz
 GIT_CN:https://gitee.com/bc_R/CokeeDisplayProtect
