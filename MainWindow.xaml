@@ -130,7 +130,7 @@
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <Label x:Name="hitokoto" Content="贺常青666🌟" HorizontalAlignment="Left" Margin="20,1021,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" MouseDoubleClick="hitokoto_MouseDown" FontSize="28" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" MouseRightButtonDown="Like_menu">
+                <Label x:Name="hitokoto" Content="占位符🌟" HorizontalAlignment="Left" Margin="20,1021,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" MouseDoubleClick="hitokoto_MouseDown" FontSize="28" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
                         <ContextMenu Width="250"
              BorderBrush="#EAEAEA" x:Name="like"
@@ -414,6 +414,15 @@
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
                     pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Left" Height="26" VerticalAlignment="Center" Content="收藏一言" Canvas.Left="1572" Canvas.Top="981" RenderTransformOrigin="0.474,0.269" />
+                <Button
+                    pu:ButtonHelper.ShadowColor="#6CBCEA"
+                    Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
+                    BorderThickness="1" Foreground="White"
+                    pu:ButtonHelper.ClickEffect="Shake" 
+                    pu:ButtonHelper.CornerRadius="5"
+                    pu:ShadowHelper.BlurRadius="10"
+                    pu:ShadowHelper.Direction="240"
+                    pu:ShadowHelper.ShadowDepth="4" Click="Tabtip" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1656" Canvas.Top="981" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </Canvas>
         </Viewbox>
 

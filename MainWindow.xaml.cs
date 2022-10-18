@@ -316,10 +316,10 @@ namespace CokeeDP
         {
             try
             {
-               /* if (CokeeDP.Properties.Settings.Default.isDebug)
+              if (CokeeDP.Properties.Settings.Default.isDebug)
                 {
                     return; 
-                }*/
+                }
                 var client = new HttpClient();
                 JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.hk_api));
                 string who = dt["from_who"].ToString();
@@ -400,7 +400,7 @@ namespace CokeeDP
                 br1.BeginInit();
                 br1.Source = new BitmapImage(uri/*new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg")*/);
                 br1.EndInit();
-                log.Text = bing + "/LoadBingImage:" + uri;
+                log.Text = bing + "/加载bing壁纸:" + uri;
                 /*a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
                 a.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback1);
                 a.DownloadFileAsync(uri, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg");*/
@@ -897,7 +897,7 @@ namespace CokeeDP
         }
         /// <summary>
         ///u盘处理-打开
-        /// </summary>
+        /// </summary>"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe"
         private void OpenUsb(object sender, RoutedEventArgs e)
         {
             try
@@ -910,7 +910,18 @@ namespace CokeeDP
                 log.Text = ex.ToString();
             }
         }
-
+        private void Tabtip(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start("explorer.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+            }
+            catch (Exception ex)
+            {
+                ProcessErr(ex);
+                log.Text = ex.ToString();
+            }
+        }
 
 
         /// <summary>
