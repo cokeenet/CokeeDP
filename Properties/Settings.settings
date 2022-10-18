@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CokeeDP.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="hk_api" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://v1.hitokoto.cn/?c=k</Value>
+    </Setting>
+    <Setting Name="disable_hk" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="disable_clock1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="hkc" Type="System.String" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="wea" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3600</Value>
+    </Setting>
+    <Setting Name="city" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fuyang</Value>
+    </Setting>
+    <Setting Name="wantRes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="timeTo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">高考</Value>
+    </Setting>
+    <Setting Name="timeTod" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2025/06/05 00:00:00</Value>
+    </Setting>
+    <Setting Name="usingBing" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="childPW" Type="System.String" Scope="User">
+      <Value Profile="(Default)">cokeetech</Value>
+    </Setting>
+    <Setting Name="enableBigTimeTo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="accColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">108, 188, 234</Value>
+    </Setting>
+    <Setting Name="backColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Font" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
+    </Setting>
+    <Setting Name="siz" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="childLockPw" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="isChildLocked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="isDebug" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AudioFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\seewo\Desktop\英语\Audio</Value>
+    </Setting>
+    <Setting Name="IsUHDWapp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

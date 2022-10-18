@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CokeeDP", "CokeeDP.csproj", "{EAEE0902-8950-4951-8A90-51F08D9A424A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7D23011D-316D-4652-AF63-ED6BBB283691}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|x64.ActiveCfg = Debug|x64
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|x64.Build.0 = Debug|x64
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|x86.ActiveCfg = Debug|x86
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Debug|x86.Build.0 = Debug|x86
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|x64.ActiveCfg = Release|x64
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|x64.Build.0 = Release|x64
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|x86.ActiveCfg = Release|x86
+		{EAEE0902-8950-4951-8A90-51F08D9A424A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56BA46FD-6025-4206-A004-2FCF0049823A}
+	EndGlobalSection
+EndGlobal

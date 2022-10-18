@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <Authors>Cokee</Authors>
+    <Product>CokeeDP</Product>
+    <Description>Dev Version using dotNet Lang</Description>
+    <Copyright>(c)2021 Cokee Networks Ltd.</Copyright>
+    <UseWindowsForms>False</UseWindowsForms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <StartupObject>CokeeDP.App</StartupObject>
+    <Nullable>warnings</Nullable>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>Cokee Tech.snk</AssemblyOriginatorKeyFile>
+    <ErrorReport>none</ErrorReport>
+    <DebugType>embedded</DebugType>
+    <ApplicationIcon>Image\hd1.ico</ApplicationIcon>
+    <PlatformTarget>x86</PlatformTarget>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants></DefineConstants>
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants />
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="%40AudioToastIcon.png" />
+    <None Remove="audio.scale-200.png" />
+    <None Remove="bg_normal.png" />
+    <None Remove="bg_setting.png" />
+    <None Remove="hd1.jpg" />
+    <None Remove="hd3.png" />
+    <None Remove="head.jpg" />
+    <None Remove="usb.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Image\hd1.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AppCenter" Version="4.5.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.1" />
+    <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.4.2" />
+    <PackageReference Include="Serilog" Version="2.11.1-dev-01397" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
+    <PackageReference Include="XamlFlair.WPF" Version="1.2.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="@AudioToastIcon.png" />
+    <Resource Include="audio.scale-200.png" />
+    <Resource Include="bg_normal.png" />
+    <Resource Include="bg_setting.png" />
+    <Resource Include="hd1.jpg" />
+    <Resource Include="hd3.png" />
+    <Resource Include="Image\bg_normal.png" />
+    <Resource Include="Image\bg_setting.png" />
+    <Resource Include="Image\hd1.jpg" />
+    <Resource Include="Image\head.jpg" />
+    <Resource Include="Image\usb.png" />
+    <Resource Include="usb.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="C:\Users\XiaoY\.nuget\packages\miniblinkforwpf\20.2.22.1\contentFiles\any\any\plugins\npswf32-11.5.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
