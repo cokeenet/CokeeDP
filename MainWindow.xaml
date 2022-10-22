@@ -16,6 +16,7 @@
                 <DoubleAnimation Duration="0:0:0.3" From="1" To="0.8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
                 <DoubleAnimation Duration="0:0:0.3" From="1" To="0.8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
             </Storyboard>
+            <Color x:Key="CardBackground">Black</Color>
             <!--     <Storyboard x:Key="ShowWindow" >
                 <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" FillBehavior="Stop"/>
                 <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
@@ -40,7 +41,7 @@
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Fill">
             <Canvas Width="1920" Height="1080">
-                <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=MainGrid, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MainGrid, Mode=OneWay}">
+                <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=MainGrid, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MainGrid, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0"/>
                     </Image.Effect>
@@ -51,9 +52,15 @@
                     </Label.Effect>
                 </Label>
 
-                <pu:Card Background="{x:Null}" Grid.Column="1" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Left="1508" Canvas.Top="509" Height="268" Width="406">
+                <pu:Card pu:ShadowColor="#6CBCEA"
+            pu:ShadowHelper.BlurRadius="10"
+            pu:ShadowHelper.Direction="240"
+            pu:ShadowHelper.ShadowDepth="4"   Background="#B2FFFFFF" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Left="1495" Canvas.Top="509" Height="268" Width="407">
+                    <pu:Card.BorderBrush>
+                        <SolidColorBrush Color="{DynamicResource GradientStopColor1}"/>
+                    </pu:Card.BorderBrush>
                     <Grid>
-                        <Button x:Name="weaBn"
+                        <Button x:Name="SpecialWeatherBtn"
         Background="#B2FFFFFF"
         BorderBrush="{x:Null}"
         BorderThickness="1"
@@ -63,39 +70,39 @@
             pu:ButtonHelper.ShadowColor="#6CBCEA"
             pu:ShadowHelper.BlurRadius="10"
             pu:ShadowHelper.Direction="240"
-            pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" Visibility="Collapsed" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="38,10,38,0" />
-                        <TextBox x:Name="wea1"  Text="网络状态不佳..." HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
+            pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" Visibility="Visible" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" />
+                        <TextBox x:Name="wea1"  Text="今天 雷阵雨,99°C~99°C 湿度：99%" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
                             <TextBox.Effect>
                                 <DropShadowEffect/>
                             </TextBox.Effect>
                         </TextBox>
                         <TextBlock x:Name="w1" Foreground="White"
             FontSize="45"
-            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148">
+            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148" Text="">
                             <TextBlock.Effect>
                                 <DropShadowEffect/>
                             </TextBlock.Effect>
                         </TextBlock>
-                        <TextBox x:Name="wea3" Text="" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
+                        <TextBox x:Name="wea3" Text="今天 雷阵雨,99°C~99°C 湿度：99%" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
                             <TextBox.Effect>
                                 <DropShadowEffect/>
                             </TextBox.Effect>
                         </TextBox>
                         <TextBlock x:Name="w2" Foreground="White"
             FontSize="45"
-            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91">
+            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91" Text="&#xE937;">
                             <TextBlock.Effect>
                                 <DropShadowEffect/>
                             </TextBlock.Effect>
                         </TextBlock>
-                        <TextBox x:Name="wea2" Text="" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
+                        <TextBox x:Name="wea2" Text="今天 雷阵雨,99°C~99°C 湿度：99%" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True">
                             <TextBox.Effect>
                                 <DropShadowEffect/>
                             </TextBox.Effect>
                         </TextBox>
                         <TextBlock x:Name="w3" Foreground="White"
             FontSize="45"
-            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32">
+            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32" Text="&#xE937;">
                             <TextBlock.Effect>
                                 <DropShadowEffect/>
                             </TextBlock.Effect>
@@ -103,23 +110,17 @@
 
                     </Grid>
                 </pu:Card>
-                <ProgressBar pu:ProgressBarHelper.Direction="Normal"
-                 pu:ProgressBarHelper.IsPercentVisible="True"
-                 pu:ProgressBarHelper.CornerRadius="10"
-                 Height="30"
-                 Background="#80B0B5AE"
-                 Foreground="#ACCD9D" Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Right" Width="330" VerticalAlignment="Top" Canvas.Left="1560" Canvas.Top="846" />
                 <Label x:Name="timeTod" Content="距离[---]还有---天" HorizontalAlignment="Left" Margin="20,802,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" DragLeave="Drag" Visibility="Visible">
                     <Label.Effect>
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <TextBox x:Name="log" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="20" Height="66" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" Width="330" Grid.Column="1" Text="" TextWrapping="WrapWithOverflow" Background="{x:Null}" BorderBrush="#7FFFFFFF" CaretBrush="{x:Null}" Foreground="White" IsReadOnlyCaretVisible="True" Canvas.Left="1572" Canvas.Top="909" MouseDown="kbshow">
+                <TextBox x:Name="log" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Height="35" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" Width="330" Grid.Column="1" Text="" TextWrapping="WrapWithOverflow" Background="{x:Null}" BorderBrush="#7FFFFFFF" CaretBrush="{x:Null}" Foreground="White" IsReadOnlyCaretVisible="True" Canvas.Left="1572" Canvas.Top="949" MouseDown="kbshow">
                     <TextBox.Effect>
                         <DropShadowEffect/>
                     </TextBox.Effect>
                 </TextBox>
-                <TextBox  Text="Cokee Technogies 秋坂软科" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="20" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1643" Canvas.Top="1030" Width="267">
+                <TextBox  Text="Cokee Technogies 秋坂科技" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="20" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1643" Canvas.Top="1030" Width="267">
                     <TextBox.Effect>
                         <DropShadowEffect/>
                     </TextBox.Effect>
@@ -130,7 +131,7 @@
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <Label x:Name="hitokoto" Content="贺常青666🌟" HorizontalAlignment="Left" Margin="20,1021,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" MouseDoubleClick="hitokoto_MouseDown" FontSize="28" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" MouseRightButtonDown="Like_menu">
+                <Label x:Name="hitokoto" Content="Keep your heart alive🌟" HorizontalAlignment="Left" Margin="20,1021,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" MouseDoubleClick="hitokoto_MouseDown" FontSize="28" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
                         <ContextMenu Width="250"
              BorderBrush="#EAEAEA" x:Name="like"
@@ -161,12 +162,10 @@
             pu:ShadowHelper.BlurRadius="10"
             pu:ShadowHelper.Direction="240"
             pu:ShadowHelper.ShadowDepth="4" 
-           Width="330" Grid.Column="1" Visibility="Collapsed" 
+           Width="330" Grid.Column="1" Visibility="Visible" 
            Background="#B2FFFFFF" Canvas.Left="1572" Canvas.Top="782" CornerRadius="5,5,5,5">
                     <pu:Card.BorderBrush>
-                        <RadialGradientBrush Center="5,5">
-                            <GradientStop Color="#FFE0BFBF" Offset="1"/>
-                        </RadialGradientBrush>
+                        <SolidColorBrush Color="{DynamicResource GradientStopColor1}"/>
                     </pu:Card.BorderBrush>
                     <Grid>
                         <Button x:Name="open" Tag="" Content="打开" 
@@ -196,12 +195,11 @@
 
                 <ProgressBar x:Name="pro" pu:ProgressBarHelper.Direction="Normal"
                  pu:ProgressBarHelper.IsPercentVisible="True"
-                 pu:ProgressBarHelper.CornerRadius="15"
+                 pu:ProgressBarHelper.CornerRadius="5"
                  pu:ProgressBarHelper.InvertedForeground="Azure"
                   pu:ProgressBarHelper.PercentStringFormat="{}{0:P2}"
-                 Value="50"
                  Background="#22ACCD9D"
-                 Foreground="#6CBCEA" Margin="757,913,20,135" Grid.Column="1" Visibility="Collapsed" />
+                 Foreground="#6CBCEA" Grid.Column="1" Visibility="Visible" Height="29" Canvas.Left="1572" Canvas.Top="909" Width="330" Value="48" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <Button
             pu:ButtonHelper.ShadowColor="#6CBCEA"
         Background="#80969696" BorderBrush="#FF707070"
@@ -212,7 +210,7 @@
             pu:ShadowHelper.Direction="240"
             pu:ShadowHelper.ShadowDepth="4" FontSize="20" Grid.Column="1" Click="ShowSetting" 
          HorizontalAlignment="Left" Width="138" Canvas.Left="1752" Canvas.Top="14" Height="45" VerticalAlignment="Top" />
-                <Label x:Name="bingif" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="24" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" Content="">
+                <Label x:Name="BingImageInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="24" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" Content="">
                     <Label.Effect>
                         <DropShadowEffect/>
                     </Label.Effect>
@@ -262,7 +260,7 @@
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <TextBox  Text="循星🌟 Ver 2.1" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="22" FontFamily="Microsoft YaHei" FontWeight="Normal" TextAlignment="Right" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1730" Canvas.Top="999" Width="180">
+                <TextBox  Text="循星🌟 Ver 2.2" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="22" FontFamily="Microsoft YaHei" FontWeight="Normal" TextAlignment="Right" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1740" Canvas.Top="999" Width="170">
                     <TextBox.Effect>
                         <DropShadowEffect/>
                     </TextBox.Effect>
@@ -276,7 +274,7 @@
             pu:ShadowHelper.BlurRadius="10"
             pu:ShadowHelper.Direction="240"
             pu:ShadowHelper.ShadowDepth="4" 
-            Width="260" Grid.Column="1" Visibility="Collapsed" 
+            Width="260" Grid.Column="1" Visibility="Visible" 
             Background="#B2FFFFFF" Height="153" Canvas.Left="1439" Canvas.Top="14">
                     <pu:Card.BorderBrush>
                         <RadialGradientBrush Center="5,5">
@@ -413,7 +411,20 @@
                    pu:ButtonHelper.CornerRadius="5"
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Left" Height="26" VerticalAlignment="Center" Content="收藏一言" Canvas.Left="1572" Canvas.Top="981" RenderTransformOrigin="0.474,0.269" />
+                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Content="收藏一言" Canvas.Left="1572" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" />
+                <Button
+                    pu:ButtonHelper.ShadowColor="#6CBCEA"
+                    Background="#80C5C4C4"
+                    BorderThickness="1" Foreground="White"
+                    pu:ButtonHelper.ClickEffect="Shake" 
+                    pu:ButtonHelper.CornerRadius="5"
+                    pu:ShadowHelper.BlurRadius="10"
+                    pu:ShadowHelper.Direction="240"
+                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" Height="26" Content="收藏一言" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Button.BorderBrush>
+                        <SolidColorBrush Color="{DynamicResource GradientStopColor1}"/>
+                    </Button.BorderBrush>
+                </Button>
             </Canvas>
         </Viewbox>
 

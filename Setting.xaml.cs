@@ -14,7 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 namespace CokeeDP
 {
-    public class ExampleItem : NotifyPropertyChangedBase
+    public class ImageItem : NotifyPropertyChangedBase
     {
         public string Name { get => _displayName; set => Set(ref _displayName, value); }
         public string Path { get => p; set => Set(ref p, value); }
@@ -117,7 +117,7 @@ namespace CokeeDP
             try
             {
                 DirectoryInfo di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-                /*if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ExampleItem()
+                /*if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ImageItem()
                 {
                     Name = "[资源包]Version:" + File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver"),
                     Path = "respack",
@@ -132,7 +132,7 @@ namespace CokeeDP
                     //a.StreamSource = new FileStream(di.FullName + "\\tmp000", FileMode.OpenOrCreate);
                     a = new BitmapImage(bgp);
                     a.DecodePixelHeight=10;
-                    LsbExamples.Items.Add(new ExampleItem()
+                    LsbExamples.Items.Add(new ImageItem()
                     {
                         Name = i.Name + "(" + a.PixelWidth + "x" + a.PixelHeight + ")",
                         Path = i.FullName,

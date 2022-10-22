@@ -30,6 +30,7 @@ using NAudio.Wave;
 using NAudio.CoreAudioApi;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 namespace CokeeDP
 {
@@ -84,7 +85,7 @@ namespace CokeeDP
             if(usingBing)
             {
 
-                _ = bingWp();
+                _ = GetBingWapp();
             }
             else
             {
@@ -255,7 +256,7 @@ namespace CokeeDP
                 {
                     bing ++;
                     if (bing >= 8 || bing <= -2) bing = 0;
-                    _ = bingWp();
+                    _ = GetBingWapp();
                     return;
                 }
                 else
@@ -375,7 +376,7 @@ namespace CokeeDP
             if (a.Name == "left") bing = bing + 1;
             else if (a.Name == "right") bing = bing - 1;
             if (bing >= 8 || bing <= -1) bing = 0;
-            _ = bingWp();
+            _ = GetBingWapp();
         }
          private async Task DownloadResPack()
         {
@@ -386,14 +387,44 @@ namespace CokeeDP
             a.DownloadFileAsync(new Uri(u2), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip");
             nowDowning = "资源包";
         }          
-        private async Task bingWp()
+        private async Task GetBingWapp()
         {
             try
             {
-                var client = new HttpClient();//var a= new WebClient();
+                                       var source = await Task.Run<ImageSource>(() =>
+                                         {
+                                               var p = current.ToString();
+                                           var s = new BitmapImage();
+                                            s.BeginInit();
+                                                 s.CacheOption = BitmapCacheOption.OnLoad;
+                                            //打开文件流
+                    using(var stream = File.OpenRead(p))
+                                                {
+                                                      s.StreamSource = stream;
+                                                      s.EndInit();
+                                                       //这一句很重要，少了UI线程就不认了。
+                   s.Freeze();
+                                                  }
+                                           return s;
+                                    });
+                                    //出炉
+                  bigImage.Source = source;
+                             }
+                               catch { }
+                              //好了，不用转了
+          rotate.BeginAnimation(RotateTransform.AngleProperty,null);
+                            }
+             else
+                            {
+                                var s = bigImage.Source;
+                                s = null;
+                               bigImage.Source = null;
+                            }
+                  }
+        var client = new HttpClient();//var a= new WebClient();
                 var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                bingif.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
+                BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
                 var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
                 if(Properties.Settings.Default.IsUHDWapp)urlstr= urlstr.Replace("_1920x1080","_UHD");
                 Uri uri = new Uri(urlstr);
@@ -425,14 +456,14 @@ namespace CokeeDP
                 var dt = JsonConvert.DeserializeObject<JObject>(u2);
                 if (!dt["warning"].HasValues)
                 {
-                    weaBn.Visibility = Visibility.Collapsed;
+                    SpecialWeatherBtn.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     var t = dt["warning"][0]["title"].ToString();
-                    weaBn.Visibility = Visibility.Visible;
+                    SpecialWeatherBtn.Visibility = Visibility.Visible;
 
-                    weaBn.Content = t.Substring(t.IndexOf("布") + 1);
+                    SpecialWeatherBtn.Content = t.Substring(t.IndexOf("布") + 1);
                     weaWr = dt["warning"][0]["text"].ToString();
                 }
             }
@@ -921,7 +952,7 @@ namespace CokeeDP
         {
             try
             {
-                MessageBoxX.Show(this, weaWr, (string)weaBn.Content, MessageBoxIcon.Info, DefaultButton.YesOK);
+                MessageBoxX.Show(this, weaWr, (string)SpecialWeatherBtn.Content, MessageBoxIcon.Info, DefaultButton.YesOK);
             }
             catch (Exception ex)
             {

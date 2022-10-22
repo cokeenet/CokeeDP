@@ -13,6 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="ThemeColorLight" Color="#6CBCEA" Opacity="100"/>
             <SolidColorBrush x:Key="BackgroundColorLight" Color="#6CBCEA" Opacity="100"/>
+            <Color x:Key="GradientStopColor1">#FFE0BFBF</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
