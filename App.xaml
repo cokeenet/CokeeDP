@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CokeeDP" 
              xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
-             StartupUri="MainWindow.xaml">
+             xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
+             StartupUri="MainWindow.xaml" Startup="AppStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                
                 <ResourceDictionary Source="pack://application:,,,/Panuon.WPF.UI;component/Control.xaml" />
                 <xf:XamlFlairResources />
                 <ResourceDictionary Source="pack://application:,,,/XamlFlair.WPF;component/DefaultAnimations.xaml"/>
@@ -14,6 +16,23 @@
             <SolidColorBrush x:Key="ThemeColorLight" Color="#6CBCEA" Opacity="100"/>
             <SolidColorBrush x:Key="BackgroundColorLight" Color="#6CBCEA" Opacity="100"/>
             <Color x:Key="GradientStopColor1">#FFE0BFBF</Color>
+            <Color x:Key="CardBackground">#FFE0BFBF</Color>
+            <pu:NoticeBoxSettings x:Key="noticeSetting"
+                      AnimationDuration="0:0:1"
+                      AnimationEase="CubicInOut">
+                <pu:NoticeBoxSettings.NoticeBoxItemStyle>
+                    <Style TargetType="pu:NoticeBoxItem">
+                        <Setter Property="Background"
+                    Value="#1E1E1E" />
+                        <Setter Property="BorderBrush"
+                    Value="#4E4E4E" />
+                        <Setter Property="Foreground"
+                    Value="White" />
+                        <Setter Property="ClickEffect"
+                    Value="None" />
+                    </Style>
+                </pu:NoticeBoxSettings.NoticeBoxItemStyle>
+            </pu:NoticeBoxSettings>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -14,14 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 namespace CokeeDP
 {
-    public class ImageItem : NotifyPropertyChangedBase
-    {
-        public string Name { get => _displayName; set => Set(ref _displayName, value); }
-        public string Path { get => p; set => Set(ref p, value); }
-        public BitmapImage ImageSr { get => ee; set => Set(ref ee, value); }
-        private BitmapImage ee;
-        private string _displayName, p;
-    }
+    
 
     public partial class Settings : WindowX
     {
@@ -108,6 +101,9 @@ namespace CokeeDP
 
         private void Button_Click(object sender,RoutedEventArgs e)
         {
+            #region checkFolderExist
+            if(!Directory.Exists(Properties.Settings.Default.AudioFolder))NoticeBox.Show("警告:媒体文件夹不存在,请重新输入.","Error",MessageBoxIcon.Error,true,3000);
+            #endregion
             NoticeBox.Show("Saved!ヾ(≧▽≦*)o","info",MessageBoxIcon.Success,true,3000);
             CokeeDP.Properties.Settings.Default.Save();
         }
@@ -155,7 +151,7 @@ namespace CokeeDP
             {
                 ComboBox a = (ComboBox)e.Source;
                 ComboBoxItem b = (ComboBoxItem)a.SelectedItem;
-                if (b.Tag.ToString() != "edit") { hk.Text = "https://v1.hitokoto.cn/?c=" + b.Tag.ToString(); CokeeDP.Properties.Settings.Default.hk_api = hk.Text; }
+                if (b.Tag.ToString() != "edit"&&b.Tag.ToString()!=null) { hk.Text = "https://v1.hitokoto.cn/?c=" + b.Tag.ToString(); CokeeDP.Properties.Settings.Default.hk_api = hk.Text; }
                 //NoticeBox.Show(sender.ToString()+"##"+e.ToString(), true, MessageBoxIcon.Info);
             }
             catch (Exception ex)
@@ -282,7 +278,7 @@ namespace CokeeDP
             }
             else
             {
-                NoticeBox.Show("笨蛋(╯‵□′)╯︵┻━┻\nE/Logger:Password Error.","info",MessageBoxIcon.Error,true,3000);
+                NoticeBox.Show("笨蛋(╯‵□′)╯︵┻━┻\nE/SecurityHelper:Password Error.","info",MessageBoxIcon.Error,true,3000);
             }
         }
 

@@ -1,10 +1,11 @@
-﻿<pu:WindowX  x:Class="CokeeDP.Settings"
+﻿<pu:WindowX
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:purs="clr-namespace:Panuon.WPF.UI.Resources;assembly=Panuon.WPF.UI"
             xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
+            xmlns:System="clr-namespace:System;assembly=System.Runtime"  x:Class="CokeeDP.Settings"
             mc:Ignorable="d"
             Title="设置"
             MinHeight="630"
@@ -12,11 +13,11 @@
             BorderThickness="0"
             pu:WindowXCaption.Height="50"
             pu:WindowXCaption.Foreground="#F1F1F1"
-            pu:WindowXCaption.Background="#6CBCEA" Width="1068" Height="630">
+            pu:WindowXCaption.Background="#6CBCEA" Width="1068" Height="630" Background="#FF8C8C8C" Foreground="{x:Null}">
     <pu:WindowX.Resources>
 
         <Style x:Key="HeaderSolidIconButtonStyle"
-               TargetType="Button"
+               TargetType="{x:Type Button}"
                BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="pu:ButtonHelper.CornerRadius"
                     Value="3,0,0,3" />
@@ -39,7 +40,7 @@
         </Style>
 
         <Style x:Key="HeaderLinkIconButtonStyle"
-               TargetType="Button"
+               TargetType="{x:Type Button}"
                BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="pu:ButtonHelper.CornerRadius"
                     Value="3,0,0,3" />
@@ -56,7 +57,7 @@
         </Style>
 
         <Style x:Key="SearchTextBoxStyle"
-               TargetType="TextBox"
+               TargetType="{x:Type TextBox}"
                BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="pu:TextBoxHelper.CornerRadius"
                     Value="13" />
@@ -81,7 +82,7 @@
         </Style>
 
         <Style x:Key="MainMenuTreeViewStyle"
-               TargetType="TreeView"
+               TargetType="{x:Type TreeView}"
                BasedOn="{StaticResource {x:Type TreeView}}">
             <Setter Property="pu:IconHelper.FontFamily"
                     Value="{StaticResource PanuonIconFont}" />
@@ -110,7 +111,7 @@
         </Style>
 
         <Style x:Key="SubMenuTabControlStyle"
-               TargetType="TabControl"
+               TargetType="{x:Type TabControl}"
                BasedOn="{StaticResource {x:Type TabControl}}">
             <Setter Property="pu:TabControlHelper.HeaderPanelHorizontalAlignment"
                     Value="Center" />
@@ -139,9 +140,12 @@
                     Value="0,0,0,1" />
         </Style>
     </pu:WindowX.Resources>
-    <pu:WindowX.Background>
+    <pu:WindowX.Effect>
+        <pu:AcrylicWindowXEffect AccentColor="#66FFFFFF" />
+    </pu:WindowX.Effect>
+    <!--<pu:WindowX.Background>
         <ImageBrush ImageSource="/bg_setting.png" Opacity="0.5" Stretch="UniformToFill" />
-    </pu:WindowX.Background>
+    </pu:WindowX.Background>-->
     <pu:WindowXCaption.HeaderTemplate>
         <DataTemplate>
             <Grid>
@@ -205,7 +209,9 @@
                               Header="本地资源管理" IsSelected="{Binding IsSelected, ElementName=s2}" />
                     <TreeViewItem pu:TreeViewItemHelper.Icon="&#xE9B7;" x:Name="birth"
                     Header="生日提醒" IsSelected="{Binding IsSelected, ElementName=s5}" />
-                    <TreeViewItem pu:TreeViewItemHelper.Icon="&#xE9AB;" x:Name="library"
+                    <TreeViewItem pu:TreeViewItemHelper.Icon="&#xE9A5;" x:Name="fastprogram"
+                    Header="快捷启动栏" IsSelected="{Binding IsSelected, ElementName=s7}"/>
+                    <TreeViewItem pu:TreeViewItemHelper.Icon="&#xE9AB;" x:Name="tasks"
                     Header="定时任务" IsSelected="{Binding IsSelected, ElementName=s6}"/>
                     <TreeViewItem pu:TreeViewItemHelper.Icon="&#xE966;" x:Name="cloud"
                               Header="儿童锁" IsSelected="{Binding IsSelected, ElementName=s4}" />
@@ -218,12 +224,12 @@
         </Border>
         <TabControl Grid.Column="1"
                     Style="{StaticResource SubMenuTabControlStyle}" IsSynchronizedWithCurrentItem="True" Background="{x:Null}">
-            <TabItem Header="" IsSelected="true" x:Name="s1" Background="{x:Null}" Foreground="Black">
+            <TabItem Header="" IsSelected="true" x:Name="s1" Background="{x:Null}" Foreground="{x:Null}">
 
                 <Grid>
                     <ScrollViewer x:Name="scrollView1" pu:ScrollViewerHelper.ScrollBarThickness="10" Margin="0,0,-4,-5">
                         <Grid Height="615" Width="808">
-                            <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" Text="首选项" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="30" Foreground="White">
+                            <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" Text="CokeeDP 首选项" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="30" Foreground="White">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
@@ -262,8 +268,11 @@
                                 <ComboBoxItem Content="影视" Tag="h" />
                                 <ComboBoxItem Content="诗词" Tag="i" />
                                 <ComboBoxItem Content="网易云" Tag="j" />
-                                <ComboBoxItem Content="哲学" Tag="k"  IsSelected="True" />
+                                <ComboBoxItem Content="哲学" Tag="k" />
                                 <ComboBoxItem Content="动画" Tag="a" />
+                                <ComboBoxItem Content="网络" Tag="f" />
+                                <ComboBoxItem Content="其他" Tag="g" />
+                                <ComboBoxItem Content="抖机灵" Tag="l" />
                             </ComboBox>
                             <TextBlock HorizontalAlignment="Left" Margin="22,164,0,0" Text="一言/壁纸刷新时间(s)" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White">
                                 <TextBlock.Effect>
@@ -355,23 +364,23 @@
                                     <DropShadowEffect/>
                                 </CheckBox.Effect>
                             </CheckBox>
-                            <TextBlock HorizontalAlignment="Left" Margin="22,362,0,0" Text="个性化 (Beta)" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="25" Foreground="White">
+                            <TextBlock HorizontalAlignment="Left" Margin="22,362,0,0" Text="个性化" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="25" Foreground="White">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <pu:ColorPicker Margin="22,442,647,133" ColorChannels="RGB" DefaultColor="#FF6CBCEA"  CornerRadius="2">
+                            <pu:ColorPicker Margin="22,442,647,133" ColorChannels="RGB" DefaultColor="#FF6CBCEA"  CornerRadius="2" ClearButtonVisibility="Visible" IsDropDownOpen="True" Text="">
                                 <pu:ColorPicker.Effect>
                                     <DropShadowEffect Opacity="0.5"/>
                                 </pu:ColorPicker.Effect>
                             </pu:ColorPicker>
-                            <TextBlock HorizontalAlignment="Left" Margin="22,413,0,0" Text="Acc. Color" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White" Height="24">
+                            <TextBlock HorizontalAlignment="Left" Margin="22,413,0,0" Text="强调色" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White" Height="24">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
 
-                            <TextBlock HorizontalAlignment="Left" Margin="188,413,0,0" Text="Non-Acc. Color" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White" Height="24">
+                            <TextBlock HorizontalAlignment="Left" Margin="188,413,0,0" Text="非强调色" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White" Height="24">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
@@ -419,17 +428,12 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="420,260,154,315" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="Testmode1" >
+                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="592,104,98,471" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="启用一言" ClickMode="Press" >
                                 <CheckBox.Effect>
                                     <DropShadowEffect Opacity="0.5"/>
                                 </CheckBox.Effect>
                             </CheckBox>
-                            <TextBlock HorizontalAlignment="Left" Margin="420,0,0,0" Text="注:启用该选项即代表你同意 Cokee Tech &amp; AppCenter 隐私条款." TextWrapping="Wrap" VerticalAlignment="Center" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" Foreground="#FFC5C5C5">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect Opacity="0.5" />
-                                </TextBlock.Effect>
-                            </TextBlock>
-                            <TextBlock HorizontalAlignment="Left" Margin="22,502,0,0" Text="Media Player Setting (Beta)" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="25" Foreground="White">
+                            <TextBlock HorizontalAlignment="Left" Margin="22,502,0,0" Text="媒体播放器" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="25" Foreground="White">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
@@ -442,14 +446,14 @@
                             <TextBox x:Name="audioFd" Tag="audiofolder"
                                 Height="35"
                                 BorderBrush="#6CBCEA"
-                                pu:TextBoxHelper.Watermark="C:\Users\seewo\Desktop\英语\Audio"
+                                pu:TextBoxHelper.Watermark="文件夹绝对路径"
                                 pu:TextBoxHelper.CornerRadius="2"
                                 pu:TextBoxHelper.FocusedBorderBrush="LightPink"
                                 pu:TextBoxHelper.ShadowColor="LightBlue"
                                 pu:TextBoxHelper.FocusedShadowColor="LightPink"
-                                pu:ShadowHelper.BlurRadius="10"
+                                pu:ShadowHelper.BlurRadius="5"
                                 pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" Margin="22,570,404,10" TextChanged="TextBoxHandler" />
+                                pu:ShadowHelper.ShadowDepth="1" Margin="22,0,404,10" TextChanged="TextBoxHandler" VerticalAlignment="Bottom" />
                             <TextBlock HorizontalAlignment="Left" Margin="117,548,0,0" Text="注:单击时钟即可召唤播放器." TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" Foreground="#FFC5C5C5">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
@@ -462,8 +466,7 @@
                             </CheckBox>
                         </Grid>
                     </ScrollViewer>
-                    <Button Height="40"
-                                Width="150"
+                    <Button
                                 Background="#6CBCEA"
                                 Foreground="White"
                                 Content="保存"
@@ -471,7 +474,7 @@
                                 pu:ButtonHelper.ShadowColor="#6CBCEA"
                                 pu:ShadowHelper.BlurRadius="6"
                                 pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="Button_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,37,43" />
+                                pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="Button_Click" Margin="627,527,37,43" />
                 </Grid>
             </TabItem>
             <TabItem Header="" x:Name="s2" Foreground="Black" Background="{x:Null}">
@@ -705,6 +708,57 @@
                             pu:ShadowHelper.BlurRadius="6"
                             pu:ShadowHelper.Direction="240"
                             pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="birth_impory" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,41,505" Grid.Column="1" />
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="" x:Name="s7" Background="{x:Null}" Foreground="Black">
+
+                <ScrollViewer x:Name="scrollView6" pu:ScrollViewerHelper.ScrollBarThickness="10">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="119*"/>
+                            <ColumnDefinition Width="140*"/>
+                            <ColumnDefinition Width="143*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock HorizontalAlignment="Left" Margin="14,14,0,0" Text="快捷启动栏" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="32" Foreground="White"/>
+                        <TextBlock Margin="14,65,0,0" Text="程序列表" TextWrapping="Wrap" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="White" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Width="72"/>
+                        <Button
+                            Background="#6CBCEA"
+                            Foreground="White"
+                            Content="保存"
+                            pu:ButtonHelper.CornerRadius="2"
+                            pu:ButtonHelper.ShadowColor="#6CBCEA"
+                            pu:ShadowHelper.BlurRadius="6"
+                            pu:ShadowHelper.Direction="240"
+                            pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="Button_Click" Margin="105,506,31,64" Grid.Column="2" />
+                        <TextBlock HorizontalAlignment="Left" Margin="14,94,0,0" Text="数据库内无数据。您需要通过Excel文件导入数据。" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="16" Foreground="White" Visibility="Collapsed">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Opacity="0.5" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <DataGrid x:Name="dataGrid"  Margin="14,107,0,0" Height="425" VerticalAlignment="Top" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="514">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=Number}" Width="40" ClipboardContentBinding="{x:Null}" Header="序号"/>
+                                <DataGridTemplateColumn Width="600" Header="Contour">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding image}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Height="40"
+                            Width="150"
+                            Background="#6CBCEA"
+                            Foreground="White"
+                            pu:ButtonHelper.CornerRadius="2"
+                            pu:ButtonHelper.ShadowColor="#6CBCEA"
+                            pu:ShadowHelper.BlurRadius="6"
+                            pu:ShadowHelper.Direction="240"
+                            pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="birth_impory" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,41,428" Grid.Column="2" Content="添加程序" />
                     </Grid>
                 </ScrollViewer>
             </TabItem>
