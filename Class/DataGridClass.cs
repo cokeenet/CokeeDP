@@ -15,8 +15,8 @@ namespace CokeeDP.Class
     {
         public string Name { get => _displayName; set => Set(ref _displayName,value); }
         public string Path { get => p; set => Set(ref p,value); }
-        public BitmapImage ImageSr { get => ee; set => Set(ref ee,value); }
-        private BitmapImage ee;
+        public ImageSource Image { get => ee; set => Set(ref ee,value); }
+        private ImageSource ee;
         private string _displayName, p;
     }
     public class FastProgram

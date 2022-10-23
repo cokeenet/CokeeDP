@@ -1,4 +1,5 @@
-﻿using Microsoft.AppCenter;
+﻿using CokeeDP.Class;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
@@ -48,7 +49,7 @@ namespace CokeeDP
         private int AudioNum = 0;
         private String AudioPath, AudioFolder, MediaDuring;
         private int bgn = 0, bing = 0;
-
+        BitmapImage bitmapImage = null;
         //U盘插入后，OS的底层会自动检测，然后向应用程序发送“硬件设备状态改变“的消息
         private string disk, weaWr, hkUrl, nowDowning = "";
 
@@ -185,6 +186,7 @@ namespace CokeeDP
                 AudioFolder = Properties.Settings.Default.AudioFolder;
                 Properties.Settings.Default.Save();
                 SetTimer(sec,1,hkc,Convert.ToInt32(Properties.Settings.Default.hkc),wet,Convert.ToInt32(Properties.Settings.Default.wea));
+               
             }
             catch(Exception ex)
             {
@@ -295,38 +297,62 @@ namespace CokeeDP
         {
 
 
-            var client = new HttpClient();//var a= new WebClient();
+            var client = new HttpClient();var a= new WebClient();
             var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
             JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
             BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
             var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
             if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
             Uri uri = new Uri(urlstr);
-            br1_blur.Radius = 10;
-            var source = await Task.Run<ImageSource>(() =>
-            {
-                var s = new BitmapImage();
-                s.BeginInit();
-                s.CacheOption = BitmapCacheOption.OnLoad;
-                //打开文件流
-                using(var stream = File.OpenRead(uri.OriginalString))
-                {
-                    s.StreamSource = stream;
-                    s.EndInit();
-                    //这一句很重要，少了UI线程就不认了。
-                    s.Freeze();
-                }
-                return s;
-            });
-            //出炉
-            br1.Source = source;
-
-            //好了，不用转了
-            br1_blur.Radius = 0;
             log.Text = bing + "/LoadBingImage:" + uri;
+           bitmapImage= new BitmapImage(uri);
+            bitmapImage.DownloadProgress += ImageDownloadProgress;
+           bitmapImage.DownloadCompleted += DownloadImageCompleted;  
+            br1_blur.Radius = 8;
+            bitmapImage.BeginInit();
+          /* 
+           a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+            a.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
+            a.DownloadFileAsync(uri, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg");      */
+
         }
 
-        private async Task Hitoko()
+        private void ImageDownloadProgress(object sender,DownloadProgressEventArgs e)
+        {
+            if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
+            pro.Value = e.Progress; 
+            log.Text = "正在加载壁纸" + e.Progress+"%"; 
+        }
+
+        private void DownloadImageCompleted(object sender,EventArgs e)
+        {
+            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
+            log.Text = "Done.";
+           br1_blur.Radius = 0;
+            br1.Source = bitmapImage;
+        }
+
+        private void DownloadFileCallback(object sender,AsyncCompletedEventArgs e)
+        {
+            if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
+            log.Text = "Done.";
+            if(e.Cancelled)
+            {
+                log.Text = "File download cancelled.";
+            }
+            if(e.Error != null)
+            {
+                log.Text = e.Error.ToString();
+            }
+            if(e.Error == null&&!e.Cancelled)
+            {
+                br1.BeginInit();
+                br1_blur.Radius = 0;
+                br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
+                br1.EndInit();
+            }
+        }
+            private async Task Hitoko()
         {
             try
             {
@@ -590,8 +616,8 @@ namespace CokeeDP
         /// <param name="sender">(Label)</param>
         private void Like_menu(object sender,MouseButtonEventArgs e)
         {
-            like.PlacementTarget = hitokoto;
-            like.IsOpen = true;
+            lik.PlacementTarget = hitokoto;
+            lik.IsOpen = true;
         }
 
         /// <summary>
@@ -884,6 +910,13 @@ namespace CokeeDP
                 }
             }
         }
+
+        private void FastProgClick(object sender,RoutedEventArgs e)
+        {
+            if(!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+            else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+        }
+
         /// <summary>
         ///一言处理
         /// </summary>
@@ -952,7 +985,7 @@ namespace CokeeDP
         {
             if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
             pro.Value = e.ProgressPercentage;
-            log.Text = "正在下载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
+            log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
         }
 
         private async Task CheckUpdate()

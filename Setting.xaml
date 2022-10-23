@@ -395,7 +395,7 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <TextBlock x:Name="over_flag" HorizontalAlignment="Left" Margin="408,305,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="14" Foreground="White" Height="24" Visibility="Collapsed">
+                            <TextBlock x:Name="over_flag" HorizontalAlignment="Left" Margin="409,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="14" Foreground="White" Height="24" Visibility="Visible" Text="(倒计时好像结束了...">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>

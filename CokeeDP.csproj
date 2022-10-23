@@ -67,6 +67,7 @@
     <None Remove="hd1.jpg" />
     <None Remove="hd3.png" />
     <None Remove="head.jpg" />
+    <None Remove="OIP-C.jpg" />
     <None Remove="usb.png" />
 
   </ItemGroup>
@@ -100,6 +101,7 @@
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
     <Resource Include="Image\usb.png" />
+    <Resource Include="OIP-C.jpg" />
     <Resource Include="usb.png" />
   </ItemGroup>
 

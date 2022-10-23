@@ -18,7 +18,7 @@ namespace CokeeDP
 
     public partial class Settings : WindowX
     {
-        private string version = "V1.8";
+        private string version = "V2.2";
 
         public Settings()
         {
