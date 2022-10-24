@@ -24,6 +24,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace CokeeDP
@@ -178,7 +179,7 @@ namespace CokeeDP
                 if(Properties.Settings.Default.timeTod.Length == 0) { tod = new(2025,6,5,00,00,00); Properties.Settings.Default.timeTod = tod.ToString(); }
                 else tod = DateTime.Parse(Properties.Settings.Default.timeTod);
                 if(Properties.Settings.Default.hk_api.Length == 0) Properties.Settings.Default.hk_api = "https://v1.hitokoto.cn/?c=k";
-                if(Convert.ToInt32(Properties.Settings.Default.hkc) <= 300) Properties.Settings.Default.hkc = "300";
+                if(Convert.ToInt32(Properties.Settings.Default.hkc) <= 100) Properties.Settings.Default.hkc = "100";
                 if(Convert.ToInt32(Properties.Settings.Default.wea) <= 9800) Properties.Settings.Default.wea = "9800";
                 if(Properties.Settings.Default.timeTo.Length <= 1) Properties.Settings.Default.timeTo = "高考";
                 if(Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;
@@ -307,8 +308,10 @@ namespace CokeeDP
             log.Text = bing + "/LoadBingImage:" + uri;
            bitmapImage= new BitmapImage(uri);
             bitmapImage.DownloadProgress += ImageDownloadProgress;
-           bitmapImage.DownloadCompleted += DownloadImageCompleted;  
-            br1_blur.Radius = 8;
+           bitmapImage.DownloadCompleted += DownloadImageCompleted;
+       //     DoubleAnimation doubleAnimation;
+
+            br1_blur.Radius = 10;
             bitmapImage.BeginInit();
           /* 
            a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
@@ -889,7 +892,7 @@ namespace CokeeDP
 
         private void kbshow(object sender,MouseButtonEventArgs e)
         {
-            Process.Start(@"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+            Process.Start("explore.exe",@"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
         }
 
         private void BtnSaveHandler(object sender,RoutedEventArgs e)
@@ -906,15 +909,22 @@ namespace CokeeDP
             {
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.WriteLine($"{DateTime.Now}   {info}");
+                    writer.WriteLine($"{DateTime.Now},{info}");
                 }
             }
         }
 
         private void FastProgClick(object sender,RoutedEventArgs e)
         {
-            if(!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
-            else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+            try
+            {
+                if (!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+                else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+            }
+            catch(Exception ex)
+            {
+                ProcessErr(ex);
+            }
         }
 
         /// <summary>

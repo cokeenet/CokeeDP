@@ -35,6 +35,7 @@ namespace CokeeDP
             checkBox_Copy.IsChecked = CokeeDP.Properties.Settings.Default.enableBigTimeTo;
             checkBox_Copy1.IsChecked = CokeeDP.Properties.Settings.Default.isDebug; 
             checkBox_Copy2.IsChecked = CokeeDP.Properties.Settings.Default.IsUHDWapp;
+            audioFd.Text=Properties.Settings.Default.AudioFolder;
             if(DateTime.Now.CompareTo(new(2025,6,5,00,00,00)) >= 0) 
             {
                 checkBox_Copy.Visibility= Visibility.Visible;

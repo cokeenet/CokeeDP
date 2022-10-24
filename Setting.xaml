@@ -13,7 +13,7 @@
             BorderThickness="0"
             pu:WindowXCaption.Height="50"
             pu:WindowXCaption.Foreground="#F1F1F1"
-            pu:WindowXCaption.Background="#6CBCEA" Width="1068" Height="630" Background="#FF8C8C8C" Foreground="{x:Null}">
+            pu:WindowXCaption.Background="#6CBCEA" Width="1068" Height="630" Foreground="{x:Null}">
     <pu:WindowX.Resources>
 
         <Style x:Key="HeaderSolidIconButtonStyle"
@@ -140,12 +140,9 @@
                     Value="0,0,0,1" />
         </Style>
     </pu:WindowX.Resources>
-    <pu:WindowX.Effect>
-        <pu:AcrylicWindowXEffect AccentColor="#66FFFFFF" />
-    </pu:WindowX.Effect>
-    <!--<pu:WindowX.Background>
+    <pu:WindowX.Background>
         <ImageBrush ImageSource="/bg_setting.png" Opacity="0.5" Stretch="UniformToFill" />
-    </pu:WindowX.Background>-->
+    </pu:WindowX.Background>
     <pu:WindowXCaption.HeaderTemplate>
         <DataTemplate>
             <Grid>
@@ -395,7 +392,7 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <TextBlock x:Name="over_flag" HorizontalAlignment="Left" Margin="409,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="14" Foreground="White" Height="24" Visibility="Visible" Text="(倒计时好像结束了...">
+                            <TextBlock x:Name="over_flag" HorizontalAlignment="Left" Margin="409,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="14" Foreground="White" Height="24" Visibility="Collapsed" Text="(倒计时好像结束了...">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
