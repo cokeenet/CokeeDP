@@ -494,7 +494,11 @@ namespace CokeeDP
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                Close();
+                if(IsPlaying)
+                {
+                   if(MessageBoxX.Show(this,"有媒体正在播放。确认退出吗?","警告",MessageBoxButton.OKCancel,MessageBoxIcon.Warning)==MessageBoxResult.OK)Close();
+                }
+                else Close();
             }));
         }
 
