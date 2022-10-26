@@ -451,7 +451,7 @@
                     pu:ButtonHelper.CornerRadius="5"
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" />
+                    pu:ShadowHelper.ShadowDepth="4" Click="kbshow" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" Visibility="Collapsed" />
             </Canvas>
         </Viewbox>
 

@@ -91,7 +91,7 @@ namespace CokeeDP
                 }
                 time.Content = DateTime.Now.ToString("hh:mm:ss");
                 DirectoryInfo dir = new DirectoryInfo(AudioFolder);
-                audio = dir.GetFiles("*.mp3");
+                if(dir.Exists)audio = dir.GetFiles("*.mp3");
                 //MessageBoxX.Show(audio.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
                 //hitokoto.Content = "hello world!";
@@ -721,9 +721,9 @@ namespace CokeeDP
                 slider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 audioTime.Content = "0:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-                playIcon.Text = "";
+               /* playIcon.Text = "";
                 IsPlaying = true;
-                mediaplayer.Play();
+                mediaplayer.Play();*/
             }
             catch(Exception ex)
             {
@@ -929,6 +929,11 @@ namespace CokeeDP
             {
                 ProcessErr(ex);
             }
+        }
+
+        private void kbshow(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
         }
 
         /// <summary>
