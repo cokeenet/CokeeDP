@@ -366,7 +366,7 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <pu:ColorPicker Margin="22,442,647,133" ColorChannels="RGB" DefaultColor="#FF6CBCEA"  CornerRadius="2" ClearButtonVisibility="Visible" IsDropDownOpen="True" Text="">
+                            <pu:ColorPicker Margin="22,442,647,133" ColorChannels="RGB" DefaultColor="#FF6CBCEA"  CornerRadius="2" ClearButtonVisibility="Visible" Text="">
                                 <pu:ColorPicker.Effect>
                                     <DropShadowEffect Opacity="0.5"/>
                                 </pu:ColorPicker.Effect>
@@ -425,7 +425,7 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="592,104,98,471" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="启用一言" ClickMode="Press" >
+                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="592,104,98,471" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="禁用一言" ClickMode="Press" >
                                 <CheckBox.Effect>
                                     <DropShadowEffect Opacity="0.5"/>
                                 </CheckBox.Effect>
@@ -471,7 +471,7 @@
                                 pu:ButtonHelper.ShadowColor="#6CBCEA"
                                 pu:ShadowHelper.BlurRadius="6"
                                 pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="Button_Click" Margin="627,527,37,43" />
+                                pu:ShadowHelper.ShadowDepth="4" FontSize="15" RenderTransformOrigin="0.48,-0.106" Click="Button_Click" Margin="627,527,37,0" Height="40" VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
             <TabItem Header="" x:Name="s2" Foreground="Black" Background="{x:Null}">
@@ -560,7 +560,7 @@
                         <ImageBrush ImageSource="/2020-07-17 13.06.jpg" />
                     </Grid.Background>-->
                         <Image HorizontalAlignment="Left" Height="105" Margin="181,38,0,0" VerticalAlignment="Top" Width="105" Source="/hd3.png" Grid.Column="1" />
-                        <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" Text="循星🌟 Ver.2.0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="36" Foreground="White" SnapsToDevicePixels="True"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" Text="循星🌟 Ver.2.2" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="36" Foreground="White" SnapsToDevicePixels="True"/>
                         <ScrollViewer x:Name="scrollViewer"
               BorderBrush="LightGray" pu:ScrollViewerHelper.ScrollBarThickness="10"
               Margin="22,115,135,138">
@@ -570,7 +570,6 @@
                         <TextBlock x:Name="vers" HorizontalAlignment="Left" Margin="15,10,0,0" Text="软件版本:V000 资源包版本:V0000" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="18" Height="28" Width="276" Foreground="White" TextAlignment="Right" Grid.Column="1"/>
                         <TextBlock HorizontalAlignment="Left" Margin="22,60,0,0" Text="A Modern PC ScreenSaver" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="20" Foreground="White" TextAlignment="Right" FontWeight="Normal"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,472,0,0" Text="Email:xiaoyangjunroms@outlook.com" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="20" Foreground="White" TextAlignment="Left"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="116,212,0,0" Text="Published at Sep.12,2022 14:08" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" Foreground="White" TextAlignment="Right" Grid.Column="1" FlowDirection="LeftToRight" Width="171"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,502,0,0" Text="软件下载&amp;更新: https://gitee.com/cokee/CokeeDisplayProtect" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="20" Foreground="White" TextAlignment="Left" Grid.ColumnSpan="2"/>
                         <TextBlock HorizontalAlignment="Left" Margin="35,143,0,0" Text="Cokee Technogies 秋坂科技" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="20" Foreground="White" TextAlignment="Right" Grid.Column="1"/>
                         <TextBlock HorizontalAlignment="Right" Margin="0,168,15,0" Text="https://cokee.tech" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="15" Foreground="White" TextAlignment="Right" Grid.Column="1"/>

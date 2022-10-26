@@ -384,6 +384,8 @@ namespace CokeeDP
             {
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+                br1.Width=this.Width;
+                br1.Height = this.Height;
                 if(Environment.OSVersion.Version.Major >= 10.0)
                     AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
@@ -894,10 +896,7 @@ namespace CokeeDP
             hitokoto.Content = a.Text;
         }
 
-        private void kbshow(object sender,MouseButtonEventArgs e)
-        {
-            Process.Start("explore.exe",@"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
-        }
+      
 
         private void BtnSaveHandler(object sender,RoutedEventArgs e)
         {
@@ -922,8 +921,8 @@ namespace CokeeDP
         {
             try
             {
-                if (!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
-                else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher");
+                if (!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe");
+                else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe");
             }
             catch(Exception ex)
             {
@@ -933,7 +932,26 @@ namespace CokeeDP
 
         private void kbshow(object sender, RoutedEventArgs e)
         {
-            Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+           // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+       
+        }
+
+        private void FuncT1(object sender, MouseButtonEventArgs e)
+        {
+            this.Width = 720;
+            this.Height = 640;
+        }
+
+        private void FuncT2(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Process.Start("C:\\Windows\\explorer.exe");
+            }
+            catch(Exception ex)
+            {
+                ProcessErr(ex);
+            }
         }
 
         /// <summary>

@@ -151,7 +151,7 @@
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <TextBox x:Name="log" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Height="35" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" Width="330" Grid.Column="1" Text="" TextWrapping="WrapWithOverflow" Background="{x:Null}" BorderBrush="#7FFFFFFF" CaretBrush="{x:Null}" Foreground="White" IsReadOnlyCaretVisible="True" Canvas.Left="1572" Canvas.Top="949" MouseDown="kbshow">
+                <TextBox x:Name="log" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Height="35" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" Width="330" Grid.Column="1" Text="" TextWrapping="WrapWithOverflow" Background="{x:Null}" BorderBrush="#7FFFFFFF" CaretBrush="{x:Null}" Foreground="White" IsReadOnlyCaretVisible="True" Canvas.Left="1572" Canvas.Top="949">
                     <TextBox.Effect>
                         <DropShadowEffect/>
                     </TextBox.Effect>
@@ -442,7 +442,7 @@
                    pu:ButtonHelper.CornerRadius="5"
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Content="收藏一言" Canvas.Left="1572" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" FontSize="11" />
+                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Content="收藏一言" Canvas.Left="1572" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" FontSize="11" MouseRightButtonDown="FuncT2" />
                 <Button
                     pu:ButtonHelper.ShadowColor="#6CBCEA"
                     Background="#80C5C4C4"
@@ -451,7 +451,7 @@
                     pu:ButtonHelper.CornerRadius="5"
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="kbshow" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" Visibility="Collapsed" />
+                    pu:ShadowHelper.ShadowDepth="4" Click="kbshow" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" MouseRightButtonDown="FuncT1" />
             </Canvas>
         </Viewbox>
 
