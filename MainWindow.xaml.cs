@@ -301,7 +301,7 @@ namespace CokeeDP
             var client = new HttpClient();var a= new WebClient();
             var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
             JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-            if (File.Exists(Environment.CurrentDirectory + "\blkimg.txt") && File.ReadAllText(Environment.CurrentDirectory + "\blkimg.txt").Contains(dt["images"][0]["enddate"].ToString())) { ChangeWapp(false);return; }
+            if (File.Exists(Environment.CurrentDirectory + "\\blkimg.txt") && File.ReadAllText(Environment.CurrentDirectory + "\\blkimg.txt").Contains(dt["images"][0]["enddate"].ToString())) { ChangeWapp(false);return; }
             BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
             var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
             if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
@@ -957,7 +957,7 @@ namespace CokeeDP
 
         private void DislikeImage(object sender, RoutedEventArgs e)
         {
-            WriteInfo(br1.Tag.ToString()+"\n", Environment.CurrentDirectory + "\blkimg.txt");
+            WriteInfo(br1.Tag.ToString()+"\n", Environment.CurrentDirectory + "\\blkimg.txt");
             _=GetBingWapp();
         }
 
