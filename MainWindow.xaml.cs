@@ -301,6 +301,7 @@ namespace CokeeDP
             var client = new HttpClient();var a= new WebClient();
             var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
             JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
+            if(File.ReadAllText(Environment.CurrentDirectory + "blkimg.txt").Contains(dt["images"][0]["enddate"].ToString()))
             BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
             var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
             if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
@@ -309,8 +310,8 @@ namespace CokeeDP
            bitmapImage= new BitmapImage(uri);
             bitmapImage.DownloadProgress += ImageDownloadProgress;
            bitmapImage.DownloadCompleted += DownloadImageCompleted;
-       //     DoubleAnimation doubleAnimation;
-
+            //     DoubleAnimation doubleAnimation;
+            br1.Tag = dt["images"][0]["enddate"].ToString();
             br1_blur.Radius = 10;
             bitmapImage.BeginInit();
           /* 
@@ -901,18 +902,18 @@ namespace CokeeDP
         private void BtnSaveHandler(object sender,RoutedEventArgs e)
         {
             NoticeBox.Show("已收藏至文件 " + filePath,"info",MessageBoxIcon.Info,true,1000);
-            WriteInfo(hitokoto.Content.ToString());
+            WriteInfo(hitokoto.Content.ToString(), @"D:\cokee_hitokoto.txt");
         }
 
         private string filePath = @"D:\cokee_hitokoto.txt";
 
-        private void WriteInfo(string info)
+        private void WriteInfo(string info,string filepath)
         {
-            using(FileStream stream = new FileStream(filePath,FileMode.Append))
+            using(FileStream stream = new FileStream(filepath,FileMode.Append))
             {
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.WriteLine($"{DateTime.Now},{info}");
+                    writer.WriteLine($"{DateTime.Now},{info};");
                 }
             }
         }
@@ -952,6 +953,12 @@ namespace CokeeDP
             {
                 ProcessErr(ex);
             }
+        }
+
+        private void DislikeImage(object sender, RoutedEventArgs e)
+        {
+            WriteInfo(br1.Tag.ToString()+"\n", Environment.CurrentDirectory + "blkimg.txt");
+            _=GetBingWapp();
         }
 
         /// <summary>

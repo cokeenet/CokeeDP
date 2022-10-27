@@ -1,5 +1,5 @@
 ﻿<Window
-        xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
+    
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -42,7 +42,7 @@
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Fill">
             <Canvas Width="1920" Height="1080">
-                <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=MainGrid, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MainGrid, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0"/>
                     </Image.Effect>
@@ -258,7 +258,7 @@
              pu:ShadowHelper.ShadowDepth="0"
              pu:ShadowHelper.BlurRadius="25"
              pu:ShadowHelper.Opacity="0.5">
-                            <MenuItem Header="不喜欢这张图" Click="Viewsour" />
+                            <MenuItem Header="不喜欢这张图" Click="DislikeImage" />
                             <MenuItem Header="喜欢"
               Icon="&#xE952;" Click="Likeit" />
                         </ContextMenu>
