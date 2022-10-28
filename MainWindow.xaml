@@ -52,7 +52,7 @@
                         <DropShadowEffect/>
                     </Label.Effect>
                 </Label>
-                <pu:Carousel Width="407"
+                <pu:Carousel x:Name="pager" Width="407"
              Height="268"
              Animation="Scale,Fade"
              AnimationEase="CubicOut"

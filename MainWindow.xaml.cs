@@ -939,8 +939,7 @@ namespace CokeeDP
 
         private void FuncT1(object sender, MouseButtonEventArgs e)
         {
-            this.Width = 720;
-            this.Height = 640;
+            //br1_blur.BeginAnimation(br1_blur.Radius,)
         }
 
         private void FuncT2(object sender, MouseButtonEventArgs e)
