@@ -958,6 +958,7 @@ namespace CokeeDP
         private void DislikeImage(object sender, RoutedEventArgs e)
         {
             WriteInfo(br1.Tag.ToString()+"\n", Environment.CurrentDirectory + "\\blkimg.txt");
+            NoticeBox.Show("屏蔽成功.");
             _=GetBingWapp();
         }
 
