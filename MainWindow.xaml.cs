@@ -87,7 +87,7 @@ namespace CokeeDP
                 {
                     if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp")) Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     DirectoryInfo di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-                    afi = di.GetFiles("*.png");
+                    afi = di.GetFiles("*.png");ChangeWapp(false);
                 }
                 time.Content = DateTime.Now.ToString("hh:mm:ss");
                 DirectoryInfo dir = new DirectoryInfo(AudioFolder);
@@ -385,8 +385,8 @@ namespace CokeeDP
             {
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
-                br1.Width=this.Width;
-                br1.Height = this.Height;
+                br1.Width= System.Windows.SystemParameters.PrimaryScreenWidth;
+                br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 if(Environment.OSVersion.Version.Major >= 10.0)
                     AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
@@ -431,10 +431,9 @@ namespace CokeeDP
         private void WappChangeBtnHandler(object sender,RoutedEventArgs e)
         {
             var a = (Button)sender;
-            if(a.Name == "left") bing = bing + 1;
-            else if(a.Name == "right") bing = bing - 1;
+            if (a.Name == "left") ChangeWapp(false);
+            else if (a.Name == "right") ChangeWapp(true);
             if(bing >= 8 || bing <= -1) bing = 0;
-            _ = GetBingWapp();
         }
 
         private async Task Wea()

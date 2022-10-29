@@ -481,7 +481,7 @@
                       pu:ScrollViewerHelper.ScrollBarPosition="Outside"
                       pu:ScrollViewerHelper.WheelScrollingDirection="Horizontal">
                     <Grid>
-                        <!--<ItemsControl x:Name="LsbExamples"
+                        <ItemsControl x:Name="LsbExamples"
                           VerticalContentAlignment="Stretch"
                           HorizontalAlignment="Stretch" Visibility="Collapsed">
                             <ItemsControl.ItemsPanel>
@@ -539,8 +539,8 @@
                                     </Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
-                        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="因极其卡顿的爆炸使用体验，该功能正在维护中" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="30" Foreground="White">
+                        </ItemsControl>
+                        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Text="因极其卡顿的爆炸使用体验，该功能正在维护中" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="30" Foreground="White" Visibility="Collapsed">
                             <TextBlock.Effect>
                                 <DropShadowEffect Opacity="0.5" />
                             </TextBlock.Effect>

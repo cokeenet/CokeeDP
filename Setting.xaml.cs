@@ -1,4 +1,5 @@
-﻿using Microsoft.AppCenter;
+﻿using CokeeDP.Class;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Win32;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,17 +49,18 @@ namespace CokeeDP
                 Dispatcher.Invoke(new Action(delegate
             {
                 if(Properties.Settings.Default.isChildLocked)childBorder.Visibility= Visibility.Visible;
-                //loadPic();
+                //Thread thread =new Thread()
+                loadPic();
                 if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) vers.Text = "软件版本:" + version + " 资源包版本:" + System.IO.File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver");
                 else vers.Text = "软件版本:" + version + " [无资源包]";
                // if (Environment.OSVersion.Version.Major >= 10.0 && AppCenter.IsEnabledAsync().Result) t.Text = "AppCenter Running.V" + AppCenter.SdkVersion;
             }
        ));
 
-            _ = wea();
+            _ = GetUpdateLog();
         }
 
-        private async Task wea()
+        private async Task GetUpdateLog()
         {
             try
             {
@@ -114,13 +117,13 @@ namespace CokeeDP
             try
             {
                 DirectoryInfo di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-                /*if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ImageItem()
+               if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ImageItem()
                 {
                     Name = "[资源包]Version:" + File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver"),
                     Path = "respack",
                     ImageSr = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.jpg"))
-                });            */
-                /*FileInfo[] afi = di.GetFiles("*.png");
+                });            
+                FileInfo[] afi = di.GetFiles("*.png");
                 Uri bgp; BitmapImage a = new BitmapImage();
                 foreach (FileInfo i in afi)
                 {
@@ -128,7 +131,7 @@ namespace CokeeDP
                     //MakeThumbnail(i.FullName, 192, 168, "HW").Save(BitmapImage());
                     //a.StreamSource = new FileStream(di.FullName + "\\tmp000", FileMode.OpenOrCreate);
                     a = new BitmapImage(bgp);
-                    a.DecodePixelHeight=10;
+                    a.DecodePixelHeight=90;
                     LsbExamples.Items.Add(new ImageItem()
                     {
                         Name = i.Name + "(" + a.PixelWidth + "x" + a.PixelHeight + ")",
@@ -136,7 +139,7 @@ namespace CokeeDP
                         ImageSr = a
                     });        
 
-                }             */
+                }             
             }
             catch (Exception e)
             {
