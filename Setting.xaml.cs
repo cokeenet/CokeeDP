@@ -5,6 +5,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.Win32;
 using Panuon.WPF;
 using Panuon.WPF.UI;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
