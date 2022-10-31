@@ -117,7 +117,7 @@ namespace CokeeDP
                 else
                 {
                     Uri bgp;
-                    if(direction)
+                    if(!direction)
                     {
                         if(bgn == 0)
                         {
