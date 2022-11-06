@@ -30,7 +30,7 @@ namespace CokeeDP.Class
         {
             public object Convert(object value,Type targetType,object parameter,System.Globalization.CultureInfo culture)
         {
-            var ExePath = "";
+            var ExePath = "C:\\Program Files (x86)\\Seewo\\EasiNote5\\swenlauncher\\swenlauncher.exe";
             if(!string.IsNullOrEmpty(value.ToString()))
                 {
                     ExePath = (string)value;
