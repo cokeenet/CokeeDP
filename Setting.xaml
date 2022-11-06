@@ -425,7 +425,7 @@
                                     <DropShadowEffect Opacity="0.5" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="592,104,98,471" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="禁用一言" ClickMode="Press" >
+                            <CheckBox pu:CheckBoxHelper.CornerRadius="2" pu:CheckBoxHelper.CheckedBackground="LightBlue" pu:CheckBoxHelper.ContentPlacement="Right" x:Name="checkBox_Copy1" Margin="592,104,98,471" Foreground="White" FontSize="15" Background="White" Checked="debug" Click="debug" Content="禁用一言" ClickMode="Press" Visibility="Collapsed" IsEnabled="False" >
                                 <CheckBox.Effect>
                                     <DropShadowEffect Opacity="0.5"/>
                                 </CheckBox.Effect>

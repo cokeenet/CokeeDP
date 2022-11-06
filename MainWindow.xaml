@@ -45,7 +45,7 @@
             <Canvas Width="1920" Height="1080">
                 <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
                     <Image.Effect>
-                        <BlurEffect x:Name="br1_blur" Radius="0"/>
+                        <BlurEffect x:Name="br1_blur" KernelType="Gaussian" RenderingBias="Performance" Radius="1"/>
                     </Image.Effect>
                 </Image>
                 <Label x:Name="time" Content="00:00:00" HorizontalAlignment="Left" Margin="20,875,0,0" VerticalAlignment="Top" Foreground="White" Background="{x:Null}" FontSize="112" FontFamily="Segoe UI Light" Opacity="0.8" MouseDown="ShowPlayer">
@@ -74,7 +74,7 @@
                             pu:ButtonHelper.ShadowColor="#6CBCEA"
                             pu:ShadowHelper.BlurRadius="10"
                             pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" Visibility="Visible" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" />
+                            pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" Visibility="Collapsed" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" />
                             <TextBox x:Name="wea1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
