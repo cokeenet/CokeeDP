@@ -25,8 +25,9 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 
+using System.Windows.Media.Effects;
+using System.Windows.Media.Imaging;
 namespace CokeeDP
 {
     /// <summary>
@@ -301,7 +302,7 @@ namespace CokeeDP
             var client = new HttpClient();var a= new WebClient();
             var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
             JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-            if (File.Exists(Environment.CurrentDirectory + "\\blkimg.txt") && File.ReadAllText(Environment.CurrentDirectory + "\\blkimg.txt").Contains(dt["images"][0]["enddate"].ToString())) { ChangeWapp(false);return; }
+            if (File.Exists(Environment.CurrentDirectory + "\\blkimg.txt") )if( File.ReadAllText(Environment.CurrentDirectory + "\\blkimg.txt").Contains(dt["images"][0]["enddate"].ToString())) { ChangeWapp(false); return; }
             BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
             var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
             if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
@@ -310,14 +311,15 @@ namespace CokeeDP
            bitmapImage= new BitmapImage(uri);
             bitmapImage.DownloadProgress += ImageDownloadProgress;
            bitmapImage.DownloadCompleted += DownloadImageCompleted;
-            //     DoubleAnimation doubleAnimation;
             br1.Tag = dt["images"][0]["enddate"].ToString();
-            br1_blur.Radius = 10;
+            DoubleAnimation animation=  new DoubleAnimation(br1_blur.Radius,br1_blur.Radius+10,new Duration(TimeSpan.FromSeconds(3)));
+            br1.Appear();
+
             bitmapImage.BeginInit();
-          /* 
-           a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-            a.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
-            a.DownloadFileAsync(uri, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg");      */
+            /* 
+             a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+              a.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
+              a.DownloadFileAsync(uri, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg");      */
 
         }
 
@@ -332,7 +334,8 @@ namespace CokeeDP
         {
             if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
             log.Text = "Done.";
-           br1_blur.Radius = 0;
+            DoubleAnimation animation = new DoubleAnimation(br1_blur.Radius,br1_blur.Radius - 10,new Duration(TimeSpan.FromSeconds(10)));
+            br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
             br1.Source = bitmapImage;
         }
 
