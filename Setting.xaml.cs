@@ -5,6 +5,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.Win32;
 using Panuon.WPF;
 using Panuon.WPF.UI;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,6 +70,7 @@ namespace CokeeDP
             }
             catch (Exception e)
             {
+         
                 ProcessErr(e);
                 update1.Text = e.ToString();
             }
@@ -77,7 +79,8 @@ namespace CokeeDP
         public void ProcessErr(Exception e)
         {
             NoticeBox.Show(e.ToString(), "Error", MessageBoxIcon.Error,true,5000);
-             if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
+            Log.Error(e, "Error");
+            if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
         public void load()
