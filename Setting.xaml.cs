@@ -133,13 +133,15 @@ namespace CokeeDP
                     bgp = new Uri(i.FullName);
                     //MakeThumbnail(i.FullName, 192, 168, "HW").Save(BitmapImage());
                     //a.StreamSource = new FileStream(di.FullName + "\\tmp000", FileMode.OpenOrCreate);
-                    a = new BitmapImage(bgp);
-                    a.DecodePixelHeight=90;
+                    var ar = new BitmapImage(bgp);
+                    ar.DecodePixelWidth = 10;
+                    ar.DecodePixelHeight=10;
+                    //ar.BeginInit();
                     LsbExamples.Items.Add(new ImageItem()
                     {
-                        Name = i.Name + "(" + a.PixelWidth + "x" + a.PixelHeight + ")",
+                        Name = i.Name + "(" + ar.PixelWidth + "x" + ar.PixelHeight + ")",
                         Path = i.FullName,
-                        ImageSr = a
+                        ImageSr = ar
                     });        
 
                 }             
