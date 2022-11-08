@@ -109,7 +109,8 @@ namespace CokeeDP
             {
                 if(usingBing)
                 {
-                    bing++;
+                    if (!direction) bing++;
+                    else bing--;
                     if(bing >= 8 || bing <= -2) bing = 0;
                     _ = GetBingWapp();
                     return;
@@ -440,10 +441,10 @@ namespace CokeeDP
 
         private void WappChangeBtnHandler(object sender,RoutedEventArgs e)
         {
-            var a = (Button)sender;
+            var a = (Button)sender;if(bing >= 8 || bing <= -1) bing = 0;
             if (a.Name == "left") ChangeWapp(false);
             else if (a.Name == "right") ChangeWapp(true);
-            if(bing >= 8 || bing <= -1) bing = 0;
+            
         }
 
         private async Task Wea()
