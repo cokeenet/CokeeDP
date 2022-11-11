@@ -60,10 +60,13 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="AudioFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\seewo\Desktop\英语\Audio</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsUHDWapp" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CityId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

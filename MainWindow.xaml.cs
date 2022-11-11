@@ -452,11 +452,12 @@ namespace CokeeDP
             try
             {
                 var client = new HttpClient();
-                var u2 = await client.GetStringAsync("http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=" + Properties.Settings.Default.city + "&language=zh-Hans&unit=c&start=0&days=3");
+                var u2 = await //client.GetStringAsync("http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=" + Properties.Settings.Default.city + "&language=zh-Hans&unit=c&start=0&days=3");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["results"][0]["daily"][0]["text_day"].ToString() + "," + dt["results"][0]["daily"][0]["high"].ToString() + "°C~" + dt["results"][0]["daily"][0]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["results"][0]["daily"][1]["text_day"].ToString() + "," + dt["results"][0]["daily"][1]["high"].ToString() + "°C~" + dt["results"][0]["daily"][1]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][1]["humidity"].ToString();
                 wea3.Text = "后天 " + dt["results"][0]["daily"][2]["text_day"].ToString() + "," + dt["results"][0]["daily"][2]["high"].ToString() + "°C~" + dt["results"][0]["daily"][2]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][2]["humidity"].ToString();
+                
                 w1.Text = GetWeatherIcon((int)dt["results"][0]["daily"][0]["code_day"]);
                 w2.Text = GetWeatherIcon((int)dt["results"][0]["daily"][1]["code_day"]);
                 w3.Text = GetWeatherIcon((int)dt["results"][0]["daily"][2]["code_day"]);
@@ -483,6 +484,7 @@ namespace CokeeDP
                 if(!dt["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
+
                 }
                 else
                 {

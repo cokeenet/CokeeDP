@@ -252,7 +252,7 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\seewo\\Desktop\\英语\\Audio")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string AudioFolder {
             get {
                 return ((string)(this["AudioFolder"]));
@@ -271,6 +271,18 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["IsUHDWapp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CityId {
+            get {
+                return ((string)(this["CityId"]));
+            }
+            set {
+                this["CityId"] = value;
             }
         }
     }

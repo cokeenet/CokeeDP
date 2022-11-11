@@ -31,7 +31,7 @@
         <ImageBrush ImageSource="/bg_normal.png"/>
     </Window.Background>
     <Window.Triggers>
-        
+
     </Window.Triggers>
     <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
         <Grid.Background>
@@ -113,8 +113,58 @@
                             </TextBlock>
                         </Grid>
                     </Border>
+                    <Border>
+                        <Grid>
+                            <Button x:Name="SpecialWeatherBtn1"
+                                Background="#B2FFFFFF"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="1"
+                                Foreground="Black"
+                                pu:ButtonHelper.CornerRadius="2"
+                                pu:ButtonHelper.ShadowColor="#6CBCEA"
+                                pu:ShadowHelper.BlurRadius="10"
+                                pu:ShadowHelper.Direction="240"
+                                pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" Visibility="{Binding Visibility, ElementName=SpecialWeatherBtn}" />
+                            <TextBox x:Name="wea4" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                <TextBox.Effect>
+                                    <DropShadowEffect/>
+                                </TextBox.Effect>
+                            </TextBox>
+                            <TextBlock x:Name="w4" Foreground="White"
+                                FontSize="45"
+                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBox x:Name="wea5" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                <TextBox.Effect>
+                                    <DropShadowEffect/>
+                                </TextBox.Effect>
+                            </TextBox>
+                            <TextBlock x:Name="w5" Foreground="White"
+                                FontSize="45"
+                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBox x:Name="wea6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                <TextBox.Effect>
+                                    <DropShadowEffect/>
+                                </TextBox.Effect>
+                            </TextBox>
+                            <TextBlock x:Name="w6" Foreground="White"
+                                FontSize="45"
+                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
 
-                    <Border Background="#80969696">
+                    <Border Background="#80969696" Visibility="Collapsed" IsEnabled="False">
                         <Grid Margin="30,91,0,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="65*"/>
