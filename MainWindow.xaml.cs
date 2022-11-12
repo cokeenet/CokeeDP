@@ -109,9 +109,10 @@ namespace CokeeDP
             {
                 if(usingBing)
                 {
+                    if(bing >= 8 || bing <= -2) bing = 0;
                     if (!direction) bing++;
                     else bing--;
-                    if(bing >= 8 || bing <= -2) bing = 0;
+                    if (bing >= 8 || bing <= -1) bing = 0;
                     _ = GetBingWapp();
                     return;
                 }
@@ -341,7 +342,7 @@ namespace CokeeDP
            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
             log.Text = "Image Loaded. Num:"+bing;
             DoubleAnimation animation = new DoubleAnimation(15,0,new Duration(TimeSpan.FromSeconds(3)));
-           // animation.EasingFunction = new CircleEase();
+           animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
             br1.Source = bitmapImage;
@@ -451,16 +452,18 @@ namespace CokeeDP
         {
             try
             {
-                var client = new HttpClient();
-                var u2 = await //client.GetStringAsync("http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=" + Properties.Settings.Default.city + "&language=zh-Hans&unit=c&start=0&days=3");
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                var client = new HttpClient(handler);
+                var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
+                MessageBox.Show(u2);
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                wea1.Text = "今天 " + dt["results"][0]["daily"][0]["text_day"].ToString() + "," + dt["results"][0]["daily"][0]["high"].ToString() + "°C~" + dt["results"][0]["daily"][0]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][0]["humidity"].ToString();
-                wea2.Text = "明天 " + dt["results"][0]["daily"][1]["text_day"].ToString() + "," + dt["results"][0]["daily"][1]["high"].ToString() + "°C~" + dt["results"][0]["daily"][1]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][1]["humidity"].ToString();
-                wea3.Text = "后天 " + dt["results"][0]["daily"][2]["text_day"].ToString() + "," + dt["results"][0]["daily"][2]["high"].ToString() + "°C~" + dt["results"][0]["daily"][2]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][2]["humidity"].ToString();
+                wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["high"].ToString() + "°C~" + dt["daily"][0]["low"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
+                wea2.Text = "明天 " + dt["daily"][1]["text_day"].ToString() + "," + dt["daily"][1]["high"].ToString() + "°C~" + dt["daily"][1]["low"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
+                wea3.Text = "后天 " + dt["daily"][2]["text_day"].ToString() + "," + dt["daily"][2]["high"].ToString() + "°C~" + dt["daily"][2]["low"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
                 
-                w1.Text = GetWeatherIcon((int)dt["results"][0]["daily"][0]["code_day"]);
-                w2.Text = GetWeatherIcon((int)dt["results"][0]["daily"][1]["code_day"]);
-                w3.Text = GetWeatherIcon((int)dt["results"][0]["daily"][2]["code_day"]);
+                w1.Text = GetWeatherIcon((int)dt["daily"][0]["code_day"]);
+                w2.Text = GetWeatherIcon((int)dt["daily"][1]["code_day"]);
+                w3.Text = GetWeatherIcon((int)dt["daily"][2]["code_day"]);
             }
             catch(Exception ex)
             {

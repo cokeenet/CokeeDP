@@ -66,7 +66,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="CityId" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">101220807</Value>
     </Setting>
   </Settings>
 </SettingsFile>
