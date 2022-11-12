@@ -457,9 +457,9 @@ namespace CokeeDP
                 var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
                 MessageBox.Show(u2);
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["high"].ToString() + "°C~" + dt["daily"][0]["low"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
-                wea2.Text = "明天 " + dt["daily"][1]["text_day"].ToString() + "," + dt["daily"][1]["high"].ToString() + "°C~" + dt["daily"][1]["low"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
-                wea3.Text = "后天 " + dt["daily"][2]["text_day"].ToString() + "," + dt["daily"][2]["high"].ToString() + "°C~" + dt["daily"][2]["low"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
+                wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
+                wea3.Text = "后天 " + dt["daily"][2]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
                 
                 w1.Text = GetWeatherIcon((int)dt["daily"][0]["code_day"]);
                 w2.Text = GetWeatherIcon((int)dt["daily"][1]["code_day"]);
@@ -654,7 +654,7 @@ namespace CokeeDP
             // return DragEventHandler.;
         }
         /// <summary>
-        ///元素highlight处理
+        ///元素tempMaxlight处理
         /// </summary>
         /// <param name="sender">(Label)被拖的</param>
         private void Light(object sender,DragEventArgs e)
