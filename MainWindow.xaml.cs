@@ -46,7 +46,7 @@ namespace CokeeDP
         private static Timer hkc;
         private static Timer sec;
         private static Timer wet;
-        private FileInfo[] afi;
+        private FileInfo[] afi,Weaicon;
         private FileInfo[] audio;
         private int AudioNum = 0;
         private String AudioPath, AudioFolder, MediaDuring;
@@ -205,7 +205,7 @@ namespace CokeeDP
         {
             Dispatcher.Invoke(new Action(delegate
             {
-                ChangeWapp(true);
+                ChangeWapp(false);
                 _ = Hitoko();
             }
        ));
@@ -273,7 +273,7 @@ namespace CokeeDP
             c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
 
-        private static string GetWeatherIcon(int code)
+        /*private static string GetWeatherIcon(int code)
         {
             string icon = "";
             if(code < 0 || code == 99) return "\ue94f";//no network
@@ -285,8 +285,18 @@ namespace CokeeDP
             else if(code >= 26 && code <= 29) icon = "\ue9c6";//dust
             else if(code >= 30 && code <= 36) icon = "\ue9a0";//windy
             return icon;
-        }
+        }*/
+        public ImageSource GetWeatherIcon(int code)
+        {
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                ProcessErr(ex);
+            }
+        }
         private async Task DownloadResPack()
         {
             var client = new HttpClient(); var a = new WebClient();
@@ -399,6 +409,11 @@ namespace CokeeDP
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 br1.Width= System.Windows.SystemParameters.PrimaryScreenWidth;
                 br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+                if(Directory.Exists(Environment.CurrentDirectory))
+                {
+                    var a=new DirectoryInfo(Environment.CurrentDirectory));
+                    Weaicon = a.GetFiles();
+                }
                 if(Environment.OSVersion.Version.Major >= 10.0)
                     AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
@@ -455,13 +470,13 @@ namespace CokeeDP
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 var client = new HttpClient(handler);
                 var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
-                MessageBox.Show(u2);
+                //MessageBox.Show(u2);
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
                 wea3.Text = "后天 " + dt["daily"][2]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                
-                w1.Text = GetWeatherIcon((int)dt["daily"][0]["code_day"]);
+                wea4.Text = "后天 " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                w1.Source = GetWeatherIcon((int)dt["daily"][0]["code_day"]);
                 w2.Text = GetWeatherIcon((int)dt["daily"][1]["code_day"]);
                 w3.Text = GetWeatherIcon((int)dt["daily"][2]["code_day"]);
             }

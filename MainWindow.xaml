@@ -80,37 +80,28 @@
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w1" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <Image x:Name="w1"
+                            Width="50" Height="50" Margin="5,68,325,148">
+                
+                            </Image>
                             <TextBox x:Name="wea3" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w2" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <Image x:Name="w2" 
+                             Width="50" Height="50" Margin="5,125,325,91">
+                             
+                            </Image>
                             <TextBox x:Name="wea2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w3" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <Image x:Name="w3" 
+                            Width="50" Height="50" Margin="5,184,325,32">
+                                
+                            </Image>
                         </Grid>
                     </Border>
                     <Border>
