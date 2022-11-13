@@ -476,14 +476,17 @@ namespace CokeeDP
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
                 wea3.Text = "后天 " + dt["daily"][2]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                wea4.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) +" "+ dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                wea5.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) + " " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                wea6.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) + " " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                wea4.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) +" "+ dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][3]["tempMax"].ToString() + "°C~" + dt["daily"][3]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][3]["humidity"].ToString();
+                wea5.Text = dt["daily"][4]["fxDate"].ToString().Substring(5) + " " + dt["daily"][4]["textDay"].ToString() + "," + dt["daily"][4]["tempMax"].ToString() + "°C~" + dt["daily"][4]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][4]["humidity"].ToString();
+                wea6.Text = dt["daily"][5]["fxDate"].ToString().Substring(5) + " " + dt["daily"][5]["textDay"].ToString() + "," + dt["daily"][5]["tempMax"].ToString() + "°C~" + dt["daily"][5]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][5]["humidity"].ToString();
 
 
                 w1.Source = GetWeatherIcon((int)dt["daily"][0]["iconDay"]);
                 w2.Source = GetWeatherIcon((int)dt["daily"][1]["iconDay"]);
                 w3.Source = GetWeatherIcon((int)dt["daily"][2]["iconDay"]);
+                w4.Source = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
+                w5.Source = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
+                w6.Source = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
             }
             catch(Exception ex)
             {
@@ -507,13 +510,14 @@ namespace CokeeDP
                 if(!dt["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
-
+                    SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     var t = dt["warning"][0]["title"].ToString();
                     SpecialWeatherBtn.Visibility = Visibility.Visible;
-
+                    SpecialWeatherBtn1.Visibility = Visibility.Visible;
+                    SpecialWeatherBtn1.Content = t.Substring(t.IndexOf("布") + 1);
                     SpecialWeatherBtn.Content = t.Substring(t.IndexOf("布") + 1);
                     weaWr = dt["warning"][0]["text"].ToString();
                 }
