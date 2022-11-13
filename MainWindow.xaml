@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
         xmlns:Win32="clr-namespace:Microsoft.Win32;assembly=Microsoft.Win32.SystemEvents" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:Net="clr-namespace:System.Net;assembly=System.Net.HttpListener" x:Name="window"
+       xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Class="CokeeDP.MainWindow"
         mc:Ignorable="d"
         Title="CokeeDP" Foreground="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowState="Maximized" Loaded="Load" AllowDrop="True">
@@ -80,28 +81,25 @@
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <Image x:Name="w1"
-                            Width="50" Height="50" Margin="5,68,325,148">
-                
-                            </Image>
+                            <svgc:SvgViewbox IsHitTestVisible="False"  x:Name="w1"
+                            Width="50" Height="50" Margin="5,68,325,148" MessageFillBrush="White"/>
+                            
                             <TextBox x:Name="wea3" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <Image x:Name="w2" 
-                             Width="50" Height="50" Margin="5,125,325,91">
+                            <svgc:SvgViewbox x:Name="w2" 
+                             Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White">
                              
-                            </Image>
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <Image x:Name="w3" 
-                            Width="50" Height="50" Margin="5,184,325,32">
-                                
-                            </Image>
+                            <svgc:SvgViewbox x:Name="w3" 
+                            Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White"/>
                         </Grid>
                     </Border>
                     <Border>
@@ -121,37 +119,27 @@
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w4" Foreground="White"
-                                FontSize="45"
-                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <svgc:SvgViewbox x:Name="w4" Width="50" Height="50" Margin="5,68,325,148">
+
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea5" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w5" Foreground="White"
-                                FontSize="45"
-                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <svgc:SvgViewbox x:Name="w5" 
+                                Width="50" Height="50" Margin="5,125,325,91">
+             
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w6" Foreground="White"
-                                FontSize="45"
-                                FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                            <svgc:SvgViewbox x:Name="w6" 
+                                Width="50" Height="50" Margin="5,184,325,32">
+
+                            </svgc:SvgViewbox>
                         </Grid>
                     </Border>
 

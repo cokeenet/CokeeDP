@@ -286,15 +286,16 @@ namespace CokeeDP
             else if(code >= 30 && code <= 36) icon = "\ue9a0";//windy
             return icon;
         }*/
-        public ImageSource GetWeatherIcon(int code)
+        public Uri GetWeatherIcon(int code)
         {
             try
             {
-
+                return new Uri(Environment.CurrentDirectory + "/icons/"+code.ToString()+".svg");
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
+                return null;
             }
         }
         private async Task DownloadResPack()
@@ -411,7 +412,7 @@ namespace CokeeDP
                 br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 if(Directory.Exists(Environment.CurrentDirectory))
                 {
-                    var a=new DirectoryInfo(Environment.CurrentDirectory));
+                    var a=new DirectoryInfo(Environment.CurrentDirectory);
                     Weaicon = a.GetFiles();
                 }
                 if(Environment.OSVersion.Version.Major >= 10.0)
@@ -475,10 +476,14 @@ namespace CokeeDP
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
                 wea3.Text = "后天 " + dt["daily"][2]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                wea4.Text = "后天 " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
-                w1.Source = GetWeatherIcon((int)dt["daily"][0]["code_day"]);
-                w2.Text = GetWeatherIcon((int)dt["daily"][1]["code_day"]);
-                w3.Text = GetWeatherIcon((int)dt["daily"][2]["code_day"]);
+                wea4.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) +" "+ dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                wea5.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) + " " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                wea6.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) + " " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+
+
+                w1.Source = GetWeatherIcon((int)dt["daily"][0]["iconDay"]);
+                w2.Source = GetWeatherIcon((int)dt["daily"][1]["iconDay"]);
+                w3.Source = GetWeatherIcon((int)dt["daily"][2]["iconDay"]);
             }
             catch(Exception ex)
             {
