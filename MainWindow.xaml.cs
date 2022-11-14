@@ -2,6 +2,7 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,6 +29,8 @@ using System.Windows.Media.Animation;
 
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using File = System.IO.File;
+
 namespace CokeeDP
 {
     /// <summary>
@@ -206,6 +209,7 @@ namespace CokeeDP
             Dispatcher.Invoke(new Action(delegate
             {
                 ChangeWapp(false);
+                pager.PageDown();
                 _ = Hitoko();
             }
        ));
@@ -290,7 +294,8 @@ namespace CokeeDP
         {
             try
             {
-                return new Uri(Environment.CurrentDirectory + "/icons/"+code.ToString()+".svg");
+                if(File.Exists(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg")) return new Uri(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg");
+                else return new Uri(Environment.CurrentDirectory + "/icons/"+code.ToString()+".svg");
             }
             catch (Exception ex)
             {
@@ -650,7 +655,9 @@ namespace CokeeDP
         {
             try
             {
-                ChangeWapp(true);
+                
+                ChangeWapp(false);
+                pager.PageDown();
                 _ = Hitoko();
             }
             catch(Exception ex)
