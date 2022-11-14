@@ -82,7 +82,11 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox IsHitTestVisible="False"  x:Name="w1"
-                            Width="50" Height="50" Margin="5,68,325,148" MessageFillBrush="White" MessageStrokeBrush="White"/>
+                            Width="50" Height="50" Margin="5,68,325,148" MessageFillBrush="White" MessageStrokeBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
 
                             <TextBox x:Name="wea3" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
@@ -90,14 +94,22 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox x:Name="w2" 
-                             Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White"/>
+                             Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox x:Name="w3" 
-                            Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White"/>
+                            Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                         </Grid>
                     </Border>
                     <Border>
@@ -117,21 +129,33 @@
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <svgc:SvgViewbox x:Name="w4" Width="50" Height="50" Margin="5,68,325,148"/>
+                            <svgc:SvgViewbox x:Name="w4" Width="50" Height="50" Margin="5,68,325,148">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea5" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox x:Name="w5" 
-                                Width="50" Height="50" Margin="5,125,325,91"/>
+                                Width="50" Height="50" Margin="5,125,325,91">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox x:Name="w6" 
-                                Width="50" Height="50" Margin="5,184,325,32"/>
+                                Width="50" Height="50" Margin="5,184,325,32">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                         </Grid>
                     </Border>
 
@@ -453,5 +477,5 @@
 
 
     </Grid>
-    
+
 </Window>
