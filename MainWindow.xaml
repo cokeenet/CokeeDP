@@ -31,7 +31,7 @@
         <ImageBrush ImageSource="/bg_normal.png"/>
     </Window.Background>
     <Window.Triggers>
-        
+
     </Window.Triggers>
     <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
         <Grid.Background>
@@ -45,7 +45,7 @@
             <Canvas Width="1920" Height="1080">
                 <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
                     <Image.Effect>
-                        <BlurEffect x:Name="br1_blur" KernelType="Gaussian" RenderingBias="Performance" Radius="1"/>
+                        <BlurEffect x:Name="br1_blur" KernelType="Gaussian" RenderingBias="Performance" Radius="0" />
                     </Image.Effect>
                 </Image>
                 <Label x:Name="time" Content="00:00:00" HorizontalAlignment="Left" Margin="20,875,0,0" VerticalAlignment="Top" Foreground="White" Background="{x:Null}" FontSize="112" FontFamily="Segoe UI Light" Opacity="0.8" MouseDown="ShowPlayer">
@@ -157,7 +157,7 @@
                         <DropShadowEffect/>
                     </TextBox.Effect>
                 </TextBox>
-                <TextBox  Text="Cokee Technogies 秋坂科技" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="20" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1643" Canvas.Top="1030" Width="267">
+                <TextBox  Text="Cokee Technogies 秋坂科技" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="20" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Right" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1643" Canvas.Top="1030" Width="267">
                     <TextBox.Effect>
                         <DropShadowEffect/>
                     </TextBox.Effect>
@@ -453,6 +453,11 @@
                     pu:ShadowHelper.BlurRadius="10"
                     pu:ShadowHelper.Direction="240"
                     pu:ShadowHelper.ShadowDepth="4" Click="kbshow" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" MouseRightButtonDown="FuncT1" />
+                <ProgressBar x:Name="pro_Copy" pu:ProgressBarHelper.Direction="Normal"
+                    pu:ProgressBarHelper.CornerRadius="5"
+                    pu:ProgressBarHelper.InvertedForeground="Azure"
+                    Background="{x:Null}"
+                    Foreground="#CCDCDCDC" Visibility="Visible" Height="10" Canvas.Left="891" Canvas.Top="1066" Width="186" HorizontalAlignment="Center" VerticalAlignment="Top" Maximum="7" Value="-3" />
             </Canvas>
         </Viewbox>
 
