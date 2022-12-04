@@ -7,6 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
         xmlns:Win32="clr-namespace:Microsoft.Win32;assembly=Microsoft.Win32.SystemEvents" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:Net="clr-namespace:System.Net;assembly=System.Net.HttpListener" x:Name="window"
+       xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         x:Class="CokeeDP.MainWindow"
         mc:Ignorable="d"
         Title="CokeeDP" Foreground="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowState="Maximized" Loaded="Load" AllowDrop="True">
@@ -80,67 +81,85 @@
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w1" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,68,325,148">
-                                <TextBlock.Effect>
+                            <svgc:SvgViewbox IsHitTestVisible="False"  x:Name="w1"
+                            Width="50" Height="50" Margin="5,68,325,148" MessageFillBrush="White" MessageStrokeBrush="White">
+                                <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+
                             <TextBox x:Name="wea3" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w2" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,125,325,91">
-                                <TextBlock.Effect>
+                            <svgc:SvgViewbox x:Name="w2" 
+                             Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                             <TextBox x:Name="wea2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <TextBlock x:Name="w3" Foreground="White"
-                            FontSize="45"
-                            FontFamily="{StaticResource PanuonIconFont}" Width="50" Height="50" Margin="5,184,325,32">
-                                <TextBlock.Effect>
+                            <svgc:SvgViewbox x:Name="w3" 
+                            Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect/>
-                                </TextBlock.Effect>
-                            </TextBlock>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                         </Grid>
                     </Border>
-
-                    <Border Background="#80969696">
-                        <Grid Margin="30,91,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="65*"/>
-                                <RowDefinition Height="20*"/>
-                                <RowDefinition Height="92*"/>
-                            </Grid.RowDefinitions>
-                            <TextBox  Text="快捷应用栏" Background="{x:Null}" Foreground="White" FontSize="22" FontFamily="Microsoft YaHei Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Focusable="False" AllowDrop="False" IsTabStop="False" Opacity="1" IsReadOnlyCaretVisible="True" Margin="-25,-85,277,120">
+                    <Border>
+                        <Grid>
+                            <Button x:Name="SpecialWeatherBtn1"
+                                Background="#B2FFFFFF"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="1"
+                                Foreground="Black"
+                                pu:ButtonHelper.CornerRadius="2"
+                                pu:ButtonHelper.ShadowColor="#6CBCEA"
+                                pu:ShadowHelper.BlurRadius="10"
+                                pu:ShadowHelper.Direction="240"
+                                pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" Visibility="{Binding Visibility, ElementName=SpecialWeatherBtn}" />
+                            <TextBox x:Name="wea4" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
                                 <TextBox.Effect>
                                     <DropShadowEffect/>
                                 </TextBox.Effect>
                             </TextBox>
-                            <Button x:Name="right_Copy"
-                                Background="#80969696"
-                                Foreground="White"
-                                pu:ButtonHelper.CornerRadius="5"
-                                pu:ButtonHelper.ShadowColor="#6CBCEA"
-                                pu:ShadowHelper.BlurRadius="10"
-                                pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" Click="FastProgClick" Tag="right" Visibility="Visible" Margin="-15,-50,255,10" Grid.RowSpan="2" >
-                                <Grid>
-                                    <Image x:Name="image1" Margin="15,10,30,37" Source="/OIP-C.jpg"/>
-                                    <Label x:Name="label" Content="希沃白板5" Margin="22,91,22,3" Background="{x:Null}" Foreground="#FFFFF4F4" FontSize="15"/>
-                                </Grid>
-                            </Button>
+                            <svgc:SvgViewbox x:Name="w4" Width="50" Height="50" Margin="5,68,325,148">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox x:Name="wea5" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                <TextBox.Effect>
+                                    <DropShadowEffect/>
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox x:Name="w5" 
+                                Width="50" Height="50" Margin="5,125,325,91">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox x:Name="wea6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                <TextBox.Effect>
+                                    <DropShadowEffect/>
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox x:Name="w6" 
+                                Width="50" Height="50" Margin="5,184,325,32">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect/>
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
                         </Grid>
                     </Border>
+
+
                 </pu:Carousel>
                 <!--<pu:Card    Background="#B2FFFFFF" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Left="1495" Canvas.Top="509" Height="268" Width="407" d:IsHidden="True">
                     <pu:Card.BorderBrush>

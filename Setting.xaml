@@ -224,7 +224,7 @@
             <TabItem Header="" IsSelected="true" x:Name="s1" Background="{x:Null}" Foreground="{x:Null}">
 
                 <Grid>
-                    <ScrollViewer x:Name="scrollView1" pu:ScrollViewerHelper.ScrollBarThickness="10" Margin="0,0,-4,-5">
+                    <ScrollViewer x:Name="scrollView1" pu:ScrollViewerHelper.ScrollBarThickness="10" Margin="0,0,-4,-5" AllowDrop="True">
                         <Grid Height="615" Width="808">
                             <TextBlock HorizontalAlignment="Left" Margin="22,10,0,0" Text="CokeeDP 首选项" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.363,-0.016" FontFamily="Microsoft YaHei UI Light" FontSize="30" Foreground="White">
                                 <TextBlock.Effect>
@@ -483,7 +483,7 @@
                     <Grid>
                         <ItemsControl x:Name="LsbExamples"
                           VerticalContentAlignment="Stretch"
-                          HorizontalAlignment="Stretch" Visibility="Collapsed">
+                          HorizontalAlignment="Stretch">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <UniformGrid Rows="2" />
@@ -521,7 +521,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
-                                            <Image HorizontalAlignment="Center" Source="{Binding ImageSr}">
+                                            <Image HorizontalAlignment="Center" Source="{Binding ImageSr}" >
 
                                             </Image>
                                             <TextBlock Grid.Row="1"

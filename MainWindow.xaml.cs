@@ -2,6 +2,7 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,6 +29,8 @@ using System.Windows.Media.Animation;
 
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using File = System.IO.File;
+
 namespace CokeeDP
 {
     /// <summary>
@@ -46,7 +49,7 @@ namespace CokeeDP
         private static Timer hkc;
         private static Timer sec;
         private static Timer wet;
-        private FileInfo[] afi;
+        private FileInfo[] afi,Weaicon;
         private FileInfo[] audio;
         private int AudioNum = 0;
         private String AudioPath, AudioFolder, MediaDuring;
@@ -109,8 +112,10 @@ namespace CokeeDP
             {
                 if(usingBing)
                 {
-                    bing++;
                     if(bing >= 8 || bing <= -2) bing = 0;
+                    if (!direction) bing++;
+                    else bing--;
+                    if (bing >= 8 || bing <= -1) bing = 0;
                     _ = GetBingWapp();
                     return;
                 }
@@ -203,7 +208,8 @@ namespace CokeeDP
         {
             Dispatcher.Invoke(new Action(delegate
             {
-                ChangeWapp(true);
+                ChangeWapp(false);
+                pager.PageDown();
                 _ = Hitoko();
             }
        ));
@@ -271,7 +277,7 @@ namespace CokeeDP
             c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
 
-        private static string GetWeatherIcon(int code)
+        /*private static string GetWeatherIcon(int code)
         {
             string icon = "";
             if(code < 0 || code == 99) return "\ue94f";//no network
@@ -283,8 +289,20 @@ namespace CokeeDP
             else if(code >= 26 && code <= 29) icon = "\ue9c6";//dust
             else if(code >= 30 && code <= 36) icon = "\ue9a0";//windy
             return icon;
+        }*/
+        public Uri GetWeatherIcon(int code)
+        {
+            try
+            {
+                if(File.Exists(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg")) return new Uri(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg");
+                else return new Uri(Environment.CurrentDirectory + "/icons/"+code.ToString()+".svg");
+            }
+            catch (Exception ex)
+            {
+                ProcessErr(ex);
+                return null;
+            }
         }
-
         private async Task DownloadResPack()
         {
             var client = new HttpClient(); var a = new WebClient();
@@ -340,7 +358,7 @@ namespace CokeeDP
            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
             log.Text = "Image Loaded. Num:"+bing;
             DoubleAnimation animation = new DoubleAnimation(15,0,new Duration(TimeSpan.FromSeconds(3)));
-           // animation.EasingFunction = new CircleEase();
+           animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
             br1.Source = bitmapImage;
@@ -397,6 +415,11 @@ namespace CokeeDP
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 br1.Width= System.Windows.SystemParameters.PrimaryScreenWidth;
                 br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+                if(Directory.Exists(Environment.CurrentDirectory))
+                {
+                    var a=new DirectoryInfo(Environment.CurrentDirectory);
+                    Weaicon = a.GetFiles();
+                }
                 if(Environment.OSVersion.Version.Major >= 10.0)
                     AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
@@ -440,25 +463,35 @@ namespace CokeeDP
 
         private void WappChangeBtnHandler(object sender,RoutedEventArgs e)
         {
-            var a = (Button)sender;
+            var a = (Button)sender;if(bing >= 8 || bing <= -1) bing = 0;
             if (a.Name == "left") ChangeWapp(false);
             else if (a.Name == "right") ChangeWapp(true);
-            if(bing >= 8 || bing <= -1) bing = 0;
+            
         }
 
         private async Task Wea()
         {
             try
             {
-                var client = new HttpClient();
-                var u2 = await client.GetStringAsync("http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=" + Properties.Settings.Default.city + "&language=zh-Hans&unit=c&start=0&days=3");
+                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                var client = new HttpClient(handler);
+                var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
+                //MessageBox.Show(u2);
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                wea1.Text = "今天 " + dt["results"][0]["daily"][0]["text_day"].ToString() + "," + dt["results"][0]["daily"][0]["high"].ToString() + "°C~" + dt["results"][0]["daily"][0]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][0]["humidity"].ToString();
-                wea2.Text = "明天 " + dt["results"][0]["daily"][1]["text_day"].ToString() + "," + dt["results"][0]["daily"][1]["high"].ToString() + "°C~" + dt["results"][0]["daily"][1]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][1]["humidity"].ToString();
-                wea3.Text = "后天 " + dt["results"][0]["daily"][2]["text_day"].ToString() + "," + dt["results"][0]["daily"][2]["high"].ToString() + "°C~" + dt["results"][0]["daily"][2]["low"].ToString() + "°C 湿度:" + dt["results"][0]["daily"][2]["humidity"].ToString();
-                w1.Text = GetWeatherIcon((int)dt["results"][0]["daily"][0]["code_day"]);
-                w2.Text = GetWeatherIcon((int)dt["results"][0]["daily"][1]["code_day"]);
-                w3.Text = GetWeatherIcon((int)dt["results"][0]["daily"][2]["code_day"]);
+                wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
+                wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
+                wea3.Text = "后天 " + dt["daily"][2]["textDay"].ToString() + "," + dt["daily"][2]["tempMax"].ToString() + "°C~" + dt["daily"][2]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][2]["humidity"].ToString();
+                wea4.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) +" "+ dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][3]["tempMax"].ToString() + "°C~" + dt["daily"][3]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][3]["humidity"].ToString();
+                wea5.Text = dt["daily"][4]["fxDate"].ToString().Substring(5) + " " + dt["daily"][4]["textDay"].ToString() + "," + dt["daily"][4]["tempMax"].ToString() + "°C~" + dt["daily"][4]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][4]["humidity"].ToString();
+                wea6.Text = dt["daily"][5]["fxDate"].ToString().Substring(5) + " " + dt["daily"][5]["textDay"].ToString() + "," + dt["daily"][5]["tempMax"].ToString() + "°C~" + dt["daily"][5]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][5]["humidity"].ToString();
+
+
+                w1.Source = GetWeatherIcon((int)dt["daily"][0]["iconDay"]);
+                w2.Source = GetWeatherIcon((int)dt["daily"][1]["iconDay"]);
+                w3.Source = GetWeatherIcon((int)dt["daily"][2]["iconDay"]);
+                w4.Source = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
+                w5.Source = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
+                w6.Source = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
             }
             catch(Exception ex)
             {
@@ -482,12 +515,14 @@ namespace CokeeDP
                 if(!dt["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
+                    SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     var t = dt["warning"][0]["title"].ToString();
                     SpecialWeatherBtn.Visibility = Visibility.Visible;
-
+                    SpecialWeatherBtn1.Visibility = Visibility.Visible;
+                    SpecialWeatherBtn1.Content = t.Substring(t.IndexOf("布") + 1);
                     SpecialWeatherBtn.Content = t.Substring(t.IndexOf("布") + 1);
                     weaWr = dt["warning"][0]["text"].ToString();
                 }
@@ -620,7 +655,9 @@ namespace CokeeDP
         {
             try
             {
-                ChangeWapp(true);
+                
+                ChangeWapp(false);
+                pager.PageDown();
                 _ = Hitoko();
             }
             catch(Exception ex)
@@ -648,7 +685,7 @@ namespace CokeeDP
             // return DragEventHandler.;
         }
         /// <summary>
-        ///元素highlight处理
+        ///元素tempMaxlight处理
         /// </summary>
         /// <param name="sender">(Label)被拖的</param>
         private void Light(object sender,DragEventArgs e)
