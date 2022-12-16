@@ -94,8 +94,11 @@ namespace CokeeDP
                     afi = di.GetFiles("*.png");ChangeWapp(false);
                 }
                 time.Content = DateTime.Now.ToString("hh:mm:ss");
-                DirectoryInfo dir = new DirectoryInfo(AudioFolder);
-                if(dir.Exists)audio = dir.GetFiles("*.mp3");
+                if(Directory.Exists(AudioFolder))
+                {
+                    DirectoryInfo dir = new DirectoryInfo(AudioFolder);
+                    if(dir.Exists) audio = dir.GetFiles("*.mp3");
+                }
                 //MessageBoxX.Show(audio.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
                 //hitokoto.Content = "hello world!";
@@ -185,7 +188,7 @@ namespace CokeeDP
                 if(Properties.Settings.Default.timeTod.Length == 0) { tod = new(2025,6,5,00,00,00); Properties.Settings.Default.timeTod = tod.ToString(); }
                 else tod = DateTime.Parse(Properties.Settings.Default.timeTod);
                 if(Properties.Settings.Default.hk_api.Length == 0) Properties.Settings.Default.hk_api = "https://v1.hitokoto.cn/?c=k";
-                if(Convert.ToInt32(Properties.Settings.Default.hkc) <= 100) Properties.Settings.Default.hkc = "100";
+                if(Convert.ToInt32(Properties.Settings.Default.hkc) <= 300) Properties.Settings.Default.hkc = "300";
                 if(Convert.ToInt32(Properties.Settings.Default.wea) <= 9800) Properties.Settings.Default.wea = "9800";
                 if(Properties.Settings.Default.timeTo.Length <= 1) Properties.Settings.Default.timeTo = "高考";
                 if(Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;
@@ -263,7 +266,7 @@ namespace CokeeDP
 
         public void ProcessErr(Exception e)
         {
-            if(e.StackTrace.Contains("Socket")) NoticeBox.Show(e.ToString(),"Error/网络错误v",MessageBoxIcon.Error,true,1000);
+            if(e.StackTrace.Contains("Net")) NoticeBox.Show(e.ToString(),"Error/网络错误",MessageBoxIcon.Error,true,1000);
             else NoticeBox.Show(e.ToString(),"Error",MessageBoxIcon.Error,true,5000);
             Log.Error(e,"Error");
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
@@ -276,26 +279,11 @@ namespace CokeeDP
             b = new System.Timers.Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
             c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
-
-        /*private static string GetWeatherIcon(int code)
-        {
-            string icon = "";
-            if(code < 0 || code == 99) return "\ue94f";//no network
-            else if(code <= 3 && DateTime.Now.Hour <= 18 || code == 38) icon = "\ue978";//sunny
-            else if(code <= 3 && DateTime.Now.Hour >= 18) icon = "\ue97a";//sunny_night
-            else if(code >= 4 && code <= 9) icon = "\ue97c";//cloudy
-            else if(code >= 10 && code <= 19) icon = "\ue97e";//rainy
-            else if(code >= 20 && code <= 25) icon = "\ue982";//snowy
-            else if(code >= 26 && code <= 29) icon = "\ue9c6";//dust
-            else if(code >= 30 && code <= 36) icon = "\ue9a0";//windy
-            return icon;
-        }*/
         public Uri GetWeatherIcon(int code)
         {
             try
             {
-                if(File.Exists(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg")) return new Uri(Environment.CurrentDirectory + "/icons/" + code.ToString() + "-fill.svg");
-                else return new Uri(Environment.CurrentDirectory + "/icons/"+code.ToString()+".svg");
+                return new Uri("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg");
             }
             catch (Exception ex)
             {
@@ -303,53 +291,51 @@ namespace CokeeDP
                 return null;
             }
         }
-        private async Task DownloadResPack()
-        {
-            var client = new HttpClient(); var a = new WebClient();
-            var u2 = await client.GetStringAsync("https://gitee.com/cokee/CokeeDisplayProtect/raw/main/resurl");
-            a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-            a.DownloadFileCompleted += new AsyncCompletedEventHandler(ResDwCb);
-            a.DownloadFileAsync(new Uri(u2),Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip");
-            nowDowning = "资源包";
-        }
+
 
         private async Task GetBingWapp()
         {
-
-
-            var client = new HttpClient();var a= new WebClient();
-            var u2 = await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
-            JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-            if (File.Exists(Environment.CurrentDirectory + "\\blkimg.txt") )if( File.ReadAllText(Environment.CurrentDirectory + "\\blkimg.txt").Contains(dt["images"][0]["enddate"].ToString())) { ChangeWapp(false); return; }
-            BingImageInfo.Content = dt["images"][0]["copyright"] + " | " + dt["images"][0]["enddate"].ToString();
-            var urlstr = "https://www.bing.com/" + dt["images"][0]["url"];
-            if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
-            Uri uri = new Uri(urlstr);
-            log.Text = bing + "/LoadBingImage:" + uri;
-           bitmapImage= new BitmapImage(uri);
-            bitmapImage.DownloadProgress += ImageDownloadProgress;
-           bitmapImage.DownloadCompleted += DownloadImageCompleted;
-            br1.Tag = dt["images"][0]["enddate"].ToString();
-           
-            DoubleAnimation animation = new DoubleAnimation(0,15,new Duration(TimeSpan.FromSeconds(3)));
-             animation.EasingFunction = new CircleEase();
-            //animation.AutoReverse = true;
-            br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
-
-            bitmapImage.BeginInit();
-            //Appear(pro,3,10,5);
-            /* 
-             a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-              a.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCallback);
-              a.DownloadFileAsync(uri, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg");      */
-
+            try
+            {
+                var client = new HttpClient(); var a = new WebClient();
+                var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
+                JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
+                if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\blkimg.txt"))
+                    if(File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\blkimg.txt").Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
+                    {
+                        ChangeWapp(false);
+                        return;
+                    }
+                BingImageInfo.Content = dt["data"]["images"][bing]["title"].ToString() + " (" + dt["data"]["images"][bing]["copyright"] + ")  | " + dt["data"]["images"][bing]["isoDate"].ToString();
+                var urlstr = "https://www.bing.com/" + dt["data"]["images"][bing]["imageUrls"]["landscape"]["highDef"];
+                CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
+                DescPara1.Text = dt["data"]["images"][bing]["description"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara2"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara3"];
+                DescPara1.Text = DescPara1.Text.Replace("性感","__"); //Temp use
+                if(Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080","_UHD");
+                Uri uri = new Uri(urlstr);
+                log.Text = bing + "/LoadBingImage:" + uri;
+                bitmapImage = new BitmapImage(uri);
+                bitmapImage.DownloadProgress += ImageDownloadProgress;
+                bitmapImage.DownloadCompleted += DownloadImageCompleted;
+                br1.Tag = dt["data"]["images"][bing]["isoDate"].ToString();
+                DoubleAnimation animation = new DoubleAnimation(0,100,new Duration(TimeSpan.FromSeconds(5)));
+                animation.EasingFunction = new CircleEase();
+                //animation.AutoReverse = true;
+                br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
+                //pro_Copy.Value = bing + 1;
+                bitmapImage.BeginInit();
+            }
+            catch(Exception ex)
+            {
+                ProcessErr(ex);
+            }
         }
 
         private void ImageDownloadProgress(object sender,DownloadProgressEventArgs e)
         {
             if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
             pro.Value = e.Progress; 
-            log.Text = "LoadBitmapImage_FromWeb " + e.Progress+"% "; 
+            log.Text = "LoadBingImage (" + e.Progress+"% )"; 
         }
 
         private void DownloadImageCompleted(object sender,EventArgs e)
@@ -357,7 +343,7 @@ namespace CokeeDP
            // Disappear(pro,1,20,0.5);
            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
             log.Text = "Image Loaded. Num:"+bing;
-            DoubleAnimation animation = new DoubleAnimation(15,0,new Duration(TimeSpan.FromSeconds(3)));
+            DoubleAnimation animation = new DoubleAnimation(100,0,new Duration(TimeSpan.FromSeconds(5)));
            animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
@@ -475,7 +461,7 @@ namespace CokeeDP
             {
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 var client = new HttpClient(handler);
-                var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
+                string u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location="+Properties.Settings.Default.CityId+"&key=6572127bcec647faba394b17fbd9614f");
                 //MessageBox.Show(u2);
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
@@ -522,8 +508,10 @@ namespace CokeeDP
                     var t = dt["warning"][0]["title"].ToString();
                     SpecialWeatherBtn.Visibility = Visibility.Visible;
                     SpecialWeatherBtn1.Visibility = Visibility.Visible;
-                    SpecialWeatherBtn1.Content = t.Substring(t.IndexOf("布") + 1);
-                    SpecialWeatherBtn.Content = t.Substring(t.IndexOf("布") + 1);
+                    string TextShort;
+                    if(t.Contains("发布"))TextShort= t.Substring(t.IndexOf("布") + 1);
+                    else TextShort= t.Substring(t.IndexOf("新") + 1);
+                    SpecialWeatherBtn.Content = TextShort;
                     weaWr = dt["warning"][0]["text"].ToString();
                 }
             }
@@ -720,7 +708,7 @@ namespace CokeeDP
                 mediaplayer.MediaOpened += MediaLoaded;
                 mediaplayer.MediaEnded += MediaEnded;
                 audioName.Content = audio[AudioNum].Name;
-                playIcon.Text = "";
+                
                 //audioTime.Content = "[Paused]" + audioTime.Content;
                 //var tmp = (ButtonHelper)playbtn;
                 // IsPlaying = false;
@@ -785,7 +773,7 @@ namespace CokeeDP
             {
                 if(IsReplay)
                 {
-                    playIcon.Text = "";
+                    //playIcon.Text = "";
                     IntlPlayer();
                     slider.Value = 0;
                     return;
@@ -832,13 +820,13 @@ namespace CokeeDP
                 {
                     if(AudioNum == 0) AudioNum = audio.Length;
                     else AudioNum--;
-                    playIcon.Text = "";
+                    //playIcon.Text = "";
                 }
                 else if(tmp.Tag.ToString() == "next")
                 {
                     if(AudioNum >= audio.Length) AudioNum = 0;
                     else AudioNum++;
-                    playIcon.Text = "";
+                    //playIcon.Text = "";
                 }
                 IntlPlayer();
             }
@@ -864,7 +852,7 @@ namespace CokeeDP
             {
                 if(IsPlaying)
                 {
-                    playIcon.Text = "";
+                    //playIcon.Text = "";
                     audioTime.Content = "[Paused]" + audioTime.Content;
                     //var tmp = (ButtonHelper)playbtn;
                     IsPlaying = false;
@@ -872,7 +860,7 @@ namespace CokeeDP
                 }
                 else
                 {
-                    playIcon.Text = "";
+                    //playIcon.Text = "";
                     IsPlaying = true;
                     mediaplayer.Play();
                 }

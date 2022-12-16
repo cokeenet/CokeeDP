@@ -15,7 +15,7 @@
       <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="wea" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3600</Value>
+      <Value Profile="(Default)">9800</Value>
     </Setting>
     <Setting Name="city" Type="System.String" Scope="User">
       <Value Profile="(Default)">fuyang</Value>
@@ -47,12 +47,6 @@
     <Setting Name="Font" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
     </Setting>
-    <Setting Name="siz" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="childLockPw" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="isChildLocked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -63,7 +57,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsUHDWapp" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CityId" Type="System.String" Scope="User">
       <Value Profile="(Default)">101220807</Value>

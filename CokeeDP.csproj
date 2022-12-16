@@ -60,16 +60,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="%40AudioToastIcon.png" />
-    <None Remove="100.svg" />
-    <None Remove="audio.scale-200.png" />
-    <None Remove="bg_normal.png" />
-    <None Remove="bg_setting.png" />
-    <None Remove="hd1.jpg" />
-    <None Remove="hd3.png" />
     <None Remove="head.jpg" />
-    <None Remove="OIP-C.jpg" />
-    <None Remove="usb.png" />
 
   </ItemGroup>
 
@@ -78,34 +69,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="30.0.0" />
-    <PackageReference Include="Microsoft.AppCenter" Version="5.0.0-preview.1" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.0-preview.1" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.0-preview.1" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Lepo.i18n" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
     <PackageReference Include="NAudio" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.6.5" />
     <PackageReference Include="Serilog" Version="2.12.1-dev-01587" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
+    <PackageReference Include="WPF-UI" Version="2.0.3" />
     <PackageReference Include="XamlFlair.WPF" Version="1.2.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="100.svg" />
-    <Resource Include="@AudioToastIcon.png" />
-    <Resource Include="audio.scale-200.png" />
-    <Resource Include="bg_normal.png" />
-    <Resource Include="bg_setting.png" />
-    <Resource Include="hd1.jpg" />
-    <Resource Include="hd3.png" />
     <Resource Include="Image\bg_normal.png" />
     <Resource Include="Image\bg_setting.png" />
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
-    <Resource Include="Image\usb.png" />
-    <Resource Include="OIP-C.jpg" />
-    <Resource Include="usb.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,486 +1,506 @@
 ﻿<Window
-    
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:purs="clr-namespace:Panuon.WPF.UI.Resources;assembly=Panuon.WPF.UI"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
-        xmlns:Win32="clr-namespace:Microsoft.Win32;assembly=Microsoft.Win32.SystemEvents" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" xmlns:Net="clr-namespace:System.Net;assembly=System.Net.HttpListener" x:Name="window"
-       xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-        x:Class="CokeeDP.MainWindow"
-        mc:Ignorable="d"
-        Title="CokeeDP" Foreground="{x:Null}" WindowStyle="None" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" WindowState="Maximized" Loaded="Load" AllowDrop="True">
+    x:Class="CokeeDP.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="window" Title="CokeeDP"
+    AllowDrop="True"
+    Foreground="{x:Null}"
+    Loaded="Load" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="None"
+    mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <Storyboard x:Key="HideWindow">
-                <DoubleAnimation Duration="0:0:0.3" From="1" To="0" Storyboard.TargetProperty="Opacity" FillBehavior="Stop" />
-                <DoubleAnimation Duration="0:0:0.3" From="1" To="0.8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
-                <DoubleAnimation Duration="0:0:0.3" From="1" To="0.8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
+                <DoubleAnimation
+                    FillBehavior="Stop" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.3" />
+                <DoubleAnimation
+                    FillBehavior="Stop" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" From="1" To="0.8"
+                    Duration="0:0:0.3" />
+                <DoubleAnimation
+                    FillBehavior="Stop" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" From="1" To="0.8"
+                    Duration="0:0:0.3" />
             </Storyboard>
             <Color x:Key="CardBackground">Black</Color>
-            <!--     <Storyboard x:Key="ShowWindow" >
-                <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" FillBehavior="Stop"/>
-                <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
-                <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" FillBehavior="Stop" Storyboard.TargetName="MainGrid"/>
+            <!--     <Storyboard x:Key="ShowWindow">
+                <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" FillBehavior="Stop" />
+                <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid" />
+                <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" FillBehavior="Stop" Storyboard.TargetName="MainGrid" />
             </Storyboard>
-            <Storyboard x:Key="Storyboard1" SlipBehavior="Slip"/>-->
+            <Storyboard x:Key="Storyboard1" SlipBehavior="Slip" />-->
         </ResourceDictionary>
-
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/bg_normal.png"/>
+        <ImageBrush ImageSource="/Image/bg75.png" />
     </Window.Background>
-    <Window.Triggers>
-
-    </Window.Triggers>
+    <Window.Triggers />
     <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-        <Grid.Background>
-            <ImageBrush ImageSource="/bg_normal.png"/>
-        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="271*"/>
-            <ColumnDefinition Width="369*"/>
+            <ColumnDefinition Width="271*" />
+            <ColumnDefinition Width="369*" />
         </Grid.ColumnDefinitions>
-        <Viewbox x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Fill">
+        <Viewbox
+            x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Fill">
             <Canvas Width="1920" Height="1080">
-                <Image x:Name="br1" Grid.ColumnSpan="2" Source="/bg_normal.png" Stretch="Fill" MouseLeftButtonDown="OnCloseWindow" Width="{Binding ActualWidth, ElementName=window, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
+                <Image
+                    x:Name="br1" Source="/Image/bg75.png" Width="{Binding ActualWidth, ElementName=viewbox, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=viewbox, Mode=OneWay}" Stretch="Fill" Visibility="Visible" >
                     <Image.Effect>
-                        <BlurEffect x:Name="br1_blur" KernelType="Gaussian" RenderingBias="Performance" Radius="0" />
+                    <BlurEffect x:Name="br1_blur" Radius="0"/>
                     </Image.Effect>
                 </Image>
-                <Label x:Name="time" Content="00:00:00" HorizontalAlignment="Left" Margin="20,875,0,0" VerticalAlignment="Top" Foreground="White" Background="{x:Null}" FontSize="112" FontFamily="Segoe UI Light" Opacity="0.8" MouseDown="ShowPlayer">
+                <Label
+                    x:Name="time" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Background="{x:Null}"
+                    Content="00:00:00" FontFamily="Segoe UI Light" FontSize="112" Foreground="White" MouseDown="ShowPlayer"
+                    Opacity="0.8">
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <pu:Carousel x:Name="pager" Width="407"
-             Height="268"
-             Animation="Scale,Fade"
-             AnimationEase="CubicOut"
-             AnimationDuration="0:0:1"
-             TextBlock.Foreground="White"
-             TextBlock.FontSize="40"
-             Canvas.Left="1495" Canvas.Top="509" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{x:Null}">
+                <pu:Carousel
+                    x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
+                    HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
+                    Foreground="{x:Null}"
+                    TextBlock.FontSize="40" TextBlock.Foreground="White">
 
-                    <Border>
-                        <Grid>
-                            <Button x:Name="SpecialWeatherBtn"
-                            Background="#B2FFFFFF"
-                            BorderBrush="{x:Null}"
-                            BorderThickness="1"
-                            Foreground="Black"
-                            Content="寒潮蓝色预警[IV级/严重]"
-                            pu:ButtonHelper.CornerRadius="2"
-                            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" Visibility="Collapsed" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" />
-                            <TextBox x:Name="wea1" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
-                                <TextBox.Effect>
-                                    <DropShadowEffect/>
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox IsHitTestVisible="False"  x:Name="w1"
-                            Width="50" Height="50" Margin="5,68,325,148" MessageFillBrush="White" MessageStrokeBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-
-                            <TextBox x:Name="wea3" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
-                                <TextBox.Effect>
-                                    <DropShadowEffect/>
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox x:Name="w2" 
-                             Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-                            <TextBox x:Name="wea2" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
-                                <TextBox.Effect>
-                                    <DropShadowEffect/>
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox x:Name="w3" 
-                            Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
+                    <ui:Card>
+                        <Grid Margin="0,0,-1,0">
+                            <Label
+                                x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
+                                <Label.Effect>
+                                    <DropShadowEffect Opacity="0.4" />
+                                </Label.Effect>
+                            </Label>
+                            <ScrollViewer Margin="0,40,0,0" HorizontalScrollBarVisibility="Visible">
+                                <Grid>
+                                    <TextBox
+                                        x:Name="DescPara1" Height="197" MaxHeight="385"
+                                        Background="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        CaretBrush="{x:Null}"
+                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black" IsReadOnlyCaretVisible="True" TextWrapping="WrapWithOverflow">
+                                        <TextBox.Effect>
+                                            <DropShadowEffect Opacity="0.4" />
+                                        </TextBox.Effect>
+                                    </TextBox>
+                                </Grid>
+                            </ScrollViewer>
                         </Grid>
-                    </Border>
+                    </ui:Card>
+
                     <Border>
                         <Grid>
-                            <Button x:Name="SpecialWeatherBtn1"
-                                Background="#B2FFFFFF"
+                            <ui:Button
+                                x:Name="SpecialWeatherBtn" Height="40" Margin="45,23,31,0" VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2"
+                                pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
                                 BorderBrush="{x:Null}"
-                                BorderThickness="1"
-                                Foreground="Black"
-                                pu:ButtonHelper.CornerRadius="2"
-                                pu:ButtonHelper.ShadowColor="#6CBCEA"
-                                pu:ShadowHelper.BlurRadius="10"
-                                pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" FontSize="18" Click="WeaWarnBtnHandler" FontFamily="Microsoft YaHei UI Light" VerticalAlignment="Top" Height="40" Margin="45,23,31,0" Visibility="{Binding Visibility, ElementName=SpecialWeatherBtn}" />
-                            <TextBox x:Name="wea4" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Margin="72,68,0,0" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                                BorderThickness="1" Click="WeaWarnBtnHandler" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
+                                Foreground="Black" Visibility="Collapsed" />
+                            <TextBox
+                                x:Name="wea1" Height="50" Margin="72,68,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
                                 <TextBox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </TextBox.Effect>
                             </TextBox>
-                            <svgc:SvgViewbox x:Name="w4" Width="50" Height="50" Margin="5,68,325,148">
+                            <svgc:SvgViewbox
+                                x:Name="w1" Width="50" Height="50" Margin="5,68,325,148" IsHitTestVisible="False"
+                                MessageFillBrush="White" MessageStrokeBrush="White">
                                 <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
-                            <TextBox x:Name="wea5" HorizontalAlignment="Left" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,184,0,32" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+
+                            <TextBox
+                                x:Name="wea3" Height="50" Margin="72,184,0,32" HorizontalAlignment="Left" AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
                                 <TextBox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </TextBox.Effect>
                             </TextBox>
-                            <svgc:SvgViewbox x:Name="w5" 
-                                Width="50" Height="50" Margin="5,125,325,91">
+                            <svgc:SvgViewbox
+                                x:Name="w2" Width="50" Height="50" Margin="5,125,325,91" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
-                            <TextBox x:Name="wea6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="18" Height="50" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" Margin="72,125,0,0" BorderBrush="{x:Null}" AllowDrop="False" Focusable="False" IsHitTestVisible="False" IsTabStop="False" IsReadOnlyCaretVisible="True" Text="网络状态不佳...">
+                            <TextBox
+                                x:Name="wea2" Height="50" Margin="72,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
                                 <TextBox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </TextBox.Effect>
                             </TextBox>
-                            <svgc:SvgViewbox x:Name="w6" 
-                                Width="50" Height="50" Margin="5,184,325,32">
+                            <svgc:SvgViewbox
+                                x:Name="w3" Width="50" Height="50" Margin="5,184,325,32" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect/>
+                                    <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                         </Grid>
                     </Border>
-
-
+                    <Border>
+                        <Grid>
+                            <ui:Button
+                                x:Name="SpecialWeatherBtn1" Height="40" Margin="45,23,31,0" VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2"
+                                pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="1" Click="WeaWarnBtnHandler" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black"
+                                Visibility="{Binding Visibility, ElementName=SpecialWeatherBtn}" />
+                            <TextBox
+                                x:Name="wea4" Height="50" Margin="72,68,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                x:Name="w4" Width="50" Height="50" Margin="5,68,325,148">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox
+                                x:Name="wea5" Height="50" Margin="72,184,0,32" HorizontalAlignment="Left" AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                x:Name="w5" Width="50" Height="50" Margin="5,125,325,91">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox
+                                x:Name="wea6" Height="50" Margin="72,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False" Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                x:Name="w6" Width="50" Height="50" Margin="5,184,325,32">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                        </Grid>
+                    </Border>
                 </pu:Carousel>
                 <!--<pu:Card    Background="#B2FFFFFF" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Left="1495" Canvas.Top="509" Height="268" Width="407" d:IsHidden="True">
                     <pu:Card.BorderBrush>
-                        <SolidColorBrush Color="{DynamicResource GradientStopColor1}"/>
+                        <SolidColorBrush Color="{DynamicResource GradientStopColor1}" />
                     </pu:Card.BorderBrush>
                 </pu:Card>-->
-                <Label x:Name="timeTod" Content="距离[---]还有---天" HorizontalAlignment="Left" Margin="20,802,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" DragLeave="Drag" Visibility="Visible">
+                <Label
+                    x:Name="timeTod" Margin="20,802,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    Content="距离[---]还有---天" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                    Foreground="White" Visibility="Visible">
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <TextBox x:Name="log" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Height="35" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" Width="330" Grid.Column="1" Text="" TextWrapping="WrapWithOverflow" Background="{x:Null}" BorderBrush="#7FFFFFFF" CaretBrush="{x:Null}" Foreground="White" IsReadOnlyCaretVisible="True" Canvas.Left="1572" Canvas.Top="949">
-                    <TextBox.Effect>
-                        <DropShadowEffect/>
-                    </TextBox.Effect>
-                </TextBox>
-                <TextBox  Text="Cokee Technogies 秋坂科技" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="20" FontFamily="Microsoft YaHei UI Light" FontWeight="Normal" TextAlignment="Left" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Right" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1643" Canvas.Top="1030" Width="267">
-                    <TextBox.Effect>
-                        <DropShadowEffect/>
-                    </TextBox.Effect>
-                </TextBox>
+                <ui:TextBox
+                    x:Name="log" Grid.Column="1" Canvas.Left="1572" Canvas.Top="959" Width="330"
+                    Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    BorderBrush="#7FFFFFFF"
+                    CaretBrush="{x:Null}"
+                    FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="White" IsReadOnlyCaretVisible="True"
+                    Text="" TextWrapping="WrapWithOverflow">
+                    <ui:TextBox.Effect>
+                        <DropShadowEffect />
+                    </ui:TextBox.Effect>
+                </ui:TextBox>
+                <Label
+                    Grid.Column="1" Canvas.Left="1659" Canvas.Top="1029" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    AllowDrop="False"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Content="Cokee Technogies 秋坂科技" Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                    Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
+                    <Label.Effect>
+                        <DropShadowEffect />
+                    </Label.Effect>
+                </Label>
 
-                <Label x:Name="timeTo" Content="周---,--月--日" HorizontalAlignment="Left" Margin="20,842,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="24" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" MouseDown="OnwklabC" Height="39">
+                <Label
+                    x:Name="timeTo" Height="39" Margin="20,842,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    Content="周---,--月--日" FontFamily="Microsoft YaHei UI Light" FontSize="24" FontWeight="Normal" Foreground="White"
+                    MouseDown="OnwklabC">
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <Label x:Name="hitokoto" Content="Keep your heart alive🌟" HorizontalAlignment="Left" Margin="20,1021,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" MouseDoubleClick="hitokoto_MouseDown" FontSize="28" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" MouseRightButtonDown="Like_menu">
+                <Label
+                    x:Name="hitokoto" Grid.ColumnSpan="2" Margin="20,1021,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    Content="Keep your heart alive🌟" FontFamily="Microsoft YaHei UI Light" FontSize="28" Foreground="White" MouseDoubleClick="hitokoto_MouseDown"
+                    MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
-                        <ContextMenu Width="250"
-             BorderBrush="#EAEAEA" x:Name="lik"
-             pu:DropDownHelper.CornerRadius="8"
-             pu:DropDownHelper.ShadowColor="#6CBCEA"
-             pu:ContextMenuHelper.ItemsHoverBackground="#6CBCEA"
-             pu:ContextMenuHelper.ItemsHoverForeground="#FFFFFF"
-             pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-             pu:ShadowHelper.ShadowDepth="0"
-             pu:ShadowHelper.BlurRadius="25"
-             pu:ShadowHelper.Opacity="0.5">
-                            <MenuItem Header="查看句子源" Click="Viewsour" />
-                            <MenuItem Header="编辑文本"
-         Click="Likeit" />
-
+                        <ContextMenu
+                            x:Name="lik" Width="250" BorderBrush="#EAEAEA">
+                            <MenuItem Click="Viewsour" Header="查看句子源" />
+                            <MenuItem Click="Likeit" Header="编辑文本" />
                         </ContextMenu>
                     </Label.ContextMenu>
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <pu:Card x:Name="usb"
-            BorderThickness="2,2,2,2"
-            HorizontalAlignment="Right"
-           VerticalAlignment="Bottom"
-            
-            pu:ShadowColor="#6CBCEA"
-            pu:ShadowHelper.BlurRadius="10"
-            pu:ShadowHelper.Direction="240"
-            pu:ShadowHelper.ShadowDepth="4" 
-           Width="330" Grid.Column="1" Visibility="Collapsed" 
-           Background="#B2FFFFFF" Canvas.Left="1572" Canvas.Top="782" CornerRadius="5,5,5,5" BorderBrush="#FFE0BFBF">
+                <ui:Card
+                    x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="782" Width="349"
+                    HorizontalAlignment="Left" Background="#B2FFFFFF" BorderBrush="#FFE0BFBF" BorderThickness="2,2,2,2" Visibility="Visible">
                     <Grid>
-                        <Button x:Name="open" Tag="" Content="打开" 
-                        HorizontalAlignment="Left" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-                        pu:ButtonHelper.Icon="&#xE992;" BorderBrush="#6CBCEA" BorderThickness="1" 
-                        pu:ButtonHelper.CornerRadius="5" Margin="220,9,0,0" VerticalAlignment="Top"
-                        Height="40" Width="97" FontSize="16" Click="OpenUsb" Background="White"/>
-
-                        <Image HorizontalAlignment="Left" Height="118" Margin="-29,0,0,0" VerticalAlignment="Center" Width="89" Source="/usb.png" Stretch="UniformToFill">
-                            <Image.Effect>
-                                <DropShadowEffect/>
-                            </Image.Effect>
-                        </Image>
-                        <Button Content="弹出" HorizontalAlignment="Left" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}" pu:ButtonHelper.Icon="&#xE96F;" BorderBrush="#6CBCEA" BorderThickness="1" pu:ButtonHelper.CornerRadius="5" Margin="219,64,0,0" VerticalAlignment="Top" Height="44" Width="97" FontSize="16" Click="ExitUsbDrive" Background="#FFFFFEFE"/>
-                        <Label x:Name="diskName" Content="U盘(?:\)" HorizontalAlignment="Left" Margin="68,21,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" SnapsToDevicePixels="True">
+                        <ui:SymbolIcon
+                            Width="72" Height="72" Margin="-9,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            FontSize="72" Symbol="UsbStick20" />
+                        <ui:Button
+                            x:Name="open" Width="97" Height="40" Margin="220,9,0,0" HorizontalAlignment="Left"
+                            VerticalAlignment="Top" Background="#CCFFFFFF" BorderBrush="#6CBCEA" BorderThickness="1" Click="OpenUsb"
+                            Content="打开" FontSize="16" Tag="" />
+                        <ui:Button
+                            x:Name="remove" Width="97" Height="44" Margin="219,64,0,0" HorizontalAlignment="Left"
+                            VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="5" Background="#FFFFFEFE" BorderBrush="#6CBCEA" BorderThickness="1"
+                            Click="ExitUsbDrive" Content="弹出" FontSize="16" />
+                        <Label
+                            x:Name="diskName" Margin="68,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="U盘(H:\)" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black"
+                            SnapsToDevicePixels="True">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4"/>
+                                <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
                         </Label>
-                        <Label x:Name="diskInfo" Content="--GB/--GB" HorizontalAlignment="Left" Margin="68,64,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="Black" FontSize="18" Height="39" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" d:LayoutOverrides="HorizontalAlignment">
+                        <Label
+                            x:Name="diskInfo" Height="22" Margin="68,64,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="128GB/256GB" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="Black">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4"/>
+                                <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </pu:Card>
+                </ui:Card>
 
-                <ProgressBar x:Name="pro" pu:ProgressBarHelper.Direction="Normal"
-                 pu:ProgressBarHelper.IsPercentVisible="True"
-                 pu:ProgressBarHelper.CornerRadius="5"
-                 pu:ProgressBarHelper.PercentStringFormat=""
-                 pu:ProgressBarHelper.InvertedForeground="Azure"
-                 Background="#22ACCD9D"
-                 Foreground="#6CBCEA" Grid.Column="1" Visibility="Collapsed" Height="29" Canvas.Left="1572" Canvas.Top="909" Width="330" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <Button
-            pu:ButtonHelper.ShadowColor="#6CBCEA"
-        Background="#66FFFFFF" BorderBrush="#FF707070"
-        BorderThickness="1" Foreground="White" Content="设置"
-        pu:ButtonHelper.ClickEffect="Shake" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-        pu:ButtonHelper.Icon="&#xE990;" pu:ButtonHelper.CornerRadius="2"
-            pu:ShadowHelper.BlurRadius="10"
-            pu:ShadowHelper.Direction="240"
-            pu:ShadowHelper.ShadowDepth="4" FontSize="20" Grid.Column="1" Click="ShowSetting" 
-         HorizontalAlignment="Left" Width="138" Canvas.Left="1752" Canvas.Top="14" Height="45" VerticalAlignment="Top" />
-                <Label x:Name="BingImageInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="24" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" Content="">
+                <ProgressBar
+                    x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1054" Width="150"
+                    Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#22ACCD9D" Foreground="#FFD6D6D6"
+                    Visibility="Visible" />
+                <ui:Button
+                    Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Background="#66FFFFFF" BorderBrush="#FF707070" BorderThickness="1"
+                    Click="ShowSetting" Content="设置" FontSize="20" Foreground="White" />
+                <Label
+                    x:Name="BingImageInfo" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" HorizontalAlignment="Center"
+                    VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    Content="" FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="White">
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                     <Label.ContextMenu>
-                        <ContextMenu Width="250"
-             BorderBrush="#EAEAEA" x:Name="bm"
-             pu:DropDownHelper.CornerRadius="5"
-             pu:DropDownHelper.ShadowColor="#6CBCEA"
-             pu:ContextMenuHelper.ItemsHoverBackground="#6CBCEA"
-             pu:ContextMenuHelper.ItemsHoverForeground="#FFFFFF"
-             pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-             pu:ShadowHelper.ShadowDepth="0"
-             pu:ShadowHelper.BlurRadius="25"
-             pu:ShadowHelper.Opacity="0.5">
-                            <MenuItem Header="不喜欢这张图" Click="DislikeImage" />
-                            <MenuItem Header="喜欢"
-              Icon="&#xE952;" Click="Likeit" />
+                        <ContextMenu
+                            x:Name="bm" Width="250" pu:ContextMenuHelper.ItemsHoverBackground="#6CBCEA" BorderBrush="#EAEAEA">
+                            <MenuItem Click="DislikeImage" Header="不喜欢这张图" />
+                            <MenuItem Click="Likeit" Header="喜欢" />
                         </ContextMenu>
                     </Label.ContextMenu>
                 </Label>
-                <Button x:Name="left"
-        Width="54"
-        Background="#66FFFFFF"
-        Foreground="White"
-        pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-        pu:ButtonHelper.Icon="&#xE90C;"
-         pu:IconHelper.FontSize="32"
-        pu:ButtonHelper.CornerRadius="2"
-        pu:ButtonHelper.ShadowColor="#6CBCEA"
-        pu:ShadowHelper.BlurRadius="10"
-        pu:ShadowHelper.Direction="240"
-        pu:ShadowHelper.ShadowDepth="4" HorizontalAlignment="Left" Height="54" Tag="left" Click="WappChangeBtnHandler" Visibility="Visible" Canvas.Left="25" Canvas.Top="447" />
-                <Button x:Name="right"
-            Width="54"
-            Background="#66FFFFFF"
-            Foreground="White"
-            pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-            pu:ButtonHelper.Icon="&#xE90E;"
-            pu:IconHelper.FontSize="32"
-            pu:ButtonHelper.CornerRadius="2"
-            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-            pu:ShadowHelper.ShadowDepth="4" Height="54" Grid.Column="1" Click="WappChangeBtnHandler" Tag="right" Visibility="Visible" Canvas.Left="1836" Canvas.Top="447" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                <Label x:Name="birth" Content="今天是[---]的生日" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" DragLeave="Drag" Canvas.Left="24" Canvas.Top="553" Visibility="Collapsed">
+                <ui:Button
+                    x:Name="left" Canvas.Left="25" Canvas.Top="447" Width="54" Height="54"
+                    HorizontalAlignment="Left" Background="#66FFFFFF" Click="WappChangeBtnHandler" Foreground="White" Tag="left"
+                    Visibility="Visible" />
+                <ui:Button
+                    x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="447" Width="54"
+                    Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#66FFFFFF" Click="WappChangeBtnHandler"
+                    Foreground="White" Tag="right" Visibility="Visible" />
+                <Label
+                    x:Name="birth" Canvas.Left="24" Canvas.Top="553" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Background="{x:Null}"
+                    Content="今天是[---]的生日" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                    Foreground="White" Visibility="Collapsed">
                     <Label.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <TextBox  Text="循星🌟 Ver 2.2" VerticalAlignment="Center" Background="{x:Null}" Foreground="#66FFFFFF" FontSize="22" FontFamily="Microsoft YaHei" FontWeight="Normal" TextAlignment="Right" BorderBrush="{x:Null}" Grid.Column="1" HorizontalAlignment="Left" Focusable="False" AllowDrop="False" IsTabStop="False" IsEnabled="False" Opacity="1" IsReadOnlyCaretVisible="True" Canvas.Left="1740" Canvas.Top="999" Width="170">
-                    <TextBox.Effect>
-                        <DropShadowEffect/>
-                    </TextBox.Effect>
-                </TextBox>
-                <pu:Card x:Name="zk"
-            BorderThickness="2,2,2,2"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            pu:CornerRadius="5"
-            ShadowColor="#6CBCEA"
-            pu:ShadowHelper.BlurRadius="10"
-            pu:ShadowHelper.Direction="240"
-            pu:ShadowHelper.ShadowDepth="4" 
-            Width="260" Grid.Column="1" Visibility="Collapsed" 
-            Background="#B2FFFFFF" Height="153" Canvas.Left="1439" Canvas.Top="14">
+                <Label
+                    Grid.Column="1" Canvas.Left="1752" Canvas.Top="999" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    AllowDrop="False"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Content="循星🌟 Ver 3.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                    Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
+                    <Label.Effect>
+                        <DropShadowEffect />
+                    </Label.Effect>
+                </Label>
+                <pu:Card
+                    x:Name="zk" Grid.Column="1" Canvas.Left="1439" Canvas.Top="14" Width="260"
+                    Height="153" HorizontalAlignment="Right" VerticalAlignment="Bottom" pu:CornerRadius="5" pu:ShadowHelper.BlurRadius="10"
+                    pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF" BorderThickness="2,2,2,2" ShadowColor="#6CBCEA"
+                    Visibility="Collapsed">
                     <pu:Card.BorderBrush>
                         <RadialGradientBrush Center="5,5">
-                            <GradientStop Color="#FFE0BFBF" Offset="1"/>
+                            <GradientStop Offset="1" Color="#FFE0BFBF" />
                         </RadialGradientBrush>
                     </pu:Card.BorderBrush>
                     <Grid>
-                        <Label x:Name="diskInfo1" Content="最后" HorizontalAlignment="Left" Margin="23,50,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDA0000" FontSize="36" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Bold">
+                        <Label
+                            x:Name="diskInfo1" Margin="23,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="最后" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4                                           "/>
+                                <DropShadowEffect Opacity="0.4                                           " />
                             </Label.Effect>
                         </Label>
-                        <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" Height="64" VerticalAlignment="Top" Width="100" Margin="105,47,0,0" Background="#4CE20000">
-                            <Label x:Name="big_tod" Content="--" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{x:Null}" Foreground="Black" FontSize="48" FontFamily="Microsoft YaHei" HorizontalContentAlignment="Left" FontWeight="Bold" FontStyle="Normal">
+                        <Border
+                            Width="100" Height="64" Margin="105,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Background="#4CE20000" BorderBrush="Red" BorderThickness="1">
+                            <Label
+                                x:Name="big_tod" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="--" FontFamily="Microsoft YaHei" FontSize="48" FontStyle="Normal" FontWeight="Bold"
+                                Foreground="Black">
                                 <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4"/>
+                                    <DropShadowEffect Opacity="0.4" />
                                 </Label.Effect>
                             </Label>
                         </Border>
-                        <Label Content="[----]倒计时" HorizontalAlignment="Left" Margin="52,-9,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFCA0000" FontSize="33" FontFamily="Microsoft YaHei" HorizontalContentAlignment="Left" FontWeight="Normal" SnapsToDevicePixels="True" Height="56" Width="204">
+                        <Label
+                            Width="204" Height="56" Margin="52,-9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="[----]倒计时" FontFamily="Microsoft YaHei" FontSize="33" FontWeight="Normal" Foreground="#FFCA0000"
+                            SnapsToDevicePixels="True">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4                                           "/>
+                                <DropShadowEffect Opacity="0.4                                           " />
                             </Label.Effect>
                         </Label>
-                        <Label Content="天" HorizontalAlignment="Left" Margin="200,50,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDA0000" FontSize="36" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Bold">
+                        <Label
+                            Margin="200,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="天" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4"/>
+                                <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
                         </Label>
-                        <Label x:Name="tod_info" Content="还有---天" HorizontalAlignment="Left" Margin="4,111,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFDA0000" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Bold">
+                        <Label
+                            x:Name="tod_info" Margin="4,111,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
-                                <DropShadowEffect Opacity="0.4"/>
+                                <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
                         </Label>
                     </Grid>
                 </pu:Card>
-                <TextBox x:Name="hkself" Canvas.Left="446" TextWrapping="Wrap" Canvas.Top="974" Width="411" Height="40" TextChanged="Textbox_Chg" FontSize="16" Background="{x:Null}" Foreground="White" pu:TextBoxHelper.Watermark="Input Text Here..." pu:TextBoxHelper.WatermarkForeground="Gainsboro" Visibility="Collapsed" />
-                <pu:Card x:Name="music"
-                    BorderThickness="2,2,2,2"
-            
-                    ShadowColor="#6CBCEA"
-                    pu:ShadowHelper.BlurRadius="10"
-                    pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" 
-                    Width="340" Canvas.Left="25" Canvas.Top="596" CornerRadius="5,5,5,5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="201" Background="#D2FFFFFF" Visibility="Collapsed">
-                    <pu:Card.BorderBrush>
-                        <RadialGradientBrush Center="5,5">
-                            <GradientStop Color="#FFE0BFBF" Offset="1"/>
-                        </RadialGradientBrush>
-                    </pu:Card.BorderBrush>
-                    <Grid>
-                        <Image x:Name="image" Margin="11,24,277,120" Source="/@AudioToastIcon.png" RenderTransformOrigin="0.458,0.434">
-                            <Image.Effect>
-                                <DropShadowEffect/>
-                            </Image.Effect>
-                        </Image>
-                        <Slider x:Name="slider" Margin="6,86,8,73" Background="#FF868686" RenderTransformOrigin="0.5,0.5" ValueChanged="SilderChanged" BorderBrush="{x:Null}"/>
-                        <Label x:Name="audioName" Background="{x:Null}" Foreground="Black" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" DragLeave="Drag" Visibility="Visible" Margin="59,4,8,153">
-                            <Label.Effect>
-                                <DropShadowEffect Opacity="0.5"/>
-                            </Label.Effect>
-                        </Label>
-                        <Label x:Name="audioTime" Content="0:00/3:59" Background="{x:Null}" Foreground="Black" FontSize="20" FontFamily="Microsoft YaHei UI Light" HorizontalContentAlignment="Left" FontWeight="Normal" DragLeave="Drag" Visibility="Visible" Margin="59,44,84,116" Width="Auto" Height="Auto">
-                            <Label.Effect>
-                                <DropShadowEffect Opacity="0.5"/>
-                            </Label.Effect>
-                        </Label>
-                        <Button
-                            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
-                            BorderThickness="1" Foreground="White"
-                            pu:ButtonHelper.ClickEffect="Shake" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-                            pu:ButtonHelper.Icon="&#xE90C;" pu:ButtonHelper.CornerRadius="5"
-                            pu:IconHelper.FontSize="20"
-                            pu:IconHelper.Margin="0,0,0,0"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" FontSize="20" Click="PlayerBtnProc" Margin="0,118,219,0" Width="45" HorizontalAlignment="Right" Height="42" VerticalAlignment="Top" Tag="prev" />
-                        <Button x:Name="playbtn"
-                            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
-                            BorderThickness="1" Foreground="White"
-                            pu:ButtonHelper.ClickEffect="Shake" 
-                            
-                             pu:ButtonHelper.CornerRadius="5"
-                            pu:IconHelper.FontSize="20"
-                            pu:IconHelper.Margin="0,0,0,0"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" FontSize="20" Click="OnBtnPlay" Margin="0,114,0,0" Width="52" HorizontalAlignment="Center" Height="50" VerticalAlignment="Top" RenderTransformOrigin="0.558,0.6" >
-                            <TextBlock x:Name="playIcon"
-                            FontSize="25"
-                            FontFamily="{StaticResource PanuonIconFont}" Text="&#xE91E;" Foreground="#CCFFFFFF"/>
-                        </Button>
-                        <Button
-                                pu:ButtonHelper.ShadowColor="#6CBCEA"
-                                Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
-                                BorderThickness="1" Foreground="White"
-                                pu:ButtonHelper.ClickEffect="Shake" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-                                pu:ButtonHelper.Icon="&#xE90E;" pu:ButtonHelper.CornerRadius="5"
-                                pu:IconHelper.FontSize="20"
-                                pu:IconHelper.Margin="0,0,0,0"
-                                pu:ShadowHelper.BlurRadius="10"
-                                pu:ShadowHelper.Direction="240"
-                                pu:ShadowHelper.ShadowDepth="4" FontSize="20" Click="PlayerBtnProc" Width="45" HorizontalAlignment="Left" Height="42" VerticalAlignment="Top" Margin="218,118,0,0" Tag="next" />
-                        <Button
-                            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
-                            BorderThickness="1" Foreground="White"
-                            pu:ButtonHelper.ClickEffect="Shake" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-                            pu:ButtonHelper.Icon="&#xE96D;" pu:ButtonHelper.CornerRadius="5"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" Click="ChangeVolume" Margin="0,50,10,0" Width="74" HorizontalAlignment="Right" Height="26" VerticalAlignment="Top" Content="音量" />
-                        <Slider x:Name="slider_Copy" Margin="139,169,10,6" Background="#FF868686" RenderTransformOrigin="0.5,0.5" ValueChanged="VolumeChanged" Tag="volume" Maximum="100" LargeChange="10" SmallChange="1" Visibility="Collapsed"/>
-                        <Button
-                            pu:ButtonHelper.ShadowColor="#6CBCEA"
-                            Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
-                            BorderThickness="1" Foreground="White"
-                            pu:ButtonHelper.ClickEffect="Shake" pu:IconHelper.FontFamily="{StaticResource PanuonIconFont}"
-                            pu:ButtonHelper.Icon="&#xE96D;" pu:ButtonHelper.CornerRadius="5"
-                            pu:ShadowHelper.BlurRadius="10"
-                            pu:ShadowHelper.Direction="240"
-                            pu:ShadowHelper.ShadowDepth="4" Click="BtnReplayHandler" Margin="0,165,262,0" Width="68" HorizontalAlignment="Right" Height="26" VerticalAlignment="Top" Content="循环开" />
-                    </Grid>
-                </pu:Card>
-                <Button
-                    pu:ButtonHelper.ShadowColor="#6CBCEA"
-                    Background="#80C5C4C4" BorderBrush="{x:Null}"
-                    BorderThickness="1" Foreground="White"
-                    pu:ButtonHelper.ClickEffect="Shake" 
-                   pu:ButtonHelper.CornerRadius="5"
-                    pu:ShadowHelper.BlurRadius="10"
-                    pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="BtnSaveHandler" Width="74" HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Content="收藏一言" Canvas.Left="1572" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" FontSize="11" MouseRightButtonDown="FuncT2" />
-                <Button
-                    pu:ButtonHelper.ShadowColor="#6CBCEA"
-                    Background="#80C5C4C4"
-                    BorderThickness="1" Foreground="White"
-                    pu:ButtonHelper.ClickEffect="Shake" 
-                    pu:ButtonHelper.CornerRadius="5"
-                    pu:ShadowHelper.BlurRadius="10"
-                    pu:ShadowHelper.Direction="240"
-                    pu:ShadowHelper.ShadowDepth="4" Click="kbshow" Width="74" Height="26" Content="触摸键盘" Canvas.Left="1661" Canvas.Top="989" RenderTransformOrigin="0.474,0.269" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" FontSize="11" MouseRightButtonDown="FuncT1" />
-                <ProgressBar x:Name="pro_Copy" pu:ProgressBarHelper.Direction="Normal"
-                    pu:ProgressBarHelper.CornerRadius="5"
-                    pu:ProgressBarHelper.InvertedForeground="Azure"
+                <TextBox
+                    x:Name="hkself" Canvas.Left="446" Canvas.Top="974" Width="411" Height="40"
+                    pu:TextBoxHelper.Watermark="Input Text Here..." pu:TextBoxHelper.WatermarkForeground="Gainsboro"
                     Background="{x:Null}"
-                    Foreground="#CCDCDCDC" Visibility="Visible" Height="10" Canvas.Left="891" Canvas.Top="1066" Width="186" HorizontalAlignment="Center" VerticalAlignment="Top" Maximum="7" Value="-3" />
+                    FontSize="16" Foreground="White" TextChanged="Textbox_Chg" TextWrapping="Wrap" Visibility="Collapsed" />
+                <ui:Card
+                    x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
+                    pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
+                    Visibility="Visible">
+                    <ui:Card.BorderBrush>
+                        <RadialGradientBrush Center="5,5">
+                            <GradientStop Offset="1" Color="#FFE0BFBF" />
+                        </RadialGradientBrush>
+                    </ui:Card.BorderBrush>
+                    <Grid Width="308">
+                        <ui:SymbolIcon
+                            Margin="-9,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Symbol="MusicNote2Play20" />
+                        <Slider
+                            x:Name="slider" Margin="6,82,8,74" Background="#FF868686"
+                            BorderBrush="{x:Null}"
+                            RenderTransformOrigin="0.5,0.5" ValueChanged="SilderChanged" />
+                        <Border
+                            Margin="44,0,8,152" BorderThickness="1">
+                            <Label
+                                x:Name="audioName" Margin="0,0,-2,-6" HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="01.高考主播.NewVersion111111.mp3" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                                Foreground="Black">
+                                <Label.Effect>
+                                    <DropShadowEffect Opacity="0.5" />
+                                </Label.Effect>
+                            </Label>
+                        </Border>
+                        <ui:Button
+                            Margin="45,118,218,18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayerBtnProc" FontSize="20"
+                            Foreground="White" Tag="prev" />
+                        <ui:Button
+                            x:Name="playbtn" Height="50" Margin="128,114,128,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                            pu:ButtonHelper.ClickEffect="Shake" pu:ButtonHelper.CornerRadius="5" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:IconHelper.FontSize="20" pu:IconHelper.Margin="0,0,0,0"
+                            pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#80C5C4C4" BorderBrush="#FFA5A5A5"
+                            BorderThickness="1" Click="OnBtnPlay" FontSize="20" Foreground="White" />
+                        <ui:Button
+                            Height="42" Margin="218,118,45,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#80C5C4C4"
+                            BorderBrush="#FFA5A5A5" BorderThickness="1" Click="PlayerBtnProc" FontSize="20" Foreground="White"
+                            Tag="next" />
+                        <ui:Button
+                            Width="72" Height="30" Margin="0,47,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />
+                        <Slider
+                            x:Name="slider_Copy" Margin="139,169,10,6" Background="#FF868686" LargeChange="10" Maximum="100"
+                            RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
+                        <ui:Button
+                            Width="87" Height="30" Margin="134,47,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
+                            Content="循环开" FontSize="13" Icon="ArrowRepeatAll24" />
+                        <Label
+                            x:Name="audioTime" Margin="44,26,130,131" HorizontalContentAlignment="Left"
+                            Background="{x:Null}"
+                            Content="128:00 / 256:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
+                            Foreground="Black">
+                            <Label.Effect>
+                                <DropShadowEffect Opacity="0.2" />
+                            </Label.Effect>
+                        </Label>
+                    </Grid>
+                </ui:Card>
+                <ui:Button
+                    Canvas.Left="1572" Canvas.Top="989" Width="74" Height="26" HorizontalAlignment="Center"
+                    VerticalAlignment="Top" Background="#80C5C4C4"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="1" Click="BtnSaveHandler" Content="收藏一言" FontSize="11" Foreground="White"
+                    MouseRightButtonDown="FuncT2" />
+                <ui:Button
+                    Canvas.Left="1661" Canvas.Top="989" Width="74" Height="26" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Background="#80C5C4C4"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="1" Click="kbshow" Content="触摸键盘" FontSize="11" Foreground="White"
+                    MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
             </Canvas>
         </Viewbox>
-
-
     </Grid>
-
 </Window>
