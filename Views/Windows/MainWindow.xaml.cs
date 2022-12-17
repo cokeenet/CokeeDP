@@ -278,7 +278,8 @@ namespace CokeeDP.Views.WIndows
         {
             try
             {
-                return new Uri("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg");
+                if(!File.Exists("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg")) return new Uri("pack://application:,,,/Icons/" + code.ToString() + ".svg");
+                else return new Uri("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg");
             }
             catch (Exception ex)
             {
