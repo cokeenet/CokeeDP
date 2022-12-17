@@ -324,7 +324,8 @@
                 <ui:Button
                     Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B3F7F7F7"
-                    Click="ShowSetting" Content="设置" FontSize="20" BorderBrush="{x:Null}"  Icon="Settings48"/>
+                    BorderBrush="{x:Null}"
+                    Click="ShowSetting" Content="设置" FontSize="20" Icon="Settings48" />
                 <Label
                     x:Name="BingImageInfo" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" HorizontalAlignment="Center"
                     VerticalAlignment="Top" HorizontalContentAlignment="Left"
@@ -343,12 +344,16 @@
                 </Label>
                 <ui:Button
                     x:Name="left" Canvas.Left="25" Canvas.Top="447" Width="54" Height="54"
-                    HorizontalAlignment="Left"  Click="WappChangeBtnHandler" Tag="left"
-                    Visibility="Visible" Icon="ArrowLeft20" FontSize="36" BorderBrush="{x:Null}" Background="#B3F7F7F7" Foreground="#E4000000"/>
+                    HorizontalAlignment="Left" Background="#B3F7F7F7"
+                    BorderBrush="{x:Null}"
+                    Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowLeft20" Tag="left"
+                    Visibility="Visible" />
                 <ui:Button
                     x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="447" Width="54"
-                    Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Click="WappChangeBtnHandler"
-                     Icon="ArrowRight20" FontSize="36" BorderBrush="{x:Null}" Background="#B3F7F7F7" Foreground="#E4000000" Tag="right" Visibility="Visible" />
+                    Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B3F7F7F7"
+                    BorderBrush="{x:Null}"
+                    Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowRight20" Tag="right"
+                    Visibility="Visible" />
                 <Label
                     x:Name="birth" Canvas.Left="24" Canvas.Top="553" HorizontalAlignment="Left" VerticalAlignment="Top"
                     HorizontalContentAlignment="Left"
@@ -372,14 +377,14 @@
                 </Label>
                 <ui:Card
                     x:Name="BigCountdown" Grid.Column="1" Canvas.Left="1380" Canvas.Top="14" Width="319"
-                    Height="153" HorizontalAlignment="Left"
-                    Visibility="Collapsed">
+                    Height="153" HorizontalAlignment="Left" Visibility="Collapsed">
                     <ui:Card.BorderBrush>
                         <RadialGradientBrush Center="5,5">
                             <GradientStop Offset="1" Color="#FFE0BFBF" />
                         </RadialGradientBrush>
                     </ui:Card.BorderBrush>
-                    <Grid Width="305" Height="131" VerticalAlignment="Top">
+                    <Grid
+                        Width="305" Height="131" VerticalAlignment="Top">
                         <Label
                             x:Name="diskInfo1" Margin="23,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
@@ -420,9 +425,10 @@
                             </Label.Effect>
                         </Label>
                         <Label
-                            x:Name="tod_info" Margin="0,97,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            x:Name="tod_info" Width="286" Height="36" Margin="0,97,0,0" HorizontalAlignment="Left"
+                            VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
-                            Content="还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Bold" Foreground="#FFDA0000" Height="36" Width="286">
+                            Content="还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
@@ -511,7 +517,9 @@
                     BorderBrush="{x:Null}"
                     BorderThickness="1" Click="kbshow" Content="触摸键盘" FontSize="11" Foreground="White"
                     MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
-                <ui:Snackbar Content="Snackbar" Canvas.Left="717" Canvas.Top="951" HorizontalAlignment="Left" VerticalAlignment="Top" Width="486"/>
+                <ui:Snackbar x:Name="snackbar"
+                    Canvas.Left="690" Canvas.Top="959" Width="486" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Content="Snackbar" />
             </Canvas>
         </Viewbox>
     </Grid>

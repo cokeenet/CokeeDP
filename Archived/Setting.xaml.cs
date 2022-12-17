@@ -35,7 +35,7 @@ namespace CokeeDP
             timeto.Text = CokeeDP.Properties.Settings.Default.CountdownName;
             timetoT.Text = CokeeDP.Properties.Settings.Default.timeTod;
             checkBox.IsChecked = CokeeDP.Properties.Settings.Default.BingWappEnable;
-            checkBox_Copy.IsChecked = CokeeDP.Properties.Settings.Default.enableBigTimeTo;
+            checkBox_Copy.IsChecked = CokeeDP.Properties.Settings.Default.EnableBigTimeTo;
             checkBox_Copy1.IsChecked = CokeeDP.Properties.Settings.Default.isDebug; 
             checkBox_Copy2.IsChecked = CokeeDP.Properties.Settings.Default.IsUHDWapp;
             audioFd.Text=Properties.Settings.Default.AudioFolder;
@@ -260,8 +260,8 @@ namespace CokeeDP
         {
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
-            CokeeDP.Properties.Settings.Default.enableBigTimeTo = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.enableBigTimeTo.ToString(),"info",MessageBoxIcon.Info,true,3000);
+            CokeeDP.Properties.Settings.Default.EnableBigTimeTo = (bool)a.IsChecked;
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.EnableBigTimeTo.ToString(),"info",MessageBoxIcon.Info,true,3000);
             CokeeDP.Properties.Settings.Default.Save();
         }
 
