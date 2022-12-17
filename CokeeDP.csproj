@@ -61,6 +61,8 @@
 
   <ItemGroup>
     <None Remove="head.jpg" />
+    <None Remove="Image\bg75.png" />
+    <None Remove="SplashScreen.png" />
 
   </ItemGroup>
 
@@ -69,6 +71,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
@@ -85,10 +88,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Image\bg75.png" />
     <Resource Include="Image\bg_normal.png" />
     <Resource Include="Image\bg_setting.png" />
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="SplashScreen.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,6 +109,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\About.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
@@ -117,6 +128,13 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\About.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -29,9 +29,14 @@ using System.Windows.Media.Animation;
 
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Mvvm.Services;
+using Button = Wpf.Ui.Controls.Button;
 using File = System.IO.File;
 
-namespace CokeeDP
+namespace CokeeDP.Views.WIndows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -57,12 +62,12 @@ namespace CokeeDP
         BitmapImage bitmapImage = null;
         //U盘插入后，OS的底层会自动检测，然后向应用程序发送“硬件设备状态改变“的消息
         private string disk, weaWr, hkUrl, nowDowning = "";
-
+        SnackbarService snackbarService = new SnackbarService();
         private bool IsPlaying = false, AudioLoaded = false, IsReplay = true;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime tod;
         private bool usingBing = true;
-        private double ver = 2.2;
+        private double ver = 3.0;
 
         public MainWindow()
         {
@@ -222,14 +227,6 @@ namespace CokeeDP
         {
 
         }
-        public static ImageSource GetExeIcon(string fileName)
-        {
-            System.Drawing.Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(fileName);
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
-                        icon.Handle,
-                        new Int32Rect(0,0,icon.Width,icon.Height),
-                        BitmapSizeOptions.FromEmptyOptions());
-        }
         public void OnOneSec(object source,ElapsedEventArgs e)
         {
             try
@@ -252,8 +249,8 @@ namespace CokeeDP
                 if(IsPlaying)
                 {
                     //  audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + "/" + MediaDuring;
-                    slider.Value = mediaplayer.Position.TotalSeconds;
-                    //slider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
+                    PlaySlider.Value = mediaplayer.Position.TotalSeconds;
+                    //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 }
                 // new Thread(CheckTasks).Start();          // 创建线程
             }));
@@ -266,8 +263,7 @@ namespace CokeeDP
 
         public void ProcessErr(Exception e)
         {
-            if(e.StackTrace.Contains("Net")) NoticeBox.Show(e.ToString(),"Error/网络错误",MessageBoxIcon.Error,true,1000);
-            else NoticeBox.Show(e.ToString(),"Error",MessageBoxIcon.Error,true,5000);
+            snackbarService.Show("发生错误",e.Message+"  "+e.StackTrace,SymbolRegular.ErrorCircle24);
             Log.Error(e,"Error");
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
@@ -318,7 +314,7 @@ namespace CokeeDP
                 bitmapImage.DownloadProgress += ImageDownloadProgress;
                 bitmapImage.DownloadCompleted += DownloadImageCompleted;
                 br1.Tag = dt["data"]["images"][bing]["isoDate"].ToString();
-                DoubleAnimation animation = new DoubleAnimation(0,100,new Duration(TimeSpan.FromSeconds(5)));
+                DoubleAnimation animation = new DoubleAnimation(0,20,new Duration(TimeSpan.FromSeconds(5)));
                 animation.EasingFunction = new CircleEase();
                 //animation.AutoReverse = true;
                 br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
@@ -343,7 +339,7 @@ namespace CokeeDP
            // Disappear(pro,1,20,0.5);
            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
             log.Text = "Image Loaded. Num:"+bing;
-            DoubleAnimation animation = new DoubleAnimation(100,0,new Duration(TimeSpan.FromSeconds(5)));
+            DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
            animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
@@ -627,8 +623,8 @@ namespace CokeeDP
         {
             try
             {
-                var win1 = new Settings();
-                win1.Show();
+                var settingsWindow = new SettingsWindow();
+                settingsWindow.Show();
             }
             catch(Exception ex)
             {
@@ -689,7 +685,7 @@ namespace CokeeDP
             try
             {
                 if(music.Visibility == Visibility.Collapsed) music.Visibility = Visibility.Visible;
-                else if(music.Visibility == Visibility.Visible) { music.Visibility = Visibility.Collapsed; IsPlaying = false; mediaplayer.Pause(); }
+                else if(music.Visibility == Visibility.Visible) { music.Visibility = Visibility.Collapsed; IsPlaying = false; playbtn.Icon=SymbolRegular.Play48; mediaplayer.Pause(); }
                 IntlPlayer();
             }
             catch(Exception ex)
@@ -721,7 +717,7 @@ namespace CokeeDP
 
         private void SilderChanged(object sender,RoutedPropertyChangedEventArgs<double> e)
         {
-            mediaplayer.Position = TimeSpan.FromSeconds(slider.Value);
+            mediaplayer.Position = TimeSpan.FromSeconds(PlaySlider.Value);
             audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + " / " + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
         }
 
@@ -730,17 +726,18 @@ namespace CokeeDP
             try
             {
                 var tmp = (Button)sender;
-                if(tmp.Content.ToString() == "音量")//only 2 modes
+                if(VolumeSlider.Visibility==Visibility.Collapsed)
                 {
                     CancelTheMute();
-                    slider_Copy.Visibility = Visibility.Visible;
-                    slider_Copy.Value = GetCurrentSpeakerVolume();
-                    tmp.Content = "音量 ";
+                    VolumeText.Visibility = Visibility.Visible;
+                    VolumeSlider.Visibility = Visibility.Visible;
+                    VolumeText.Content = "音量:"+ GetCurrentSpeakerVolume()+"%";
+                    VolumeSlider.Value = GetCurrentSpeakerVolume();
                 }
-                else if(tmp.Content.ToString() == "音量 ")
+                else if(VolumeSlider.Visibility == Visibility.Visible)
                 {
-                    slider_Copy.Visibility = Visibility.Collapsed;
-                    tmp.Content = "音量";
+                    VolumeSlider.Visibility = Visibility.Collapsed;
+                    VolumeText.Visibility=Visibility.Collapsed;
                 }
             }
             catch(Exception ex)
@@ -754,10 +751,10 @@ namespace CokeeDP
             try
             {
                 audioName.Content = audio[AudioNum].Name;
-                slider.Value = 0;
-                slider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
+                PlaySlider.Value = 0;
+                PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-                audioTime.Content = "0:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                /* playIcon.Text = "";
                 IsPlaying = true;
                 mediaplayer.Play();*/
@@ -775,7 +772,7 @@ namespace CokeeDP
                 {
                     //playIcon.Text = "";
                     IntlPlayer();
-                    slider.Value = 0;
+                    PlaySlider.Value = 0;
                     return;
                 }
                 else
@@ -795,15 +792,15 @@ namespace CokeeDP
             try
             {
                 var tmp = (Button)sender;
-                if(tmp.Content.ToString() == "循环开")
+                if(tmp.Content.ToString() == "单曲循环")
                 {
                     IsReplay = false;
-                    tmp.Content = "循环关";
+                    tmp.Content = "列表循环";
                 }
-                else if(tmp.Content.ToString() == "循环关")
+                else if(tmp.Content.ToString() == "列表循环")
                 {
                     IsReplay = true;
-                    tmp.Content = "循环开";
+                    tmp.Content = "单曲循环";
                 }
             }
             catch(Exception ex)
@@ -820,13 +817,13 @@ namespace CokeeDP
                 {
                     if(AudioNum == 0) AudioNum = audio.Length;
                     else AudioNum--;
-                    //playIcon.Text = "";
+                    playbtn.Icon = SymbolRegular.Play48;
                 }
                 else if(tmp.Tag.ToString() == "next")
                 {
                     if(AudioNum >= audio.Length) AudioNum = 0;
                     else AudioNum++;
-                    //playIcon.Text = "";
+                    playbtn.Icon = SymbolRegular.Play48;
                 }
                 IntlPlayer();
             }
@@ -839,7 +836,7 @@ namespace CokeeDP
         {
             try
             {
-                SetCurrentSpeakerVolume(Convert.ToInt32(slider_Copy.Value));
+                SetCurrentSpeakerVolume(Convert.ToInt32(VolumeSlider.Value));
             }
             catch(Exception ex)
             {
@@ -852,15 +849,13 @@ namespace CokeeDP
             {
                 if(IsPlaying)
                 {
-                    //playIcon.Text = "";
-                    audioTime.Content = "[Paused]" + audioTime.Content;
-                    //var tmp = (ButtonHelper)playbtn;
+                    playbtn.Icon = SymbolRegular.Play48;
                     IsPlaying = false;
                     mediaplayer.Pause();
                 }
                 else
                 {
-                    //playIcon.Text = "";
+                    playbtn.Icon = SymbolRegular.Pause48;
                     IsPlaying = true;
                     mediaplayer.Play();
                 }
@@ -927,7 +922,7 @@ namespace CokeeDP
 
         private void Textbox_Chg(object sender,TextChangedEventArgs e)
         {
-            var a = (TextBox)sender;
+            var a = (System.Windows.Controls.TextBox)sender;
             hitokoto.Content = a.Text;
         }
 
@@ -967,8 +962,8 @@ namespace CokeeDP
 
         private void kbshow(object sender, RoutedEventArgs e)
         {
-           // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
-       
+            // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+            MainWindow.GetWindow(this).WindowState = WindowState.Normal;
         }
 
         private void FuncT1(object sender, MouseButtonEventArgs e)
@@ -1000,7 +995,9 @@ namespace CokeeDP
         /// </summary>
         private void Viewsour(object sender,RoutedEventArgs e)
         {
-            NoticeBox.Show("https://hitokoto.cn/?uuid=" + hkUrl,"info");
+            
+            snackbarService.Show("链接已复制","https://hitokoto.cn/?uuid=" + hkUrl,SymbolRegular.CopyAdd24);
+                //("https://hitokoto.cn/?uuid=" + hkUrl,"info");
         }
 
         private void Likeit(object sender,RoutedEventArgs e)

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:CokeeDP" 
              xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             StartupUri="MainWindow.xaml" Startup="AppStartup">
+             StartupUri="pack://application:,,,/Views/Windows/MainWindow.xaml" Startup="AppStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
