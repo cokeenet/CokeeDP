@@ -88,13 +88,13 @@ jobs:
             cmd /c echo %os% >>${{ github.workspace }}\Build_Info.txt
             cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Build_Info.txt
       - name: NuGet restore
-        run: nuget restore /CokeeDP.csproj
+        run: nuget restore ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release /CokeeDP}.csproj
+        run: msbuild -p:Configuration=Release ${{ github.workspace }}\CokeeDP}.csproj
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug /CokeeDP.csproj
+        run: msbuild -p:Configuration=Debug ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Upload CokeeDP(Release,dotnet6)
         uses: actions/upload-artifact@v3
