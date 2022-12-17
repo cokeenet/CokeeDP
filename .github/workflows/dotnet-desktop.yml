@@ -82,11 +82,11 @@ jobs:
       - name: Write Build info
         shell: cmd
         run: |
-            cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %date% %time% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %cd% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %os% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\CokeeDP\Build_Info.txt
+            cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %date% %time% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %cd% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %os% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Build_Info.txt
       - name: NuGet restore
         run: nuget restore CokeeDP/${{ matrix.project }}/CokeeDP-${{ matrix.project }}.csproj
 
