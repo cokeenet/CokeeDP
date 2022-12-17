@@ -50,12 +50,12 @@ namespace CokeeDP
             Dispatcher.Invoke(new Action(delegate
         {
             if (Properties.Settings.Default.isChildLocked) childBorder.Visibility = Visibility.Visible;
-                //Thread thread =new Thread()
-                loadPic();
+            //Thread thread =new Thread()
+            loadPic();
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) vers.Text = "软件版本:" + version + " 资源包版本:" + System.IO.File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver");
             else vers.Text = "软件版本:" + version + " [无资源包]";
-                // if (Environment.OSVersion.Version.Major >= 10.0 && AppCenter.IsEnabledAsync().Result) t.Text = "AppCenter Running.V" + AppCenter.SdkVersion;
-            }
+            // if (Environment.OSVersion.Version.Major >= 10.0 && AppCenter.IsEnabledAsync().Result) t.Text = "AppCenter Running.V" + AppCenter.SdkVersion;
+        }
    ));
 
             _ = GetUpdateLog();
