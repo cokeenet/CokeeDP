@@ -91,10 +91,10 @@ jobs:
         run: nuget restore ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release ${{ github.workspace }\CokeeDP}.csproj
+        run: msbuild -p:Configuration=Release ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug ${{ github.workspace }\CokeeDP.csproj
+        run: msbuild -p:Configuration=Debug ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Upload CokeeDP(Release,dotnet6)
         uses: actions/upload-artifact@v3
