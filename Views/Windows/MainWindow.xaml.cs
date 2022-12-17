@@ -80,8 +80,8 @@ namespace CokeeDP.Views.WIndows
                  }            
                 */
 
-               FillConfig();
-                if(Properties.Settings.Default.EnableBigTimeTo)
+                FillConfig();
+                if (Properties.Settings.Default.EnableBigTimeTo)
                 {
                     BigCountdown.Visibility = Visibility.Visible;
                     timeTod.Visibility = Visibility.Collapsed;
@@ -233,7 +233,7 @@ namespace CokeeDP.Views.WIndows
             {
                 time.Content = DateTime.Now.ToString("hh:mm:ss");
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
-                if(Properties.Settings.Default.EnableBigTimeTo)
+                if (Properties.Settings.Default.EnableBigTimeTo)
                 {
                     tod_info.Content = "还有" + tod.Subtract(DateTime.Now).TotalDays + "天";
                     big_tod.Content = ((int)tod.Subtract(DateTime.Now).TotalDays);
@@ -262,9 +262,9 @@ namespace CokeeDP.Views.WIndows
         public void ProcessErr(Exception e)
         {
             snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.Show("发生错误",e.Message+"  "+e.StackTrace,SymbolRegular.ErrorCircle24);
-            Log.Error(e,"Error");
-            if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
+            snackbarService.Show("发生错误", e.Message + "  " + e.StackTrace, SymbolRegular.ErrorCircle24);
+            Log.Error(e, "Error");
+            if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
         public void SetTimer(System.Timers.Timer a, int ms, System.Timers.Timer b, int ms1, System.Timers.Timer c, int ms2)
