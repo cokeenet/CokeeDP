@@ -262,9 +262,9 @@ namespace CokeeDP.Views.WIndows
         public void ProcessErr(Exception e)
         {
             snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.Show("发生错误",e.Message+Environment.NewLine+e.StackTrace,SymbolRegular.ErrorCircle24);
-            Log.Error(e,"Error");
-            if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
+            snackbarService.Show("发生错误", e.Message + Environment.NewLine + e.StackTrace, SymbolRegular.ErrorCircle24);
+            Log.Error(e, "Error");
+            if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
         public void SetTimer(System.Timers.Timer a, int ms, System.Timers.Timer b, int ms1, System.Timers.Timer c, int ms2)
