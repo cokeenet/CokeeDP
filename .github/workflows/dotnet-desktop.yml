@@ -1,6 +1,8 @@
 name: Build
 
 on:
+  watch:
+    types: [started]
   push:
     paths:
       - '**.cs'
