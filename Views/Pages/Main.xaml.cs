@@ -26,18 +26,18 @@ namespace CokeeDP.Views.Pages
             InitializeComponent();
         }
 
-        private void OnLoaded(object sender,RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
         }
 
-        private void OnSwitchChecked(object sender,RoutedEventArgs e)
+        private void OnSwitchChecked(object sender, RoutedEventArgs e)
         {
-            var toggleSwitch= (ToggleSwitch)sender;
-            switch(toggleSwitch.Tag)
+            var toggleSwitch = (ToggleSwitch)sender;
+            switch (toggleSwitch.Tag)
             {
                 case "bing":
-                    Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked;break;
+                    Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
                 default:

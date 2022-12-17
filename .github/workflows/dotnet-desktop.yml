@@ -82,28 +82,28 @@ jobs:
       - name: Write Build info
         shell: cmd
         run: |
-            cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %date% %time% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %cd% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo %os% >>${{ github.workspace }}\CokeeDP\Build_Info.txt
-            cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\CokeeDP\Build_Info.txt
+            cmd /c echo GITHUB ACTION #${{github.run_number}} >${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %date% %time% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %cd% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo %os% >>${{ github.workspace }}\Build_Info.txt
+            cmd /c echo ${{github.ref}} ${{github.sha}}>>${{ github.workspace }}\Build_Info.txt
       - name: NuGet restore
-        run: nuget restore CokeeDP/${{ matrix.project }}/CokeeDP-${{ matrix.project }}.csproj
+        run: nuget restore ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Build the project(Release)
-        run: msbuild -p:Configuration=Release CokeeDP/${{ matrix.project }}/CokeeDP-${{ matrix.project }}.csproj
+        run: msbuild -p:Configuration=Release ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Build the project(Debug)
-        run: msbuild -p:Configuration=Debug CokeeDP/${{ matrix.project }}/CokeeDP-${{ matrix.project }}.csproj
+        run: msbuild -p:Configuration=Debug ${{ github.workspace }}\CokeeDP.csproj
 
       - name: Upload CokeeDP(Release,dotnet6)
         uses: actions/upload-artifact@v3
         with:
-          name: CokeeDP_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6
-          path: ${{ github.workspace }}\CokeeDP\${{ matrix.project }}\bin\Release\net6.0-windows10.0.22000.0
+          name: CokeeDP_${{ needs.draft_release.outputs.tag_name }}_dotnet6
+          path: ${{ github.workspace }}\bin\Release\net6.0-windows10.0.22000.0
 
-      - name: Upload Serein(Debug,dotnet6)
+      - name: Upload CokeeDP(Debug,dotnet6)
         uses: actions/upload-artifact@v3
         with:
-          name: CokeeDP_${{ matrix.project }}_${{ needs.draft_release.outputs.tag_name }}_dotnet6_debug
-          path: ${{ github.workspace }}\CokeeDP\${{ matrix.project }}\bin\Debug\net6.0-windows10.0.22000.0
+          name: CokeeDP_${{ needs.draft_release.outputs.tag_name }}_dotnet6_debug
+          path: ${{ github.workspace }}\bin\Debug\net6.0-windows10.0.22000.0

@@ -13,11 +13,11 @@ namespace CokeeDP
     /// </summary>
     public partial class App : Application
     {
-        private void AppStartup(object sender,StartupEventArgs e)
+        private void AppStartup(object sender, StartupEventArgs e)
         {
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt",
                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}").CreateLogger();
-            if(Environment.OSVersion.Version.Major >= 10.0) AppCenter.Start("52a9c4e0-ad42-455b-b1cf-515d8a39f245",typeof(Analytics),typeof(Crashes));
+            if (Environment.OSVersion.Version.Major >= 10.0) AppCenter.Start("52a9c4e0-ad42-455b-b1cf-515d8a39f245", typeof(Analytics), typeof(Crashes));
         }
     }
 }
