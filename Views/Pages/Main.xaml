@@ -27,7 +27,8 @@
                         FontSize="12" Opacity="0.7" Text="禁用则加载本地壁纸" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:ToggleSwitch x:Name="BingWappSwitch" IsChecked="True" Checked="OnSwitchChecked" />
+            <ui:ToggleSwitch
+                x:Name="BingWappSwitch" Checked="OnSwitchChecked" IsChecked="True" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="2" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
@@ -39,7 +40,8 @@
                         FontSize="12" Opacity="0.7" Text="禁用则加载1080P清晰度" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:ToggleSwitch x:Name="BingWappSwitch1" IsChecked="True" Checked="OnSwitchChecked" />
+            <ui:ToggleSwitch
+                x:Name="BingWappSwitch1" Checked="OnSwitchChecked" IsChecked="True" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="3" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
@@ -51,7 +53,7 @@
                         FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:TextBox Width="481"/>
+            <ui:TextBox Width="481" />
         </ui:CardControl>
     </Grid>
 </ui:UiPage>
