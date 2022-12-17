@@ -51,7 +51,7 @@ namespace CokeeDP.Views.WIndows
         public const int GENERIC_WRITE = 0x40000000;
         public const int IOCTL_STORAGE_EJECT_MEDIA = 0x2d4808;
         public const int WM_DEVICECHANGE = 0x219;
-        private static Timer hkc;
+        private static Timer OneWordsTimeInterval;
         private static Timer sec;
         private static Timer wet;
         private FileInfo[] afi,Weaicon;
@@ -85,7 +85,7 @@ namespace CokeeDP.Views.WIndows
                FillConfig();
                 if(Properties.Settings.Default.enableBigTimeTo)
                 {
-                    zk.Visibility = Visibility.Visible;
+                    BigCountdown.Visibility = Visibility.Visible;
                     timeTod.Visibility = Visibility.Collapsed;
                 }
                 if(usingBing)
@@ -200,7 +200,7 @@ namespace CokeeDP.Views.WIndows
                 usingBing = Properties.Settings.Default.usingBing;
                 AudioFolder = Properties.Settings.Default.AudioFolder;
                 Properties.Settings.Default.Save();
-                SetTimer(sec,1,hkc,Convert.ToInt32(Properties.Settings.Default.hkc),wet,Convert.ToInt32(Properties.Settings.Default.wea));
+                SetTimer(sec,1,hkc,Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval),wet,Convert.ToInt32(Properties.Settings.Default.wea));
                
             }
             catch(Exception ex)

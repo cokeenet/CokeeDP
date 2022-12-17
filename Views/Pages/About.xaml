@@ -9,7 +9,7 @@
       d:DesignHeight="450" d:DesignWidth="800" 
       Title="Main">
 
-    <Grid Background="White">
+    <Grid>
         <TextBlock
             Margin="5,10"
             FontSize="20"

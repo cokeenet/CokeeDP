@@ -26,24 +26,24 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://v1.hitokoto.cn/?c=k")]
-        public string hk_api {
+        public string OneWordsApi {
             get {
-                return ((string)(this["hk_api"]));
+                return ((string)(this["OneWordsApi"]));
             }
             set {
-                this["hk_api"] = value;
+                this["OneWordsApi"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool disable_hk {
+        public bool OneWordsEnable {
             get {
-                return ((bool)(this["disable_hk"]));
+                return ((bool)(this["OneWordsEnable"]));
             }
             set {
-                this["disable_hk"] = value;
+                this["OneWordsEnable"] = value;
             }
         }
         
@@ -62,36 +62,36 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("300")]
-        public string hkc {
+        public string OneWordsTimeInterval {
             get {
-                return ((string)(this["hkc"]));
+                return ((string)(this["OneWordsTimeInterval"]));
             }
             set {
-                this["hkc"] = value;
+                this["OneWordsTimeInterval"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9800")]
-        public string wea {
+        public string WeatherTimeInterval {
             get {
-                return ((string)(this["wea"]));
+                return ((string)(this["WeatherTimeInterval"]));
             }
             set {
-                this["wea"] = value;
+                this["WeatherTimeInterval"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("fuyang")]
-        public string city {
+        public string City {
             get {
-                return ((string)(this["city"]));
+                return ((string)(this["City"]));
             }
             set {
-                this["city"] = value;
+                this["City"] = value;
             }
         }
         
@@ -110,12 +110,12 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("高考")]
-        public string timeTo {
+        public string CountdownName {
             get {
-                return ((string)(this["timeTo"]));
+                return ((string)(this["CountdownName"]));
             }
             set {
-                this["timeTo"] = value;
+                this["CountdownName"] = value;
             }
         }
         
@@ -134,12 +134,12 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool usingBing {
+        public bool BingWappEnable {
             get {
-                return ((bool)(this["usingBing"]));
+                return ((bool)(this["BingWappEnable"]));
             }
             set {
-                this["usingBing"] = value;
+                this["BingWappEnable"] = value;
             }
         }
         

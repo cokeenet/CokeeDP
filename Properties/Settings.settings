@@ -2,34 +2,34 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CokeeDP.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="hk_api" Type="System.String" Scope="User">
+    <Setting Name="OneWordsApi" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://v1.hitokoto.cn/?c=k</Value>
     </Setting>
-    <Setting Name="disable_hk" Type="System.Boolean" Scope="User">
+    <Setting Name="OneWordsEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="disable_clock1" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="hkc" Type="System.String" Scope="User">
+    <Setting Name="OneWordsTimeInterval" Type="System.String" Scope="User">
       <Value Profile="(Default)">300</Value>
     </Setting>
-    <Setting Name="wea" Type="System.String" Scope="User">
+    <Setting Name="WeatherTimeInterval" Type="System.String" Scope="User">
       <Value Profile="(Default)">9800</Value>
     </Setting>
-    <Setting Name="city" Type="System.String" Scope="User">
+    <Setting Name="City" Type="System.String" Scope="User">
       <Value Profile="(Default)">fuyang</Value>
     </Setting>
     <Setting Name="wantRes" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="timeTo" Type="System.String" Scope="User">
+    <Setting Name="CountdownName" Type="System.String" Scope="User">
       <Value Profile="(Default)">高考</Value>
     </Setting>
     <Setting Name="timeTod" Type="System.String" Scope="User">
       <Value Profile="(Default)">2025/06/05 00:00:00</Value>
     </Setting>
-    <Setting Name="usingBing" Type="System.Boolean" Scope="User">
+    <Setting Name="BingWappEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="childPW" Type="System.String" Scope="User">

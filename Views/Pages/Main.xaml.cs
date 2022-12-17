@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
-
 namespace CokeeDP.Views.Pages
 {
     /// <summary>
@@ -24,6 +24,25 @@ namespace CokeeDP.Views.Pages
         public Main()
         {
             InitializeComponent();
+        }
+
+        private void OnLoaded(object sender,RoutedEventArgs e)
+        {
+            BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
+        }
+
+        private void OnSwitchChecked(object sender,RoutedEventArgs e)
+        {
+            var toggleSwitch= (ToggleSwitch)sender;
+            switch(toggleSwitch.Tag)
+            {
+                case "bing":
+                    Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked;break;
+                case "uhd":
+                    Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
+                default:
+                    break;
+            }
         }
     }
 }

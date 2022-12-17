@@ -71,7 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
@@ -84,7 +83,6 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
-    <PackageReference Include="XamlFlair.WPF" Version="1.2.13" />
   </ItemGroup>
 
   <ItemGroup>

@@ -323,8 +323,8 @@
                     Visibility="Visible" />
                 <ui:Button
                     Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Background="#66FFFFFF" BorderBrush="#FF707070" BorderThickness="1"
-                    Click="ShowSetting" Content="设置" FontSize="20" Foreground="White" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B3F7F7F7"
+                    Click="ShowSetting" Content="设置" FontSize="20" BorderBrush="{x:Null}"  Icon="Settings48"/>
                 <Label
                     x:Name="BingImageInfo" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" HorizontalAlignment="Center"
                     VerticalAlignment="Top" HorizontalContentAlignment="Left"
@@ -348,7 +348,7 @@
                 <ui:Button
                     x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="447" Width="54"
                     Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Click="WappChangeBtnHandler"
-                     Icon="ArrowLeft20" FontSize="36" BorderBrush="{x:Null}" Background="#B3F7F7F7" Foreground="#E4000000" Tag="right" Visibility="Visible" />
+                     Icon="ArrowRight20" FontSize="36" BorderBrush="{x:Null}" Background="#B3F7F7F7" Foreground="#E4000000" Tag="right" Visibility="Visible" />
                 <Label
                     x:Name="birth" Canvas.Left="24" Canvas.Top="553" HorizontalAlignment="Left" VerticalAlignment="Top"
                     HorizontalContentAlignment="Left"
@@ -370,19 +370,18 @@
                         <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <pu:Card
-                    x:Name="zk" Grid.Column="1" Canvas.Left="1439" Canvas.Top="14" Width="260"
-                    Height="153" HorizontalAlignment="Right" VerticalAlignment="Bottom" pu:CornerRadius="5" pu:ShadowHelper.BlurRadius="10"
-                    pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF" BorderThickness="2,2,2,2" ShadowColor="#6CBCEA"
+                <ui:Card
+                    x:Name="BigCountdown" Grid.Column="1" Canvas.Left="1380" Canvas.Top="14" Width="319"
+                    Height="153" HorizontalAlignment="Left"
                     Visibility="Collapsed">
-                    <pu:Card.BorderBrush>
+                    <ui:Card.BorderBrush>
                         <RadialGradientBrush Center="5,5">
                             <GradientStop Offset="1" Color="#FFE0BFBF" />
                         </RadialGradientBrush>
-                    </pu:Card.BorderBrush>
-                    <Grid>
+                    </ui:Card.BorderBrush>
+                    <Grid Width="305" Height="131" VerticalAlignment="Top">
                         <Label
-                            x:Name="diskInfo1" Margin="23,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            x:Name="diskInfo1" Margin="23,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             Content="最后" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
@@ -390,7 +389,7 @@
                             </Label.Effect>
                         </Label>
                         <Border
-                            Width="100" Height="64" Margin="105,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Width="100" Height="64" Margin="105,41,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                             Background="#4CE20000" BorderBrush="Red" BorderThickness="1">
                             <Label
                                 x:Name="big_tod" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Left"
@@ -403,7 +402,7 @@
                             </Label>
                         </Border>
                         <Label
-                            Width="204" Height="56" Margin="52,-9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Width="294" Height="47" Margin="1,-6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             Content="[----]倒计时" FontFamily="Microsoft YaHei" FontSize="33" FontWeight="Normal" Foreground="#FFCA0000"
@@ -413,7 +412,7 @@
                             </Label.Effect>
                         </Label>
                         <Label
-                            Margin="200,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            Margin="204,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
                             Content="天" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Bold" Foreground="#FFDA0000">
                             <Label.Effect>
@@ -421,15 +420,15 @@
                             </Label.Effect>
                         </Label>
                         <Label
-                            x:Name="tod_info" Margin="4,111,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
+                            x:Name="tod_info" Margin="0,97,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
-                            Content="还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Bold" Foreground="#FFDA0000">
+                            Content="还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Bold" Foreground="#FFDA0000" Height="36" Width="286">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </pu:Card>
+                </ui:Card>
                 <TextBox
                     x:Name="hkself" Canvas.Left="446" Canvas.Top="974" Width="411" Height="40"
                     pu:TextBoxHelper.Watermark="Input Text Here..." pu:TextBoxHelper.WatermarkForeground="Gainsboro"
