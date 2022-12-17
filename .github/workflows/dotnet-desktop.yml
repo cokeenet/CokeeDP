@@ -102,7 +102,7 @@ jobs:
           name: CokeeDP_${{ needs.draft_release.outputs.tag_name }}_dotnet6
           path: ${{ github.workspace }}\bin\Release\net6.0-windows10.0.22000.0
 
-      - name: Upload Serein(Debug,dotnet6)
+      - name: Upload CokeeDP(Debug,dotnet6)
         uses: actions/upload-artifact@v3
         with:
           name: CokeeDP_${{ needs.draft_release.outputs.tag_name }}_dotnet6_debug
