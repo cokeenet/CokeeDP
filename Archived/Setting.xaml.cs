@@ -17,9 +17,9 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 namespace CokeeDP
 {
-    
 
-    public  partial class Settings : WindowX
+
+    public partial class Settings : WindowX
     {
         private string version = "V2.2";
 
@@ -36,27 +36,27 @@ namespace CokeeDP
             timetoT.Text = CokeeDP.Properties.Settings.Default.timeTod;
             checkBox.IsChecked = CokeeDP.Properties.Settings.Default.BingWappEnable;
             checkBox_Copy.IsChecked = CokeeDP.Properties.Settings.Default.enableBigTimeTo;
-            checkBox_Copy1.IsChecked = CokeeDP.Properties.Settings.Default.isDebug; 
+            checkBox_Copy1.IsChecked = CokeeDP.Properties.Settings.Default.isDebug;
             checkBox_Copy2.IsChecked = CokeeDP.Properties.Settings.Default.IsUHDWapp;
-            audioFd.Text=Properties.Settings.Default.AudioFolder;
-            if(DateTime.Now.CompareTo(new(2025,6,5,00,00,00)) >= 0) 
+            audioFd.Text = Properties.Settings.Default.AudioFolder;
+            if (DateTime.Now.CompareTo(new(2025, 6, 5, 00, 00, 00)) >= 0)
             {
-                checkBox_Copy.Visibility= Visibility.Visible;
+                checkBox_Copy.Visibility = Visibility.Visible;
                 checkBox_Copy.IsEnabled = true;
                 over_flag.Visibility = Visibility.Visible;
             }
-                
 
-                Dispatcher.Invoke(new Action(delegate
-            {
-                if(Properties.Settings.Default.isChildLocked)childBorder.Visibility= Visibility.Visible;
+
+            Dispatcher.Invoke(new Action(delegate
+        {
+            if (Properties.Settings.Default.isChildLocked) childBorder.Visibility = Visibility.Visible;
                 //Thread thread =new Thread()
                 loadPic();
-                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) vers.Text = "软件版本:" + version + " 资源包版本:" + System.IO.File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver");
-                else vers.Text = "软件版本:" + version + " [无资源包]";
-               // if (Environment.OSVersion.Version.Major >= 10.0 && AppCenter.IsEnabledAsync().Result) t.Text = "AppCenter Running.V" + AppCenter.SdkVersion;
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) vers.Text = "软件版本:" + version + " 资源包版本:" + System.IO.File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver");
+            else vers.Text = "软件版本:" + version + " [无资源包]";
+                // if (Environment.OSVersion.Version.Major >= 10.0 && AppCenter.IsEnabledAsync().Result) t.Text = "AppCenter Running.V" + AppCenter.SdkVersion;
             }
-       ));
+   ));
 
             _ = GetUpdateLog();
         }
@@ -70,7 +70,7 @@ namespace CokeeDP
             }
             catch (Exception e)
             {
-         
+
                 ProcessErr(e);
                 update1.Text = e.ToString();
             }
@@ -78,7 +78,7 @@ namespace CokeeDP
 
         public void ProcessErr(Exception e)
         {
-            NoticeBox.Show(e.ToString(), "Error", MessageBoxIcon.Error,true,5000);
+            NoticeBox.Show(e.ToString(), "Error", MessageBoxIcon.Error, true, 5000);
             Log.Error(e, "Error");
             if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
@@ -98,7 +98,7 @@ namespace CokeeDP
                 if (n.Tag.ToString() == "City") CokeeDP.Properties.Settings.Default.City = n.Text;
                 if (n.Tag.ToString() == "ttN") CokeeDP.Properties.Settings.Default.CountdownName = n.Text;
                 if (n.Tag.ToString() == "ttT") CokeeDP.Properties.Settings.Default.timeTod = n.Text;
-                if(n.Tag.ToString()== "audiofolder") CokeeDP.Properties.Settings.Default.AudioFolder = n.Text;
+                if (n.Tag.ToString() == "audiofolder") CokeeDP.Properties.Settings.Default.AudioFolder = n.Text;
             }
             catch (Exception ex)
             {
@@ -106,12 +106,12 @@ namespace CokeeDP
             }
         }
 
-        private void Button_Click(object sender,RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             #region checkFolderExist
-            if(!Directory.Exists(Properties.Settings.Default.AudioFolder))NoticeBox.Show("警告:媒体文件夹不存在,请重新输入.","Error",MessageBoxIcon.Error,true,3000);
+            if (!Directory.Exists(Properties.Settings.Default.AudioFolder)) NoticeBox.Show("警告:媒体文件夹不存在,请重新输入.", "Error", MessageBoxIcon.Error, true, 3000);
             #endregion
-            NoticeBox.Show("Saved!ヾ(≧▽≦*)o","info",MessageBoxIcon.Success,true,3000);
+            NoticeBox.Show("Saved!ヾ(≧▽≦*)o", "info", MessageBoxIcon.Success, true, 3000);
             CokeeDP.Properties.Settings.Default.Save();
         }
 
@@ -120,12 +120,12 @@ namespace CokeeDP
             try
             {
                 DirectoryInfo di = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-               if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ImageItem()
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver")) LsbExamples.Items.Add(new ImageItem()
                 {
                     Name = "[资源包]Version:" + File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\ver"),
                     Path = "respack",
                     ImageSr = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.jpg"))
-                });            
+                });
                 FileInfo[] afi = di.GetFiles("*.png");
                 Uri bgp; BitmapImage a = new BitmapImage();
                 foreach (FileInfo i in afi)
@@ -135,20 +135,20 @@ namespace CokeeDP
                     //a.StreamSource = new FileStream(di.FullName + "\\tmp000", FileMode.OpenOrCreate);
                     var ar = new BitmapImage(bgp);
                     ar.DecodePixelWidth = 10;
-                    ar.DecodePixelHeight=10;
+                    ar.DecodePixelHeight = 10;
                     //ar.BeginInit();
                     LsbExamples.Items.Add(new ImageItem()
                     {
                         Name = i.Name + "(" + ar.PixelWidth + "x" + ar.PixelHeight + ")",
                         Path = i.FullName,
                         ImageSr = ar
-                    });        
+                    });
 
-                }             
+                }
             }
             catch (Exception e)
             {
-                NoticeBox.Show(e.ToString(),"Error",MessageBoxIcon.Error,true,5000);
+                NoticeBox.Show(e.ToString(), "Error", MessageBoxIcon.Error, true, 5000);
                 ProcessErr(e);
             }
         }
@@ -160,7 +160,7 @@ namespace CokeeDP
             {
                 ComboBox a = (ComboBox)e.Source;
                 ComboBoxItem b = (ComboBoxItem)a.SelectedItem;
-                if (b.Tag.ToString() != "edit"&&b.Tag.ToString()!=null) { hk.Text = "https://v1.hitokoto.cn/?c=" + b.Tag.ToString(); CokeeDP.Properties.Settings.Default.OneWordsApi = hk.Text; }
+                if (b.Tag.ToString() != "edit" && b.Tag.ToString() != null) { hk.Text = "https://v1.hitokoto.cn/?c=" + b.Tag.ToString(); CokeeDP.Properties.Settings.Default.OneWordsApi = hk.Text; }
                 //NoticeBox.Show(sender.ToString()+"##"+e.ToString(), true, MessageBoxIcon.Info);
             }
             catch (Exception ex)
@@ -171,7 +171,7 @@ namespace CokeeDP
 
         private void Cilck(object sender, RoutedEventArgs e)
         {
-            NoticeBox.Show(sender.ToString(),"tips",MessageBoxIcon.Info,true,5000);
+            NoticeBox.Show(sender.ToString(), "tips", MessageBoxIcon.Info, true, 5000);
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -220,7 +220,7 @@ namespace CokeeDP
                     File.Copy(openFileDialog.FileName, GenNPicName());
                     //LsbExamples.Items.Clear();
                     loadPic();
-                    NoticeBox.Show("Done", "info", MessageBoxIcon.Success, true,3000);
+                    NoticeBox.Show("Done", "info", MessageBoxIcon.Success, true, 3000);
                 }
             }
             catch (Exception ex)
@@ -234,43 +234,43 @@ namespace CokeeDP
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
             CokeeDP.Properties.Settings.Default.BingWappEnable = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.BingWappEnable.ToString(), "info", MessageBoxIcon.Success, true,3000);
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.BingWappEnable.ToString(), "info", MessageBoxIcon.Success, true, 3000);
             CokeeDP.Properties.Settings.Default.Save();
-           /* if (Environment.OSVersion.Version.Major >= 10.0) Analytics.TrackEvent("Test", new Dictionary<string, string>
-            {
-                {"BingWappEnable",CokeeDP.Properties.Settings.Default.BingWappEnable.ToString()}
-            });                  */
+            /* if (Environment.OSVersion.Version.Major >= 10.0) Analytics.TrackEvent("Test", new Dictionary<string, string>
+             {
+                 {"BingWappEnable",CokeeDP.Properties.Settings.Default.BingWappEnable.ToString()}
+             });                  */
         }
 
-        private void child(object sender,RoutedEventArgs e)
+        private void child(object sender, RoutedEventArgs e)
         {
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
             CokeeDP.Properties.Settings.Default.isChildLocked = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.isChildLocked.ToString(),"info",MessageBoxIcon.Success,true,3000);
-            
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.isChildLocked.ToString(), "info", MessageBoxIcon.Success, true, 3000);
+
         }
 
-        private void birth_impory(object sender,RoutedEventArgs e)
+        private void birth_impory(object sender, RoutedEventArgs e)
         {
-            NoticeBox.Show("咕咕咕","鸽了🕊",MessageBoxIcon.Info,true,3000);
+            NoticeBox.Show("咕咕咕", "鸽了🕊", MessageBoxIcon.Info, true, 3000);
         }
 
-        private void DaoJiShiCheck(object sender,RoutedEventArgs e)
+        private void DaoJiShiCheck(object sender, RoutedEventArgs e)
         {
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
             CokeeDP.Properties.Settings.Default.enableBigTimeTo = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.enableBigTimeTo.ToString(),"info",MessageBoxIcon.Info,true,3000);
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.enableBigTimeTo.ToString(), "info", MessageBoxIcon.Info, true, 3000);
             CokeeDP.Properties.Settings.Default.Save();
         }
 
-        private void debug(object sender,RoutedEventArgs e)
+        private void debug(object sender, RoutedEventArgs e)
         {
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
             CokeeDP.Properties.Settings.Default.isDebug = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.isDebug.ToString(),"info",MessageBoxIcon.Info,true,3000);
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.isDebug.ToString(), "info", MessageBoxIcon.Info, true, 3000);
             CokeeDP.Properties.Settings.Default.Save();
             /*if(Environment.OSVersion.Version.Major >= 10.0) Analytics.TrackEvent("Test",new Dictionary<string,string>
             {
@@ -278,25 +278,25 @@ namespace CokeeDP
             });           */
         }
 
-        private void CheckChildPwBtnHandler(object sender,RoutedEventArgs e)
+        private void CheckChildPwBtnHandler(object sender, RoutedEventArgs e)
         {
-            if(timeto_Copy.Text.Contains("cokee*"))
+            if (timeto_Copy.Text.Contains("cokee*"))
             {
-                NoticeBox.Show("Saved!ヾ(≧▽≦*)o","info",MessageBoxIcon.Success,true,3000);
+                NoticeBox.Show("Saved!ヾ(≧▽≦*)o", "info", MessageBoxIcon.Success, true, 3000);
                 CokeeDP.Properties.Settings.Default.Save();
             }
             else
             {
-                NoticeBox.Show("笨蛋(╯‵□′)╯︵┻━┻\nE/SecurityHelper:Password Error.","info",MessageBoxIcon.Error,true,3000);
+                NoticeBox.Show("笨蛋(╯‵□′)╯︵┻━┻\nE/SecurityHelper:Password Error.", "info", MessageBoxIcon.Error, true, 3000);
             }
         }
 
-        private void UHDCkbox(object sender,RoutedEventArgs e)
+        private void UHDCkbox(object sender, RoutedEventArgs e)
         {
             var a = (CheckBox)sender;
             // if (a.IsChecked == null) { NoticeBox.Show("Null>_<", "info", MessageBoxIcon.Success, 3000); CokeeDP.Properties.Settings.Default.BingWappEnable = false;return; }
             CokeeDP.Properties.Settings.Default.IsUHDWapp = (bool)a.IsChecked;
-            NoticeBox.Show(CokeeDP.Properties.Settings.Default.IsUHDWapp.ToString(),"info",MessageBoxIcon.Info,true,3000);
+            NoticeBox.Show(CokeeDP.Properties.Settings.Default.IsUHDWapp.ToString(), "info", MessageBoxIcon.Info, true, 3000);
             CokeeDP.Properties.Settings.Default.Save();
         }
     }
