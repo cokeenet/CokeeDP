@@ -511,6 +511,7 @@
                     BorderBrush="{x:Null}"
                     BorderThickness="1" Click="kbshow" Content="触摸键盘" FontSize="11" Foreground="White"
                     MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
+                <ui:Snackbar Content="Snackbar" Canvas.Left="717" Canvas.Top="951" HorizontalAlignment="Left" VerticalAlignment="Top" Width="486"/>
             </Canvas>
         </Viewbox>
     </Grid>

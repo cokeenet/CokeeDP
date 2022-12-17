@@ -46,12 +46,12 @@
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="加载4K清晰度 (UHD)的壁纸" />
+                        FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P清晰度" />
+                        FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:TextBox Width="541"/>
+            <ui:TextBox Width="481"/>
         </ui:CardControl>
     </Grid>
 </ui:UiPage>

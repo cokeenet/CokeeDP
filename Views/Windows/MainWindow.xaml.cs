@@ -2,7 +2,6 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -26,7 +25,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -51,9 +49,9 @@ namespace CokeeDP.Views.WIndows
         public const int GENERIC_WRITE = 0x40000000;
         public const int IOCTL_STORAGE_EJECT_MEDIA = 0x2d4808;
         public const int WM_DEVICECHANGE = 0x219;
-        private static Timer OneWordsTimeInterval;
-        private static Timer sec;
-        private static Timer wet;
+        private static Timer OneWordsTimer;
+        private static Timer SecondTimer;
+        private static Timer WeatherTimer;
         private FileInfo[] afi,Weaicon;
         private FileInfo[] audio;
         private int AudioNum = 0;
@@ -66,7 +64,7 @@ namespace CokeeDP.Views.WIndows
         private bool IsPlaying = false, AudioLoaded = false, IsReplay = true;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime tod;
-        private bool usingBing = true;
+        private bool UsingBing = true;
         private double ver = 3.0;
 
         public MainWindow()
@@ -88,7 +86,7 @@ namespace CokeeDP.Views.WIndows
                     BigCountdown.Visibility = Visibility.Visible;
                     timeTod.Visibility = Visibility.Collapsed;
                 }
-                if(usingBing)
+                if(UsingBing)
                 {
                     _ = GetBingWapp();
                 }
@@ -118,7 +116,7 @@ namespace CokeeDP.Views.WIndows
         {
             try
             {
-                if(usingBing)
+                if(UsingBing)
                 {
                     if(bing >= 8 || bing <= -2) bing = 0;
                     if (!direction) bing++;
@@ -192,23 +190,23 @@ namespace CokeeDP.Views.WIndows
             {
                 if(Properties.Settings.Default.timeTod.Length == 0) { tod = new(2025,6,5,00,00,00); Properties.Settings.Default.timeTod = tod.ToString(); }
                 else tod = DateTime.Parse(Properties.Settings.Default.timeTod);
-                if(Properties.Settings.Default.hk_api.Length == 0) Properties.Settings.Default.hk_api = "https://v1.hitokoto.cn/?c=k";
-                if(Convert.ToInt32(Properties.Settings.Default.hkc) <= 300) Properties.Settings.Default.hkc = "300";
-                if(Convert.ToInt32(Properties.Settings.Default.wea) <= 9800) Properties.Settings.Default.wea = "9800";
-                if(Properties.Settings.Default.timeTo.Length <= 1) Properties.Settings.Default.timeTo = "高考";
+                if(Properties.Settings.Default.OneWordsApi.Length == 0) Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=k";
+                if(Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) <= 300) Properties.Settings.Default.OneWordsTimeInterval = "300";
+                if(Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval) <= 9800) Properties.Settings.Default.WeatherTimeInterval = "9800";
+                if(Properties.Settings.Default.CountdownName.Length <= 1) Properties.Settings.Default.CountdownName = "高考";
                 if(Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;
-                usingBing = Properties.Settings.Default.usingBing;
+                UsingBing = Properties.Settings.Default.BingWappEnable;
                 AudioFolder = Properties.Settings.Default.AudioFolder;
                 Properties.Settings.Default.Save();
-                SetTimer(sec,1,hkc,Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval),wet,Convert.ToInt32(Properties.Settings.Default.wea));
+                SetTimer(SecondTimer,1,OneWordsTimer,Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval),WeatherTimer,Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval));
                
             }
             catch(Exception ex)
             {
                 ProcessErr(ex);
                 log.Text = ex.ToString();
-                Properties.Settings.Default.hkc = "300";
-                Properties.Settings.Default.wea = "9800";
+                Properties.Settings.Default.OneWordsTimeInterval = "300";
+                Properties.Settings.Default.WeatherTimeInterval = "9800";
             }
         }
 
@@ -227,7 +225,7 @@ namespace CokeeDP.Views.WIndows
         {
 
         }
-        public void OnOneSec(object source,ElapsedEventArgs e)
+        public void OnOneSecondTimer(object source,ElapsedEventArgs e)
         {
             try
             {
@@ -241,7 +239,7 @@ namespace CokeeDP.Views.WIndows
                     big_tod.Content = ((int)tod.Subtract(DateTime.Now).TotalDays);
                 }
                 else
-                    timeTod.Content = "距离[" + Properties.Settings.Default.timeTo + "]还有" + tod.Subtract(DateTime.Now).TotalDays + "天";
+                    timeTod.Content = "距离[" + Properties.Settings.Default.CountdownName + "]还有" + tod.Subtract(DateTime.Now).TotalDays + "天";
                 if(DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
                 {
                     OnNewDay();
@@ -250,7 +248,7 @@ namespace CokeeDP.Views.WIndows
                 {
                     //  audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + "/" + MediaDuring;
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
-                    //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
+                    //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
                 // new Thread(CheckTasks).Start();          // 创建线程
             }));
@@ -263,6 +261,7 @@ namespace CokeeDP.Views.WIndows
 
         public void ProcessErr(Exception e)
         {
+            snackbarService.SetSnackbarControl()
             snackbarService.Show("发生错误",e.Message+"  "+e.StackTrace,SymbolRegular.ErrorCircle24);
             Log.Error(e,"Error");
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
@@ -271,7 +270,7 @@ namespace CokeeDP.Views.WIndows
         public void SetTimer(System.Timers.Timer a,int ms,System.Timers.Timer b,int ms1,System.Timers.Timer c,int ms2)
         {
             // Create timers with a interval.
-            a = new System.Timers.Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSec); a.AutoReset = true; a.Enabled = true;
+            a = new System.Timers.Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
             b = new System.Timers.Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
             c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
@@ -375,7 +374,7 @@ namespace CokeeDP.Views.WIndows
                      return;
                  }*/
                 var client = new HttpClient();
-                JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.hk_api));
+                JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
                 hitokoto.Content = who == "null"
@@ -582,7 +581,7 @@ namespace CokeeDP.Views.WIndows
          string lpFileName,
          uint dwDesireAccess,
          uint dwShareMode,
-         IntPtr SecurityAttributes,
+         IntPtr SecondTimerurityAttributes,
          uint dwCreationDisposition,
          uint dwFlagsAndAttributes,
          IntPtr hTemplateFile);

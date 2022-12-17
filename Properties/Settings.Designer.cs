@@ -122,12 +122,12 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2025/06/05 00:00:00")]
-        public string timeTod {
+        public string CountdownTime {
             get {
-                return ((string)(this["timeTod"]));
+                return ((string)(this["CountdownTime"]));
             }
             set {
-                this["timeTod"] = value;
+                this["CountdownTime"] = value;
             }
         }
         
@@ -158,35 +158,12 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool enableBigTimeTo {
+        public bool EnableBigTimeTo {
             get {
-                return ((bool)(this["enableBigTimeTo"]));
+                return ((bool)(this["EnableBigTimeTo"]));
             }
             set {
-                this["enableBigTimeTo"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("108, 188, 234")]
-        public global::System.Drawing.Color accColor {
-            get {
-                return ((global::System.Drawing.Color)(this["accColor"]));
-            }
-            set {
-                this["accColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Drawing.Color backColor {
-            get {
-                return ((global::System.Drawing.Color)(this["backColor"]));
-            }
-            set {
-                this["backColor"] = value;
+                this["EnableBigTimeTo"] = value;
             }
         }
         
@@ -259,6 +236,42 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["CityId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2025/06/05 00:00:00")]
+        public string timeTod {
+            get {
+                return ((string)(this["timeTod"]));
+            }
+            set {
+                this["timeTod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string backColor {
+            get {
+                return ((string)(this["backColor"]));
+            }
+            set {
+                this["backColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("108, 188, 234")]
+        public string f {
+            get {
+                return ((string)(this["f"]));
+            }
+            set {
+                this["f"] = value;
             }
         }
     }
