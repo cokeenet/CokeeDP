@@ -262,7 +262,7 @@ namespace CokeeDP.Views.WIndows
         public void ProcessErr(Exception e)
         {
             snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.Show("发生错误",e.Message+"  "+e.StackTrace,SymbolRegular.ErrorCircle24);
+            snackbarService.Show("发生错误",e.Message+Environment.NewLine+e.StackTrace,SymbolRegular.ErrorCircle24);
             Log.Error(e,"Error");
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
