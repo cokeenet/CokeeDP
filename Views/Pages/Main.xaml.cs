@@ -48,28 +48,28 @@ namespace CokeeDP.Views.Pages
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
                 case "dark":
-                    if((bool)toggleSwitch.IsChecked) { Theme.Apply(ThemeType.Dark,BackgroundType.Mica); break; }
-                    else { Theme.Apply(ThemeType.Light,BackgroundType.Mica); break; }
+                    if ((bool)toggleSwitch.IsChecked) { Theme.Apply(ThemeType.Dark, BackgroundType.Mica); break; }
+                    else { Theme.Apply(ThemeType.Light, BackgroundType.Mica); break; }
                 default:
                     break;
             }
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender,TextChangedEventArgs e)
+        private void TextBodHandler(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch(textBox.Tag)
+            switch (textBox.Tag)
             {
                 case "audioDir":
-                    Properties.Settings.Default.AudioFolder = textBox.Text;break;
-                    //case
+                    Properties.Settings.Default.AudioFolder = textBox.Text; break;
+                //case
                 default:
                     break;
             }
             Properties.Settings.Default.Save();
-            snackbarService.Show("Saved",Properties.Settings.Default.AudioFolder);
-            
+            snackbarService.Show("Saved", Properties.Settings.Default.AudioFolder);
+
         }
     }
 }
