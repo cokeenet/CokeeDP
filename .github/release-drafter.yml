@@ -6,4 +6,4 @@ template: |
   >查看 **[✨完整更新日志](https://github.com/cokeenet/CokeeDP/.github/Versions/v$RESOLVED_VERSION.md)**
   
   ---
-  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/Cokee/CokeeDP/v$RESOLVED_VERSION/total?style=for-the-badge)
+  ![GitHub release (latest by date)](https://img.shields.io/github/downloads/cokeenet/CokeeDP/v$RESOLVED_VERSION/total?style=for-the-badge)
