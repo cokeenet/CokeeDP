@@ -11,7 +11,7 @@ namespace CokeeDP
     /// <summary>
     /// Settings.xaml 的交互逻辑
     /// </summary>                                                                                                                 
-    
+
     public partial class SettingsWindow : UiWindow
     {
         public SettingsWindow()
@@ -19,9 +19,9 @@ namespace CokeeDP
             InitializeComponent();
         }
 
-        private void load(object sender,RoutedEventArgs e)
+        private void load(object sender, RoutedEventArgs e)
         {
-            
+
         }
     }
 }
