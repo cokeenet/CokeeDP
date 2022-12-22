@@ -9,10 +9,25 @@
       d:DesignHeight="450" d:DesignWidth="800" 
       Title="Main">
 
-    <Grid>
+    <Grid Margin="5,0,5,0">
+        <Grid.ColumnDefinitions />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <TextBlock
             Margin="5,10"
             FontSize="20"
-            Text="CokeeDP 设置" />
+            Text="CokeeDP 循星🌟" Grid.Row="3" />
     </Grid>
 </ui:UiPage>

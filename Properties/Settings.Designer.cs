@@ -238,41 +238,5 @@ namespace CokeeDP.Properties {
                 this["CityId"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2025/06/05 00:00:00")]
-        public string timeTod {
-            get {
-                return ((string)(this["timeTod"]));
-            }
-            set {
-                this["timeTod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string backColor {
-            get {
-                return ((string)(this["backColor"]));
-            }
-            set {
-                this["backColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("108, 188, 234")]
-        public string f {
-            get {
-                return ((string)(this["f"]));
-            }
-            set {
-                this["f"] = value;
-            }
-        }
     }
 }

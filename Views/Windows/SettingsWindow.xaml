@@ -1,8 +1,7 @@
 ﻿<ui:UiWindow
     x:Class="CokeeDP.SettingsWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Settings" Width="800" Height="450" WindowStyle="None" WindowCornerPreference="Round"
-    xmlns:pages="clr-namespace:CokeeDP.Views.Pages" 
-    mc:Ignorable="d">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pages="clr-namespace:CokeeDP.Views.Pages" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Settings" Width="880"
+    Height="500" WindowCornerPreference="Round" WindowStyle="None" mc:Ignorable="d" Loaded="load">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -10,13 +9,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ui:TitleBar
-            Title="CokeeDP Settings" Grid.Row="0"
-            CanMaximize="False"
-            Icon="pack://application:,,,/Image/hd1.jpg"
-            ShowMaximize="False"
-            ShowMinimize="True"
-            UseSnapLayout="True" />
-        <Grid Margin="3,3,3,3" Grid.Row="1">
+            Title="CokeeDP Settings" Grid.Row="0" Margin="0,-5,0,0" HorizontalAlignment="Stretch" CanMaximize="False"
+            Icon="pack://application:,,,/Image/hd1.jpg" ShowMaximize="False" ShowMinimize="True" UseSnapLayout="True" />
+        <Grid Grid.Row="1" Margin="3,3,3,3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -28,26 +23,24 @@
                 SelectedPageIndex="0">
                 <ui:NavigationStore.Items>
                     <ui:NavigationItem
-                        Content="设置" Icon="Home24" PageType="{x:Type pages:Main}"
-                     />
+                        Content="设置" Icon="Home24"
+                        PageType="{x:Type pages:Main}" />
                     <ui:NavigationSeparator />
-                    <ui:NavigationItem
-                        Content="定时任务" Icon="ClockAlarm32"
-                    />
+                    <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" />
 
 
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
                     <ui:NavigationItem
-                        Content="关于" Icon="Info24" PageType="{x:Type pages:About}"
-                   />
+                        Content="关于" Icon="Info24"
+                        PageType="{x:Type pages:About}" />
                 </ui:NavigationStore.Footer>
             </ui:NavigationStore>
             <Border
-                Grid.Column="1" Margin="0"
-                CornerRadius="8,0,0,0">
+                Grid.Column="1" Margin="0" CornerRadius="8,0,0,0">
                 <Frame x:Name="RootFrame" Margin="4,8" />
             </Border>
         </Grid>
+
     </Grid>
 </ui:UiWindow>

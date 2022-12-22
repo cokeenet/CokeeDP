@@ -56,14 +56,5 @@
     <Setting Name="CityId" Type="System.String" Scope="User">
       <Value Profile="(Default)">101220807</Value>
     </Setting>
-    <Setting Name="timeTod" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2025/06/05 00:00:00</Value>
-    </Setting>
-    <Setting Name="backColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="f" Type="System.String" Scope="User">
-      <Value Profile="(Default)">108, 188, 234</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
