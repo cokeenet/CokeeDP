@@ -72,16 +72,15 @@
                                     <DropShadowEffect Opacity="0.4" />
                                 </Label.Effect>
                             </Label>
-                            <ScrollViewer Margin="0,40,0,0" VerticalScrollBarVisibility="Visible">
+                            <ScrollViewer Margin="0,40,0,0">
                                 <Grid>
                                     <TextBox
-                                        x:Name="DescPara1" Height="197" MaxHeight="368"
+                                        x:Name="DescPara1" Height="197" MaxHeight="385"
                                         Background="{x:Null}"
                                         BorderBrush="{x:Null}"
                                         CaretBrush="{x:Null}"
                                         FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black" IsReadOnlyCaretVisible="True"
                                         Style="{x:Null}"
-                                        Template="{x:Null}"
                                         TextWrapping="WrapWithOverflow">
                                         <TextBox.Effect>
                                             <DropShadowEffect Opacity="0.4" />

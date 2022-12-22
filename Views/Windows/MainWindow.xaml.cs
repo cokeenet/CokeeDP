@@ -68,7 +68,7 @@ namespace CokeeDP.Views.WIndows
         //U盘插入后，OS的底层会自动检测，然后向应用程序发送“硬件设备状态改变“的消息
         private string disk, weaWr, hkUrl, nowDowning = "";
 
-        private SnackbarService snackbarService = new SnackbarService();
+        private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsReplay = true;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime;
@@ -274,8 +274,11 @@ namespace CokeeDP.Views.WIndows
 
         public void ProcessErr(Exception e)
         {
-            snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.Show("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
+            if(this.IsLoaded)
+            {
+                snackbarService.SetSnackbarControl(snackbar);
+                snackbarService.Show("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
+            }
             Log.Error(e,"Error");
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
@@ -418,7 +421,8 @@ namespace CokeeDP.Views.WIndows
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 br1.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
-                if(snackbarService.GetSnackbarControl() == null) snackbarService.SetSnackbarControl(snackbar);
+                snackbarService = new SnackbarService();
+                snackbarService.SetSnackbarControl(snackbar);
                 ThemeService themeService = new ThemeService();
                 themeService.SetTheme(ThemeType.Light);
                 Theme.Apply(ThemeType.Light,BackgroundType.Mica);
