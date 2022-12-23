@@ -32,7 +32,7 @@ namespace CokeeDP.Views.Pages
             InitializeComponent();
         }
 
-        private void OnLoaded(object sender,RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             snackbarService = new SnackbarService();
             snackbarService.SetSnackbarControl(snackbar);
@@ -40,24 +40,24 @@ namespace CokeeDP.Views.Pages
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
         }
 
-        private void OnSwitchChecked(object sender,RoutedEventArgs e)
+        private void OnSwitchChecked(object sender, RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            switch(toggleSwitch.Tag)
+            switch (toggleSwitch.Tag)
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
                 case "dark":
-                    if((bool)toggleSwitch.IsChecked)
+                    if ((bool)toggleSwitch.IsChecked)
                     {
-                        Theme.Apply(ThemeType.Dark,BackgroundType.Mica);
+                        Theme.Apply(ThemeType.Dark, BackgroundType.Mica);
                         break;
                     }
                     else
                     {
-                        Theme.Apply(ThemeType.Light,BackgroundType.Mica);
+                        Theme.Apply(ThemeType.Light, BackgroundType.Mica);
                         break;
                     }
                 default:
@@ -66,10 +66,10 @@ namespace CokeeDP.Views.Pages
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender,TextChangedEventArgs e)
+        private void TextBodHandler(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch(textBox.Tag)
+            switch (textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
