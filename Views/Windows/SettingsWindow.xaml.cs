@@ -19,7 +19,7 @@ namespace CokeeDP.Views.Windows
             InitializeComponent();
         }
 
-        private void load(object sender,RoutedEventArgs e)
+        private void load(object sender, RoutedEventArgs e)
         {
         }
     }
