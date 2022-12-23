@@ -62,35 +62,6 @@
                     HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
                     Foreground="{x:Null}"
                     TextBlock.FontSize="40" TextBlock.Foreground="White">
-                    <ui:Card BorderBrush="{x:Null}">
-                        <Grid Margin="0,0,-1,0">
-                            <Label
-                                x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
-                                Background="{x:Null}"
-                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4" />
-                                </Label.Effect>
-                            </Label>
-                            <ScrollViewer Margin="0,40,0,0">
-                                <Grid>
-                                    <TextBox
-                                        x:Name="DescPara1" Height="197" MaxHeight="385"
-                                        Background="{x:Null}"
-                                        BorderBrush="{x:Null}"
-                                        CaretBrush="{x:Null}"
-                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black" IsReadOnlyCaretVisible="True"
-                                        Style="{x:Null}"
-                                        TextWrapping="WrapWithOverflow">
-                                        <TextBox.Effect>
-                                            <DropShadowEffect Opacity="0.4" />
-                                        </TextBox.Effect>
-                                    </TextBox>
-                                </Grid>
-                            </ScrollViewer>
-                        </Grid>
-                    </ui:Card>
-
                     <Border>
                         <Grid>
                             <ui:Button
@@ -160,6 +131,35 @@
                             </svgc:SvgViewbox>
                         </Grid>
                     </Border>
+                    <ui:Card>
+                        <Grid Margin="0,0,-1,0">
+                            <Label
+                                x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
+                                <Label.Effect>
+                                    <DropShadowEffect Opacity="0.4" />
+                                </Label.Effect>
+                            </Label>
+                            <ScrollViewer Margin="0,40,0,0">
+                                <Grid>
+                                    <TextBox
+                                        x:Name="DescPara1" Height="197" MaxHeight="385"
+                                        Background="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        CaretBrush="{x:Null}"
+                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black" IsReadOnlyCaretVisible="True"
+                                        Style="{x:Null}"
+                                        Text="01.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp3" TextWrapping="WrapWithOverflow">
+                                        <TextBox.Effect>
+                                            <DropShadowEffect Opacity="0.4" />
+                                        </TextBox.Effect>
+                                    </TextBox>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </ui:Card>
+
                     <Border>
                         <Grid>
                             <ui:Button
@@ -277,8 +277,8 @@
                     </Label.Effect>
                 </Label>
                 <Label
-                    x:Name="hitokoto" Grid.ColumnSpan="2" Margin="20,1021,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    HorizontalContentAlignment="Left"
+                    x:Name="hitokoto" Grid.ColumnSpan="2" Height="40" Margin="20,1021,0,0" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" HorizontalContentAlignment="Left"
                     Background="{x:Null}"
                     Content="Keep your heart alive🌟" FontFamily="Microsoft YaHei UI Light" FontSize="28" Foreground="White" MouseDoubleClick="hitokoto_MouseDown"
                     MouseRightButtonDown="Like_menu">
@@ -296,7 +296,7 @@
                 <ui:Card
                     x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"
                     HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B2FFFFFF" BorderBrush="#FFE0BFBF" BorderThickness="2,2,2,2"
-                    Visibility="Collapsed">
+                    Visibility="Visible">
                     <Grid>
                         <ui:SymbolIcon
                             Width="72" Height="72" Margin="-9,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -495,13 +495,13 @@
                             Height="42" Margin="202,134,61,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="1"
                             Click="PlayerBtnProc" FontSize="20" Foreground="White" Icon="Next48" Tag="next" />
                         <ui:Button
-                            Width="72" Height="30" Margin="0,52,10,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Width="72" Height="30" Margin="0,52,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
                             Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />
                         <Slider
                             x:Name="VolumeSlider" Margin="160,98,8,58" Background="#FF868686" LargeChange="10" Maximum="100"
                             RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
                         <ui:Button
-                            Width="97" Height="30" Margin="124,52,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
+                            Width="97" Height="30" Margin="134,52,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
                             Content="单曲循环" FontSize="13" Icon="ArrowRepeatAll24" />
                         <Label
                             x:Name="audioTime" Margin="44,27,130,130" HorizontalContentAlignment="Left"

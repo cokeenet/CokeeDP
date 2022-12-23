@@ -110,7 +110,7 @@ namespace CokeeDP.Views.Windows
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
                     if(dir.Exists)
                     {
-                        AudioArray = dir.GetFiles("*.mp3|*.ogg|*.wmv|*.m4a");
+                        AudioArray = dir.GetFiles("*.mp3|*.wmv|*.m4a");
                     }
                 }
                 //MessageBoxX.Show(AudioArray.Length.ToString());
@@ -129,10 +129,10 @@ namespace CokeeDP.Views.Windows
             {
                 if(UsingBing)
                 {
-                    if(bing >= 8 || bing <= -2) bing = 0;
+                    if(bing >= 6 || bing <= 0) bing = 0;
                     if(!direction) bing++;
                     else bing--;
-                    if(bing >= 8 || bing <= -1) bing = 0;
+                    if(bing >= 6 || bing <= 0) bing = 0;
                     _ = GetBingWapp();
                     return;
                 }
@@ -291,20 +291,14 @@ namespace CokeeDP.Views.Windows
             c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
 
-        public Uri GetWeatherIcon(int code)
+        public Stream GetWeatherIcon(int code)
         {
             try
             {
-                if(!File.Exists(("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg")))
-                {
-                    Log.Debug("icon not found.return " + "pack://application:,,,/Icons/" + code.ToString() + ".svg");
-                    return new Uri("pack://application:,,,/Icons/" + code.ToString() + ".svg");
-                }
-                else
-                {
-                    Log.Debug("icon found.");
-                    return new Uri("pack://application:,,,/Icons/" + code.ToString() + "-fill.svg");
-                }
+                System.Reflection.Assembly assembly = GetType().Assembly;
+                Stream streamSmall = assembly.GetManifestResourceStream("CokeeDP.Icons." + code.ToString() + "-fill.svg");
+                if(streamSmall == null) streamSmall = assembly.GetManifestResourceStream("CokeeDP.Icons." + code.ToString() + ".svg");
+                return streamSmall;
             }
             catch(Exception ex)
             {
@@ -320,12 +314,11 @@ namespace CokeeDP.Views.Windows
                 var client = new HttpClient(); var a = new WebClient();
                 var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\blkimg.txt"))
-                    if(File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\blkimg.txt").Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
-                    {
-                        ChangeWapp(false);
-                        return;
-                    }
+                if(Properties.Settings.Default.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
+                {
+                    ChangeWapp(false);
+                    return;
+                }
                 BingImageInfo.Content = dt["data"]["images"][bing]["title"].ToString() + " (" + dt["data"]["images"][bing]["copyright"] + ")  | " + dt["data"]["images"][bing]["isoDate"].ToString();
                 var urlstr = "https://www.bing.com/" + dt["data"]["images"][bing]["imageUrls"]["landscape"]["highDef"];
                 CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
@@ -489,13 +482,12 @@ namespace CokeeDP.Views.Windows
                 wea4.Text = dt["daily"][3]["fxDate"].ToString().Substring(5) + " " + dt["daily"][3]["textDay"].ToString() + "," + dt["daily"][3]["tempMax"].ToString() + "°C~" + dt["daily"][3]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][3]["humidity"].ToString();
                 wea5.Text = dt["daily"][4]["fxDate"].ToString().Substring(5) + " " + dt["daily"][4]["textDay"].ToString() + "," + dt["daily"][4]["tempMax"].ToString() + "°C~" + dt["daily"][4]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][4]["humidity"].ToString();
                 wea6.Text = dt["daily"][5]["fxDate"].ToString().Substring(5) + " " + dt["daily"][5]["textDay"].ToString() + "," + dt["daily"][5]["tempMax"].ToString() + "°C~" + dt["daily"][5]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][5]["humidity"].ToString();
-
-                w1.Source = GetWeatherIcon((int)dt["daily"][0]["iconDay"]);
-                w2.Source = GetWeatherIcon((int)dt["daily"][1]["iconDay"]);
-                w3.Source = GetWeatherIcon((int)dt["daily"][2]["iconDay"]);
-                w4.Source = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
-                w5.Source = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
-                w6.Source = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
+                w1.StreamSource = GetWeatherIcon((int)dt["daily"][0]["iconDay"]);
+                w2.StreamSource = GetWeatherIcon((int)dt["daily"][1]["iconDay"]);
+                w3.StreamSource = GetWeatherIcon((int)dt["daily"][2]["iconDay"]);
+                w4.StreamSource = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
+                w5.StreamSource = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
+                w6.StreamSource = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
             }
             catch(Exception ex)
             {
@@ -704,27 +696,33 @@ namespace CokeeDP.Views.Windows
              }      */
         }
 
+        private Object locker = new Object();
+
         private void ShowPlayer(object sender,MouseButtonEventArgs e)
         {
             try
             {
-                DoubleAnimation anim1 = new DoubleAnimation(0,TimeSpan.FromSeconds(1));
-                DoubleAnimation anim2 = new DoubleAnimation(-365,TimeSpan.FromSeconds(1));
-                anim1.EasingFunction = new CircleEase();
-                anim2.Completed += Anim2_Completed;
-                anim2.EasingFunction = new CircleEase();
-                if(music.Visibility == Visibility.Collapsed)
+                lock(locker)
                 {
-                    music.Visibility = Visibility.Visible;
-                    tranT.BeginAnimation(TranslateTransform.XProperty,anim1);
+                    DoubleAnimation anim1 = new DoubleAnimation(0,TimeSpan.FromSeconds(1));
+                    DoubleAnimation anim2 = new DoubleAnimation(-365,TimeSpan.FromSeconds(1));
+                    anim1.EasingFunction = new CircleEase();
+                    anim2.Completed += Anim2_Completed;
+                    anim2.EasingFunction = new CircleEase();
+                    if(music.Visibility == Visibility.Collapsed)
+                    {
+                        music.Visibility = Visibility.Visible;
+                        tranT.BeginAnimation(TranslateTransform.XProperty,anim1);
+                    }
+                    else if(music.Visibility == Visibility.Visible)
+                    {
+                        tranT.BeginAnimation(TranslateTransform.XProperty,anim2);
+                        IsPlaying = false;
+                        playbtn.Icon = SymbolRegular.Play48;
+                        mediaplayer.Pause();
+                    }
                 }
-                else if(music.Visibility == Visibility.Visible)
-                {
-                    tranT.BeginAnimation(TranslateTransform.XProperty,anim2);
-                    IsPlaying = false;
-                    playbtn.Icon = SymbolRegular.Play48;
-                    mediaplayer.Pause();
-                }
+
                 IntlPlayer();
             }
             catch(Exception ex)
@@ -742,7 +740,7 @@ namespace CokeeDP.Views.Windows
                 if(Directory.Exists(AudioFolder) && AudioArray.Length == 0)
                 {
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
-                    if(dir.Exists) AudioArray = dir.GetFiles("*.mp3");
+                    if(dir.Exists) AudioArray = dir.GetFiles("*.mp3|*.wmv|*.m4a");
                     else throw new DirectoryNotFoundException("听力文件夹未找到 : " + AudioFolder);
                     if(AudioArray.Length == 0) throw new FileNotFoundException("听力文件夹内没有.mp3文件。请转换音频为.mp3格式。");
                 }
@@ -766,8 +764,11 @@ namespace CokeeDP.Views.Windows
 
         private void SilderChanged(object sender,RoutedPropertyChangedEventArgs<double> e)
         {
-            mediaplayer.Position = TimeSpan.FromSeconds(PlaySlider.Value);
-            audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + " / " + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+            if(AudioLoaded == true)
+            {
+                mediaplayer.Position = TimeSpan.FromSeconds(PlaySlider.Value);
+                audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + " / " + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+            }
         }
 
         private void ChangeVolume(object sender,RoutedEventArgs e)
@@ -804,6 +805,7 @@ namespace CokeeDP.Views.Windows
                 PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                AudioLoaded = true;
                 /* playIcon.Text = "";
                  IsPlaying = true;
                  mediaplayer.Play();*/
@@ -935,6 +937,7 @@ namespace CokeeDP.Views.Windows
                     MMDevice mMDevice = speakDevices.ToList()[0];
                     volume = Convert.ToInt16(mMDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
                 }
+                else throw new EntryPointNotFoundException("未找到音频设备");
                 return volume;
             }
             catch(Exception ex)
@@ -1005,19 +1008,6 @@ namespace CokeeDP.Views.Windows
                 {
                     writer.WriteLine($"{DateTime.Now},{info};");
                 }
-            }
-        }
-
-        private void FastProgClick(object sender,RoutedEventArgs e)
-        {
-            try
-            {
-                if(!File.Exists(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe")) Process.Start(@"C:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe");
-                else Process.Start(@"D:\Program Files(x86)\Seewo\EasiNote5\swenlauncher\swenlauncher.exe");
-            }
-            catch(Exception ex)
-            {
-                ProcessErr(ex);
             }
         }
 

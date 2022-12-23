@@ -257,14 +257,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Icons\100-fill.svg" />
-    <Resource Include="Icons\1001.svg" />
+    <EmbeddedResource Include="Icons\100-fill.svg" />
+    <EmbeddedResource Include="Icons\1001.svg" />
     <Resource Include="Icons\1002.svg" />
     <Resource Include="Icons\1003.svg" />
     <Resource Include="Icons\1004.svg" />
     <Resource Include="Icons\1005.svg" />
     <Resource Include="Icons\1006.svg" />
-    <Resource Include="Icons\1007.svg" />
+    <Content Include="Icons\1007.svg" />
     <Resource Include="Icons\1008.svg" />
     <Resource Include="Icons\1009.svg" />
     <Resource Include="Icons\101-fill.svg" />
@@ -475,6 +475,10 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

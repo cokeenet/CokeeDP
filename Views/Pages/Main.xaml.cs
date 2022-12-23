@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
-using CokeeDP.Views.WIndows;
+using CokeeDP.Views.Windows;
+
 namespace CokeeDP.Views.Pages
 {
     /// <summary>
@@ -25,12 +26,13 @@ namespace CokeeDP.Views.Pages
     public partial class Main : UiPage
     {
         public SnackbarService snackbarService { get; set; }
+
         public Main()
         {
             InitializeComponent();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender,RoutedEventArgs e)
         {
             snackbarService = new SnackbarService();
             snackbarService.SetSnackbarControl(snackbar);
@@ -38,28 +40,36 @@ namespace CokeeDP.Views.Pages
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
         }
 
-        private void OnSwitchChecked(object sender, RoutedEventArgs e)
+        private void OnSwitchChecked(object sender,RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            switch (toggleSwitch.Tag)
+            switch(toggleSwitch.Tag)
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
                 case "dark":
-                    if ((bool)toggleSwitch.IsChecked) { Theme.Apply(ThemeType.Dark, BackgroundType.Mica); break; }
-                    else { Theme.Apply(ThemeType.Light, BackgroundType.Mica); break; }
+                    if((bool)toggleSwitch.IsChecked)
+                    {
+                        Theme.Apply(ThemeType.Dark,BackgroundType.Mica);
+                        break;
+                    }
+                    else
+                    {
+                        Theme.Apply(ThemeType.Light,BackgroundType.Mica);
+                        break;
+                    }
                 default:
                     break;
             }
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender, TextChangedEventArgs e)
+        private void TextBodHandler(object sender,TextChangedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch (textBox.Tag)
+            switch(textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
@@ -68,8 +78,7 @@ namespace CokeeDP.Views.Pages
                     break;
             }
             Properties.Settings.Default.Save();
-            snackbarService.Show("Saved", Properties.Settings.Default.AudioFolder);
-
+            //snackbarService.Show("Saved",Properties.Settings.Default.AudioFolder);
         }
     }
 }

@@ -20,10 +20,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-
         <TextBlock
             Grid.Row="0" Grid.Column="0" FontSize="20" Text="CokeeDP 设置" />
-        <ui:InfoBar Content="warn" ></ui:InfoBar>
+        <ui:InfoBar Content="warn" />
         <ui:CardControl
             Grid.Row="1" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
             <ui:CardControl.Header>
@@ -35,7 +34,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="BingWappSwitch" Checked="OnSwitchChecked" IsChecked="True" />
+                x:Name="BingWappSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="2" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
@@ -60,7 +59,8 @@
                         FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:TextBox Width="551" Tag="audioDir" TextChanged="TextBodHandler" />
+            <ui:TextBox
+                Width="551" Tag="audioDir" TextChanged="TextBodHandler" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="4" Margin="0,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
@@ -72,7 +72,7 @@
                         FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ComboBox Width="145" >
+            <ComboBox Width="145">
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -82,7 +82,6 @@
                 <ComboBoxItem Content="网络" Tag="f" />
                 <ComboBoxItem Content="其他" Tag="g" />
                 <ComboBoxItem Content="抖机灵" Tag="l" />
-
             </ComboBox>
         </ui:CardControl>
         <ui:CardControl
@@ -94,10 +93,10 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="DarkModeSwitch" Checked="OnSwitchChecked" IsChecked="True" HorizontalAlignment="Center" Tag="dark" />
+                x:Name="DarkModeSwitch" HorizontalAlignment="Center" Checked="OnSwitchChecked" IsChecked="True" Tag="dark" />
         </ui:CardControl>
         <ui:Snackbar
-            x:Name="snackbar" Width="370" Height="68" Margin="0,10,0,0"
-            HorizontalAlignment="Center" Grid.RowSpan="7" Grid.Row="5" VerticalAlignment="Top" />
+            x:Name="snackbar" Grid.Row="5" Grid.RowSpan="7" Width="370" Height="68"
+            Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Grid>
 </ui:UiPage>

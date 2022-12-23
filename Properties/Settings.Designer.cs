@@ -238,5 +238,17 @@ namespace CokeeDP.Properties {
                 this["CityId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BlockedImageIds {
+            get {
+                return ((string)(this["BlockedImageIds"]));
+            }
+            set {
+                this["BlockedImageIds"] = value;
+            }
+        }
     }
 }

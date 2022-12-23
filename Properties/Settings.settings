@@ -56,5 +56,8 @@
     <Setting Name="CityId" Type="System.String" Scope="User">
       <Value Profile="(Default)">101220807</Value>
     </Setting>
+    <Setting Name="BlockedImageIds" Type="System.String" Scope="User">
+      <Value Profile="(Default)"></Value>
+    </Setting>
   </Settings>
 </SettingsFile>
