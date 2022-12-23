@@ -126,17 +126,35 @@ namespace CokeeDP.Class
     }
     public class ImageItem : NotifyPropertyChangedBase
     {
-        public string Name { get => _displayName; set => Set(ref _displayName, value); }
-        public string Path { get => p; set => Set(ref p, value); }
-        public ImageSource ImageSr { get => ee; set => Set(ref ee, value); }
+        public string Name
+        {
+            get => _displayName; set => Set(ref _displayName, value);
+        }
+        public string Path
+        {
+            get => p; set => Set(ref p, value);
+        }
+        public ImageSource ImageSr
+        {
+            get => ee; set => Set(ref ee, value);
+        }
         private ImageSource ee;
         private string _displayName, p;
     }
     public class FastProgram
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public BitmapImage image { get; set; }
+        public int Id
+        {
+            get; set;
+        }
+        public string Name
+        {
+            get; set;
+        }
+        public BitmapImage image
+        {
+            get; set;
+        }
     }
 
     [ValueConversion(typeof(byte[]), typeof(BitmapImage))]
