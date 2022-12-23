@@ -6,11 +6,11 @@ using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 
-namespace CokeeDP
+namespace CokeeDP.Views.Windows
 {
     /// <summary>
     /// Settings.xaml 的交互逻辑
-    /// </summary>                                                                                                                 
+    /// </summary>
 
     public partial class SettingsWindow : UiWindow
     {
@@ -19,9 +19,8 @@ namespace CokeeDP
             InitializeComponent();
         }
 
-        private void load(object sender, RoutedEventArgs e)
+        private void load(object sender,RoutedEventArgs e)
         {
-
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="CokeeDP.Views.WIndows.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Class="CokeeDP.Views.Windows.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="window" Title="CokeeDP"
     AllowDrop="True"
     Foreground="{x:Null}"
@@ -456,7 +456,7 @@
                 <ui:Card
                     x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                     pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                    RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                    RenderTransformOrigin="0.5,0.5" Visibility="Visible">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
