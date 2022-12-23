@@ -274,13 +274,13 @@ namespace CokeeDP.Views.Windows
 
         public void ProcessErr(Exception e)
         {
-            if (this.IsLoaded)
+            if(this.IsLoaded)
             {
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.Show("发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24);
+                snackbarService.Show("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
             }
-            Log.Error(e, "Error");
-            if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
+            Log.Error(e,"Error");
+            if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
         public void SetTimer(System.Timers.Timer a,int ms,System.Timers.Timer b,int ms1,System.Timers.Timer c,int ms2)
@@ -417,7 +417,7 @@ namespace CokeeDP.Views.Windows
                 snackbarService = new SnackbarService();
                 snackbarService.SetSnackbarControl(snackbar);
                 ThemeService themeService = new ThemeService();
-                themeService.SetTheme(ThemeType.Light);
+                themeService.SetTheme(ThemeType.Light);//TODO
                 Theme.Apply(ThemeType.Light,BackgroundType.Mica);
                 if(Environment.OSVersion.Version.Major >= 10.0)
                     AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
@@ -427,12 +427,7 @@ namespace CokeeDP.Views.Windows
                 {
                     if(t.DriveType == DriveType.Removable)
                     {
-                        usb.Visibility = Visibility.Visible;
-                        disk = t.Name;
-                        //MessageBox.Show("U盘插入,盘符为：" + t.Name);
-                        usb.Visibility = Visibility.Visible;
-                        diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
-                        diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";
+                        ShowUsbCard(false,t);
                         return true;
                     }
                     return false;
@@ -473,8 +468,7 @@ namespace CokeeDP.Views.Windows
             {
                 var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                 var client = new HttpClient(handler);
-                string u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
-                //MessageBox.Show(u2);
+                string u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
@@ -505,7 +499,6 @@ namespace CokeeDP.Views.Windows
                 handler.ClientCertificateOptions = ClientCertificateOption.Automatic;
                 handler.AllowAutoRedirect = true;
                 var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=101220801&key=6572127bcec647faba394b17fbd9614f&gzip=n");
-                //MessageBox.Show(u2);
                 var dt = JsonConvert.DeserializeObject<JObject>(u2);
                 if(!dt["warning"].HasValues)
                 {
@@ -534,17 +527,52 @@ namespace CokeeDP.Views.Windows
         //http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=fuyang&language=zh-Hans&unit=c&start=0&days=3
         private void hitokoto_MouseDown(object sender,MouseButtonEventArgs e) => _ = Hitoko();
 
+        private Object locker1 = new Object();
+
         private void OnCloseWindow(object sender,MouseButtonEventArgs e)
         {
             Dispatcher.Invoke(new Action(() =>
             {
                 if(IsPlaying)
                 {
-                    if(MessageBoxX.Show(this,"有媒体正在播放。确认退出吗?","警告",MessageBoxButton.OKCancel,MessageBoxIcon.Warning) == MessageBoxResult.OK) Close();
+                    MessageBox messageBox = new MessageBox();
+                    messageBox.Content = "有媒体正在播放。确认关闭程序吗？";
+                    messageBox.ButtonLeftName = "确认";
+                    messageBox.ButtonRightName = "取消";
+                    messageBox.MicaEnabled = true;
+                    //messageBox.Icon = SymbolRegular.Warning28;
+                    if((bool)messageBox.ShowDialog()) Application.Current.Shutdown();
                 }
                 else Close();
             }));
         }
+
+        private void ShowUsbCard(bool isUnplug,DriveInfo t = null)
+        {
+            lock(locker)
+            {
+                DoubleAnimation anim1 = new DoubleAnimation(0,TimeSpan.FromSeconds(1));
+                DoubleAnimation anim2 = new DoubleAnimation(368,TimeSpan.FromSeconds(1));
+                anim1.EasingFunction = new CircleEase();
+                anim2.Completed += Anim3_Completed;
+                anim2.EasingFunction = new CircleEase();
+                if(!isUnplug)
+                {
+                    usb.Visibility = Visibility.Visible;
+                    tranUsb.BeginAnimation(TranslateTransform.XProperty,anim1);
+                    disk = t.Name;
+                    diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
+                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";
+                }
+                else if(isUnplug)
+                {
+                    tranUsb.BeginAnimation(TranslateTransform.XProperty,anim2);
+                    usb.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void Anim3_Completed(object sender,EventArgs e) => throw new NotImplementedException();
 
         private IntPtr WndProc(IntPtr hwnd,int msg,IntPtr wParam,IntPtr lParam,ref bool handled)
         {
@@ -560,11 +588,7 @@ namespace CokeeDP.Views.Windows
                             {
                                 if(t.DriveType == DriveType.Removable)
                                 {
-                                    usb.Visibility = Visibility.Visible;
-                                    disk = t.Name;
-                                    log.Text = DateTime.Now.ToString("R") + "_Usbdrive.Install(" + t.Name + "," + t.DriveType + ");";
-                                    diskName.Content = t.VolumeLabel + "(" + t.Name + ":)";
-                                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";
+                                    ShowUsbCard(false,t);
                                     return true;
                                 }
                                 return false;
@@ -574,7 +598,7 @@ namespace CokeeDP.Views.Windows
                         case DBT_DEVICEREMOVECOMPLETE:
                             //MessageBox.Show("U盘卸载");
                             log.Text = DateTime.Now.ToString("R") + "_Usbdrive.Uninstall();";
-                            usb.Visibility = Visibility.Collapsed;
+                            ShowUsbCard(true);
                             break;
 
                         default:

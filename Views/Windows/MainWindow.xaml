@@ -72,7 +72,7 @@
                                 BorderThickness="1" Click="WeaWarnBtnHandler" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
                                 Foreground="Black" Visibility="Visible" />
                             <TextBox
-                                x:Name="wea1" Width="303" Height="26" Margin="72,68,0,0" HorizontalAlignment="Left"
+                                x:Name="wea1" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
@@ -85,7 +85,7 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox
-                                x:Name="w1" Width="50" Height="50" Margin="10,58,347,160" IsHitTestVisible="False"
+                                x:Name="w1" Width="50" Height="50" Margin="35,58,322,160" IsHitTestVisible="False"
                                 MessageFillBrush="White" MessageStrokeBrush="White">
                                 <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect />
@@ -93,7 +93,7 @@
                             </svgc:SvgViewbox>
 
                             <TextBox
-                                x:Name="wea3" Width="303" Margin="72,185,0,58" HorizontalAlignment="Left" AllowDrop="False"
+                                x:Name="wea3" Width="280" Margin="95,191,0,52" HorizontalAlignment="Left" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
@@ -105,13 +105,13 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox
-                                x:Name="w2" Width="50" Height="50" Margin="10,108,347,110" MessageFillBrush="White">
+                                x:Name="w2" Width="50" Height="50" Margin="35,119,322,99" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                             <TextBox
-                                x:Name="wea2" Width="303" Height="26" Margin="72,125,0,0" HorizontalAlignment="Left"
+                                x:Name="wea2" Width="280" Height="26" Margin="95,134,0,0" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
@@ -124,7 +124,7 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox
-                                x:Name="w3" Width="50" Height="50" Margin="10,172,347,46" MessageFillBrush="White">
+                                x:Name="w3" Width="50" Height="50" Margin="35,178,322,40" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
@@ -159,19 +159,18 @@
                             </ScrollViewer>
                         </Grid>
                     </ui:Card>
-
                     <Border>
                         <Grid>
                             <ui:Button
-                                x:Name="SpecialWeatherBtn1" Width="314" Height="40" Margin="0,10,0,0" HorizontalAlignment="Center"
+                                x:Name="SpecialWeatherBtn1" Width="315" Height="40" Margin="0,13,0,0" HorizontalAlignment="Center"
                                 VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
                                 pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
                                 BorderBrush="{x:Null}"
-                                BorderThickness="1" Click="WeaWarnBtnHandler" FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black"
-                                Visibility="{Binding Visibility, ElementName=SpecialWeatherBtn, Mode=TwoWay}" />
+                                BorderThickness="1" Click="WeaWarnBtnHandler" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
+                                Foreground="Black" Visibility="Visible" />
                             <TextBox
-                                x:Name="wea4" Height="28" Margin="72,68,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                AllowDrop="False"
+                                x:Name="wea4" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
@@ -183,13 +182,34 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox
-                                x:Name="w4" Width="50" Height="50" Margin="17,55,340,163">
+                                x:Name="w4" Width="50" Height="50" Margin="35,58,322,160" IsHitTestVisible="False"
+                                MessageFillBrush="White" MessageStrokeBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+
+                            <TextBox
+                                x:Name="wea5" Width="280" Margin="95,191,0,52" HorizontalAlignment="Left" AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Style="{x:Null}"
+                                Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                x:Name="w5" Width="50" Height="50" Margin="35,119,322,99" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                             <TextBox
-                                x:Name="wea5" Margin="72,184,0,57" HorizontalAlignment="Left" AllowDrop="False"
+                                x:Name="wea6" Width="280" Height="26" Margin="95,134,0,0" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
                                 Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
@@ -201,25 +221,7 @@
                                 </TextBox.Effect>
                             </TextBox>
                             <svgc:SvgViewbox
-                                x:Name="w5" Width="50" Height="50" Margin="17,110,340,108">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect />
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-                            <TextBox
-                                x:Name="wea6" Margin="72,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" AllowDrop="False"
-                                Background="{x:Null}"
-                                BorderBrush="{x:Null}"
-                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
-                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
-                                Style="{x:Null}"
-                                Text="网络状态不佳..." TextAlignment="Left">
-                                <TextBox.Effect>
-                                    <DropShadowEffect />
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox
-                                x:Name="w6" Width="50" Height="50" Margin="17,176,340,42">
+                                x:Name="w6" Width="50" Height="50" Margin="35,178,322,40" MessageFillBrush="White">
                                 <svgc:SvgViewbox.Effect>
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
@@ -296,7 +298,12 @@
                 <ui:Card
                     x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"
                     HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B2FFFFFF" BorderBrush="#FFE0BFBF" BorderThickness="2,2,2,2"
-                    Visibility="Visible">
+                    RenderTransformOrigin="0.5,0.5" Visibility="Visible">
+                    <ui:Card.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform x:Name="tranUsb" X="368" />
+                        </TransformGroup>
+                    </ui:Card.RenderTransform>
                     <Grid>
                         <ui:SymbolIcon
                             Width="72" Height="72" Margin="-9,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
