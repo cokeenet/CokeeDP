@@ -25,7 +25,10 @@ namespace CokeeDP.Views.Pages
     /// </summary>
     public partial class Main : UiPage
     {
-        public SnackbarService snackbarService { get; set; }
+        public SnackbarService snackbarService
+        {
+            get; set;
+        }
 
         public Main()
         {
