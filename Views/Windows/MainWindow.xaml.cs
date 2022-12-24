@@ -764,7 +764,7 @@ namespace CokeeDP.Views.Windows
                 if(Directory.Exists(AudioFolder) && AudioArray.Length == 0)
                 {
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
-                    if(dir.Exists) AudioArray = dir.GetFiles("*.mp3|*.wmv|*.m4a");
+                    if(dir.Exists) AudioArray = dir.GetFiles("*.mp3");
                     else throw new DirectoryNotFoundException("听力文件夹未找到 : " + AudioFolder);
                     if(AudioArray.Length == 0) throw new FileNotFoundException("听力文件夹内没有.mp3文件。请转换音频为.mp3格式。");
                 }
