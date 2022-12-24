@@ -19,12 +19,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
+        <!--<ui:InfoBar />-->
         <TextBlock
             Grid.Row="0" Grid.Column="0" FontSize="20" Text="CokeeDP 设置" />
-        <ui:InfoBar Content="warn" />
+
+        <TextBlock
+            Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="壁纸" />
+
         <ui:CardControl
-            Grid.Row="1" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
+            Grid.Row="2" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -37,7 +40,7 @@
                 x:Name="BingWappSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="2" Margin="0,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
+            Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -49,30 +52,19 @@
             <ui:ToggleSwitch
                 x:Name="UHDModeSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="uhd" />
         </ui:CardControl>
+        <TextBlock
+            Grid.Row="4" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
         <ui:CardControl
-            Grid.Row="3" Margin="0,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
+            Grid.Row="5" Margin="5,10,5,0" VerticalAlignment="Top" Icon="SlideText24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
+                        FontSize="13" FontWeight="Medium" Text="一言API" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="绝对路径" />
+                        FontSize="12" Opacity="0.7" Text="数据来自Hitokoto | 一言 (hitokoto.cn) " />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:TextBox
-                Width="551" Tag="audioDir" TextChanged="TextBodHandler" />
-        </ui:CardControl>
-        <ui:CardControl
-            Grid.Row="4" Margin="0,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
-            <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                    <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
-                    <TextBlock
-                        FontSize="12" Opacity="0.7" Text="绝对路径" />
-                </StackPanel>
-            </ui:CardControl.Header>
-            <ComboBox Width="145">
+            <ComboBox Width="145" Selected="ComboBoxHandler">
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -85,18 +77,47 @@
             </ComboBox>
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="5" Margin="0,10,5,0" VerticalAlignment="Top" Icon="DarkTheme24">
+            Grid.Row="6" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Clock24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="切换暗色主题" />
+                        FontSize="13" FontWeight="Medium" Text="一言/壁纸更新间隔" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:ToggleSwitch
-                x:Name="DarkModeSwitch" HorizontalAlignment="Center" Checked="OnSwitchChecked" IsChecked="True" Tag="dark" />
+            <Grid>
+                <ui:TextBox
+                    x:Name="timeBox" Margin="52,0,50,0" Tag="time" TextChanged="TextBodHandler" />
+                <TextBlock
+                    Margin="221,5,9,5" FontSize="16" Opacity="0.7" Text="分钟" />
+            </Grid>
         </ui:CardControl>
+        <TextBlock
+            Grid.Row="7" Margin="0,5,5,2" FontSize="16" Text="杂项" />
+        <ui:CardControl
+            Grid.Row="8" Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
+                    <TextBlock
+                        FontSize="12" Opacity="0.7" Text="绝对路径" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:TextBox
+                x:Name="folderBox" Width="551" Tag="audioDir" TextChanged="TextBodHandler" />
+        </ui:CardControl>
+
+        <ui:CardAction
+            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Command="" Icon="WeatherCloudy24">
+            <ui:CardAction.Content>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="选择天气城市" />
+                </StackPanel>
+            </ui:CardAction.Content>
+        </ui:CardAction>
         <ui:Snackbar
-            x:Name="snackbar" Grid.Row="5" Grid.RowSpan="7" Width="370" Height="68"
+            x:Name="snackbar" Grid.Row="6" Grid.RowSpan="7" Width="370" Height="68"
             Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Grid>
 </ui:UiPage>

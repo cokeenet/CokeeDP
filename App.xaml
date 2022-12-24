@@ -7,10 +7,9 @@
                 <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
-
+            <FontFamily x:Key="SegoeFluentIcons">pack://application:,,,/;Fonts/#Segoe Fluent Icons</FontFamily>
             <Color x:Key="GradientStopColor1">#FFE0BFBF</Color>
             <Color x:Key="CardBackground">#FFE0BFBF</Color>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -25,42 +25,41 @@ namespace CokeeDP.Views.Pages
     /// </summary>
     public partial class Main : UiPage
     {
-        public SnackbarService snackbarService
-        {
-            get; set;
-        }
+        public SnackbarService snackbarService;
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender,RoutedEventArgs e)
         {
             snackbarService = new SnackbarService();
             snackbarService.SetSnackbarControl(snackbar);
             BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
+            folderBox.Text = Properties.Settings.Default.AudioFolder;
+            timeBox.Text = (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) / 60).ToString();
         }
 
-        private void OnSwitchChecked(object sender, RoutedEventArgs e)
+        private void OnSwitchChecked(object sender,RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            switch (toggleSwitch.Tag)
+            switch(toggleSwitch.Tag)
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
                 case "dark":
-                    if ((bool)toggleSwitch.IsChecked)
+                    if((bool)toggleSwitch.IsChecked)
                     {
-                        Theme.Apply(ThemeType.Dark, BackgroundType.Mica);
+                        Theme.Apply(ThemeType.Dark,BackgroundType.Mica);
                         break;
                     }
                     else
                     {
-                        Theme.Apply(ThemeType.Light, BackgroundType.Mica);
+                        Theme.Apply(ThemeType.Light,BackgroundType.Mica);
                         break;
                     }
                 default:
@@ -69,19 +68,27 @@ namespace CokeeDP.Views.Pages
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender, TextChangedEventArgs e)
+        private void TextBodHandler(object sender,TextChangedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch (textBox.Tag)
+            switch(textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
-                //case
+                case "time":
+                    Properties.Settings.Default.OneWordsTimeInterval = textBox.Text; break;
                 default:
                     break;
             }
             Properties.Settings.Default.Save();
             //snackbarService.Show("Saved",Properties.Settings.Default.AudioFolder);
+        }
+
+        private void ComboBoxHandler(object sender,RoutedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            var item = comboBox.SelectedItem as ComboBoxItem;
+            Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
         }
     }
 }

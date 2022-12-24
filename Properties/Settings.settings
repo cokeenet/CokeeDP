@@ -20,9 +20,6 @@
     <Setting Name="City" Type="System.String" Scope="User">
       <Value Profile="(Default)">fuyang</Value>
     </Setting>
-    <Setting Name="wantRes" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="CountdownName" Type="System.String" Scope="User">
       <Value Profile="(Default)">高考</Value>
     </Setting>
@@ -31,9 +28,6 @@
     </Setting>
     <Setting Name="BingWappEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="childPW" Type="System.String" Scope="User">
-      <Value Profile="(Default)">cokeetech</Value>
     </Setting>
     <Setting Name="EnableBigTimeTo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -57,7 +51,13 @@
       <Value Profile="(Default)">101220807</Value>
     </Setting>
     <Setting Name="BlockedImageIds" Type="System.String" Scope="User">
-      <Value Profile="(Default)"></Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CachedWeatherData" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CachedWeatherTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -97,18 +97,6 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool wantRes {
-            get {
-                return ((bool)(this["wantRes"]));
-            }
-            set {
-                this["wantRes"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("高考")]
         public string CountdownName {
             get {
@@ -140,18 +128,6 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["BingWappEnable"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("cokeetech")]
-        public string childPW {
-            get {
-                return ((string)(this["childPW"]));
-            }
-            set {
-                this["childPW"] = value;
             }
         }
         
@@ -248,6 +224,30 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["BlockedImageIds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CachedWeatherData {
+            get {
+                return ((string)(this["CachedWeatherData"]));
+            }
+            set {
+                this["CachedWeatherData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CachedWeatherTime {
+            get {
+                return ((string)(this["CachedWeatherTime"]));
+            }
+            set {
+                this["CachedWeatherTime"] = value;
             }
         }
     }
