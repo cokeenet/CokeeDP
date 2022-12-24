@@ -11,15 +11,19 @@ namespace CokeeDP.Views.Windows
     /// <summary>
     /// Settings.xaml 的交互逻辑
     /// </summary>
-
     public partial class SettingsWindow : UiWindow
     {
+        public NavigationView NavigationView
+        {
+            get; set;
+        }
+
         public SettingsWindow()
         {
             InitializeComponent();
         }
 
-        private void load(object sender, RoutedEventArgs e)
+        private void load(object sender,RoutedEventArgs e)
         {
         }
     }

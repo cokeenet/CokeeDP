@@ -190,7 +190,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -217,7 +216,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
                 Properties.Settings.Default.OneWordsTimeInterval = "300";
                 Properties.Settings.Default.WeatherTimeInterval = "9800";
             }
@@ -277,9 +275,10 @@ namespace CokeeDP.Views.Windows
             if(this.IsLoaded)
             {
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.Show("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
+                snackbarService.ShowAsync("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
             }
             Log.Error(e,"Error");
+            log.Text = e.ToString();
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
@@ -352,35 +351,21 @@ namespace CokeeDP.Views.Windows
 
         private void DownloadImageCompleted(object sender,EventArgs e)
         {
+            try
+            {
+                if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
+                log.Text = "Image Loaded. Num:" + bing;
+                DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
+                animation.EasingFunction = new CircleEase();
+                //animation.AutoReverse = true;
+                br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
+                br1.Source = bitmapImage;
+            }
+            catch(Exception ex)
+            {
+                ProcessErr(ex);
+            }
             // Disappear(pro,1,20,0.5);
-            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
-            log.Text = "Image Loaded. Num:" + bing;
-            DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
-            animation.EasingFunction = new CircleEase();
-            //animation.AutoReverse = true;
-            br1_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
-            br1.Source = bitmapImage;
-        }
-
-        private void DownloadFileCallback(object sender,AsyncCompletedEventArgs e)
-        {
-            if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
-            log.Text = "Done.";
-            if(e.Cancelled)
-            {
-                log.Text = "File download cancelled.";
-            }
-            if(e.Error != null)
-            {
-                log.Text = e.Error.ToString();
-            }
-            if(e.Error == null && !e.Cancelled)
-            {
-                br1.BeginInit();
-                br1_blur.Radius = 0;
-                br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
-                br1.EndInit();
-            }
         }
 
         private async Task Hitoko()
@@ -402,7 +387,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -419,8 +403,6 @@ namespace CokeeDP.Views.Windows
                 ThemeService themeService = new ThemeService();
                 themeService.SetTheme(ThemeType.Light);//TODO
                 Theme.Apply(ThemeType.Light,BackgroundType.Mica);
-                if(Environment.OSVersion.Version.Major >= 10.0)
-                    AppCenter.Start("75515c2c-52fd-4db8-a6c1-84682e1860de",typeof(Analytics),typeof(Crashes));
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
                 DriveInfo[] s = DriveInfo.GetDrives();
                 s.Any(t =>
@@ -440,7 +422,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -486,7 +467,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -520,7 +500,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -572,7 +551,7 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private void Anim3_Completed(object sender,EventArgs e) => throw new NotImplementedException();
+        private void Anim3_Completed(object sender,EventArgs e) => usb.Visibility = Visibility.Collapsed;
 
         private IntPtr WndProc(IntPtr hwnd,int msg,IntPtr wParam,IntPtr lParam,ref bool handled)
         {
@@ -597,7 +576,7 @@ namespace CokeeDP.Views.Windows
 
                         case DBT_DEVICEREMOVECOMPLETE:
                             //MessageBox.Show("U盘卸载");
-                            log.Text = DateTime.Now.ToString("R") + "_Usbdrive.Uninstall();";
+                            log.Text = "EVENT : Usbdrive.Uninstall";
                             ShowUsbCard(true);
                             break;
 
@@ -609,7 +588,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
             return IntPtr.Zero;
         }
@@ -646,13 +624,12 @@ namespace CokeeDP.Views.Windows
                 // 向目标设备发送设备控制码。IOCTL_STORAGE_EJECT_MEDIA-弹出U盘
                 uint byteReturned;
                 bool result = DeviceIoControl(handle,IOCTL_STORAGE_EJECT_MEDIA,IntPtr.Zero,0,IntPtr.Zero,0,out byteReturned,IntPtr.Zero);
-                if(!result) NoticeBox.Show("U盘退出失败","Error",MessageBoxIcon.Warning,true,3000);
-                else usb.Visibility = Visibility.Collapsed;
+                if(!result) snackbarService.ShowAsync("U盘退出失败","请检查程序占用，关闭已打开的文件夹，PPT，WORD等。",SymbolRegular.Warning24);
+                else ShowUsbCard(true);
             }
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -667,7 +644,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -685,7 +661,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -915,8 +890,8 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                VolumeText.Content = "音量:" + GetCurrentSpeakerVolume() + "%";
-                SetCurrentSpeakerVolume(Convert.ToInt32(VolumeSlider.Value));
+                VolumeText.Content = "音量:" + Convert.ToInt32(e.NewValue) + "%";
+                SetCurrentSpeakerVolume(Convert.ToInt32(e.NewValue));
             }
             catch(Exception ex)
             {
@@ -1017,7 +992,7 @@ namespace CokeeDP.Views.Windows
         private void BtnSaveHandler(object sender,RoutedEventArgs e)
         {
             if(snackbarService.GetSnackbarControl() == null) snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.Show("一言已收藏","已收藏至文件 " + filePath,SymbolRegular.Heart48);
+            snackbarService.ShowAsync("一言已收藏","已收藏至文件 " + filePath,SymbolRegular.Heart48);
             //NoticeBox.Show("已收藏至文件 " + filePath, "info", MessageBoxIcon.Info, true, 1000);
             WriteInfo(hitokoto.Content.ToString(),@"D:\cokee_hitokoto.txt");
         }
@@ -1060,8 +1035,8 @@ namespace CokeeDP.Views.Windows
 
         private void DislikeImage(object sender,RoutedEventArgs e)
         {
-            WriteInfo(br1.Tag.ToString() + "\n",Environment.CurrentDirectory + "\\blkimg.txt");
-            NoticeBox.Show("屏蔽成功.");
+            Properties.Settings.Default.BlockedImageIds += br1.Tag.ToString() + "|";
+            snackbarService.ShowAsync("屏蔽成功","已屏蔽日期为 " + br1.Tag.ToString() + " 的图片。",SymbolRegular.CheckmarkCircle24);
             _ = GetBingWapp();
         }
 
@@ -1071,8 +1046,7 @@ namespace CokeeDP.Views.Windows
         private void Viewsour(object sender,RoutedEventArgs e)
         {
             Clipboard.SetText("https://hitokoto.cn/?uuid=" + hkUrl);
-            snackbarService.Show("链接已复制","https://hitokoto.cn/?uuid=" + hkUrl,SymbolRegular.CopyAdd24);
-            //("https://hitokoto.cn/?uuid=" + hkUrl,"info");
+            snackbarService.ShowAsync("链接已复制","https://hitokoto.cn/?uuid=" + hkUrl,SymbolRegular.CopyAdd24);
         }
 
         private void Likeit(object sender,RoutedEventArgs e)
@@ -1097,7 +1071,7 @@ namespace CokeeDP.Views.Windows
 
         private void MouseMove(object sender,MouseEventArgs e)
         {
-            System.Windows.Point position = e.GetPosition(this);
+            /*/System.Windows.Point position = e.GetPosition(this);
             double pX = position.X;
             double pY = position.Y;
 
@@ -1105,7 +1079,7 @@ namespace CokeeDP.Views.Windows
             Canvas.SetLeft(CloseOpin,pX);
             Canvas.SetTop(CloseOpin,pY);
             // CloseOpin.Width = pX;
-            //CloseOpin.Height = pY;
+            //CloseOpin.Height = pY;   */
         }
 
         /// <summary>
@@ -1115,12 +1089,11 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                System.Diagnostics.Process.Start("explorer.exe",disk);
+                Process.Start("explorer.exe",disk);
             }
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -1132,17 +1105,17 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                var messageBox = new MessageBox();
-                messageBox.Show((string)SpecialWeatherBtn.Content,weaWr);
+                var dialog = new Dialog();
+                dialog.Show((string)SpecialWeatherBtn.Content,weaWr);
             }
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
                 //MessageBoxX.Show(this, ex.ToString(), "Error", MessageBoxIcon.Warning, DefaultButton.YesOK);
             }
         }
 
+        //---目前没什么用的函数
         private async Task CheckUpdate()
         {
             try
@@ -1160,7 +1133,6 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                log.Text = ex.ToString();
             }
         }
 
@@ -1187,6 +1159,27 @@ namespace CokeeDP.Views.Windows
             if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
             pro.Value = e.ProgressPercentage;
             log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
+        }
+
+        private void DownloadFileCallback(object sender,AsyncCompletedEventArgs e)
+        {
+            if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
+            log.Text = "Done.";
+            if(e.Cancelled)
+            {
+                log.Text = "File download cancelled.";
+            }
+            if(e.Error != null)
+            {
+                log.Text = e.Error.ToString();
+            }
+            if(e.Error == null && !e.Cancelled)
+            {
+                br1.BeginInit();
+                br1_blur.Radius = 0;
+                br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
+                br1.EndInit();
+            }
         }
 
         public void Appear(FrameworkElement element,int direction = 0,int distance = 20,double duration = .3)

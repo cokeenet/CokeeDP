@@ -61,6 +61,31 @@
                     HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
                     Foreground="{x:Null}"
                     TextBlock.FontSize="40" TextBlock.Foreground="White">
+                    <ui:Card>
+                        <Grid Margin="0,0,-1,0">
+                            <Label
+                                x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
+                                <Label.Effect>
+                                    <DropShadowEffect Opacity="0.4" />
+                                </Label.Effect>
+                            </Label>
+                            <ScrollViewer Margin="0,40,0,0">
+                                <TextBox
+                                    x:Name="DescPara1" Width="364" MaxHeight="385"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    FontFamily="Microsoft YaHei UI Light" FontSize="18" IsReadOnlyCaretVisible="True"
+                                    Style="{x:Null}"
+                                    TextWrapping="WrapWithOverflow">
+                                    <TextBox.Effect>
+                                        <DropShadowEffect Opacity="0.4" />
+                                    </TextBox.Effect>
+                                </TextBox>
+                            </ScrollViewer>
+                        </Grid>
+                    </ui:Card>
                     <Border>
                         <Grid>
                             <ui:Button
@@ -128,36 +153,20 @@
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
+                            <TextBox
+                                x:Name="wea3_Copy" Width="220" Margin="187,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="#FFB7B7B7"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Style="{x:Null}"
+                                Text="最近更新:2022/12/24 18:38" TextAlignment="Right">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
                         </Grid>
                     </Border>
-                    <ui:Card>
-                        <Grid Margin="0,0,-1,0">
-                            <Label
-                                x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
-                                Background="{x:Null}"
-                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4" />
-                                </Label.Effect>
-                            </Label>
-                            <ScrollViewer Margin="0,40,0,0">
-                                <Grid>
-                                    <TextBox
-                                        x:Name="DescPara1" Height="197" MaxHeight="385"
-                                        Background="{x:Null}"
-                                        BorderBrush="{x:Null}"
-                                        CaretBrush="{x:Null}"
-                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" Foreground="Black" IsReadOnlyCaretVisible="True"
-                                        Style="{x:Null}"
-                                        Text="01.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp301.高考主播.NewVersion111111.mp3" TextWrapping="WrapWithOverflow">
-                                        <TextBox.Effect>
-                                            <DropShadowEffect Opacity="0.4" />
-                                        </TextBox.Effect>
-                                    </TextBox>
-                                </Grid>
-                            </ScrollViewer>
-                        </Grid>
-                    </ui:Card>
                     <Border>
                         <Grid>
                             <ui:Button
@@ -284,8 +293,7 @@
                     Content="Keep your heart alive🌟" FontFamily="Microsoft YaHei UI Light" FontSize="28" Foreground="White" MouseDoubleClick="hitokoto_MouseDown"
                     MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
-                        <ContextMenu
-                            x:Name="lik" Width="250" BorderBrush="#EAEAEA">
+                        <ContextMenu x:Name="lik">
                             <MenuItem Click="Viewsour" Header="查看句子源" />
                             <MenuItem Click="Likeit" Header="编辑文本" />
                         </ContextMenu>
@@ -297,7 +305,7 @@
                 <ui:Card
                     x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"
                     HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B2FFFFFF" BorderBrush="#FFE0BFBF" BorderThickness="2,2,2,2"
-                    RenderTransformOrigin="0.5,0.5" Visibility="Visible">
+                    RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranUsb" X="368" />
@@ -337,8 +345,8 @@
                 </ui:Card>
 
                 <ProgressBar
-                    x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1060" Width="150"
-                    Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#22ACCD9D" Foreground="#FFD6D6D6"
+                    x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1059" Width="150"
+                    Height="11" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#22ACCD9D" Foreground="#FFD6D6D6"
                     Visibility="Visible" />
                 <ui:Button
                     Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
@@ -354,8 +362,7 @@
                         <DropShadowEffect />
                     </Label.Effect>
                     <Label.ContextMenu>
-                        <ContextMenu
-                            x:Name="bm" Width="250" pu:ContextMenuHelper.ItemsHoverBackground="#6CBCEA" BorderBrush="#EAEAEA">
+                        <ContextMenu x:Name="bm">
                             <MenuItem Click="DislikeImage" Header="不喜欢这张图" />
                             <MenuItem Click="Likeit" Header="喜欢" />
                         </ContextMenu>
@@ -388,7 +395,7 @@
                     AllowDrop="False"
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
-                    Content="循星🌟 Ver 3.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                    Content="渡尘🌟 Ver 3.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
                     Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
                     <Label.Effect>
                         <DropShadowEffect />
@@ -462,7 +469,7 @@
                 <ui:Card
                     x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                     pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                    RenderTransformOrigin="0.5,0.5" Visibility="Visible">
+                    RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
@@ -493,13 +500,13 @@
                         </Border>
                         <ui:Button
                             Margin="59,134,204,2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayerBtnProc" FontSize="20"
-                            Foreground="White" Icon="Previous48" Tag="prev" />
+                            Icon="Previous48" Tag="prev" />
                         <ui:Button
                             x:Name="playbtn" Height="50" Margin="128,128,128,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                            BorderThickness="1" Click="OnBtnPlay" FontSize="24" Foreground="White" Icon="Play48" />
+                            BorderThickness="1" Click="OnBtnPlay" FontSize="24" Icon="Play48" />
                         <ui:Button
                             Height="42" Margin="202,134,61,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="1"
-                            Click="PlayerBtnProc" FontSize="20" Foreground="White" Icon="Next48" Tag="next" />
+                            Click="PlayerBtnProc" FontSize="20" Icon="Next48" Tag="next" />
                         <ui:Button
                             Width="72" Height="30" Margin="0,52,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
                             Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />

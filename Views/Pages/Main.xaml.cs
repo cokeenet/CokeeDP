@@ -65,6 +65,7 @@ namespace CokeeDP.Views.Pages
                 default:
                     break;
             }
+            snackbarService.Show("Saved",sender.ToString());
             Properties.Settings.Default.Save();
         }
 
@@ -76,7 +77,7 @@ namespace CokeeDP.Views.Pages
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
                 case "time":
-                    Properties.Settings.Default.OneWordsTimeInterval = textBox.Text; break;
+                    Properties.Settings.Default.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
                 default:
                     break;
             }
