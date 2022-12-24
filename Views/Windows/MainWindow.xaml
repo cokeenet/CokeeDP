@@ -154,13 +154,13 @@
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                             <TextBox
-                                x:Name="wea3_Copy" Width="220" Margin="187,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                x:Name="weaupd1" Width="203" Margin="204,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="#FFB7B7B7"
-                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" IsHitTestVisible="False"
+                                IsReadOnlyCaretVisible="True" IsTabStop="False"
                                 Style="{x:Null}"
-                                Text="最近更新:2022/12/24 18:38" TextAlignment="Right">
+                                Text="最近更新:" TextAlignment="Right">
                                 <TextBox.Effect>
                                     <DropShadowEffect />
                                 </TextBox.Effect>
@@ -234,6 +234,18 @@
                                     <DropShadowEffect />
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
+                            <TextBox
+                                x:Name="weaupd2" Width="203" Margin="204,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" IsHitTestVisible="False"
+                                IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Style="{x:Null}"
+                                Text="最近更新:" TextAlignment="Right">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
                         </Grid>
                     </Border>
                 </pu:Carousel>
@@ -326,7 +338,7 @@
                         <Label
                             x:Name="diskName" Margin="68,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
-                            Content="U盘(H:\)" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black"
+                            Content="U盘(?:\)" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black"
                             SnapsToDevicePixels="True">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
@@ -336,7 +348,7 @@
                             x:Name="diskInfo" Height="22" Margin="68,64,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                             HorizontalContentAlignment="Left"
                             Background="{x:Null}"
-                            Content="128GB/256GB" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="Black">
+                            Content="---GB/---GB" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="Black">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
@@ -492,8 +504,7 @@
                             <Label
                                 x:Name="audioName" Margin="0,0,-2,-6" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
-                                Content="01.高考主播.NewVersion111111.mp3" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
-                                Foreground="Black">
+                                DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black">
                                 <Label.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </Label.Effect>
@@ -520,7 +531,7 @@
                         <Label
                             x:Name="audioTime" Margin="44,27,130,130" HorizontalContentAlignment="Left"
                             Background="{x:Null}"
-                            Content="128:00 / 256:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
+                            Content="00:00 / 00:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                             Foreground="Black">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.2" />

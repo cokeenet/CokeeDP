@@ -57,7 +57,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CachedWeatherTime" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">
+        2000/01/01 00:00:00
+      </Value>
     </Setting>
   </Settings>
 </SettingsFile>

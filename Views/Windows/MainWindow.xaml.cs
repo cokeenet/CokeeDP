@@ -415,8 +415,7 @@ namespace CokeeDP.Views.Windows
                     return false;
                 });
                 _ = Hitoko();
-                _ = Wea();
-                _ = weaWrn();
+                _ = GetWeatherInfo();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
             }
             catch(Exception ex)
@@ -430,8 +429,7 @@ namespace CokeeDP.Views.Windows
             //async get http wea info
             Dispatcher.Invoke(new Action(delegate
             {
-                _ = Wea();
-                _ = weaWrn();
+                _ = GetWeatherInfo();
             }
             ));
         }
@@ -443,13 +441,28 @@ namespace CokeeDP.Views.Windows
             else if(a.Name == "right") ChangeWapp(true);
         }
 
-        private async Task Wea()
+        private async Task GetWeatherInfo()
         {
             try
             {
-                var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
-                var client = new HttpClient(handler);
-                string u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
+                DateTime dateTime; string u2, u3;
+                if(!DateTime.TryParse(Properties.Settings.Default.CachedWeatherTime,out dateTime) || DateTime.Now.Subtract(dateTime).Hours > 6 || !Properties.Settings.Default.CachedWeatherData.Contains("|"))
+                {
+                    var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
+                    var client = new HttpClient(handler);
+
+                    u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
+                    u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
+                    Properties.Settings.Default.CachedWeatherData = u2 + "|" + u3;
+                    Properties.Settings.Default.CachedWeatherTime = DateTime.Now.ToString();
+                }
+                else
+                {
+                    u2 = Properties.Settings.Default.CachedWeatherData.Split("|")[0];
+                    u3 = Properties.Settings.Default.CachedWeatherData.Split("|")[1];
+                }
+                weaupd1.Text = "最近更新: " + DateTime.Parse(Properties.Settings.Default.CachedWeatherTime).ToString("yyyy/MM/dd HH:mm:ss");
+                weaupd2.Text = weaupd1.Text;
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
                 wea2.Text = "明天 " + dt["daily"][1]["textDay"].ToString() + "," + dt["daily"][1]["tempMax"].ToString() + "°C~" + dt["daily"][1]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][1]["humidity"].ToString();
@@ -463,23 +476,8 @@ namespace CokeeDP.Views.Windows
                 w4.StreamSource = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
                 w5.StreamSource = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
                 w6.StreamSource = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
-            }
-            catch(Exception ex)
-            {
-                ProcessErr(ex);
-            }
-        }
+                dt = JsonConvert.DeserializeObject<JObject>(u3);
 
-        private async Task weaWrn()
-        {
-            try
-            {
-                var handler = new HttpClientHandler();
-                var client = new HttpClient(handler);
-                handler.ClientCertificateOptions = ClientCertificateOption.Automatic;
-                handler.AllowAutoRedirect = true;
-                var u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=101220801&key=6572127bcec647faba394b17fbd9614f&gzip=n");
-                var dt = JsonConvert.DeserializeObject<JObject>(u2);
                 if(!dt["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
@@ -496,6 +494,17 @@ namespace CokeeDP.Views.Windows
                     SpecialWeatherBtn.Content = TextShort;
                     weaWr = dt["warning"][0]["text"].ToString();
                 }
+            }
+            catch(Exception ex)
+            {
+                ProcessErr(ex);
+            }
+        }
+
+        private async Task GetWeatherWarnings()
+        {
+            try
+            {
             }
             catch(Exception ex)
             {
@@ -1063,10 +1072,11 @@ namespace CokeeDP.Views.Windows
 
         private void MouseDown(object sender,MouseButtonEventArgs e)
         {
-            MainCanvas.MouseMove -= MouseMove;
-            DoubleAnimation doubleAnimation = new DoubleAnimation(100,TimeSpan.FromSeconds(1));
-            CloseOpin.BeginAnimation(Ellipse.HeightProperty,doubleAnimation);
-            CloseOpin.BeginAnimation(Ellipse.HeightProperty,doubleAnimation);
+            /* MainCanvas.MouseMove -= MouseMove;
+             DoubleAnimation doubleAnimation = new DoubleAnimation(100,TimeSpan.FromSeconds(1));
+             CloseOpin.BeginAnimation(Ellipse.HeightProperty,doubleAnimation);
+             CloseOpin.BeginAnimation(Ellipse.HeightProperty,doubleAnimation);                                 */
+            Close();
         }
 
         private void MouseMove(object sender,MouseEventArgs e)

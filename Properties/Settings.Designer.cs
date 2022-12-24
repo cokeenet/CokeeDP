@@ -241,7 +241,7 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\r\n        2000/01/01 00:00:00\r\n      ")]
         public string CachedWeatherTime {
             get {
                 return ((string)(this["CachedWeatherTime"]));
