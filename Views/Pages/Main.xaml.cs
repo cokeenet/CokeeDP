@@ -25,17 +25,13 @@ namespace CokeeDP.Views.Pages
     /// </summary>
     public partial class Main : UiPage
     {
-        public SnackbarService snackbarService;
+        private SettingsWindow _Window = Application.Current.Windows
+            .Cast<Window>()
+            .FirstOrDefault(window => window is SettingsWindow) as SettingsWindow;
 
         public Main()
         {
             InitializeComponent();
-        }
-
-        private void OnLoaded(object sender,RoutedEventArgs e)
-        {
-            snackbarService = new SnackbarService();
-            snackbarService.SetSnackbarControl(snackbar);
             BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
             folderBox.Text = Properties.Settings.Default.AudioFolder;
@@ -65,7 +61,7 @@ namespace CokeeDP.Views.Pages
                 default:
                     break;
             }
-            snackbarService.Show("Saved",sender.ToString());
+            _Window.snackbarService.ShowAsync("Saved");
             Properties.Settings.Default.Save();
         }
 
@@ -90,6 +86,11 @@ namespace CokeeDP.Views.Pages
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
             Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
+        }
+
+        private void CardAction_Click(object sender,RoutedEventArgs e)
+        {
+            _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
     }
 }

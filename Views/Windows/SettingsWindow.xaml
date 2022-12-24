@@ -39,5 +39,8 @@
                 <Frame x:Name="RootFrame" Margin="4,8" />
             </Border>
         </Grid>
+        <ui:Snackbar
+            x:Name="snackbar" Grid.Row="1" Width="370" Height="68" Margin="0,371,0,0"
+            HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Grid>
 </ui:UiWindow>

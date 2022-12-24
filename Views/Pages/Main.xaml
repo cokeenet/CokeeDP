@@ -1,7 +1,7 @@
 ﻿<ui:UiPage
     x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="432" d:DesignWidth="794"
-    Loaded="OnLoaded" Scrollable="True" mc:Ignorable="d">
+    Scrollable="True" mc:Ignorable="d">
 
     <Grid Margin="5,0,5,0">
         <Grid.ColumnDefinitions />
@@ -108,7 +108,8 @@
         </ui:CardControl>
 
         <ui:CardAction
-            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Command="" Icon="WeatherCloudy24">
+            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click" Command=""
+            Icon="WeatherCloudy24">
             <ui:CardAction.Content>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -116,8 +117,5 @@
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
-        <ui:Snackbar
-            x:Name="snackbar" Grid.Row="6" Grid.RowSpan="7" Width="370" Height="68"
-            Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" />
     </Grid>
 </ui:UiPage>

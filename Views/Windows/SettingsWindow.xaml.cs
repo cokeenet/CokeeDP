@@ -13,7 +13,7 @@ namespace CokeeDP.Views.Windows
     /// </summary>
     public partial class SettingsWindow : UiWindow
     {
-        public NavigationView NavigationView
+        public SnackbarService snackbarService
         {
             get; set;
         }
@@ -25,6 +25,8 @@ namespace CokeeDP.Views.Windows
 
         private void load(object sender,RoutedEventArgs e)
         {
+            snackbarService = new SnackbarService();
+            snackbarService.SetSnackbarControl(snackbar);
         }
     }
 }

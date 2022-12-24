@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CokeeDP.Views.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,17 +23,13 @@ namespace CokeeDP.Views.Pages
     /// </summary>
     public partial class GeoSearch : UiPage
     {
-        public SnackbarService snackbarService;
+        private SettingsWindow _Window = Application.Current.Windows
+             .Cast<Window>()
+             .FirstOrDefault(window => window is SettingsWindow) as SettingsWindow;
 
         public GeoSearch()
         {
             InitializeComponent();
-        }
-
-        private void OnLoad(object sender,RoutedEventArgs e)
-        {
-            snackbarService = new SnackbarService();
-            snackbarService.SetSnackbarControl(snackbar);
         }
     }
 }
