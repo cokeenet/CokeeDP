@@ -3,8 +3,7 @@
     xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="window" Title="CokeeDP"
     AllowDrop="True"
     Foreground="{x:Null}"
-    Loaded="Load" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="None"
-    mc:Ignorable="d">
+    Loaded="Load" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="None" mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <Storyboard x:Key="HideWindow">
@@ -36,7 +35,7 @@
             <ColumnDefinition Width="369*" />
         </Grid.ColumnDefinitions>
         <Viewbox
-            x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Fill">
+            x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Uniform">
             <Canvas
                 x:Name="MainCanvas" Width="1920" Height="1080" MouseMove="MouseMove">
                 <Image
@@ -543,12 +542,13 @@
                     BorderThickness="1" Click="kbshow" Content="触摸键盘" FontSize="11" Foreground="White"
                     MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
                 <ui:Snackbar
-                    x:Name="snackbar" Canvas.Left="685" Canvas.Top="915" Width="515" Height="107"
+                    x:Name="snackbar" Canvas.Left="702" Canvas.Top="934" Width="516" Height="107"
                     HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
                 <Ellipse
                     x:Name="CloseOpin" Canvas.Left="330" Canvas.Top="150" Width="100" Height="100"
                     Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
-                    Stroke="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+                    Stroke="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
+                    Visibility="Collapsed">
                     <Ellipse.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform x:Name="scaleT" CenterX="0" ScaleX="1" ScaleY="1" />
