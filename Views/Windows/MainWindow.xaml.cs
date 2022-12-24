@@ -528,12 +528,16 @@ namespace CokeeDP.Views.Windows
                     messageBox.ButtonLeftName = "确认";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
+
                     //messageBox.Icon = SymbolRegular.Warning28;
-                    if((bool)messageBox.ShowDialog()) Application.Current.Shutdown();
+                    messageBox.ShowDialog();
+                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
                 }
                 else Close();
             }));
         }
+
+        private void MessageBox_ButtonLeftClick(object sender,RoutedEventArgs e) => Close();
 
         private void ShowUsbCard(bool isUnplug,DriveInfo t = null)
         {
@@ -1150,7 +1154,6 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                var dialog = new Dialog();
                 dialog.Show((string)SpecialWeatherBtn.Content,weaWr);
             }
             catch(Exception ex)

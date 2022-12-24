@@ -42,7 +42,7 @@
                     x:Name="br1"
                     Width="{Binding ActualWidth, ElementName=viewbox, Mode=OneWay}"
                     Height="{Binding ActualHeight, ElementName=viewbox, Mode=OneWay}"
-                    MouseDown="MouseDown" Source="pack://application:,,,/Image/bg75.png" Stretch="Fill" TouchDown="TouchDown" Visibility="Visible">
+                    MouseDown="OnCloseWindow" Source="pack://application:,,,/Image/bg75.png" Stretch="Fill" TouchDown="TouchDown" Visibility="Visible">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
@@ -577,6 +577,9 @@
                         </TransformGroup>
                     </Ellipse.RenderTransform>
                 </Ellipse>
+                <ui:Dialog
+                    x:Name="dialog" Title="提示" ButtonLeftName="确定" ButtonRightVisibility="Collapsed" DialogHeight="275"
+                    DialogWidth="300" />
             </Canvas>
         </Viewbox>
     </Grid>
