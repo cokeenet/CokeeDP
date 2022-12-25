@@ -461,7 +461,7 @@ namespace CokeeDP.Views.Windows
                     u2 = Properties.Settings.Default.CachedWeatherData.Split("|")[0];
                     u3 = Properties.Settings.Default.CachedWeatherData.Split("|")[1];
                 }
-                weaupd1.Text = "最近更新: " + DateTime.Parse(Properties.Settings.Default.CachedWeatherTime).ToString("yyyy/MM/dd HH:mm:ss");
+                weaupd1.Text = Properties.Settings.Default.City + " 最近更新: " + DateTime.Parse(Properties.Settings.Default.CachedWeatherTime).ToString("yyyy/MM/dd HH:mm:ss");
                 weaupd2.Text = weaupd1.Text;
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
@@ -478,7 +478,9 @@ namespace CokeeDP.Views.Windows
                 w6.StreamSource = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
                 dt = JsonConvert.DeserializeObject<JObject>(u3);
 
-                if(!dt["warning"].HasValues)
+                if(!dt.ContainsKey("warning") || dt["code"].ToString() != "200")
+                    throw new HttpRequestException("天气预警加载失败。网络异常。(CODE:)" + dt["code"].ToString());
+                if(dt["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
                     SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
@@ -501,18 +503,6 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private async Task GetWeatherWarnings()
-        {
-            try
-            {
-            }
-            catch(Exception ex)
-            {
-                ProcessErr(ex);
-            }
-        }
-
-        //http://api.seniverse.com/v3/weather/daily.json?key=SISi82MwzaMbmQqSh&location=fuyang&language=zh-Hans&unit=c&start=0&days=3
         private void hitokoto_MouseDown(object sender,MouseButtonEventArgs e) => _ = Hitoko();
 
         private Object locker1 = new Object();
@@ -554,7 +544,7 @@ namespace CokeeDP.Views.Windows
                     tranUsb.BeginAnimation(TranslateTransform.XProperty,anim1);
                     disk = t.Name;
                     diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
-                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";
+                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";//TODO:改进算法，这个结果是错的
                 }
                 else if(isUnplug)
                 {
@@ -1150,11 +1140,12 @@ namespace CokeeDP.Views.Windows
         ///特殊天气按钮-按下处理
         /// </summary>
         /// <param name="sender">(Btn)</param>
-        private void WeaWarnBtnHandler(object sender,RoutedEventArgs e)
+        private void ShowWeatherWarns(object sender,RoutedEventArgs e)
         {
             try
             {
                 dialog.Show((string)SpecialWeatherBtn.Content,weaWr);
+                dialog.ButtonLeftClick += Dialog_ButtonLeftClick;
             }
             catch(Exception ex)
             {
@@ -1162,6 +1153,8 @@ namespace CokeeDP.Views.Windows
                 //MessageBoxX.Show(this, ex.ToString(), "Error", MessageBoxIcon.Warning, DefaultButton.YesOK);
             }
         }
+
+        private void Dialog_ButtonLeftClick(object sender,RoutedEventArgs e) => dialog.Hide();
 
         //---目前没什么用的函数
         private async Task CheckUpdate()

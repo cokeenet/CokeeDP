@@ -66,7 +66,7 @@
                             <Label
                                 x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
-                                Content="网络不佳..." FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
+                                FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
                                 <Label.Effect>
                                     <DropShadowEffect Opacity="0.4" />
                                 </Label.Effect>
@@ -78,7 +78,7 @@
                                     BorderBrush="{x:Null}"
                                     FontFamily="Microsoft YaHei UI Light" FontSize="18" IsReadOnlyCaretVisible="True"
                                     Style="{x:Null}"
-                                    TextWrapping="WrapWithOverflow">
+                                    Text="Loading..." TextWrapping="WrapWithOverflow">
                                     <TextBox.Effect>
                                         <DropShadowEffect Opacity="0.4" />
                                     </TextBox.Effect>
@@ -93,7 +93,7 @@
                                 VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
                                 pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
                                 BorderBrush="{x:Null}"
-                                BorderThickness="1" Click="WeaWarnBtnHandler" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
+                                BorderThickness="1" Click="ShowWeatherWarns" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
                                 Foreground="Black" Visibility="Visible" />
                             <TextBox
                                 x:Name="wea1" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
@@ -154,13 +154,13 @@
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                             <TextBox
-                                x:Name="weaupd1" Width="203" Margin="204,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                x:Name="weaupd1" Width="382" Margin="25,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" IsHitTestVisible="False"
-                                IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
                                 Style="{x:Null}"
-                                Text="最近更新:" TextAlignment="Right">
+                                TextAlignment="Right">
                                 <TextBox.Effect>
                                     <DropShadowEffect />
                                 </TextBox.Effect>
@@ -174,7 +174,7 @@
                                 VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
                                 pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
                                 BorderBrush="{x:Null}"
-                                BorderThickness="1" Click="WeaWarnBtnHandler" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
+                                BorderThickness="1" Click="ShowWeatherWarns" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
                                 Foreground="Black" Visibility="Visible" />
                             <TextBox
                                 x:Name="wea4" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
@@ -235,13 +235,13 @@
                                 </svgc:SvgViewbox.Effect>
                             </svgc:SvgViewbox>
                             <TextBox
-                                x:Name="weaupd2" Width="203" Margin="204,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                x:Name="weaupd2" Width="382" Margin="25,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
                                 Background="{x:Null}"
                                 BorderBrush="{x:Null}"
-                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" IsHitTestVisible="False"
-                                IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="White"
+                                IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
                                 Style="{x:Null}"
-                                Text="最近更新:" TextAlignment="Right">
+                                TextAlignment="Right">
                                 <TextBox.Effect>
                                     <DropShadowEffect />
                                 </TextBox.Effect>
@@ -578,8 +578,11 @@
                     </Ellipse.RenderTransform>
                 </Ellipse>
                 <ui:Dialog
-                    x:Name="dialog" Title="提示" ButtonLeftName="确定" ButtonRightVisibility="Collapsed" DialogHeight="275"
-                    DialogWidth="300" />
+                    x:Name="dialog" Title="提示"
+                    Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
+                    Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
+                    HorizontalAlignment="Left" VerticalAlignment="Center" d:IsHidden="True" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
+                    DialogHeight="276" DialogWidth="516" />
             </Canvas>
         </Viewbox>
     </Grid>
