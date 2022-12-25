@@ -50,3 +50,9 @@ NET 6.0 SDK
 - [SharpVectors.Wpf](https://github.com/ElinamLLC/SharpVectors)
 - [Microsoft.AppCenter](https://aka.ms/telgml)
 >本软件使用微软App Center进行错误日志收集，可以在设置中关闭开关。(关跟不关其实没啥区别ψ(._. )>)
+## 额外限制和例外 Additional limitations and exceptions
+- 本软件及其源代码不得被用于商业用途。
+- 使用本软件代码时，您必须在醒目的位置标上"Powered by CokeeDP"及指向本Git仓库(https://github.com/cokeenet/CokeeDP)的超链接。
+- 作者Cokee 保留一切权利。
+- 如果您不遵守上述条例，作者保留追究您法律责任的权利。
+- （软件内的条例仅作参考）
