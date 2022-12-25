@@ -39,10 +39,10 @@ namespace CokeeDP.Views.Pages
             cityName.Text = "当前选择:" + Properties.Settings.Default.City;
         }
 
-        private void OnSwitchChecked(object sender,RoutedEventArgs e)
+        private void OnSwitchChecked(object sender, RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            switch(toggleSwitch.Tag)
+            switch (toggleSwitch.Tag)
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
@@ -55,10 +55,10 @@ namespace CokeeDP.Views.Pages
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender,TextChangedEventArgs e)
+        private void TextBodHandler(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch(textBox.Tag)
+            switch (textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
@@ -71,14 +71,14 @@ namespace CokeeDP.Views.Pages
             //snackbarService.Show("Saved",Properties.Settings.Default.AudioFolder);
         }
 
-        private void ComboBoxHandler(object sender,RoutedEventArgs e)
+        private void ComboBoxHandler(object sender, RoutedEventArgs e)
         {
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
             Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
         }
 
-        private void CardAction_Click(object sender,RoutedEventArgs e)
+        private void CardAction_Click(object sender, RoutedEventArgs e)
         {
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }

@@ -28,13 +28,13 @@ namespace CokeeDP.Views.Windows
 
         public void ProcessErr(Exception e)
         {
-            if(this.IsLoaded)
+            if (this.IsLoaded)
             {
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.ShowAsync("发生错误",e.Message + e.StackTrace,SymbolRegular.ErrorCircle24);
+                snackbarService.ShowAsync("发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24);
             }
-            Log.Error(e,"Error");
-            if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
+            Log.Error(e, "Error");
+            if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
         public Frame GetFrame()
@@ -55,7 +55,7 @@ namespace CokeeDP.Views.Windows
         public void CloseWindow()
             => Close();
 
-        private void load(object sender,RoutedEventArgs e)
+        private void load(object sender, RoutedEventArgs e)
         {
             snackbarService = new SnackbarService();
             snackbarService.SetSnackbarControl(snackbar);
