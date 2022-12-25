@@ -68,6 +68,7 @@ patents cannot be used to render the program non-free.
   The precise terms and conditions for copying, distribution and
 modification follow.
 
+
                        TERMS AND CONDITIONS
 
   0. Definitions.
@@ -672,3 +673,10 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+额外限制和例外 Additional limitations and exceptions
+本软件及其源代码不得被用于商业用途。
+使用本软件代码时，您必须在醒目的位置标上"Powered by CokeeDP"及指向本Git仓库(https://github.com/cokeenet/CokeeDP)的超链接。
+作者Cokee 保留一切权利。
+如果您不遵守上述条例，作者保留追究您法律责任的权利。
+
