@@ -115,7 +115,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="选择天气城市" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="当前选择:未选择" />
+                        x:Name="cityName" FontSize="12" Opacity="0.7" Text="当前选择:未选择" />
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>

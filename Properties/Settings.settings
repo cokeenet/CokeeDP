@@ -18,7 +18,7 @@
       <Value Profile="(Default)">9800</Value>
     </Setting>
     <Setting Name="City" Type="System.String" Scope="User">
-      <Value Profile="(Default)">fuyang</Value>
+      <Value Profile="(Default)">中国 北京</Value>
     </Setting>
     <Setting Name="CountdownName" Type="System.String" Scope="User">
       <Value Profile="(Default)">高考</Value>
@@ -48,7 +48,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CityId" Type="System.String" Scope="User">
-      <Value Profile="(Default)">101220807</Value>
+      <Value Profile="(Default)">101010100</Value>
     </Setting>
     <Setting Name="BlockedImageIds" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -60,6 +60,9 @@
       <Value Profile="(Default)">
         2000/01/01 00:00:00
       </Value>
+    </Setting>
+    <Setting Name="OneWordsComboBoxIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

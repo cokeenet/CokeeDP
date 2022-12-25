@@ -499,6 +499,7 @@ namespace CokeeDP.Views.Windows
             }
             catch(Exception ex)
             {
+                Properties.Settings.Default.CachedWeatherData = "";
                 ProcessErr(ex);
             }
         }

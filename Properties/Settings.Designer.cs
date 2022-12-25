@@ -85,7 +85,7 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fuyang")]
+        [global::System.Configuration.DefaultSettingValueAttribute("中国 北京")]
         public string City {
             get {
                 return ((string)(this["City"]));
@@ -205,7 +205,7 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("101220807")]
+        [global::System.Configuration.DefaultSettingValueAttribute("101010100")]
         public string CityId {
             get {
                 return ((string)(this["CityId"]));
@@ -248,6 +248,18 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["CachedWeatherTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OneWordsComboBoxIndex {
+            get {
+                return ((int)(this["OneWordsComboBoxIndex"]));
+            }
+            set {
+                this["OneWordsComboBoxIndex"] = value;
             }
         }
     }

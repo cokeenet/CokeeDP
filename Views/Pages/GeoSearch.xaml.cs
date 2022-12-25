@@ -69,7 +69,7 @@ namespace CokeeDP.Views.Pages
 
         private void Button_Click(object sender,RoutedEventArgs e)
         {
-            _Window.RootNavigation.Navigate("Main");
+            _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/Main.xaml");
         }
 
         private async Task GetGeoInfo()

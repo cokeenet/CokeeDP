@@ -8,6 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition MaxHeight="500" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -20,10 +21,50 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock
-            Grid.Row="0" Margin="5,10" FontSize="20" Text="CokeeDP 渡尘🌟" />
-        <TextBlock
-            Grid.Row="1" Margin="5,10" FontSize="20" Text="感谢您使用渡尘。" />
+            Grid.Row="1" Margin="5,10" FontSize="20" Text="CokeeDP 渡尘🌟" />
+        <RichTextBox
+            Grid.Row="2" IsReadOnly="True"
+            Style="{x:Null}">
+            <FlowDocument>
+                <Paragraph>
+                    <Bold>感谢您使用CokeeDP 渡尘。</Bold>
+                </Paragraph>
+                <Paragraph>软件版本:Ver3.0</Paragraph>
+                <Paragraph>本软件使用GPL V3.0 许可证分发。</Paragraph>
+                <Paragraph>
+                    <Bold>
+                        额外限制和例外
+                        <LineBreak />
+                    </Bold>
+                    <LineBreak />
+                    本软件及其源代码不得被用于商业用途。<LineBreak />
+                    <LineBreak />
+                    作者Cokee 保留一切权利。<LineBreak />
+                    <LineBreak />
+                    如果您不遵守这些条例，作者保留追究您法律责任的权利。</Paragraph>
+                <Paragraph>
+                    <Bold>
+                        联系作者
+                        <LineBreak />
+                        <LineBreak />
+                        Cokee
+                    </Bold>
+
+                    <LineBreak />
+                    BiliBili:  CokeeOfficial<LineBreak />
+                    Github : Cokeenet<LineBreak />
+                    Email : bluecitynetwork@outlook.com<LineBreak />
+                    本软件中所有图片的版权归原作者所有。侵权请联系上面那个邮箱（）<LineBreak />
+                    软件交流群 ：9263225805<LineBreak />
+                    <LineBreak />
+                    <Hyperlink Foreground="#FF5186BF" NavigateUri="https://github.com/cokeenet/CokeeDP/releases">
+                        软件可在Github仓库更新
+                    </Hyperlink>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
         <Image
-            Grid.Row="9" MaxWidth="100.7" HorizontalAlignment="Left" Source="https://cdn.qweather.com/media/powered-by-heweather-dark2.png" />
+            x:Name="image" Grid.Row="1" Grid.RowSpan="2" Width="100" Height="100"
+            Margin="0,20,20,0" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Image/hd1.jpg" />
     </Grid>
 </ui:UiPage>

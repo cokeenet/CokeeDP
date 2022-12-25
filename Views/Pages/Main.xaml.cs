@@ -36,6 +36,7 @@ namespace CokeeDP.Views.Pages
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
             folderBox.Text = Properties.Settings.Default.AudioFolder;
             timeBox.Text = (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) / 60).ToString();
+            cityName.Text = "当前选择:" + Properties.Settings.Default.City;
         }
 
         private void OnSwitchChecked(object sender,RoutedEventArgs e)
@@ -47,17 +48,6 @@ namespace CokeeDP.Views.Pages
                     Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
                 case "uhd":
                     Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
-                case "dark":
-                    if((bool)toggleSwitch.IsChecked)
-                    {
-                        Theme.Apply(ThemeType.Dark,BackgroundType.Mica);
-                        break;
-                    }
-                    else
-                    {
-                        Theme.Apply(ThemeType.Light,BackgroundType.Mica);
-                        break;
-                    }
                 default:
                     break;
             }
