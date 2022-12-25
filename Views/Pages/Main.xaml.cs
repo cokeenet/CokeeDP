@@ -82,5 +82,9 @@ namespace CokeeDP.Views.Pages
         {
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
+
+        private void CardAction_Click_1(object sender,RoutedEventArgs e)
+        {
+        }
     }
 }

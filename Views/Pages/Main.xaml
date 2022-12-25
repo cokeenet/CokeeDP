@@ -119,5 +119,15 @@
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
+        <ui:CardAction
+            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click_1" Command=""
+            Icon="WeatherCloudy24">
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="13" FontWeight="Medium" Text="选择倒计时日期" />
+                <TextBlock
+                    x:Name="countDown" FontSize="12" Opacity="0.7" Text="当前设置:未设置" />
+            </StackPanel>
+        </ui:CardAction>
     </Grid>
 </ui:UiPage>

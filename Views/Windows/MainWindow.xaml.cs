@@ -282,12 +282,12 @@ namespace CokeeDP.Views.Windows
             if(Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
-        public void SetTimer(System.Timers.Timer a,int ms,System.Timers.Timer b,int ms1,System.Timers.Timer c,int ms2)
+        public void SetTimer(Timer a,int ms,Timer b,int ms1,Timer c,int ms2)
         {
             // Create timers with a interval.
-            a = new System.Timers.Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
-            b = new System.Timers.Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
-            c = new System.Timers.Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
+            a = new Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
+            b = new Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
+            c = new Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
         }
 
         public Stream GetWeatherIcon(int code)
@@ -476,25 +476,25 @@ namespace CokeeDP.Views.Windows
                 w4.StreamSource = GetWeatherIcon((int)dt["daily"][3]["iconDay"]);
                 w5.StreamSource = GetWeatherIcon((int)dt["daily"][4]["iconDay"]);
                 w6.StreamSource = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
-                dt = JsonConvert.DeserializeObject<JObject>(u3);
+                JObject dt1 = JsonConvert.DeserializeObject<JObject>(u3);
 
-                if(!dt.ContainsKey("warning") || dt["code"].ToString() != "200")
-                    throw new HttpRequestException("天气预警加载失败。网络异常。(CODE:)" + dt["code"].ToString());
-                if(dt["warning"].HasValues)
+                if(!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200")
+                    throw new HttpRequestException("天气预警加载失败。网络异常。(CODE:)" + dt1["code"].ToString());
+                if(dt1["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
                     SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    var t = dt["warning"][0]["title"].ToString();
+                    var t = dt1["warning"][0]["title"].ToString();
                     SpecialWeatherBtn.Visibility = Visibility.Visible;
                     SpecialWeatherBtn1.Visibility = Visibility.Visible;
                     string TextShort;
                     if(t.Contains("发布")) TextShort = t.Substring(t.IndexOf("布") + 1);
                     else TextShort = t.Substring(t.IndexOf("新") + 1);
                     SpecialWeatherBtn.Content = TextShort;
-                    weaWr = dt["warning"][0]["text"].ToString();
+                    weaWr = dt1["warning"][0]["text"].ToString();
                 }
             }
             catch(Exception ex)
@@ -1226,7 +1226,7 @@ namespace CokeeDP.Views.Windows
 
         public void Appear(FrameworkElement element,int direction = 0,int distance = 20,double duration = .3)
         {
-            //将所选控件的Visibility属性改为Visible，这里要首先执行否则动画看不到
+            //将所选控件的Visibility属性改为Visible
             ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
             DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Visible,new TimeSpan(0,0,0));
             VisbilityAnimation.KeyFrames.Add(kf);
@@ -1235,7 +1235,6 @@ namespace CokeeDP.Views.Windows
             //创建新的缩放动画
             TranslateTransform TT = new TranslateTransform();
             element.RenderTransform = TT;
-            //创建缩放动画函数，可以自己修改
             EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
 
             //判断动画方向
@@ -1283,7 +1282,7 @@ namespace CokeeDP.Views.Windows
             //创建新的缩放动画
             TranslateTransform TT = new TranslateTransform();
             element.RenderTransform = TT;
-            //创建缩放动画函数，可以自己修改
+            //创建缩放动画函数
             EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
 
             //判断动画方向
@@ -1319,7 +1318,7 @@ namespace CokeeDP.Views.Windows
             OpacityAnimation.EasingFunction = easeFunction;
             element.BeginAnimation(Border.OpacityProperty,OpacityAnimation);
 
-            //将所选控件的Visibility属性改为Collapsed，这样不占用空间
+            //将所选控件的Visibility属性改为Collapsed
             ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
             DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Collapsed,new TimeSpan(0,0,1));
             VisbilityAnimation.KeyFrames.Add(kf);

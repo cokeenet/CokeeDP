@@ -23,7 +23,9 @@
         <TextBlock
             Grid.Row="1" Margin="5,10" FontSize="20" Text="CokeeDP 渡尘🌟" />
         <RichTextBox
-            Grid.Row="2" IsReadOnly="True"
+            Grid.Row="2"
+            Background="{x:Null}"
+            IsReadOnly="True"
             Style="{x:Null}">
             <FlowDocument>
                 <Paragraph>
@@ -58,7 +60,7 @@
                     软件交流群 ：9263225805<LineBreak />
                     <LineBreak />
                     <Hyperlink Foreground="#FF5186BF" NavigateUri="https://github.com/cokeenet/CokeeDP/releases">
-                        软件可在Github仓库更新
+                        软件可在Github仓库更新 https://github.com/cokeenet/CokeeDP/releases
                     </Hyperlink>
                 </Paragraph>
             </FlowDocument>
