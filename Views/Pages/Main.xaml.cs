@@ -34,57 +34,74 @@ namespace CokeeDP.Views.Pages
             InitializeComponent();
             BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
             UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
+            SnowFlakeSwitch.IsChecked = Properties.Settings.Default.SnowEnable;
             folderBox.Text = Properties.Settings.Default.AudioFolder;
             timeBox.Text = (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) / 60).ToString();
             cityName.Text = "当前选择:" + Properties.Settings.Default.City;
+            oneWord.SelectedIndex = Properties.Settings.Default.OneWordsComboBoxIndex;
+            countDownBox.Text = Properties.Settings.Default.CountdownName;
+            countDownPicker.SelectedDate = Properties.Settings.Default.CountdownTime;
         }
 
-        private void OnSwitchChecked(object sender, RoutedEventArgs e)
+        private void OnSwitchChecked(object sender,RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
-            switch (toggleSwitch.Tag)
+            bool enable = (bool)toggleSwitch.IsChecked;
+            if(toggleSwitch.IsChecked == null) enable = false;
+            switch(toggleSwitch.Tag)
             {
                 case "bing":
-                    Properties.Settings.Default.BingWappEnable = (bool)toggleSwitch.IsChecked; break;
+                    Properties.Settings.Default.BingWappEnable = enable; break;
                 case "uhd":
-                    Properties.Settings.Default.IsUHDWapp = (bool)toggleSwitch.IsChecked; break;
+                    Properties.Settings.Default.IsUHDWapp = enable; break;
+                case "SnowFlake":
+                    Properties.Settings.Default.SnowEnable = enable; break;
                 default:
                     break;
             }
-            _Window.snackbarService.ShowAsync("Saved");
+            _Window.snackbarService.ShowAsync("Saved",enable.ToString());
             Properties.Settings.Default.Save();
         }
 
-        private void TextBodHandler(object sender, TextChangedEventArgs e)
+        private void TextBoxHandler(object sender,RoutedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch (textBox.Tag)
+            switch(textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
                 case "time":
                     Properties.Settings.Default.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
+                case "CountDownName":
+                    Properties.Settings.Default.CountdownName = textBox.Text; break;
                 default:
                     break;
             }
             Properties.Settings.Default.Save();
-            //snackbarService.Show("Saved",Properties.Settings.Default.AudioFolder);
+            _Window.snackbarService.ShowAsync("Saved",textBox.Text);
         }
 
-        private void ComboBoxHandler(object sender, RoutedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            var item = comboBox.SelectedItem as ComboBoxItem;
-            Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
-        }
-
-        private void CardAction_Click(object sender, RoutedEventArgs e)
+        private void CardAction_Click(object sender,RoutedEventArgs e)
         {
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
 
-        private void CardAction_Click_1(object sender,RoutedEventArgs e)
+        private void ComboBoxHandler(object sender,SelectionChangedEventArgs e)
         {
+            var comboBox = sender as ComboBox;
+            var item = comboBox.SelectedItem as ComboBoxItem;
+            if(item == null) return;
+            Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
+            Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
+            _Window.snackbarService.ShowAsync("Saved",comboBox.SelectedIndex.ToString());
+        }
+
+        private void DatePickerHandler(object sender,DataTransferEventArgs e)
+        {
+            DatePicker datePicker = sender as DatePicker;
+            if(datePicker == null) return;
+            Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
+            _Window.snackbarService.ShowAsync("Saved",Properties.Settings.Default.CountdownTime.ToString());
         }
     }
 }

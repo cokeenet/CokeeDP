@@ -306,8 +306,8 @@
                     MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
                         <ContextMenu x:Name="lik">
-                            <MenuItem Click="Viewsour" Header="查看句子源" />
-                            <MenuItem Click="Likeit" Header="编辑文本" />
+                            <ui:MenuItem Click="Viewsour" Header="查看句子源" />
+                            <ui:MenuItem Click="Likeit" Header="编辑文本" />
                         </ContextMenu>
                     </Label.ContextMenu>
                     <Label.Effect>
@@ -375,8 +375,8 @@
                     </Label.Effect>
                     <Label.ContextMenu>
                         <ContextMenu x:Name="bm">
-                            <MenuItem Click="DislikeImage" Header="不喜欢这张图" />
-                            <MenuItem Click="Likeit" Header="喜欢" />
+                            <ui:MenuItem Click="DislikeImage" Header="不喜欢这张图" />
+                            <ui:MenuItem Click="Likeit" Header="喜欢" />
                         </ContextMenu>
                     </Label.ContextMenu>
                 </Label>

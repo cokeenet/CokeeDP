@@ -109,10 +109,10 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2025/06/05 00:00:00")]
-        public string CountdownTime {
+        [global::System.Configuration.DefaultSettingValueAttribute("2025-06-05")]
+        public global::System.DateTime CountdownTime {
             get {
-                return ((string)(this["CountdownTime"]));
+                return ((global::System.DateTime)(this["CountdownTime"]));
             }
             set {
                 this["CountdownTime"] = value;
@@ -241,10 +241,22 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\r\n        2000/01/01 00:00:00\r\n      ")]
-        public string CachedWeatherTime {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int OneWordsComboBoxIndex {
             get {
-                return ((string)(this["CachedWeatherTime"]));
+                return ((int)(this["OneWordsComboBoxIndex"]));
+            }
+            set {
+                this["OneWordsComboBoxIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
+        public global::System.DateTime CachedWeatherTime {
+            get {
+                return ((global::System.DateTime)(this["CachedWeatherTime"]));
             }
             set {
                 this["CachedWeatherTime"] = value;
@@ -253,13 +265,13 @@ namespace CokeeDP.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int OneWordsComboBoxIndex {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SnowEnable {
             get {
-                return ((int)(this["OneWordsComboBoxIndex"]));
+                return ((bool)(this["SnowEnable"]));
             }
             set {
-                this["OneWordsComboBoxIndex"] = value;
+                this["SnowEnable"] = value;
             }
         }
     }

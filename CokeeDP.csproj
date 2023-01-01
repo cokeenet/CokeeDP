@@ -66,8 +66,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Archived\Setting.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Image\bg75.png" />
-    <None Remove="SplashScreen.png" /> 
+    <None Remove="SplashScreen.png" />
+    <Page Remove="Archived\Setting.xaml" /> 
     <Content Include="Image\hd1.ico" />   
     <Resource Include="Image\bg75.png" />
     <Resource Include="Image\bg_normal.png" />
@@ -311,6 +316,11 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Archived\Setting.xaml" />
+    <None Include="Archived\Setting.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>

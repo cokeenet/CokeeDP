@@ -1,11 +1,15 @@
 ﻿<ui:UiPage
     x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP.Views.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="432" d:DesignWidth="794"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320" d:DesignWidth="794"
     Scrollable="True" mc:Ignorable="d">
 
     <Grid Margin="5,0,5,0">
         <Grid.ColumnDefinitions />
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -61,10 +65,11 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="一言API" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="数据来自Hitokoto | 一言 (hitokoto.cn) " />
+                        FontSize="12" Opacity="0.7" Text="数据来自 一言 (hitokoto.cn) " />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ComboBox Width="145">
+            <ComboBox
+                x:Name="oneWord" Width="145" SelectionChanged="ComboBoxHandler">
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -86,13 +91,13 @@
             </ui:CardControl.Header>
             <Grid>
                 <ui:TextBox
-                    x:Name="timeBox" Margin="52,0,50,0" Tag="time" TextChanged="TextBodHandler" />
+                    x:Name="timeBox" Margin="52,0,50,0" LostFocus="TextBoxHandler" Tag="time" />
                 <TextBlock
                     Margin="221,5,9,5" FontSize="16" Opacity="0.7" Text="分钟" />
             </Grid>
         </ui:CardControl>
         <TextBlock
-            Grid.Row="7" Margin="0,5,5,2" FontSize="16" Text="杂项" />
+            Grid.Row="7" Margin="5,5,0,0" FontSize="16" Text="杂项" />
         <ui:CardControl
             Grid.Row="8" Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
             <ui:CardControl.Header>
@@ -104,7 +109,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                x:Name="folderBox" Width="551" Tag="audioDir" TextChanged="TextBodHandler" />
+                x:Name="folderBox" Width="551" LostFocus="TextBoxHandler" Tag="audioDir" />
         </ui:CardControl>
 
         <ui:CardAction
@@ -119,15 +124,40 @@
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
-        <ui:CardAction
-            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click_1" Command=""
-            Icon="WeatherCloudy24">
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock
-                    FontSize="13" FontWeight="Medium" Text="选择倒计时日期" />
-                <TextBlock
-                    x:Name="countDown" FontSize="12" Opacity="0.7" Text="当前设置:未设置" />
-            </StackPanel>
-        </ui:CardAction>
+        <ui:CardControl
+            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="设置倒计时名称" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:TextBox
+                x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" />
+        </ui:CardControl>
+        <ui:CardControl
+            Grid.Row="11" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="设置倒计时日期" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <DatePicker
+                x:Name="countDownPicker" Width="224" Tag="CountDownTime" TargetUpdated="DatePickerHandler" />
+        </ui:CardControl>
+        <ui:CardControl
+            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="启用雪花效果" />
+                    <TextBlock
+                        FontSize="12" Opacity="0.7" Text="可能占用大量GPU资源" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:ToggleSwitch
+                x:Name="SnowFlakeSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="SnowFlake" />
+        </ui:CardControl>
     </Grid>
 </ui:UiPage>

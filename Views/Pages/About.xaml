@@ -63,6 +63,9 @@
                         软件可在Github仓库更新 https://github.com/cokeenet/CokeeDP/releases
                     </Hyperlink>
                 </Paragraph>
+                <Paragraph>
+                    天气数据来自和风天气
+                </Paragraph>
             </FlowDocument>
         </RichTextBox>
         <Image

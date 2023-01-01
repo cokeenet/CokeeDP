@@ -23,8 +23,8 @@
     <Setting Name="CountdownName" Type="System.String" Scope="User">
       <Value Profile="(Default)">高考</Value>
     </Setting>
-    <Setting Name="CountdownTime" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2025/06/05 00:00:00</Value>
+    <Setting Name="CountdownTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2025-06-05</Value>
     </Setting>
     <Setting Name="BingWappEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -56,13 +56,14 @@
     <Setting Name="CachedWeatherData" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="CachedWeatherTime" Type="System.String" Scope="User">
-      <Value Profile="(Default)">
-        2000/01/01 00:00:00
-      </Value>
-    </Setting>
     <Setting Name="OneWordsComboBoxIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CachedWeatherTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2000-01-01</Value>
+    </Setting>
+    <Setting Name="SnowEnable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -2,6 +2,7 @@
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Utils.Files;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -39,6 +40,7 @@ using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
 using Button = Wpf.Ui.Controls.Button;
 using Clipboard = Wpf.Ui.Common.Clipboard;
+using Directory = System.IO.Directory;
 using File = System.IO.File;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Point = System.Windows.Point;
@@ -51,8 +53,8 @@ namespace CokeeDP.Views.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public const int DBT_DEVICEARRIVAL = 0x8000;  //U盘可用
-        public const int DBT_DEVICEREMOVECOMPLETE = 0x8004; //一个设备或媒体已被删除。
+        public const int DBT_DEVICEARRIVAL = 0x8000;  //设备可用
+        public const int DBT_DEVICEREMOVECOMPLETE = 0x8004; //设备或媒体被删除
         public const int FILE_SHARE_READ = 0x1;
         public const int FILE_SHARE_WRITE = 0x2;
         public const uint GENERIC_READ = 0x80000000;
@@ -68,8 +70,6 @@ namespace CokeeDP.Views.Windows
         private String AudioPath, AudioFolder, MediaDuring;
         private int bgn = 0, bing = 0;
         private BitmapImage bitmapImage = null;
-
-        //U盘插入后，OS的底层会自动检测，然后向应用程序发送“硬件设备状态改变“的消息
         private string disk, weaWr, hkUrl, nowDowning = "";
 
         private SnackbarService snackbarService;
@@ -108,7 +108,7 @@ namespace CokeeDP.Views.Windows
                     DirectoryInfo AudioDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     ImageArray = AudioDir.GetFiles("*.png"); ChangeWapp(false);
                 }
-                TimeLabel.Content = DateTime.Now.ToString("hh:mm:ss");
+                TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 if(Directory.Exists(AudioFolder))
                 {
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
@@ -205,8 +205,12 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if(Properties.Settings.Default.CountdownTime.Length == 0) { CountDownTime = new(2025,6,5,00,00,00); Properties.Settings.Default.CountdownTime = CountDownTime.ToString(); }
-                else CountDownTime = DateTime.Parse(Properties.Settings.Default.CountdownTime);
+                if(Properties.Settings.Default.CountdownTime.Year <= 2000)
+                {
+                    CountDownTime = DateTime.Parse("2025/06/05");
+                    Properties.Settings.Default.CountdownTime = CountDownTime;
+                }
+                else CountDownTime = Properties.Settings.Default.CountdownTime;
                 if(Properties.Settings.Default.OneWordsApi.Length == 0) Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=k";
                 if(Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) <= 300) Properties.Settings.Default.OneWordsTimeInterval = "300";
                 if(Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval) <= 9800) Properties.Settings.Default.WeatherTimeInterval = "9800";
@@ -238,6 +242,7 @@ namespace CokeeDP.Views.Windows
 
         public void OnNewDay()
         {
+            snackbarService.ShowAsync("是新的一天!","哇你还没睡觉啊>_<",SymbolRegular.WeatherMoon16);
         }
 
         public void OnOneSecondTimer(object source,ElapsedEventArgs e)
@@ -246,7 +251,7 @@ namespace CokeeDP.Views.Windows
             {
                 Dispatcher.Invoke(new Action(delegate
             {
-                TimeLabel.Content = DateTime.Now.ToString("hh:mm:ss");
+                TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if(Properties.Settings.Default.EnableBigTimeTo)
                 {
@@ -421,7 +426,7 @@ namespace CokeeDP.Views.Windows
                 _ = Hitoko();
                 _ = GetWeatherInfo();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                if(DateTime.Now.Month > 10) { StartSnowing(MainCanvas); }
+                if(Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
             }
             catch(Exception ex)
             {
@@ -450,23 +455,24 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                DateTime dateTime; string u2, u3;
-                if(!DateTime.TryParse(Properties.Settings.Default.CachedWeatherTime,out dateTime) || DateTime.Now.Subtract(dateTime).Hours > 6 || !Properties.Settings.Default.CachedWeatherData.Contains("|"))
+                string u2, u3;
+                if(DateTime.Now.Subtract(Properties.Settings.Default.CachedWeatherTime).Hours > 6 || !Properties.Settings.Default.CachedWeatherData.Contains("|"))
                 {
                     var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                     var client = new HttpClient(handler);
 
                     u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
-                    u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
+                    u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
+                    MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
                     Properties.Settings.Default.CachedWeatherData = u2 + "|" + u3;
-                    Properties.Settings.Default.CachedWeatherTime = DateTime.Now.ToString();
+                    Properties.Settings.Default.CachedWeatherTime = DateTime.Now;
                 }
                 else
                 {
                     u2 = Properties.Settings.Default.CachedWeatherData.Split("|")[0];
                     u3 = Properties.Settings.Default.CachedWeatherData.Split("|")[1];
                 }
-                weaupd1.Text = Properties.Settings.Default.City + " 最近更新: " + DateTime.Parse(Properties.Settings.Default.CachedWeatherTime).ToString("yyyy/MM/dd HH:mm:ss");
+                weaupd1.Text = Properties.Settings.Default.City + " 最近更新: " + Properties.Settings.Default.CachedWeatherTime.ToString("yyyy/MM/dd HH:mm:ss");
                 weaupd2.Text = weaupd1.Text;
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
@@ -745,11 +751,14 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
+                if(!Directory.Exists(AudioFolder))
+                {
+                    throw new DirectoryNotFoundException("听力文件夹未找到 : " + AudioFolder);
+                }
                 if(Directory.Exists(AudioFolder) && AudioArray.Length == 0)
                 {
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
-                    if(dir.Exists) AudioArray = dir.GetFiles("*.mp3");
-                    else throw new DirectoryNotFoundException("听力文件夹未找到 : " + AudioFolder);
+                    AudioArray = dir.GetFiles("*.mp3");
                     if(AudioArray.Length == 0) throw new FileNotFoundException("听力文件夹内没有.mp3文件。请转换音频为.mp3格式。");
                 }
                 if(AudioNum >= AudioArray.Length || AudioNum < 0) AudioNum = 0;
@@ -1057,7 +1066,7 @@ namespace CokeeDP.Views.Windows
                         {
                             int width = random.Next(10,50);
                             SymbolIcon pack = new SymbolIcon();
-                            int snowType = random.Next(3);                   //三种雪花
+                            int snowType = random.Next(3);
                             switch(snowType)
                             {
                                 case 0: pack.Symbol = SymbolRegular.WeatherSnowflake20; break;
@@ -1069,7 +1078,7 @@ namespace CokeeDP.Views.Windows
                             pack.Width = width;
                             pack.Height = width;
                             pack.FontSize = random.Next(10,40); ;
-                            pack.Foreground = System.Windows.Media.Brushes.White;              //白色
+                            pack.Foreground = System.Windows.Media.Brushes.White;
                             pack.BorderThickness = new Thickness(0);
                             pack.RenderTransform = new RotateTransform();
 
