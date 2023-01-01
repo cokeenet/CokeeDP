@@ -405,8 +405,6 @@ namespace CokeeDP.Views.Windows
             {
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
-                br1.Width = this.Width;
-                br1.Height = this.Height;
                 snackbarService = new SnackbarService();
                 snackbarService.SetSnackbarControl(snackbar);
                 //ThemeService themeService = new ThemeService();
