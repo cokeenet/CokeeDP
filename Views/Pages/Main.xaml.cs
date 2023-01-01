@@ -45,22 +45,6 @@ namespace CokeeDP.Views.Pages
 
         private void OnSwitchChecked(object sender,RoutedEventArgs e)
         {
-            var toggleSwitch = (ToggleSwitch)sender;
-            bool enable = (bool)toggleSwitch.IsChecked;
-            if(toggleSwitch.IsChecked == null) enable = false;
-            switch(toggleSwitch.Tag)
-            {
-                case "bing":
-                    Properties.Settings.Default.BingWappEnable = enable; break;
-                case "uhd":
-                    Properties.Settings.Default.IsUHDWapp = enable; break;
-                case "SnowFlake":
-                    Properties.Settings.Default.SnowEnable = enable; break;
-                default:
-                    break;
-            }
-            _Window.snackbarService.ShowAsync("Saved",enable.ToString());
-            Properties.Settings.Default.Save();
         }
 
         private void TextBoxHandler(object sender,RoutedEventArgs e)
@@ -86,7 +70,35 @@ namespace CokeeDP.Views.Pages
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
 
-        private void ComboBoxHandler(object sender,SelectionChangedEventArgs e)
+        private void SwitchEventsHandler(object sender,RoutedEventArgs e)
+        {
+            var toggleSwitch = (ToggleSwitch)sender;
+            bool enable = (bool)toggleSwitch.IsChecked;
+            if(toggleSwitch.IsChecked == null) enable = false;
+            switch(toggleSwitch.Tag)
+            {
+                case "bing":
+                    Properties.Settings.Default.BingWappEnable = enable; break;
+                case "uhd":
+                    Properties.Settings.Default.IsUHDWapp = enable; break;
+                case "SnowFlake":
+                    Properties.Settings.Default.SnowEnable = enable; break;
+                default:
+                    break;
+            }
+            _Window.snackbarService.ShowAsync("Saved",enable.ToString());
+            Properties.Settings.Default.Save();
+        }
+
+        private void DatePickerHandler(object sender,RoutedEventArgs e)
+        {
+            DatePicker datePicker = sender as DatePicker;
+            if(datePicker == null) return;
+            Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
+            _Window.snackbarService.ShowAsync("Saved",Properties.Settings.Default.CountdownTime.ToString());
+        }
+
+        private void ComboBoxHandler(object sender,EventArgs e)
         {
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
@@ -94,14 +106,6 @@ namespace CokeeDP.Views.Pages
             Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             _Window.snackbarService.ShowAsync("Saved",comboBox.SelectedIndex.ToString());
-        }
-
-        private void DatePickerHandler(object sender,DataTransferEventArgs e)
-        {
-            DatePicker datePicker = sender as DatePicker;
-            if(datePicker == null) return;
-            Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
-            _Window.snackbarService.ShowAsync("Saved",Properties.Settings.Default.CountdownTime.ToString());
         }
     }
 }

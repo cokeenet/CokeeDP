@@ -405,13 +405,13 @@ namespace CokeeDP.Views.Windows
             {
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
-                br1.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
-                br1.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+                br1.Width = this.Width;
+                br1.Height = this.Height;
                 snackbarService = new SnackbarService();
                 snackbarService.SetSnackbarControl(snackbar);
-                ThemeService themeService = new ThemeService();
-                themeService.SetTheme(ThemeType.Light);//TODO
-                Theme.Apply(ThemeType.Light,BackgroundType.Mica);
+                //ThemeService themeService = new ThemeService();
+                //themeService.SetTheme(ThemeType.Light);//TODO
+                Theme.Apply(ThemeType.Light,BackgroundType.Auto);
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
                 DriveInfo[] s = DriveInfo.GetDrives();
                 s.Any(t =>
@@ -491,7 +491,7 @@ namespace CokeeDP.Views.Windows
 
                 if(!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200")
                     throw new HttpRequestException("天气预警加载失败。网络异常。CODE:" + dt1["code"].ToString());
-                if(dt1["warning"].HasValues)
+                if(!dt1["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
                     SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
@@ -543,7 +543,7 @@ namespace CokeeDP.Views.Windows
 
         private void ShowUsbCard(bool isUnplug,DriveInfo t = null)
         {
-            lock(locker)
+            lock(locker1)
             {
                 DoubleAnimation anim1 = new DoubleAnimation(0,TimeSpan.FromSeconds(1));
                 DoubleAnimation anim2 = new DoubleAnimation(368,TimeSpan.FromSeconds(1));
@@ -561,7 +561,6 @@ namespace CokeeDP.Views.Windows
                 else if(isUnplug)
                 {
                     tranUsb.BeginAnimation(TranslateTransform.XProperty,anim2);
-                    usb.Visibility = Visibility.Collapsed;
                 }
             }
         }

@@ -41,7 +41,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="BingWappSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="bing" />
+                x:Name="BingWappSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
@@ -54,7 +54,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="UHDModeSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="uhd" />
+                x:Name="UHDModeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="uhd" />
         </ui:CardControl>
         <TextBlock
             Grid.Row="4" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
@@ -69,7 +69,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ComboBox
-                x:Name="oneWord" Width="145" SelectionChanged="ComboBoxHandler">
+                x:Name="oneWord" Width="145" DropDownClosed="ComboBoxHandler">
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -144,7 +144,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <DatePicker
-                x:Name="countDownPicker" Width="224" Tag="CountDownTime" TargetUpdated="DatePickerHandler" />
+                x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
@@ -157,7 +157,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="SnowFlakeSwitch" Checked="OnSwitchChecked" IsChecked="True" Tag="SnowFlake" />
+                x:Name="SnowFlakeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="SnowFlake" />
         </ui:CardControl>
     </Grid>
 </ui:UiPage>
