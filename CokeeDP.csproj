@@ -15,13 +15,13 @@
     <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>Cokee Tech.snk</AssemblyOriginatorKeyFile>
     <ErrorReport>none</ErrorReport>
-    <DebugType>embedded</DebugType>
+    <DebugType>portable</DebugType>
     <ApplicationIcon>Image\hd1.ico</ApplicationIcon>
-    <PlatformTarget>x86</PlatformTarget>
     <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
     <AnalysisLevel>latest</AnalysisLevel>
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

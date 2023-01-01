@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CokeeDP": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}
