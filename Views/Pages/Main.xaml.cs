@@ -44,14 +44,14 @@ namespace CokeeDP.Views.Pages
             countDownPicker.SelectedDate = Properties.Settings.Default.CountdownTime;
         }
 
-        private void OnSwitchChecked(object sender,RoutedEventArgs e)
+        private void OnSwitchChecked(object sender, RoutedEventArgs e)
         {
         }
 
-        private void TextBoxHandler(object sender,RoutedEventArgs e)
+        private void TextBoxHandler(object sender, RoutedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            switch(textBox.Tag)
+            switch (textBox.Tag)
             {
                 case "audioDir":
                     Properties.Settings.Default.AudioFolder = textBox.Text; break;
@@ -63,20 +63,20 @@ namespace CokeeDP.Views.Pages
                     break;
             }
             Properties.Settings.Default.Save();
-            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
+            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
-        private void CardAction_Click(object sender,RoutedEventArgs e)
+        private void CardAction_Click(object sender, RoutedEventArgs e)
         {
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
 
-        private void SwitchEventsHandler(object sender,RoutedEventArgs e)
+        private void SwitchEventsHandler(object sender, RoutedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)sender;
             bool enable = (bool)toggleSwitch.IsChecked;
-            if(toggleSwitch.IsChecked == null) enable = false;
-            switch(toggleSwitch.Tag)
+            if (toggleSwitch.IsChecked == null) enable = false;
+            switch (toggleSwitch.Tag)
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = enable; break;
@@ -87,26 +87,26 @@ namespace CokeeDP.Views.Pages
                 default:
                     break;
             }
-            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
+            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
             Properties.Settings.Default.Save();
         }
 
-        private void DatePickerHandler(object sender,RoutedEventArgs e)
+        private void DatePickerHandler(object sender, RoutedEventArgs e)
         {
             DatePicker datePicker = sender as DatePicker;
-            if(datePicker == null) return;
+            if (datePicker == null) return;
             Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
-            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
+            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
-        private void ComboBoxHandler(object sender,EventArgs e)
+        private void ComboBoxHandler(object sender, EventArgs e)
         {
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
-            if(item == null) return;
+            if (item == null) return;
             Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
-            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
+            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
     }
 }
