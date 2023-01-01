@@ -109,7 +109,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                x:Name="folderBox" Width="551" LostFocus="TextBoxHandler" Tag="audioDir" />
+                x:Name="folderBox" Width="506" LostFocus="TextBoxHandler" Tag="audioDir" />
         </ui:CardControl>
 
         <ui:CardAction

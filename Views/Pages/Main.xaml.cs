@@ -17,6 +17,7 @@ using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
 using CokeeDP.Views.Windows;
+using Wpf.Ui.Common;
 
 namespace CokeeDP.Views.Pages
 {
@@ -62,7 +63,7 @@ namespace CokeeDP.Views.Pages
                     break;
             }
             Properties.Settings.Default.Save();
-            _Window.snackbarService.ShowAsync("Saved",textBox.Text);
+            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
         }
 
         private void CardAction_Click(object sender,RoutedEventArgs e)
@@ -86,7 +87,7 @@ namespace CokeeDP.Views.Pages
                 default:
                     break;
             }
-            _Window.snackbarService.ShowAsync("Saved",enable.ToString());
+            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
             Properties.Settings.Default.Save();
         }
 
@@ -95,7 +96,7 @@ namespace CokeeDP.Views.Pages
             DatePicker datePicker = sender as DatePicker;
             if(datePicker == null) return;
             Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
-            _Window.snackbarService.ShowAsync("Saved",Properties.Settings.Default.CountdownTime.ToString());
+            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
         }
 
         private void ComboBoxHandler(object sender,EventArgs e)
@@ -105,7 +106,7 @@ namespace CokeeDP.Views.Pages
             if(item == null) return;
             Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
-            _Window.snackbarService.ShowAsync("Saved",comboBox.SelectedIndex.ToString());
+            _Window.snackbarService.ShowAsync("已保存","(●'◡'●)",SymbolRegular.Save28);
         }
     }
 }
