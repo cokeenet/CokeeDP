@@ -29,19 +29,10 @@
 > 低于Win7的系统版本不保证能正常运行
 Win7或WinServer2012以上，安装.NET Desktop Runtime 6.0 x86
 
-## 使用的Nuget包
-
-- [Panuon.WPF.UI](https://github.com/PanuonGroup/Panuon.WPF.UI)
-- [Costura.Fody](https://github.com/Fody/Costura)
-- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
-- [.NET Runtime](https://github.com/dotnet/runtime)
-- [System.Net.Http](https://github.com/dotnet/corefx)
-- [WPF-UI](https://github.com/lepoco/wpfui)
-- [Lepo.i18n](https://github.com/lepoco/i18n)
-- [CsvHelper](https://joshclose.github.io/CsvHelper/)
-- [SharpVectors.Wpf](https://github.com/ElinamLLC/SharpVectors)
-- [Microsoft.AppCenter](https://aka.ms/telgml)
+## 使用的SDK
+  
 >本软件使用微软App Center进行错误日志收集，可以在设置中关闭开关。(关跟不关其实没啥区别ψ(._. )>)
+  
 ## 额外限制和例外 Additional limitations and exceptions
 - 本软件不得被用于商业用途。
 - 作者Cokee 保留一切权利。
