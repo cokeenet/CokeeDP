@@ -463,7 +463,7 @@ namespace CokeeDP.Views.Windows
 
                     u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
                     u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
-                    MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
+                    //MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
                     Properties.Settings.Default.CachedWeatherData = u2 + "|" + u3;
                     Properties.Settings.Default.CachedWeatherTime = DateTime.Now;
                 }
