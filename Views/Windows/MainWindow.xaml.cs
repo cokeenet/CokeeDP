@@ -490,7 +490,7 @@ namespace CokeeDP.Views.Windows
                 JObject dt1 = JsonConvert.DeserializeObject<JObject>(u3);
 
                 if(!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200")
-                    throw new HttpRequestException("天气预警加载失败。网络异常。(CODE:)" + dt1["code"].ToString());
+                    throw new HttpRequestException("天气预警加载失败。网络异常。CODE:" + dt1["code"].ToString());
                 if(dt1["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
