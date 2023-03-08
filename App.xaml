@@ -1,0 +1,15 @@
+﻿<Application
+    x:Class="CokeeDP.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:CokeeDP" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    x:Name="win" Startup="AppStartup" StartupUri="pack://application:,,,/Views/Windows/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Light" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="SegoeFluentIcons">pack://application:,,,/;Fonts/#Segoe Fluent Icons</FontFamily>
+            <Color x:Key="GradientStopColor1">#FFE0BFBF</Color>
+            <Color x:Key="CardBackground">#FFE0BFBF</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

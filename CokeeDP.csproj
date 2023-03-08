@@ -1,0 +1,330 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <Authors>Cokee</Authors>
+    <Product>CokeeDP</Product>
+    <Description>次世代PC屏保</Description>
+    <Copyright>(c)2022 Cokee Technoliogies Ltd.</Copyright>
+    <UseWindowsForms>False</UseWindowsForms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <StartupObject>CokeeDP.App</StartupObject>
+    <Nullable>warnings</Nullable>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>Cokee Tech.snk</AssemblyOriginatorKeyFile>
+    <ErrorReport>none</ErrorReport>
+    <DebugType>portable</DebugType>
+    <ApplicationIcon>Image\hd1.ico</ApplicationIcon>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants></DefineConstants>
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants />
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Archived\Setting.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Image\bg75.png" />
+    <None Remove="SplashScreen.png" />
+    <Page Remove="Archived\Setting.xaml" /> 
+    <Content Include="Image\hd1.ico" />   
+    <Resource Include="Image\bg75.png" />
+    <Resource Include="Image\bg_normal.png" />
+    <Resource Include="Image\bg_setting.png" />
+    <Resource Include="Image\hd1.jpg" />
+    <Resource Include="Image\head.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Lepo.i18n" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
+    <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
+    <PackageReference Include="Serilog" Version="2.12.1-dev-01635" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
+    <PackageReference Include="WPF-UI" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Icons\" />
+    <EmbeddedResource Include="Icons\100-fill.svg" />
+    <EmbeddedResource Include="Icons\1001.svg" />
+    <EmbeddedResource Include="Icons\1002.svg" />
+    <EmbeddedResource Include="Icons\1003.svg" />
+    <EmbeddedResource Include="Icons\1004.svg" />
+    <EmbeddedResource Include="Icons\1005.svg" />
+    <EmbeddedResource Include="Icons\1006.svg" />
+    <EmbeddedResource Include="Icons\1007.svg" />
+    <EmbeddedResource Include="Icons\1008.svg" />
+    <EmbeddedResource Include="Icons\1009.svg" />
+    <EmbeddedResource Include="Icons\101-fill.svg" />
+    <EmbeddedResource Include="Icons\1010.svg" />
+    <EmbeddedResource Include="Icons\1011.svg" />
+    <EmbeddedResource Include="Icons\1012.svg" />
+    <EmbeddedResource Include="Icons\1013.svg" />
+    <EmbeddedResource Include="Icons\1014.svg" />
+    <EmbeddedResource Include="Icons\1015.svg" />
+    <EmbeddedResource Include="Icons\1016.svg" />
+    <EmbeddedResource Include="Icons\1017.svg" />
+    <EmbeddedResource Include="Icons\1018.svg" />
+    <EmbeddedResource Include="Icons\1019.svg" />
+    <EmbeddedResource Include="Icons\102-fill.svg" />
+    <EmbeddedResource Include="Icons\1020.svg" />
+    <EmbeddedResource Include="Icons\1021.svg" />
+    <EmbeddedResource Include="Icons\1022.svg" />
+    <EmbeddedResource Include="Icons\1023.svg" />
+    <EmbeddedResource Include="Icons\1024.svg" />
+    <EmbeddedResource Include="Icons\1025.svg" />
+    <EmbeddedResource Include="Icons\1026.svg" />
+    <EmbeddedResource Include="Icons\1027.svg" />
+    <EmbeddedResource Include="Icons\1028.svg" />
+    <EmbeddedResource Include="Icons\1029.svg" />
+    <EmbeddedResource Include="Icons\103-fill.svg" />
+    <EmbeddedResource Include="Icons\1030.svg" />
+    <EmbeddedResource Include="Icons\1031.svg" />
+    <EmbeddedResource Include="Icons\1032.svg" />
+    <EmbeddedResource Include="Icons\1033.svg" />
+    <EmbeddedResource Include="Icons\1034.svg" />
+    <EmbeddedResource Include="Icons\1035.svg" />
+    <EmbeddedResource Include="Icons\1036.svg" />
+    <EmbeddedResource Include="Icons\1037.svg" />
+    <EmbeddedResource Include="Icons\1038.svg" />
+    <EmbeddedResource Include="Icons\1039.svg" />
+    <EmbeddedResource Include="Icons\104-fill.svg" />
+    <EmbeddedResource Include="Icons\1040.svg" />
+    <EmbeddedResource Include="Icons\1041.svg" />
+    <EmbeddedResource Include="Icons\1042.svg" />
+    <EmbeddedResource Include="Icons\1043.svg" />
+    <EmbeddedResource Include="Icons\1044.svg" />
+    <EmbeddedResource Include="Icons\1045.svg" />
+    <EmbeddedResource Include="Icons\1046.svg" />
+    <EmbeddedResource Include="Icons\1047.svg" />
+    <EmbeddedResource Include="Icons\1048.svg" />
+    <EmbeddedResource Include="Icons\1049.svg" />
+    <EmbeddedResource Include="Icons\1050.svg" />
+    <EmbeddedResource Include="Icons\1051.svg" />
+    <EmbeddedResource Include="Icons\1052.svg" />
+    <EmbeddedResource Include="Icons\1053.svg" />
+    <EmbeddedResource Include="Icons\1054.svg" />
+    <EmbeddedResource Include="Icons\1055.svg" />
+    <EmbeddedResource Include="Icons\1056.svg" />
+    <EmbeddedResource Include="Icons\1057.svg" />
+    <EmbeddedResource Include="Icons\1058.svg" />
+    <EmbeddedResource Include="Icons\1059.svg" />
+    <EmbeddedResource Include="Icons\1061.svg" />
+    <EmbeddedResource Include="Icons\1064.svg" />
+    <EmbeddedResource Include="Icons\1101.svg" />
+    <EmbeddedResource Include="Icons\1302.svg" />
+    <EmbeddedResource Include="Icons\1402.svg" />
+    <EmbeddedResource Include="Icons\150-fill.svg" />
+    <EmbeddedResource Include="Icons\151-fill.svg" />
+    <EmbeddedResource Include="Icons\152-fill.svg" />
+    <EmbeddedResource Include="Icons\153-fill.svg" />
+    <EmbeddedResource Include="Icons\1601.svg" />
+    <EmbeddedResource Include="Icons\1602.svg" />
+    <EmbeddedResource Include="Icons\1603.svg" />
+    <EmbeddedResource Include="Icons\1604.svg" />
+    <EmbeddedResource Include="Icons\1605.svg" />
+    <EmbeddedResource Include="Icons\1606.svg" />
+    <EmbeddedResource Include="Icons\1607.svg" />
+    <EmbeddedResource Include="Icons\2001.svg" />
+    <EmbeddedResource Include="Icons\2002.svg" />
+    <EmbeddedResource Include="Icons\2003.svg" />
+    <EmbeddedResource Include="Icons\2004.svg" />
+    <EmbeddedResource Include="Icons\2005.svg" />
+    <EmbeddedResource Include="Icons\2006.svg" />
+    <EmbeddedResource Include="Icons\2007.svg" />
+    <EmbeddedResource Include="Icons\2008.svg" />
+    <EmbeddedResource Include="Icons\2009.svg" />
+    <EmbeddedResource Include="Icons\2010.svg" />
+    <EmbeddedResource Include="Icons\2011.svg" />
+    <EmbeddedResource Include="Icons\2012.svg" />
+    <EmbeddedResource Include="Icons\2013.svg" />
+    <EmbeddedResource Include="Icons\2014.svg" />
+    <EmbeddedResource Include="Icons\2015.svg" />
+    <EmbeddedResource Include="Icons\2016.svg" />
+    <EmbeddedResource Include="Icons\2017.svg" />
+    <EmbeddedResource Include="Icons\2018.svg" />
+    <EmbeddedResource Include="Icons\2019.svg" />
+    <EmbeddedResource Include="Icons\2020.svg" />
+    <EmbeddedResource Include="Icons\2021.svg" />
+    <EmbeddedResource Include="Icons\2022.svg" />
+    <EmbeddedResource Include="Icons\2023.svg" />
+    <EmbeddedResource Include="Icons\2024.svg" />
+    <EmbeddedResource Include="Icons\2025.svg" />
+    <EmbeddedResource Include="Icons\2026.svg" />
+    <EmbeddedResource Include="Icons\2027.svg" />
+    <EmbeddedResource Include="Icons\2028.svg" />
+    <EmbeddedResource Include="Icons\300-fill.svg" />
+    <EmbeddedResource Include="Icons\301-fill.svg" />
+    <EmbeddedResource Include="Icons\302-fill.svg" />
+    <EmbeddedResource Include="Icons\303-fill.svg" />
+    <EmbeddedResource Include="Icons\304-fill.svg" />
+    <EmbeddedResource Include="Icons\305-fill.svg" />
+    <EmbeddedResource Include="Icons\306-fill.svg" />
+    <EmbeddedResource Include="Icons\307-fill.svg" />
+    <EmbeddedResource Include="Icons\308-fill.svg" />
+    <EmbeddedResource Include="Icons\309-fill.svg" />
+    <EmbeddedResource Include="Icons\310-fill.svg" />
+    <EmbeddedResource Include="Icons\311-fill.svg" />
+    <EmbeddedResource Include="Icons\312-fill.svg" />
+    <EmbeddedResource Include="Icons\313-fill.svg" />
+    <EmbeddedResource Include="Icons\314-fill.svg" />
+    <EmbeddedResource Include="Icons\315-fill.svg" />
+    <EmbeddedResource Include="Icons\316-fill.svg" />
+    <EmbeddedResource Include="Icons\317-fill.svg" />
+    <EmbeddedResource Include="Icons\318-fill.svg" />
+    <EmbeddedResource Include="Icons\350-fill.svg" />
+    <EmbeddedResource Include="Icons\351-fill.svg" />
+    <EmbeddedResource Include="Icons\399-fill.svg" />
+    <EmbeddedResource Include="Icons\400-fill.svg" />
+    <EmbeddedResource Include="Icons\401-fill.svg" />
+    <EmbeddedResource Include="Icons\402-fill.svg" />
+    <EmbeddedResource Include="Icons\403-fill.svg" />
+    <EmbeddedResource Include="Icons\404-fill.svg" />
+    <EmbeddedResource Include="Icons\405-fill.svg" />
+    <EmbeddedResource Include="Icons\406-fill.svg" />
+    <EmbeddedResource Include="Icons\407-fill.svg" />
+    <EmbeddedResource Include="Icons\408-fill.svg" />
+    <EmbeddedResource Include="Icons\409-fill.svg" />
+    <EmbeddedResource Include="Icons\410-fill.svg" />
+    <EmbeddedResource Include="Icons\456-fill.svg" />
+    <EmbeddedResource Include="Icons\457-fill.svg" />
+    <EmbeddedResource Include="Icons\499-fill.svg" />
+    <EmbeddedResource Include="Icons\500-fill.svg" />
+    <EmbeddedResource Include="Icons\501-fill.svg" />
+    <EmbeddedResource Include="Icons\502-fill.svg" />
+    <EmbeddedResource Include="Icons\503-fill.svg" />
+    <EmbeddedResource Include="Icons\504-fill.svg" />
+    <EmbeddedResource Include="Icons\507-fill.svg" />
+    <EmbeddedResource Include="Icons\508-fill.svg" />
+    <EmbeddedResource Include="Icons\509-fill.svg" />
+    <EmbeddedResource Include="Icons\510-fill.svg" />
+    <EmbeddedResource Include="Icons\511-fill.svg" />
+    <EmbeddedResource Include="Icons\512-fill.svg" />
+    <EmbeddedResource Include="Icons\513-fill.svg" />
+    <EmbeddedResource Include="Icons\514-fill.svg" />
+    <EmbeddedResource Include="Icons\515-fill.svg" />
+    <EmbeddedResource Include="Icons\800.svg" />
+    <EmbeddedResource Include="Icons\801.svg" />
+    <EmbeddedResource Include="Icons\802.svg" />
+    <EmbeddedResource Include="Icons\803.svg" />
+    <EmbeddedResource Include="Icons\804.svg" />
+    <EmbeddedResource Include="Icons\805.svg" />
+    <EmbeddedResource Include="Icons\806.svg" />
+    <EmbeddedResource Include="Icons\807.svg" />
+    <EmbeddedResource Include="Icons\900-fill.svg" />
+    <EmbeddedResource Include="Icons\901-fill.svg" />
+    <EmbeddedResource Include="Icons\999-fill.svg" />
+    <EmbeddedResource Include="Icons\9998.svg" />
+    <EmbeddedResource Include="Icons\9999.svg" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="SplashScreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\About.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\About.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Archived\Setting.xaml" />
+    <None Include="Archived\Setting.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>
