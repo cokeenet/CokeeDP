@@ -889,23 +889,23 @@ namespace CokeeDP.Views.Windows
             try
             {
                 var tmp = (Button)sender;
-                switch (tmp.Tag)
+                switch (tmp.Tag.ToString())
                 {
-                    case 0:
+                    case "0":
                         tmp.Content = "单曲循环";
                         tmp.Icon = SymbolRegular.ArrowRepeat124;
                         PlayingRule= 1;
-                        tmp.Tag = 1;
+                        tmp.Tag = "1";
                         break;
-                    case 1:
+                    case "1":
                         tmp.Content = "列表循环";
                         tmp.Icon = SymbolRegular.ArrowRepeatAll24;
-                        tmp.Tag= 2;
+                        tmp.Tag= "2";
                         PlayingRule = 2;
                         break;
-                    case 2:
+                    case "2":
                         tmp.Content = "播完停止";
-                        tmp.Tag = 0;
+                        tmp.Tag = "0";
                         tmp.Icon = SymbolRegular.ArrowRepeatAllOff24;
                         PlayingRule = 0;
                         break;

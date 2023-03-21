@@ -49,7 +49,7 @@
                     </Image.Effect>
                 </Image>
                 <Border BorderBrush="Black" BorderThickness="1" Canvas.Left="1398" Width="522" Height="1080" TouchMove="TouchMove" HorizontalAlignment="Center" VerticalAlignment="Top" TouchUp="TouchUp" Visibility="Collapsed"/>
-                <ui:Card x:Name="card" Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}" Background="#B3FFFFFF" Canvas.Left="1398" Width="522" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch">
+                <ui:Card x:Name="card" Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}" Background="#B3FFFFFF" Canvas.Left="1398" Width="522" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
 
@@ -537,7 +537,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5">
+                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
@@ -639,7 +639,7 @@
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
                         HorizontalAlignment="Left" VerticalAlignment="Center" d:IsHidden="True" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
                         DialogHeight="276" DialogWidth="516" />
-                <ui:Button Content="打开作业面板" Height="48" Width="206" Icon="Open32" FontSize="20" Click="HwPanelToggle" HorizontalAlignment="Stretch" Canvas.Top="450" VerticalAlignment="Stretch" Canvas.Left="1623"/>
+                <ui:Button Content="" Height="48" Width="48" Icon="Open32" FontSize="20" Click="HwPanelToggle" HorizontalAlignment="Stretch" Canvas.Top="450" VerticalAlignment="Stretch" Canvas.Left="1780"/>
             </Canvas>
         </Viewbox>
     </Grid>
