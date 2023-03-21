@@ -100,7 +100,8 @@ namespace CokeeDP.Views.Windows
         private string disk, weaWr, hkUrl, nowDowning = "";
 
         private SnackbarService snackbarService;
-        private bool IsPlaying = false, AudioLoaded = false, IsReplay = true;
+        private bool IsPlaying = false, AudioLoaded = false;
+        private int PlayingRule = 0;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime;
         private bool UsingBing = true;
@@ -863,14 +864,14 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if (IsReplay)
+                if (PlayingRule==1)
                 {
                     //playIcon.Text = "";
                     IntlPlayer();
                     PlaySlider.Value = 0;
                     return;
                 }
-                else
+                else if(PlayingRule==2) 
                 {
                     if (AudioNum >= AudioArray.Length) AudioNum = 0;
                     else AudioNum++;
@@ -891,10 +892,26 @@ namespace CokeeDP.Views.Windows
                 switch (tmp.Tag)
                 {
                     case 0:
+                        tmp.Content = "单曲循环";
+                        tmp.Icon = SymbolRegular.ArrowRepeat124;
+                        PlayingRule= 1;
+                        tmp.Tag = 1;
+                        break;
+                    case 1:
+                        tmp.Content = "列表循环";
+                        tmp.Icon = SymbolRegular.ArrowRepeatAll24;
+                        tmp.Tag= 2;
+                        PlayingRule = 2;
+                        break;
+                    case 2:
+                        tmp.Content = "播完停止";
+                        tmp.Tag = 0;
+                        tmp.Icon = SymbolRegular.ArrowRepeatAllOff24;
+                        PlayingRule = 0;
                         break;
                     default:
                         break;
-                }
+                }/*
                 if (tmp.Content.ToString() == "单曲循环")
                 {
                     IsReplay = false;
@@ -904,7 +921,7 @@ namespace CokeeDP.Views.Windows
                 {
                     IsReplay = true;
                     tmp.Content = "单曲循环";
-                }
+                }*/
             }
             catch (Exception ex)
             {
