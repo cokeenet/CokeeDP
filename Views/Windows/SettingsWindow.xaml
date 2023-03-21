@@ -28,6 +28,7 @@
                         PageType="{x:Type pages:Main}" />
                     <ui:NavigationSeparator />
                     <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" />
+                    <ui:NavigationItem Content="生日提醒" Icon="FoodCake24" />
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
                     <ui:NavigationItem

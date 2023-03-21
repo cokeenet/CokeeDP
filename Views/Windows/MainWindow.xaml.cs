@@ -64,7 +64,10 @@ namespace CokeeDP.Views.Windows
         {
             get; set;
         }
-
+        public int Id
+        {
+            get;set;
+        }
         public string Desc
         {
             get; set;
@@ -73,6 +76,10 @@ namespace CokeeDP.Views.Windows
 
     public partial class MainWindow : Window
     {
+        Point _startPosition;
+        //滚动条当前位置
+        double _startVerticalOffset;
+        double _startHorizontalOffset;
         public const int DBT_DEVICEARRIVAL = 0x8000;  //设备可用
         public const int DBT_DEVICEREMOVECOMPLETE = 0x8004; //设备或媒体被删除
         public const int FILE_SHARE_READ = 0x1;
@@ -97,8 +104,8 @@ namespace CokeeDP.Views.Windows
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime;
         private bool UsingBing = true;
-        public string Version = "Ver 3.0";
-        public double ver = 3.0;
+        public string Version = "Ver 3.1";
+        public double ver = 3.1;
 
         public MainWindow()
         {
@@ -273,6 +280,7 @@ namespace CokeeDP.Views.Windows
             {
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
+                DateLabel.Content = DateTime.Now.ToString("M月dd日 作业---本页面施工中");
                 if (Properties.Settings.Default.EnableBigTimeTo)
                 {
                     tod_info.Content = "还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
@@ -682,7 +690,7 @@ namespace CokeeDP.Views.Windows
         /// <summary>
         ///星期标签点击处理
         /// </summary>
-        private void OnwklabC(object sender, MouseButtonEventArgs e)
+        private void DateLabelClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -880,6 +888,13 @@ namespace CokeeDP.Views.Windows
             try
             {
                 var tmp = (Button)sender;
+                switch (tmp.Tag)
+                {
+                    case 0:
+                        break;
+                    default:
+                        break;
+                }
                 if (tmp.Content.ToString() == "单曲循环")
                 {
                     IsReplay = false;
@@ -1275,13 +1290,60 @@ namespace CokeeDP.Views.Windows
                 }
         }
 
+        /*
+        /// <summary>
+        /// 可触摸滚动的ScrollViewer控件
+        /// </summary>
+        public class TouchableScrollViewer : ScrollViewer
+        {
+            //触摸点的坐标
+            
+            public TouchableScrollViewer()
+            {
+                TouchDown += TouchableScrollViewer_TouchDown;
+
+                TouchUp += TouchableScrollViewer_TouchUp;
+            }
+            private void TouchableScrollViewer_TouchDown(object sender, TouchEventArgs e)
+            {
+                //添加触摸移动监听
+                TouchMove -= TouchableScrollViewer_TouchMove;
+                TouchMove += TouchableScrollViewer_TouchMove;
+
+                //获取ScrollViewer滚动条当前位置
+                _startVerticalOffset = VerticalOffset;
+                _startHorizontalOffset = HorizontalOffset;
+
+                //获取相对于ScrollViewer的触摸点位置
+                TouchPoint point = e.GetTouchPoint(this);
+                _startPosition = point.Position;
+            }
+
+            private void TouchableScrollViewer_TouchUp(object sender, TouchEventArgs e)
+            {
+                //注销触摸移动监听
+                TouchMove -= TouchableScrollViewer_TouchMove;
+            }
+
+
+        }*/
+
         private void Anim2_Completed1(object sender, EventArgs e) => card.Visibility = Visibility.Collapsed;
 
         private void HwPanelToggle(object sender, MouseEventArgs e)
         {
+            
+        }
+
+        private void NewHw(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HwPanelToggle(object sender, RoutedEventArgs e)
+        {
             lock (locker2)
             {
-                System.Windows.MessageBox.Show("!11");
                 DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
                 DoubleAnimation anim2 = new DoubleAnimation(522, TimeSpan.FromSeconds(1));
                 anim1.EasingFunction = new CircleEase();
@@ -1300,7 +1362,20 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private void NewHw(object sender, RoutedEventArgs e)
+        private void TouchMove(object sender, TouchEventArgs e)
+        {
+            //获取相对于ScrollViewer的触摸点位置
+            TouchPoint endPoint = e.GetTouchPoint(this);
+            //计算相对位置
+            double diffOffsetY = endPoint.Position.Y - _startPosition.Y;
+            double diffOffsetX = endPoint.Position.X - _startPosition.X;
+
+            //ScrollViewer滚动到指定位置(指定位置=起始位置-移动的偏移量，滚动方向和手势方向相反)
+           // ScrollToVerticalOffset(_startVerticalOffset - diffOffsetY);
+            //ScrollToHorizontalOffset(_startHorizontalOffset - diffOffsetX);
+        }
+
+        private void TouchUp(object sender, TouchEventArgs e)
         {
 
         }

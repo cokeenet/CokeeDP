@@ -104,7 +104,8 @@ namespace CokeeDP.Views.Pages
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
             if (item == null) return;
-            Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
+            if (item.Tag.ToString() == "none") Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/";
+            else Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }

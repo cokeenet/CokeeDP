@@ -70,6 +70,7 @@
             </ui:CardControl.Header>
             <ComboBox
                 x:Name="oneWord" Width="145" DropDownClosed="ComboBoxHandler">
+                <ComboBoxItem Content="综合" Tag="none"/>
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -147,7 +148,7 @@
                 x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
+            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock

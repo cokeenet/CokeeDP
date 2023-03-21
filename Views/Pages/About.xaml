@@ -29,19 +29,19 @@
             Style="{x:Null}">
             <FlowDocument>
                 <Paragraph>
-                    <Bold>感谢您使用CokeeDP 渡尘。</Bold>
+                    <Bold>感谢您使用CokeeDP 循星。</Bold>
                 </Paragraph>
-                <Paragraph>软件版本:Ver3.0</Paragraph>
-                <Paragraph>本软件使用GPL V3.0 许可证分发。</Paragraph>
+                <Paragraph>软件版本:Ver3.1</Paragraph>
+                <Paragraph>Cokee Technologies 秋坂科技 版权所有.</Paragraph>
                 <Paragraph>
                     <Bold>
                         额外限制和例外
                         <LineBreak />
                     </Bold>
                     <LineBreak />
-                    本软件及其源代码不得被用于商业用途。<LineBreak />
+                    除额外许可外，本软件不得被用于商业用途。<LineBreak />
                     <LineBreak />
-                    作者Cokee 保留一切权利。<LineBreak />
+                    作者 Cokee 保留一切权利。<LineBreak />
                     <LineBreak />
                     如果您不遵守这些条例，作者保留追究您法律责任的权利。</Paragraph>
                 <Paragraph>
@@ -64,7 +64,7 @@
                     </Hyperlink>
                 </Paragraph>
                 <Paragraph>
-                    天气数据来自和风天气
+                    天气数据来自和风天气 qweather.com
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

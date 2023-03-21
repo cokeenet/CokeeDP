@@ -48,7 +48,61 @@
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
                 </Image>
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Canvas.Left="1398" VerticalAlignment="Top" Width="522" Height="1062" Canvas.Top="10" TouchMove="HwPanelToggle" MouseMove="HwPanelToggle"/>
+                <Border BorderBrush="Black" BorderThickness="1" Canvas.Left="1398" Width="522" Height="1080" TouchMove="TouchMove" HorizontalAlignment="Center" VerticalAlignment="Top" TouchUp="TouchUp" Visibility="Collapsed"/>
+                <ui:Card x:Name="card" Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}" Background="#B3FFFFFF" Canvas.Left="1398" Width="522" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch">
+                    <ui:Card.RenderTransform>
+                        <TransformGroup>
+
+                            <TranslateTransform x:Name="tran3" X="522"/>
+                        </TransformGroup>
+                    </ui:Card.RenderTransform>
+                    <Grid Height="1038">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+
+                        </Grid.RowDefinitions>
+                        <Label
+                                x:Name="DateLabel"
+                                HorizontalContentAlignment="Left"
+                                Background="{x:Null}"
+                                Content="-月-日 作业" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
+                                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,20">
+                            <Label.Effect>
+                                <DropShadowEffect Opacity="0.6" />
+                            </Label.Effect>
+                        </Label>
+                        <ItemsControl x:Name="HwCn" Margin="0,60,0,40" Grid.RowSpan="2" >
+                        <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ui:Card Margin="0,5,0,5" MinHeight="100" VerticalAlignment="Stretch" >
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Label
+                                                   
+                                                    HorizontalContentAlignment="Left"
+                                                    Background="{x:Null}"
+                                                    Content="{Binding Name}" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
+                                                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,8">
+                                                <Label.Effect>
+                                                    <DropShadowEffect Opacity="0.6" />
+                                                </Label.Effect>
+                                            </Label>
+                                            <TextBlock Grid.Row="1" Text="{Binding Desc}" FontSize="22"/>
+                                            <ui:Button Grid.Row="2" Width="200" Height="50" Margin="0,20,0,0"/>
+                                        </Grid>
+                                    </ui:Card>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ui:Button Content="新建作业" Grid.Row="1" VerticalAlignment="Bottom" Height="49" Width="206" Icon="Add28" FontSize="20" Click="NewHw"/>
+                        <ui:Button Content="新建作业" Grid.Row="1" VerticalAlignment="Bottom" Height="49" Width="206" Icon="Add28" FontSize="20" Click="NewHw" Margin="285,0,0,0"/>
+                    </Grid>
+                </ui:Card>
                 <Label
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
@@ -295,7 +349,7 @@
                         HorizontalContentAlignment="Left"
                         Background="{x:Null}"
                         Content="周---,--月--日" FontFamily="Microsoft YaHei UI Light" FontSize="24" FontWeight="Normal" Foreground="White"
-                        MouseDown="OnwklabC">
+                        MouseDown="DateLabelClick">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -409,7 +463,7 @@
                         AllowDrop="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
-                        Content="渡尘🌟 Ver 3.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                        Content="循星🌟 Ver 3.1" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
                         Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
                     <Label.Effect>
                         <DropShadowEffect />
@@ -483,7 +537,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                        RenderTransformOrigin="0.5,0.5">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
@@ -529,7 +583,7 @@
                                 RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
                         <ui:Button
                                 Width="97" Height="30" Margin="134,52,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
-                                Content="单曲循环" FontSize="13" Icon="ArrowRepeatAll24" />
+                                Content="播完停止" FontSize="13" Icon="ArrowRepeatAllOff24" Tag="0"/>
                         <Label
                                 x:Name="audioTime" Margin="44,27,130,130" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
@@ -585,60 +639,7 @@
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
                         HorizontalAlignment="Left" VerticalAlignment="Center" d:IsHidden="True" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
                         DialogHeight="276" DialogWidth="516" />
-                <ui:Card x:Name="card" Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}" Background="#B3FFFFFF" Canvas.Left="1398" Width="522" RenderTransformOrigin="0.5,0.5">
-                    <ui:Card.RenderTransform>
-                        <TransformGroup>
-
-                            <TranslateTransform x:Name="tran3" X="522"/>
-                        </TransformGroup>
-                    </ui:Card.RenderTransform>
-                    <Grid Height="1038">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-
-                        </Grid.RowDefinitions>
-                        <Label
-                                x:Name="timeTo_Copy"
-                                HorizontalContentAlignment="Left"
-                                Background="{x:Null}"
-                                Content="-月-日 作业" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
-                                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,20">
-                            <Label.Effect>
-                                <DropShadowEffect Opacity="0.6" />
-                            </Label.Effect>
-                        </Label>
-                        <ItemsControl x:Name="HwCn" Margin="0,60,0,40" Grid.RowSpan="2" >
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ui:Card Margin="0,5,0,5" MinHeight="100" VerticalAlignment="Stretch" >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <Label
-                                                   
-                                                    HorizontalContentAlignment="Left"
-                                                    Background="{x:Null}"
-                                                    Content="{Binding Name}" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
-                                                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,8">
-                                                <Label.Effect>
-                                                    <DropShadowEffect Opacity="0.6" />
-                                                </Label.Effect>
-                                            </Label>
-                                            <TextBlock Grid.Row="1" Text="{Binding Desc}" FontSize="22"/>
-                                        </Grid>
-                                    </ui:Card>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <ui:Button Content="新建作业" Grid.Row="1" VerticalAlignment="Bottom" Height="49" Width="206" Icon="Add28" FontSize="20" Click="NewHw"/>
-                    </Grid>
-                </ui:Card>
-                <ui:Button Content="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <ui:Button Content="打开作业面板" Height="48" Width="206" Icon="Open32" FontSize="20" Click="HwPanelToggle" HorizontalAlignment="Stretch" Canvas.Top="450" VerticalAlignment="Stretch" Canvas.Left="1623"/>
             </Canvas>
         </Viewbox>
     </Grid>
