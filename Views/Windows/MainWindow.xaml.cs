@@ -532,6 +532,7 @@ namespace CokeeDP.Views.Windows
                     if (t.Contains("发布")) TextShort = t.Substring(t.IndexOf("布") + 1);
                     else TextShort = t.Substring(t.IndexOf("新") + 1);
                     SpecialWeatherBtn.Content = TextShort;
+                    SpecialWeatherBtn1.Content = TextShort;
                     weaWr = dt1["warning"][0]["text"].ToString();
                 }
             }
@@ -559,14 +560,13 @@ namespace CokeeDP.Views.Windows
                     messageBox.MicaEnabled = true;
 
                     //messageBox.Icon = SymbolRegular.Warning28;
-                    messageBox.ShowDialog();
-                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
+                    if((bool)messageBox.ShowDialog()) Close();
+
                 }
-                //else Close();
+                else Close();
             }));
         }
 
-        private void MessageBox_ButtonLeftClick(object sender, RoutedEventArgs e) => Close();
 
         private void ShowUsbCard(bool isUnplug, DriveInfo t = null)
         {
