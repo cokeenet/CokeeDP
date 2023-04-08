@@ -428,7 +428,7 @@ namespace CokeeDP.Views.Windows
                 snackbarService = new SnackbarService();
                 snackbarService.SetSnackbarControl(snackbar);
                 //ThemeService themeService = new ThemeService();
-                //themeService.SetTheme(ThemeType.Light);//TODO
+               // themeService.SetTheme(ThemeType.);//TODO
                 Theme.Apply(ThemeType.Light, BackgroundType.Auto);
                 HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
                 DriveInfo[] s = DriveInfo.GetDrives();
@@ -444,7 +444,8 @@ namespace CokeeDP.Views.Windows
                 _ = Hitoko();
                 _ = GetWeatherInfo(); 
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-                snackbarService.ShowAsync("Found "+videoDevices.Count+" devices")
+                snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
+
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
 
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
