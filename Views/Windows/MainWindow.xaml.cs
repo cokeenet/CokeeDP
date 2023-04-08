@@ -89,8 +89,8 @@ namespace CokeeDP.Views.Windows
         private String AudioPath, AudioFolder, MediaDuring;
         private int bgn = 0, bing = 0;
         private BitmapImage bitmapImage = null;
+        FilterInfoCollection videoDevices;
         private string disk, weaWr, hkUrl, nowDowning = "";
-
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false;
         private int PlayingRule = 0;
@@ -272,7 +272,7 @@ namespace CokeeDP.Views.Windows
                 Dispatcher.Invoke(new Action(delegate
             {
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
-                timeTo.Content = DateTime.Now.ToString("ddd,M月dd日")
+                timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if (Properties.Settings.Default.EnableBigTimeTo)
                 {
                     tod_info.Content = "还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
@@ -442,7 +442,9 @@ namespace CokeeDP.Views.Windows
                     return false;
                 });
                 _ = Hitoko();
-                _ = GetWeatherInfo(); videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                _ = GetWeatherInfo(); 
+                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                snackbarService.ShowAsync("Found "+videoDevices.Count+" devices")
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
 
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
