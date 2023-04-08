@@ -445,7 +445,9 @@ namespace CokeeDP.Views.Windows
                 _ = GetWeatherInfo(); 
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
-
+                VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+                videoSource.NewFrame += VideoSource_NewFrame;
+                videoSource.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
 
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
@@ -454,6 +456,13 @@ namespace CokeeDP.Views.Windows
             {
                 ProcessErr(ex);
             }
+        }
+
+        private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        {
+            System.Drawing.Image img= (System.Drawing.Image)eventArgs.Frame.Clone();
+            img.Dispose();
+
         }
 
         private void OnWea(object sender, ElapsedEventArgs e)
@@ -1065,6 +1074,7 @@ namespace CokeeDP.Views.Windows
         }
 
         private string filePath = @"D:\cokee_hitokoto.txt";
+       
 
         private void WriteInfo(string info, string filepath)
         {
