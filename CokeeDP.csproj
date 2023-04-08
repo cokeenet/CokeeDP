@@ -292,6 +292,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Views\Pages\About - 复制.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\About.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -313,6 +316,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\Pages\About - 复制.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\Pages\About.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

@@ -39,11 +39,14 @@
                         <LineBreak />
                     </Bold>
                     <LineBreak />
-                    除额外许可外，本软件不得被用于商业用途。<LineBreak />
+                    除额外许可外，本软件不得被用于商业用途。
                     <LineBreak />
-                    作者 Cokee 保留一切权利。<LineBreak />
                     <LineBreak />
-                    如果您不遵守这些条例，作者保留追究您法律责任的权利。</Paragraph>
+                    作者 Cokee 保留一切权利。
+                    <LineBreak />
+                    <LineBreak />
+                    如果您不遵守这些条例，作者保留追究您法律责任的权利。
+                </Paragraph>
                 <Paragraph>
                     <Bold>
                         联系作者
@@ -53,11 +56,16 @@
                     </Bold>
 
                     <LineBreak />
-                    BiliBili:  CokeeOfficial<LineBreak />
-                    Github : Cokeenet<LineBreak />
-                    Email : bluecitynetwork@outlook.com<LineBreak />
-                    本软件中所有图片的版权归原作者所有。侵权请联系上面那个邮箱（）<LineBreak />
-                    软件交流群 ：9263225805<LineBreak />
+                    BiliBili:  CokeeOfficial
+                    <LineBreak />
+                    Github : Cokeenet
+                    <LineBreak />
+                    Email : bluecitynetwork@outlook.com
+                    <LineBreak />
+                    本软件中所有图片的版权归原作者所有。侵权请联系上面那个邮箱（）
+                    <LineBreak />
+                    软件交流群 ：9263225805
+                    <LineBreak />
                     <LineBreak />
                     <Hyperlink Foreground="#FF5186BF" NavigateUri="https://github.com/cokeenet/CokeeDP/releases">
                         软件可在Github仓库更新 https://github.com/cokeenet/CokeeDP/releases
@@ -71,5 +79,8 @@
         <Image
             x:Name="image" Grid.Row="1" Grid.RowSpan="2" Width="100" Height="100"
             Margin="0,20,20,0" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Image/hd1.jpg" />
+        <ui:CardExpander Height="100" Header="CardExpander" Grid.RowSpan="3" VerticalAlignment="Stretch" Margin="-5,45,5,305" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5"/>
+        </ui:CardExpander>
     </Grid>
 </ui:UiPage>
