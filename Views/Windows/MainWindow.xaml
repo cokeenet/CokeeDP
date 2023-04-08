@@ -48,61 +48,6 @@
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
                 </Image>
-                <Border BorderBrush="Black" BorderThickness="1" Canvas.Left="1398" Width="522" Height="1080" TouchMove="TouchMove" HorizontalAlignment="Center" VerticalAlignment="Top" TouchUp="TouchUp" Visibility="Collapsed"/>
-                <ui:Card x:Name="card" Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}" Background="#B3FFFFFF" Canvas.Left="1398" Width="522" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Stretch" Visibility="Collapsed">
-                    <ui:Card.RenderTransform>
-                        <TransformGroup>
-
-                            <TranslateTransform x:Name="tran3" X="522"/>
-                        </TransformGroup>
-                    </ui:Card.RenderTransform>
-                    <Grid Height="1038">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-
-                        </Grid.RowDefinitions>
-                        <Label
-                                x:Name="DateLabel"
-                                HorizontalContentAlignment="Left"
-                                Background="{x:Null}"
-                                Content="-月-日 作业" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
-                                VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,20">
-                            <Label.Effect>
-                                <DropShadowEffect Opacity="0.6" />
-                            </Label.Effect>
-                        </Label>
-                        <ItemsControl x:Name="HwCn" Margin="0,60,0,40" Grid.RowSpan="2" >
-                        <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <ui:Card Margin="0,5,0,5" MinHeight="100" VerticalAlignment="Stretch" >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <Label
-                                                   
-                                                    HorizontalContentAlignment="Left"
-                                                    Background="{x:Null}"
-                                                    Content="{Binding Name}" FontFamily="Microsoft YaHei UI Light" FontSize="36" FontWeight="Normal" Foreground="Black"
-                                                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,8">
-                                                <Label.Effect>
-                                                    <DropShadowEffect Opacity="0.6" />
-                                                </Label.Effect>
-                                            </Label>
-                                            <TextBlock Grid.Row="1" Text="{Binding Desc}" FontSize="22"/>
-                                            <ui:Button Grid.Row="2" Width="200" Height="50" Margin="0,20,0,0"/>
-                                        </Grid>
-                                    </ui:Card>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                        <ui:Button Content="新建作业" Grid.Row="1" VerticalAlignment="Bottom" Height="49" Width="206" Icon="Add28" FontSize="20" Click="NewHw"/>
-                        <ui:Button Content="新建作业" Grid.Row="1" VerticalAlignment="Bottom" Height="49" Width="206" Icon="Add28" FontSize="20" Click="NewHw" Margin="285,0,0,0"/>
-                    </Grid>
-                </ui:Card>
                 <Label
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
@@ -117,6 +62,31 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
+                    <ui:Card>
+                        <Grid Margin="0,0,-1,0">
+                            <Label
+                                    x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
+                                    Background="{x:Null}"
+                                    FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
+                                <Label.Effect>
+                                    <DropShadowEffect Opacity="0.4" />
+                                </Label.Effect>
+                            </Label>
+                            <ScrollViewer Margin="0,40,0,0">
+                                <TextBox
+                                        x:Name="DescPara1" Width="364" MaxHeight="385"
+                                        Background="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" IsReadOnlyCaretVisible="True"
+                                        Style="{x:Null}"
+                                        Text="Loading..." TextWrapping="WrapWithOverflow">
+                                    <TextBox.Effect>
+                                        <DropShadowEffect Opacity="0.4" />
+                                    </TextBox.Effect>
+                                </TextBox>
+                            </ScrollViewer>
+                        </Grid>
+                    </ui:Card>
                     <Border x:Name="b2">
                         <Grid>
                             <ui:Button
@@ -197,31 +167,6 @@
                             </TextBox>
                         </Grid>
                     </Border>
-                    <ui:Card>
-                        <Grid Margin="0,0,-1,0">
-                            <Label
-                                    x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
-                                    Background="{x:Null}"
-                                    FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4" />
-                                </Label.Effect>
-                            </Label>
-                            <ScrollViewer Margin="0,40,0,0">
-                                <TextBox
-                                        x:Name="DescPara1" Width="364" MaxHeight="385"
-                                        Background="{x:Null}"
-                                        BorderBrush="{x:Null}"
-                                        FontFamily="Microsoft YaHei UI Light" FontSize="18" IsReadOnlyCaretVisible="True"
-                                        Style="{x:Null}"
-                                        Text="Loading..." TextWrapping="WrapWithOverflow">
-                                    <TextBox.Effect>
-                                        <DropShadowEffect Opacity="0.4" />
-                                    </TextBox.Effect>
-                                </TextBox>
-                            </ScrollViewer>
-                        </Grid>
-                    </ui:Card>
                     <Border x:Name="b1">
                         <Grid>
                             <ui:Button
@@ -638,7 +583,6 @@
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
                         HorizontalAlignment="Left" VerticalAlignment="Center" d:IsHidden="True" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
                         DialogHeight="276" DialogWidth="516" />
-                <ui:Button Content="" Height="48" Width="48" Icon="Open32" FontSize="20" Click="HwPanelToggle" HorizontalAlignment="Stretch" Canvas.Top="450" VerticalAlignment="Stretch" Canvas.Left="1780"/>
             </Canvas>
         </Viewbox>
     </Grid>

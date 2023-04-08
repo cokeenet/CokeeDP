@@ -1,18 +1,13 @@
-﻿using CokeeDP.Class;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
+﻿using AForge.Video.DirectShow;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Utils.Files;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Panuon.WPF.UI;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -30,10 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using Windows.Media.ClosedCaptioning;
-using Windows.UI.Core.AnimationMetrics;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -66,7 +58,7 @@ namespace CokeeDP.Views.Windows
         }
         public int Id
         {
-            get;set;
+            get; set;
         }
         public string Desc
         {
@@ -280,8 +272,7 @@ namespace CokeeDP.Views.Windows
                 Dispatcher.Invoke(new Action(delegate
             {
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
-                timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
-                DateLabel.Content = DateTime.Now.ToString("M月dd日 作业---本页面施工中");
+                timeTo.Content = DateTime.Now.ToString("ddd,M月dd日")
                 if (Properties.Settings.Default.EnableBigTimeTo)
                 {
                     tod_info.Content = "还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
@@ -451,8 +442,9 @@ namespace CokeeDP.Views.Windows
                     return false;
                 });
                 _ = Hitoko();
-                _ = GetWeatherInfo();
+                _ = GetWeatherInfo(); videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
+
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
             }
             catch (Exception ex)
@@ -560,7 +552,7 @@ namespace CokeeDP.Views.Windows
                     messageBox.MicaEnabled = true;
 
                     //messageBox.Icon = SymbolRegular.Warning28;
-                    if((bool)messageBox.ShowDialog()) Close();
+                    if ((bool)messageBox.ShowDialog()) Close();
 
                 }
                 else Close();
@@ -738,7 +730,7 @@ namespace CokeeDP.Views.Windows
 
         private Object locker = new Object();
         private Object locker2 = new Object();
-        
+
         private void ShowPlayer(object sender, MouseButtonEventArgs e)
         {
             try
@@ -864,18 +856,22 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if (PlayingRule==1)
+                if (PlayingRule == 1)
                 {
                     //playIcon.Text = "";
                     IntlPlayer();
                     PlaySlider.Value = 0;
                     return;
                 }
-                else if(PlayingRule==2) 
+                else if (PlayingRule == 2)
                 {
                     if (AudioNum >= AudioArray.Length) AudioNum = 0;
                     else AudioNum++;
                     IntlPlayer();
+                }
+                else 
+                {
+                    IsPlaying = false;
                 }
             }
             catch (Exception ex)
@@ -894,13 +890,13 @@ namespace CokeeDP.Views.Windows
                     case "0":
                         tmp.Content = "单曲循环";
                         tmp.Icon = SymbolRegular.ArrowRepeat124;
-                        PlayingRule= 1;
+                        PlayingRule = 1;
                         tmp.Tag = "1";
                         break;
                     case "1":
                         tmp.Content = "列表循环";
                         tmp.Icon = SymbolRegular.ArrowRepeatAll24;
-                        tmp.Tag= "2";
+                        tmp.Tag = "2";
                         PlayingRule = 2;
                         break;
                     case "2":
@@ -1273,39 +1269,6 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private void HwPanelToggle(object sender, TouchEventArgs e)
-        {
-                lock (locker2)
-                {
-
-                for (int i = 0; i < 99; i++)
-                {
-                    HwItem hwItem = new HwItem();
-                    hwItem.Desc = "222";
-                    hwItem.Name = "111";
-                   
-                    HwCn.Items.Add(hwItem);
-                }
-
-                
-                System.Windows.MessageBox.Show("!11");
-                    DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
-                    DoubleAnimation anim2 = new DoubleAnimation(522, TimeSpan.FromSeconds(1));
-                    anim1.EasingFunction = new CircleEase();
-                anim2.Completed += Anim2_Completed1;
-                    anim2.EasingFunction = new CircleEase();
-                    if (card.Visibility == Visibility.Collapsed)
-                    {
-                        card.Visibility = Visibility.Visible;
-                        tran3.BeginAnimation(TranslateTransform.XProperty, anim1);
-                    }
-                    else if (card.Visibility == Visibility.Visible)
-                    {
-                        tran3.BeginAnimation(TranslateTransform.XProperty, anim2);
-                        
-                    }
-                }
-        }
 
         /*
         /// <summary>
@@ -1345,226 +1308,176 @@ namespace CokeeDP.Views.Windows
 
         }*/
 
-        private void Anim2_Completed1(object sender, EventArgs e) => card.Visibility = Visibility.Collapsed;
 
-        private void HwPanelToggle(object sender, MouseEventArgs e)
-        {
-            
-        }
 
-        private void NewHw(object sender, RoutedEventArgs e)
-        {
+private void Dialog_ButtonLeftClick(object sender, RoutedEventArgs e) => dialog.Hide();
 
-        }
+//---目前没什么用的函数
+private async Task CheckUpdate()
+{
+    try
+    {
+        var client = new HttpClient(); var a = new WebClient(); var uri = "";
+        var u2 = await client.GetStringAsync("https://gitee.com/api/v5/repos/cokee/CokeeDisplayProtect/releases?page=1&per_page=1&direction=desc ");
+        JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
+        if ((double)dt[0]["name"] > ver)
+            if (dt[0]["assets"][0]["name"].ToString() != "update.zip" && dt[0]["assets"][1]["name"].ToString() == "update.zip") uri = dt[0]["assets"][1]["browser_download_url"].ToString();
+            else uri = dt[0]["assets"][0]["browser_download_url"].ToString();
+        a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+        a.DownloadFileCompleted += new AsyncCompletedEventHandler(Updatecb);
+        a.DownloadFileAsync(new Uri(uri), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip");
+    }
+    catch (Exception ex)
+    {
+        ProcessErr(ex);
+    }
+}
 
-        private void HwPanelToggle(object sender, RoutedEventArgs e)
-        {
-            lock (locker2)
-            {
-                DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
-                DoubleAnimation anim2 = new DoubleAnimation(522, TimeSpan.FromSeconds(1));
-                anim1.EasingFunction = new CircleEase();
-                anim2.Completed += Anim2_Completed1;
-                anim2.EasingFunction = new CircleEase();
-                if (card.Visibility == Visibility.Collapsed)
-                {
-                    card.Visibility = Visibility.Visible;
-                    tran3.BeginAnimation(TranslateTransform.XProperty, anim1);
-                }
-                else if (card.Visibility == Visibility.Visible)
-                {
-                    tran3.BeginAnimation(TranslateTransform.XProperty, anim2);
+private void ResDwCb(object sender, AsyncCompletedEventArgs e)
+{
+    pro.Visibility = Visibility.Collapsed;
+    ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip", ZipArchiveMode.Read);
+    if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
+    archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
+    if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) log.Text = "资源包下载成功.";
+}
 
-                }
-            }
-        }
+private void Updatecb(object sender, AsyncCompletedEventArgs e)
+{
+    pro.Visibility = Visibility.Collapsed;
+    ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip", ZipArchiveMode.Read);
+    if (Directory.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
+    archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
+}
 
-        private void TouchMove(object sender, TouchEventArgs e)
-        {
-            //获取相对于ScrollViewer的触摸点位置
-            TouchPoint endPoint = e.GetTouchPoint(this);
-            //计算相对位置
-            double diffOffsetY = endPoint.Position.Y - _startPosition.Y;
-            double diffOffsetX = endPoint.Position.X - _startPosition.X;
+//downing
+private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
+{
+    if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
+    pro.Value = e.ProgressPercentage;
+    log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
+}
 
-            //ScrollViewer滚动到指定位置(指定位置=起始位置-移动的偏移量，滚动方向和手势方向相反)
-           // ScrollToVerticalOffset(_startVerticalOffset - diffOffsetY);
-            //ScrollToHorizontalOffset(_startHorizontalOffset - diffOffsetX);
-        }
+private void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
+{
+    if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
+    log.Text = "Done.";
+    if (e.Cancelled)
+    {
+        log.Text = "File download cancelled.";
+    }
+    if (e.Error != null)
+    {
+        log.Text = e.Error.ToString();
+    }
+    if (e.Error == null && !e.Cancelled)
+    {
+        br1.BeginInit();
+        br1_blur.Radius = 0;
+        br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
+        br1.EndInit();
+    }
+}
 
-        private void TouchUp(object sender, TouchEventArgs e)
-        {
+public void Appear(FrameworkElement element, int direction = 0, int distance = 20, double duration = .3)
+{
+    //将所选控件的Visibility属性改为Visible
+    ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
+    DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Visible, new TimeSpan(0, 0, 0));
+    VisbilityAnimation.KeyFrames.Add(kf);
+    element.BeginAnimation(Border.VisibilityProperty, VisbilityAnimation);
 
-        }
+    //创建新的缩放动画
+    TranslateTransform TT = new TranslateTransform();
+    element.RenderTransform = TT;
+    EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
 
-        private void Dialog_ButtonLeftClick(object sender, RoutedEventArgs e) => dialog.Hide();
+    //判断动画方向
+    if (direction == 0)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(-distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
+    }
+    else if (direction == 1)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
+    }
+    else if (direction == 2)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
+    }
+    else if (direction == 3)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(-distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
+    }
+    else throw new Exception("无效的方向！");
 
-        //---目前没什么用的函数
-        private async Task CheckUpdate()
-        {
-            try
-            {
-                var client = new HttpClient(); var a = new WebClient(); var uri = "";
-                var u2 = await client.GetStringAsync("https://gitee.com/api/v5/repos/cokee/CokeeDisplayProtect/releases?page=1&per_page=1&direction=desc ");
-                JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                if ((double)dt[0]["name"] > ver)
-                    if (dt[0]["assets"][0]["name"].ToString() != "update.zip" && dt[0]["assets"][1]["name"].ToString() == "update.zip") uri = dt[0]["assets"][1]["browser_download_url"].ToString();
-                    else uri = dt[0]["assets"][0]["browser_download_url"].ToString();
-                a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                a.DownloadFileCompleted += new AsyncCompletedEventHandler(Updatecb);
-                a.DownloadFileAsync(new Uri(uri), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip");
-            }
-            catch (Exception ex)
-            {
-                ProcessErr(ex);
-            }
-        }
+    //将所选控件的可见度按动画函数方式显现
+    DoubleAnimation OpacityAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(duration)));
+    OpacityAnimation.EasingFunction = easeFunction;
+    element.BeginAnimation(Border.OpacityProperty, OpacityAnimation);
+}
 
-        private void ResDwCb(object sender, AsyncCompletedEventArgs e)
-        {
-            pro.Visibility = Visibility.Collapsed;
-            ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip", ZipArchiveMode.Read);
-            if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
-            archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
-            if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) log.Text = "资源包下载成功.";
-        }
+/// <summary>
+/// 淡出动画(控件名, 0：上方；1：右方；2：下方；3：左方, 淡出的距离，持续时间)
+/// </summary>
+/// <param name="element">控件名</param>
+/// <param name="direction">0：上方；1：右方；2：下方；3：左方</param>
+/// <param name="distance">淡出的距离</param>
+/// <param name="duration">持续时间</param>
+public void Disappear(FrameworkElement element, int direction = 0, int distance = 20, double duration = .3)
+{
+    //创建新的缩放动画
+    TranslateTransform TT = new TranslateTransform();
+    element.RenderTransform = TT;
+    //创建缩放动画函数
+    EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
 
-        private void Updatecb(object sender, AsyncCompletedEventArgs e)
-        {
-            pro.Visibility = Visibility.Collapsed;
-            ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip", ZipArchiveMode.Read);
-            if (Directory.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
-            archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
-        }
+    //判断动画方向
+    if (direction == 0)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(-distance, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
+    }
+    else if (direction == 1)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(distance, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
+    }
+    else if (direction == 2)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(distance, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
+    }
+    else if (direction == 3)
+    {
+        DoubleAnimation Animation = new DoubleAnimation(-distance, new Duration(TimeSpan.FromSeconds(duration)));
+        Animation.EasingFunction = easeFunction;
+        element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
+    }
+    else
+        throw new Exception("无效的方向！");
 
-        //downing
-        private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
-            pro.Value = e.ProgressPercentage;
-            log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
-        }
+    //将所选控件的可见度按动画函数方式消失
+    DoubleAnimation OpacityAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(duration)));
+    OpacityAnimation.EasingFunction = easeFunction;
+    element.BeginAnimation(Border.OpacityProperty, OpacityAnimation);
 
-        private void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
-        {
-            if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
-            log.Text = "Done.";
-            if (e.Cancelled)
-            {
-                log.Text = "File download cancelled.";
-            }
-            if (e.Error != null)
-            {
-                log.Text = e.Error.ToString();
-            }
-            if (e.Error == null && !e.Cancelled)
-            {
-                br1.BeginInit();
-                br1_blur.Radius = 0;
-                br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
-                br1.EndInit();
-            }
-        }
-
-        public void Appear(FrameworkElement element, int direction = 0, int distance = 20, double duration = .3)
-        {
-            //将所选控件的Visibility属性改为Visible
-            ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
-            DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Visible, new TimeSpan(0, 0, 0));
-            VisbilityAnimation.KeyFrames.Add(kf);
-            element.BeginAnimation(Border.VisibilityProperty, VisbilityAnimation);
-
-            //创建新的缩放动画
-            TranslateTransform TT = new TranslateTransform();
-            element.RenderTransform = TT;
-            EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
-
-            //判断动画方向
-            if (direction == 0)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(-distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
-            }
-            else if (direction == 1)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
-            }
-            else if (direction == 2)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
-            }
-            else if (direction == 3)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(-distance, 0, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
-            }
-            else throw new Exception("无效的方向！");
-
-            //将所选控件的可见度按动画函数方式显现
-            DoubleAnimation OpacityAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(duration)));
-            OpacityAnimation.EasingFunction = easeFunction;
-            element.BeginAnimation(Border.OpacityProperty, OpacityAnimation);
-        }
-
-        /// <summary>
-        /// 淡出动画(控件名, 0：上方；1：右方；2：下方；3：左方, 淡出的距离，持续时间)
-        /// </summary>
-        /// <param name="element">控件名</param>
-        /// <param name="direction">0：上方；1：右方；2：下方；3：左方</param>
-        /// <param name="distance">淡出的距离</param>
-        /// <param name="duration">持续时间</param>
-        public void Disappear(FrameworkElement element, int direction = 0, int distance = 20, double duration = .3)
-        {
-            //创建新的缩放动画
-            TranslateTransform TT = new TranslateTransform();
-            element.RenderTransform = TT;
-            //创建缩放动画函数
-            EasingFunctionBase easeFunction = new CircleEase() { EasingMode = EasingMode.EaseInOut };
-
-            //判断动画方向
-            if (direction == 0)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(-distance, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
-            }
-            else if (direction == 1)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(distance, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
-            }
-            else if (direction == 2)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(distance, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.YProperty, Animation);
-            }
-            else if (direction == 3)
-            {
-                DoubleAnimation Animation = new DoubleAnimation(-distance, new Duration(TimeSpan.FromSeconds(duration)));
-                Animation.EasingFunction = easeFunction;
-                element.RenderTransform.BeginAnimation(TranslateTransform.XProperty, Animation);
-            }
-            else
-                throw new Exception("无效的方向！");
-
-            //将所选控件的可见度按动画函数方式消失
-            DoubleAnimation OpacityAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(duration)));
-            OpacityAnimation.EasingFunction = easeFunction;
-            element.BeginAnimation(Border.OpacityProperty, OpacityAnimation);
-
-            //将所选控件的Visibility属性改为Collapsed
-            ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
-            DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Collapsed, new TimeSpan(0, 0, 1));
-            VisbilityAnimation.KeyFrames.Add(kf);
-            element.BeginAnimation(Border.VisibilityProperty, VisbilityAnimation);
-        }
+    //将所选控件的Visibility属性改为Collapsed
+    ObjectAnimationUsingKeyFrames VisbilityAnimation = new ObjectAnimationUsingKeyFrames();
+    DiscreteObjectKeyFrame kf = new DiscreteObjectKeyFrame(Visibility.Collapsed, new TimeSpan(0, 0, 1));
+    VisbilityAnimation.KeyFrames.Add(kf);
+    element.BeginAnimation(Border.VisibilityProperty, VisbilityAnimation);
+}
     }
 }
