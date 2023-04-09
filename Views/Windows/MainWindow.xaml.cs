@@ -115,12 +115,12 @@ namespace CokeeDP.Views.Windows
                 }        
                 //Read TimedTask Json
                 var s1=File.ReadAllText(@"D:\CokeeDP\TimedTask.json");
-                json
+              /*  json
                 foreach(var item in collection)
                 {
                     timeTasks = 
                 }
-                //DEBUG Only
+                //DEBUG Only*/
                 //MessageBoxX.Show(AudioArray.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
               
@@ -449,6 +449,8 @@ namespace CokeeDP.Views.Windows
         {
             System.Drawing.Image img = (System.Drawing.Image)eventArgs.Frame.Clone();
             img.Dispose();
+            img.Save(@"D:\1.png");
+         
 
         }
 
