@@ -19,9 +19,9 @@ namespace CokeeDP.Views.Pages
     /// <summary>
     /// Main.xaml 的交互逻辑
     /// </summary>
-    public partial class About : UiPage
+    public partial class TimeTask : UiPage
     {
-        public About()
+        public TimeTask()
         {
             InitializeComponent();
         }

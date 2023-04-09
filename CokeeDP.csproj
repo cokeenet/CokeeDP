@@ -70,10 +70,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Image\bg75.png" />
     <None Remove="SplashScreen.png" />
     <Page Remove="Archived\Setting.xaml" /> 
-    <Content Include="Image\hd1.ico" />   
+    <Content Include="Image\hd1.ico" /> 
+    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />   
     <Resource Include="Image\bg75.png" />
     <Resource Include="Image\bg_normal.png" />
     <Resource Include="Image\bg_setting.png" />
@@ -316,12 +318,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\Pages\About - 复制.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
     <Page Update="Views\Pages\About.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\TimeTask.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
 
