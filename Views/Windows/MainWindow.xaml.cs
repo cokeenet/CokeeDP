@@ -44,43 +44,14 @@ namespace CokeeDP.Views.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// 
+    ///  Made with Heart and Love
+    ///  Cokee.
 
-    public class HwItem
-    {
-        public string Name
-        {
-            get; set;
-        }
 
-        public DateTime DateTime
-        {
-            get; set;
-        }
-        public int Id
-        {
-            get; set;
-        }
-        public string Desc
-        {
-            get; set;
-        }
-    }
 
     public partial class MainWindow : Window
     {
-        Point _startPosition;
-        //滚动条当前位置
-        double _startVerticalOffset;
-        double _startHorizontalOffset;
-        public const int DBT_DEVICEARRIVAL = 0x8000;  //设备可用
-        public const int DBT_DEVICEREMOVECOMPLETE = 0x8004; //设备或媒体被删除
-        public const int FILE_SHARE_READ = 0x1;
-        public const int FILE_SHARE_WRITE = 0x2;
-        public const uint GENERIC_READ = 0x80000000;
-        public const int GENERIC_WRITE = 0x40000000;
-        public const int IOCTL_STORAGE_EJECT_MEDIA = 0x2d4808;
-        public const int WM_DEVICECHANGE = 0x219;
+
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
@@ -115,21 +86,25 @@ namespace CokeeDP.Views.Windows
                 */
 
                 FillConfig();
+                
                 if(Properties.Settings.Default.EnableBigTimeTo)
                 {
                     BigCountdown.Visibility = Visibility.Visible;
                 }
                 if(UsingBing)
                 {
+                    //Using Bing Picture
                     _ = GetBingWapp();
                 }
                 else
                 {
+                    //Using Local Picture
                     if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp")) Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     DirectoryInfo AudioDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     ImageArray = AudioDir.GetFiles("*.png"); ChangeWapp(false);
                 }
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
+                //Get AudioFiles
                 if(Directory.Exists(AudioFolder))
                 {
                     DirectoryInfo dir = new DirectoryInfo(AudioFolder);
@@ -137,10 +112,18 @@ namespace CokeeDP.Views.Windows
                     {
                         AudioArray = dir.GetFiles("*.mp3");
                     }
+                }        
+                //Read TimedTask Json
+                var s1=File.ReadAllText(@"D:\CokeeDP\TimedTask.json");
+                json
+                foreach(var item in collection)
+                {
+                    timeTasks = 
                 }
+                //DEBUG Only
                 //MessageBoxX.Show(AudioArray.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
-                //hitokoto.Content = "hello world!";
+              
             }
             catch(Exception e)
             {
@@ -220,23 +203,25 @@ namespace CokeeDP.Views.Windows
 
         public void CheckTasks()
         {
+
         }
 
         public void FillConfig()
         {
             try
             {
+                //如配置文件损坏或不正确，用默认配置覆盖
                 if(Properties.Settings.Default.CountdownTime.Year <= 2000)
                 {
                     CountDownTime = DateTime.Parse("2025/06/05");
                     Properties.Settings.Default.CountdownTime = CountDownTime;
                 }
                 else CountDownTime = Properties.Settings.Default.CountdownTime;
-                if(Properties.Settings.Default.OneWordsApi.Length == 0) Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=k";
+                if(Properties.Settings.Default.OneWordsApi.Length == 0) { Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=k";}
                 if(Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) <= 300) Properties.Settings.Default.OneWordsTimeInterval = "300";
                 if(Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval) <= 9800) Properties.Settings.Default.WeatherTimeInterval = "9800";
                 if(Properties.Settings.Default.CountdownName.Length <= 1) Properties.Settings.Default.CountdownName = "高考";
-                if(Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;
+                if(Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
                 UsingBing = Properties.Settings.Default.BingWappEnable;
                 AudioFolder = Properties.Settings.Default.AudioFolder;
                 Properties.Settings.Default.Save();
@@ -291,7 +276,7 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-                // new Thread(CheckTasks).Start(); // 创建线程
+                new Thread(CheckTasks).Start(); // 创建线程
             }));
             }
             catch(Exception ex)
@@ -340,8 +325,9 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                var client = new HttpClient(); var a = new WebClient();
-                var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
+                var client = new HttpClient();
+                // 从Bing获取图片Json，存在一天的时差
+                var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//旧API await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 if(Properties.Settings.Default.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
                 {
@@ -384,7 +370,7 @@ namespace CokeeDP.Views.Windows
             try
             {
                 if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
-                log.Text = "Image Loaded. Num:" + bing;
+                log.Text = "Image Loaded.😺 Day:" + bing;
                 DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
                 animation.EasingFunction = new CircleEase();
                 //animation.AutoReverse = true;
@@ -451,7 +437,7 @@ namespace CokeeDP.Views.Windows
                 videoSource.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
 
-                if(Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); }
+                if(Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
             }
             catch(Exception ex)
             {
@@ -521,8 +507,8 @@ namespace CokeeDP.Views.Windows
                 w6.StreamSource = GetWeatherIcon((int)dt["daily"][5]["iconDay"]);
                 JObject dt1 = JsonConvert.DeserializeObject<JObject>(u3);
 
-                if(!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200")
-                    throw new HttpRequestException("天气预警加载失败。网络异常。CODE:" + dt1["code"].ToString());
+                if(!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200"|| dt["code"].ToString() != "200")
+                    throw new HttpRequestException("天气数据加载失败。网络异常。CODE:" + dt1["code"].ToString());
                 if(!dt1["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
@@ -638,6 +624,15 @@ namespace CokeeDP.Views.Windows
             return IntPtr.Zero;
         }
 
+        public const int DBT_DEVICEARRIVAL = 0x8000;  //设备可用
+        public const int DBT_DEVICEREMOVECOMPLETE = 0x8004; //设备被删除
+        public const int FILE_SHARE_READ = 0x1;
+        public const int FILE_SHARE_WRITE = 0x2;
+        public const uint GENERIC_READ = 0x80000000;
+        public const int GENERIC_WRITE = 0x40000000;
+        public const int IOCTL_STORAGE_EJECT_MEDIA = 0x2d4808;
+        public const int WM_DEVICECHANGE = 0x219;
+
         [DllImport("kernel32.dll",SetLastError = true,CharSet = CharSet.Auto)]
         private static extern IntPtr CreateFile(
          string lpFileName,
@@ -662,6 +657,7 @@ namespace CokeeDP.Views.Windows
 
         private void ExitUsbDrive(object sender,RoutedEventArgs e)
         {
+
             try
             {
                 string filename = @"\\.\" + disk.Remove(2);
