@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,29 @@ namespace CokeeDP.Views.Pages
     /// <summary>
     /// Main.xaml 的交互逻辑
     /// </summary>
+    public class TimeTasks
+    {
+        public string TaskName
+        {
+            get; set;
+        }
+
+        public string Id
+        {
+            get; set;
+        }
+
+        public DateTime Time
+        {
+            get; set;
+        }
+        public TimeTasks(string name,string id,DateTime time)
+        {
+             TaskName=name;
+            Id=id;
+            Time=time;
+        }
+    }
     public partial class TimeTask : UiPage
     {
         public TimeTask()

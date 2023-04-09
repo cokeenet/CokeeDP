@@ -25,6 +25,7 @@ namespace CokeeDP
                 typeof(Timeline),
                 new FrameworkPropertyMetadata { DefaultValue = 120 }
                 );
+            Log.Debug(e.Args.ToString());
         }
     }
 }

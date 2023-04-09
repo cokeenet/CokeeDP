@@ -21,9 +21,49 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock
-            Grid.Row="1" Margin="5,10" FontSize="20" Text="dingshi" />
-        <Image
-            x:Name="image" Grid.Row="1" Grid.RowSpan="2" Width="100" Height="100"
-            Margin="0,20,20,0" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Image/hd1.jpg" />
+            Grid.Row="1" Margin="5,10" FontSize="20" Text="定时任务" />
+        <ui:CardControl
+            Grid.Row="1" Margin="5,40,11,0" VerticalAlignment="Top" Icon="Add28" Grid.RowSpan="2">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="添加任务" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <Grid Width="455" MinWidth="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ui:TextBox
+                    x:Name="searchBox" Grid.Column="0" Grid.ColumnSpan="2" Margin="86,0,139,0" />
+                <ui:Button
+                    x:Name="AddTaskBtn" Grid.Column="1" Width="124" Height="36" Margin="376,0,0,0"
+                    Content="新建任务" Icon="AddCircle28" Tag="addTask" />
+            </Grid>
+        </ui:CardControl>
+        <ui:CardControl Margin="5,5,5,5" Icon="List24">
+            <ui:CardControl.Header>
+                <StackPanel>
+                    <TextBlock
+                                    FontSize="13" FontWeight="Medium"
+                                    Text="{Binding TaskName}" />
+                    <TextBlock
+                                    FontSize="12" Opacity="0.7"
+                                    Text="{Binding Desc}" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:Button
+                            Width="85" Height="35" Content="删除" Icon="Delete48"
+                            Tag="{Binding CityCode}" />
+        </ui:CardControl>
+        <ItemsControl
+            x:Name="TaskList" Grid.Row="2" Margin="0,65,16,230">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                   
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </ui:UiPage>

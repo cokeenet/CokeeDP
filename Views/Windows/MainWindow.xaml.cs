@@ -1,4 +1,5 @@
 ﻿using AForge.Video.DirectShow;
+using CokeeDP.Views.Pages;
 using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
@@ -99,7 +100,7 @@ namespace CokeeDP.Views.Windows
         private bool UsingBing = true;
         public string Version = "Ver 3.1";
         public double ver = 3.1;
-
+        public TimeTasks[] timeTasks;
         public MainWindow()
         {
             InitializeComponent();
