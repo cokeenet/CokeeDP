@@ -114,13 +114,16 @@ namespace CokeeDP.Views.Windows
                     }
                 }        
                 //Read TimedTask Json
-                var s1=File.ReadAllText(@"D:\CokeeDP\TimedTask.json");
-              /*  json
-                foreach(var item in collection)
+                JObject jsonData= JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
+               
+                
+                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
+                //string who = dt["from_who"].ToString();
+                if(jsonData!=null)foreach (var item in jsonData)
                 {
-                    timeTasks = 
+                    timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
                 }
-                //DEBUG Only*/
+                //DEBUG Only
                 //MessageBoxX.Show(AudioArray.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
               
@@ -203,7 +206,10 @@ namespace CokeeDP.Views.Windows
 
         public void CheckTasks()
         {
-
+            if(timeTasks!=null)foreach (var item in timeTasks)
+            {
+                if (item.Time.Subtract(DateTime.Now).Seconds <= 60) ShowPlayer(null,null);
+            }
         }
 
         public void FillConfig()
@@ -433,8 +439,8 @@ namespace CokeeDP.Views.Windows
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
                 VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-                videoSource.NewFrame += VideoSource_NewFrame;
-                videoSource.Start();
+                //videoSource.NewFrame += VideoSource_NewFrame;
+               // videoSource.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
 
                 if(Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
@@ -748,6 +754,7 @@ namespace CokeeDP.Views.Windows
             {
                 lock(locker)
                 {
+                    if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));
                     DoubleAnimation anim1 = new DoubleAnimation(0,TimeSpan.FromSeconds(1));
                     DoubleAnimation anim2 = new DoubleAnimation(-365,TimeSpan.FromSeconds(1));
                     anim1.EasingFunction = new CircleEase();
@@ -791,7 +798,8 @@ namespace CokeeDP.Views.Windows
                     AudioArray = dir.GetFiles("*.mp3");
                     if(AudioArray.Length == 0) throw new FileNotFoundException("听力文件夹内没有.mp3文件。请转换音频为.mp3格式。");
                 }
-                if(AudioNum >= AudioArray.Length || AudioNum < 0) AudioNum = 0;
+
+                if (AudioNum >= AudioArray.Length || AudioNum < 0) AudioNum = 0;
                 AudioPath = AudioArray[AudioNum].FullName;
                 mediaplayer.Open(new Uri(AudioArray[AudioNum].FullName));
                 mediaplayer.Volume = 1;
@@ -852,6 +860,8 @@ namespace CokeeDP.Views.Windows
                 PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                File.WriteAllText(AudioFolder + "\\Last.DAT", AudioNum.ToString());
+               // if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));
                 AudioLoaded = true;
                 /* playIcon.Text = "";
                  IsPlaying = true;
