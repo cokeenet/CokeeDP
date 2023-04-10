@@ -124,6 +124,7 @@ namespace CokeeDP.Views.Windows
                     {
                         timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
                     }
+                timeTasks.Append(new TimeTasks("1","1", DateTime.Now, "audio"));
                 //DEBUG Only
                 //MessageBoxX.Show(AudioArray.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
@@ -207,8 +208,10 @@ namespace CokeeDP.Views.Windows
 
         public void CheckTasks()
         {
+           // snackbarService.ShowAsync("1");
             if (timeTasks != null && !IsWaitingTask) foreach (var item in timeTasks)
                 {
+                    snackbarService.ShowAsync(item.Time.Subtract(DateTime.Now).Seconds.ToString());
                     if (item.Time.Subtract(DateTime.Now).Seconds <= 60)
                     {
                         TaskCd = 60;
@@ -290,13 +293,15 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-                if (!IsWaitingTask) new Thread(CheckTasks).Start(); // 创建线程
+                CheckTasks();
+              /*  if (!IsWaitingTask)*/new Thread(CheckTasks).Start(); // 创建线程
                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
                 {
                     TaskCd = TaskCd - 1;
                     audioTime.Content = mediaplayer.NaturalDuration.TimeSpan.ToString("mm:ss") + " 将在 " + TaskCd + " 秒后自动播放";
-                    if (TaskCd == 0) { mediaplayer.Play();Ta}
+                    if (TaskCd == 0) { mediaplayer.Play();}
                 }
+
             }));
             }
             catch (Exception ex)
