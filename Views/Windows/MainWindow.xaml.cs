@@ -114,18 +114,7 @@ namespace CokeeDP.Views.Windows
                         AudioArray = dir.GetFiles("*.mp3");
                     }
                 }
-                //Read TimedTask Json
-                JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
 
-
-                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
-                //string who = dt["from_who"].ToString();
-                if (jsonData != null) foreach (var item in jsonData)
-                    {
-                        timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
-                    }
-                timeTasks.Append(new TimeTasks("1","1", DateTime.Now, "audio"));
-                //DEBUG Only
                 //MessageBoxX.Show(AudioArray.Length.ToString());
                 //MessageBoxX.Show(Environment.OSVersion.Version.Major.ToString());
 
@@ -458,10 +447,24 @@ namespace CokeeDP.Views.Windows
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
                 VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-                //videoSource.NewFrame += VideoSource_NewFrame;
-                // videoSource.Start();
+                videoSource.NewFrame += VideoSource_NewFrame;
+                //videoSource.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
+                                                                //Read TimedTask Json
+                JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
 
+
+                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
+                //string who = dt["from_who"].ToString();
+                if (jsonData != null) foreach (var item in jsonData)
+                    {
+                        timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
+                    }
+                var a= new TimeTasks("1", "1", DateTime.Now, "audio");
+                timeTasks[0] = a;
+                //timeTasks.Append(a);
+                //DEBUG Only
+                snackbarService.ShowAsync(timeTasks.Count().ToString());
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
             }
             catch (Exception ex)
@@ -475,7 +478,7 @@ namespace CokeeDP.Views.Windows
             System.Drawing.Image img = (System.Drawing.Image)eventArgs.Frame.Clone();
             img.Dispose();
             img.Save(@"D:\1.png");
-
+            Log.Information(img.Height.ToString());
 
         }
 
