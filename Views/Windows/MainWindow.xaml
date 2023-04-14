@@ -59,7 +59,7 @@
                 </Label>
                 <pu:Carousel
                         x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
                     <ui:Card>
@@ -481,7 +481,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5">
+                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />

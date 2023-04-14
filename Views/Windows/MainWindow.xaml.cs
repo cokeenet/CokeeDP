@@ -1,5 +1,4 @@
-﻿using OpenCvSharp;
-using CokeeDP.Views.Pages;
+﻿using CokeeDP.Views.Pages;
 using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
@@ -9,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -38,10 +39,9 @@ using File = System.IO.File;
 //using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Point = System.Windows.Point;
 using Timer = System.Timers.Timer;
-using OpenCvSharp.Extensions;
-using System.Drawing;
-using System.Drawing.Imaging;
 using Window = System.Windows.Window;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
 
 namespace CokeeDP.Views.Windows
 {
@@ -203,7 +203,7 @@ namespace CokeeDP.Views.Windows
 
         public void CheckTasks()
         {
-           // snackbarService.ShowAsync("1");
+            // snackbarService.ShowAsync("1");
             if (timeTasks != null && !IsWaitingTask) foreach (var item in timeTasks)
                 {
                     snackbarService.ShowAsync(item.Time.Subtract(DateTime.Now).Seconds.ToString());
@@ -289,12 +289,13 @@ namespace CokeeDP.Views.Windows
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
                 CheckTasks();
-              /*  if (!IsWaitingTask)*/new Thread(CheckTasks).Start(); // 创建线程
+                /*  if (!IsWaitingTask)*/
+                new Thread(CheckTasks).Start(); // 创建线程
                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
                 {
                     TaskCd = TaskCd - 1;
                     audioTime.Content = mediaplayer.NaturalDuration.TimeSpan.ToString("mm:ss") + " 将在 " + TaskCd + " 秒后自动播放";
-                    if (TaskCd == 0) { mediaplayer.Play();}
+                    if (TaskCd == 0) { mediaplayer.Play(); }
                 }
 
             }));
@@ -482,27 +483,40 @@ namespace CokeeDP.Views.Windows
         }
         private void VideoCap()
         {
-            Mat mat = new Mat();
-            Bitmap bitmap;
-            string a;
-            string path = "D:\\CokeeDP\\Cache\\" + DateTime.Now.ToString("MM-dd");
-            if (!Directory.Exists(path))
+            try
             {
-                Directory.CreateDirectory(path);
-            }
-            a = DateTime.Now.ToString("HH-mm-ss");
 
-            FrameSource source = Cv2.CreateFrameSource_Camera(1);
-            while (true)
+
+                Mat mat = new Mat();
+                Bitmap bitmap;
+                string a;
+                string path = "D:\\CokeeDP\\Cache\\" + DateTime.Now.ToString("MM-dd");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                a = DateTime.Now.ToString("HH-mm-ss");
+
+                FrameSource source = Cv2.CreateFrameSource_Camera(1);
+                while (true)
+                {
+                    source.NextFrame(mat);
+                    bitmap = BitmapConverter.ToBitmap(mat);
+                    bitmap.Save(path + "\\" + a + ".png", ImageFormat.Png);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
+
+                    }));
+                    Thread.Sleep(TimeSpan.FromMinutes(20));
+                }
+            }
+            catch (Exception ex)
             {
-                source.NextFrame(mat);
-                bitmap=BitmapConverter.ToBitmap(mat);
-                bitmap.Save(path+"\\"+a+".png", ImageFormat.Png);
-                log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
-                Thread.Sleep(TimeSpan.FromMinutes(20));
+                ProcessErr(ex);
             }
         }
-        
+
         /*private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             System.Drawing.Image img = (System.Drawing.Image)eventArgs.Frame.Clone();
