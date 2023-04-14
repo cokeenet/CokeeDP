@@ -76,7 +76,7 @@ namespace CokeeDP.Views.Windows
         public string Version = "Ver 3.1";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
-
+        public Thread cap;
 
         public TimeTasks task;
         public MainWindow()
@@ -456,8 +456,8 @@ namespace CokeeDP.Views.Windows
                 //VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
                 //videoSource.NewFrame += VideoSource_NewFrame;
                 //videoSource.Start();
-                Thread videoThread = new Thread(VideoCap);
-                videoThread.Start();
+                cap = new Thread(VideoCap);
+                cap.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                                                                 //Read TimedTask Json
                 JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
@@ -628,7 +628,13 @@ namespace CokeeDP.Views.Windows
                     if ((bool)messageBox.ShowDialog()) Close();
 
                 }
-                else Close();
+                else
+
+                {
+                    CancellationToken cancellationToken = new CancellationToken();
+                    cancellationToken.
+                    Close();
+                }
             }));
         }
 
