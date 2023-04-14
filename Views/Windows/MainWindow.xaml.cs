@@ -1,4 +1,4 @@
-﻿using AForge.Video.DirectShow;
+﻿using OpenCvSharp;
 using CokeeDP.Views.Pages;
 using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
@@ -38,6 +38,10 @@ using File = System.IO.File;
 //using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Point = System.Windows.Point;
 using Timer = System.Timers.Timer;
+using OpenCvSharp.Extensions;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Window = System.Windows.Window;
 
 namespace CokeeDP.Views.Windows
 {
@@ -61,7 +65,7 @@ namespace CokeeDP.Views.Windows
         private String AudioPath, AudioFolder, MediaDuring;
         private int bgn = 0, bing = 0;
         private BitmapImage bitmapImage = null;
-        FilterInfoCollection videoDevices;
+        //FilterInfoCollection videoDevices;
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
@@ -72,6 +76,8 @@ namespace CokeeDP.Views.Windows
         public string Version = "Ver 3.1";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
+
+
         public TimeTasks task;
         public MainWindow()
         {
@@ -444,11 +450,13 @@ namespace CokeeDP.Views.Windows
                 });
                 _ = Hitoko();
                 _ = GetWeatherInfo();
-                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-                snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
-                VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-                videoSource.NewFrame += VideoSource_NewFrame;
+                //videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                //snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
+                //VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+                //videoSource.NewFrame += VideoSource_NewFrame;
                 //videoSource.Start();
+                Thread videoThread = new Thread(VideoCap);
+                videoThread.Start();
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                                                                 //Read TimedTask Json
                 JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
@@ -460,11 +468,11 @@ namespace CokeeDP.Views.Windows
                     {
                         timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
                     }
-                var a= new TimeTasks("1", "1", DateTime.Now, "audio");
-                timeTasks[0] = a;
+                //var a= new TimeTasks("1", "1", DateTime.Now, "audio");
+                //timeTasks[0] = a;
                 //timeTasks.Append(a);
                 //DEBUG Only
-                snackbarService.ShowAsync(timeTasks.Count().ToString());
+                //snackbarService.ShowAsync(timeTasks.Count().ToString());
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
             }
             catch (Exception ex)
@@ -472,15 +480,37 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+        private void VideoCap()
+        {
+            Mat mat = new Mat();
+            Bitmap bitmap;
+            string a;
+            string path = "D:\\CokeeDP\\Cache\\" + DateTime.Now.ToString("MM-dd");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            a = DateTime.Now.ToString("HH-mm-ss");
 
-        private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+            FrameSource source = Cv2.CreateFrameSource_Camera(1);
+            while (true)
+            {
+                source.NextFrame(mat);
+                bitmap=BitmapConverter.ToBitmap(mat);
+                bitmap.Save(path+"\\"+a+".png", ImageFormat.Png);
+                log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
+                Thread.Sleep(TimeSpan.FromMinutes(20));
+            }
+        }
+        
+        /*private void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             System.Drawing.Image img = (System.Drawing.Image)eventArgs.Frame.Clone();
             img.Dispose();
             img.Save(@"D:\1.png");
             Log.Information(img.Height.ToString());
 
-        }
+        }*/
 
         private void OnWea(object sender, ElapsedEventArgs e)
         {
