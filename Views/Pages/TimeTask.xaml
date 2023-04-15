@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <ui:TextBox
-                    x:Name="searchBox" Grid.Column="0" Grid.ColumnSpan="2" Margin="86,0,139,0" />
+                    x:Name="searchBox" Grid.Column="0" Grid.ColumnSpan="2" />
                 <ui:Button
                     x:Name="AddTaskBtn" Grid.Column="1" Width="124" Height="36" Margin="376,0,0,0"
                     Content="新建任务" Icon="AddCircle28" Tag="addTask" />

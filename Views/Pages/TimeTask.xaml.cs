@@ -36,11 +36,16 @@ namespace CokeeDP.Views.Pages
         {
             get; set;
         }
-        public TimeTasks(string name,string id,DateTime time)
+        public string Action
+        {
+            get; set;
+        }
+        public TimeTasks(string name,string id,DateTime time,string action)
         {
              TaskName=name;
             Id=id;
             Time=time;
+            Action=action;
         }
     }
     public partial class TimeTask : UiPage

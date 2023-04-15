@@ -59,7 +59,7 @@
                 </Label>
                 <pu:Carousel
                         x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1" AnimationEase="CubicOut"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
                     <ui:Card>
@@ -408,7 +408,7 @@
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Content="循星🌟 Ver 3.1" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
-                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
+                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -520,16 +520,16 @@
                                 Height="42" Margin="202,134,61,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="1"
                                 Click="PlayerBtnProc" FontSize="20" Icon="Next48" Tag="next" />
                         <ui:Button
-                                Width="72" Height="30" Margin="0,52,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Width="72" Height="30" Margin="0,58,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
                                 Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />
                         <Slider
                                 x:Name="VolumeSlider" Margin="160,98,8,58" Background="#FF868686" LargeChange="10" Maximum="100"
                                 RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
                         <ui:Button
-                                Width="97" Height="30" Margin="134,52,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
+                                Width="97" Height="30" Margin="134,58,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
                                 Content="播完停止" FontSize="13" Icon="ArrowRepeatAllOff24" Tag="0"/>
                         <Label
-                                x:Name="audioTime" Margin="44,27,130,130" HorizontalContentAlignment="Left"
+                                x:Name="audioTime" Margin="44,27,10,126" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
                                 Content="00:00 / 00:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                                 Foreground="Black">
