@@ -408,7 +408,7 @@
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Content="循星🌟 Ver 3.1" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
-                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1">
+                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>

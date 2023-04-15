@@ -3,6 +3,8 @@ using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -40,8 +42,6 @@ using File = System.IO.File;
 using Point = System.Windows.Point;
 using Timer = System.Timers.Timer;
 using Window = System.Windows.Window;
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
 
 namespace CokeeDP.Views.Windows
 {
@@ -59,6 +59,7 @@ namespace CokeeDP.Views.Windows
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
+        private static Timer CapTimer = new Timer(10 * 60 * 1000);
         private FileInfo[] ImageArray;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
@@ -77,7 +78,7 @@ namespace CokeeDP.Views.Windows
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
         public Thread cap;
-
+        public bool isloaded = false;
         public TimeTasks task;
         public MainWindow()
         {
@@ -288,9 +289,9 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-                CheckTasks();
+                //CheckTasks();
                 /*  if (!IsWaitingTask)*/
-                new Thread(CheckTasks).Start(); // 创建线程
+                //new Thread(CheckTasks).Start(); // 创建线程
                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
                 {
                     TaskCd = TaskCd - 1;
@@ -324,6 +325,7 @@ namespace CokeeDP.Views.Windows
             a = new Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
             b = new Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
             c = new Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
+
         }
 
         public Stream GetWeatherIcon(int code)
@@ -451,13 +453,18 @@ namespace CokeeDP.Views.Windows
                 });
                 _ = Hitoko();
                 _ = GetWeatherInfo();
+                //VideoCap();
                 //videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 //snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
                 //VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
                 //videoSource.NewFrame += VideoSource_NewFrame;
                 //videoSource.Start();
-                cap = new Thread(VideoCap);
-                cap.Start();
+                new Thread(VideoCap).Start();
+          
+                CapTimer.Elapsed += CapTimer_Elapsed;
+                CapTimer.AutoReset = true;
+                CapTimer.Enabled = true;
+
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                                                                 //Read TimedTask Json
                 JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
@@ -475,12 +482,16 @@ namespace CokeeDP.Views.Windows
                 //DEBUG Only
                 //snackbarService.ShowAsync(timeTasks.Count().ToString());
                 if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
+                //isloaded = true;
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
             }
         }
+
+        private void CapTimer_Elapsed(object sender, ElapsedEventArgs e) => VideoCap();
+
         private void VideoCap()
         {
             try
@@ -497,19 +508,26 @@ namespace CokeeDP.Views.Windows
                 }
                 a = DateTime.Now.ToString("HH-mm-ss");
 
-                FrameSource source = Cv2.CreateFrameSource_Camera(1);
-                while (true)
-                {
-                    source.NextFrame(mat);
-                    bitmap = BitmapConverter.ToBitmap(mat);
-                    bitmap.Save(path + "\\" + a + ".png", ImageFormat.Png);
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
+                //FrameSource source = Cv2.CreateFrameSource_Camera(1);
 
-                    }));
-                    Thread.Sleep(TimeSpan.FromMinutes(20));
-                }
+                VideoCapture video = new VideoCapture(1);
+                video.Open(1);
+
+                video.FrameHeight = 3264;
+                video.FrameWidth = 2448;
+                //4:3 8.0mp
+                video.Read(mat);
+                //source.NextFrame(mat);
+                bitmap = BitmapConverter.ToBitmap(mat);
+                bitmap.Save(path + "\\" + a + ".png", ImageFormat.Png);
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
+
+                }));
+                //Thread.Sleep(TimeSpan.FromMinutes(15));
+                snackbarService.ShowAsync("Caped!" + DateTime.Now.ToString("HH-mm"));
+                video.Dispose();
             }
             catch (Exception ex)
             {
@@ -631,8 +649,8 @@ namespace CokeeDP.Views.Windows
                 else
 
                 {
-                    CancellationToken cancellationToken = new CancellationToken();
-                    cancellationToken.
+                    //CancellationToken cancellationToken = new CancellationToken();
+                    // cancellationToken.Register(cap)
                     Close();
                 }
             }));
@@ -1311,6 +1329,11 @@ namespace CokeeDP.Views.Windows
             {
                 ProcessErr(ex);
             }
+        }
+
+        private void testfunc1(object sender, MouseButtonEventArgs e)
+        {
+            VideoCap();
         }
 
         private void BorderLoader(object sender, RoutedEventArgs e)
