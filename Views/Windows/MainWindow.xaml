@@ -481,7 +481,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                        RenderTransformOrigin="0.5,0.5">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
@@ -504,7 +504,7 @@
                             <Label
                                     x:Name="audioName" Margin="0,0,-2,-6" HorizontalContentAlignment="Left"
                                     Background="{x:Null}"
-                                    DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black">
+                                    DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" Content="未找到音频文件">
                                 <Label.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </Label.Effect>
@@ -520,18 +520,18 @@
                                 Height="42" Margin="202,134,61,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="1"
                                 Click="PlayerBtnProc" FontSize="20" Icon="Next48" Tag="next" />
                         <ui:Button
-                                Width="72" Height="30" Margin="0,52,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Width="72" Height="30" Margin="0,55,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
                                 Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />
                         <Slider
                                 x:Name="VolumeSlider" Margin="160,98,8,58" Background="#FF868686" LargeChange="10" Maximum="100"
                                 RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
                         <ui:Button
-                                Width="97" Height="30" Margin="134,52,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
+                                Width="97" Height="30" Margin="134,55,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
                                 Content="播完停止" FontSize="13" Icon="ArrowRepeatAllOff24" Tag="0"/>
                         <Label
-                                x:Name="audioTime" Margin="44,27,130,130" HorizontalContentAlignment="Left"
+                                x:Name="audioTime" Margin="44,27,8,128" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
-                                Content="00:00 / 00:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
+                                Content="00:00 / 00:00 将在99秒后自动播放" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                                 Foreground="Black">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.2" />
