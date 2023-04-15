@@ -460,7 +460,7 @@ namespace CokeeDP.Views.Windows
                 //videoSource.NewFrame += VideoSource_NewFrame;
                 //videoSource.Start();
                 new Thread(VideoCap).Start();
-          
+
                 CapTimer.Elapsed += CapTimer_Elapsed;
                 CapTimer.AutoReset = true;
                 CapTimer.Enabled = true;
