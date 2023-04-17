@@ -59,7 +59,7 @@ namespace CokeeDP.Views.Windows
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
-        private static Timer CapTimer = new Timer(10 * 60 * 1000);
+        private static Timer CapTimer = new Timer(20* 60 * 1000);
         private FileInfo[] ImageArray;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
@@ -461,9 +461,9 @@ namespace CokeeDP.Views.Windows
                 //videoSource.Start();
                 //new Thread(VideoCap).Start();
 
-                //CapTimer.Elapsed += CapTimer_Elapsed;
-                //CapTimer.AutoReset = true;
-                //CapTimer.Enabled = true;
+                CapTimer.Elapsed += CapTimer_Elapsed;
+                CapTimer.AutoReset = true;
+                CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                                                                 //Read TimedTask Json
@@ -519,7 +519,7 @@ namespace CokeeDP.Views.Windows
                 video.Read(mat);
                 //source.NextFrame(mat);
                 bitmap = BitmapConverter.ToBitmap(mat);
-                bitmap.Save(path + "\\" + a + ".png", ImageFormat.Png);
+                bitmap.Save(path + "\\" + a + "-dp.png", ImageFormat.Png);
                 Dispatcher.Invoke(new Action(() =>
                 {
                     log.Text = "Caped! " + DateTime.Now.ToString("HH-mm");
