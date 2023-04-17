@@ -459,11 +459,11 @@ namespace CokeeDP.Views.Windows
                 //VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
                 //videoSource.NewFrame += VideoSource_NewFrame;
                 //videoSource.Start();
-                new Thread(VideoCap).Start();
+                //new Thread(VideoCap).Start();
 
-                CapTimer.Elapsed += CapTimer_Elapsed;
-                CapTimer.AutoReset = true;
-                CapTimer.Enabled = true;
+                //CapTimer.Elapsed += CapTimer_Elapsed;
+                //CapTimer.AutoReset = true;
+                //CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                                                                 //Read TimedTask Json
