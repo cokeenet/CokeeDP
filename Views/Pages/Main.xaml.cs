@@ -34,7 +34,8 @@ namespace CokeeDP.Views.Pages
         {
             InitializeComponent();
             BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
-            UHDModeSwitch.IsChecked = Properties.Settings.Default.IsUHDWapp;
+            BingVideoSwitch.IsChecked = Properties.Settings.Default.BingVideoEnable;
+            UHDModeSwitch.IsChecked = Properties.Settings.Default.UHDEnable;
             SnowFlakeSwitch.IsChecked = Properties.Settings.Default.SnowEnable;
             folderBox.Text = Properties.Settings.Default.AudioFolder;
             timeBox.Text = (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) / 60).ToString();
@@ -80,8 +81,10 @@ namespace CokeeDP.Views.Pages
             {
                 case "bing":
                     Properties.Settings.Default.BingWappEnable = enable; break;
+                case "bingVideo":
+                    Properties.Settings.Default.BingVideoEnable = enable; break;
                 case "uhd":
-                    Properties.Settings.Default.IsUHDWapp = enable; break;
+                    Properties.Settings.Default.UHDEnable = enable; break;
                 case "SnowFlake":
                     Properties.Settings.Default.SnowEnable = enable; break;
                 default:

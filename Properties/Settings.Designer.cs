@@ -12,7 +12,7 @@ namespace CokeeDP.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -194,12 +194,12 @@ namespace CokeeDP.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsUHDWapp {
+        public bool UHDEnable {
             get {
-                return ((bool)(this["IsUHDWapp"]));
+                return ((bool)(this["UHDEnable"]));
             }
             set {
-                this["IsUHDWapp"] = value;
+                this["UHDEnable"] = value;
             }
         }
         
@@ -272,6 +272,18 @@ namespace CokeeDP.Properties {
             }
             set {
                 this["SnowEnable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BingVideoEnable {
+            get {
+                return ((bool)(this["BingVideoEnable"]));
+            }
+            set {
+                this["BingVideoEnable"] = value;
             }
         }
     }

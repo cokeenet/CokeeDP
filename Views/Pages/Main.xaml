@@ -44,22 +44,35 @@
                 x:Name="BingWappSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
+            Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="VideoClip24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="加载4K清晰度 (UHD)的壁纸" />
+                        FontSize="13" FontWeight="Medium" Text="Bing 动态视频背景(测试功能)" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P清晰度" />
+                        FontSize="12" Opacity="0.7" Text="测试中" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:ToggleSwitch
+                x:Name="BingVideoSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="bingVideo" />
+        </ui:CardControl>
+        <ui:CardControl
+            Grid.Row="4" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="加载4K分辨率背景" />
+                    <TextBlock
+                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P分辨率" />
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
                 x:Name="UHDModeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="uhd" />
         </ui:CardControl>
         <TextBlock
-            Grid.Row="4" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
+            Grid.Row="5" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
         <ui:CardControl
-            Grid.Row="5" Margin="5,10,5,0" VerticalAlignment="Top" Icon="SlideText24">
+            Grid.Row="6" Margin="5,10,5,0" VerticalAlignment="Top" Icon="SlideText24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -83,7 +96,7 @@
             </ComboBox>
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="6" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Clock24">
+            Grid.Row="7" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Clock24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -98,9 +111,9 @@
             </Grid>
         </ui:CardControl>
         <TextBlock
-            Grid.Row="7" Margin="5,5,0,0" FontSize="16" Text="杂项" />
+            Grid.Row="8" Margin="5,5,0,0" FontSize="16" Text="杂项" />
         <ui:CardControl
-            Grid.Row="8" Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
+            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -114,7 +127,7 @@
         </ui:CardControl>
 
         <ui:CardAction
-            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click" Command=""
+            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click" Command=""
             Icon="WeatherCloudy24">
             <ui:CardAction.Content>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
@@ -126,7 +139,7 @@
             </ui:CardAction.Content>
         </ui:CardAction>
         <ui:CardControl
-            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            Grid.Row="11" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -137,7 +150,7 @@
                 x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="11" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
@@ -148,7 +161,7 @@
                 x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
+            Grid.Row="13" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock

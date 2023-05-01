@@ -63,17 +63,15 @@ namespace CokeeDP.Views.Windows
         private FileInfo[] ImageArray;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
-        private String AudioPath, AudioFolder, MediaDuring;
-        private int bgn = 0, bing = 0;
+        private string AudioFolder;
+        private int bgn = 0, bing = 0,videoCount=0;
         private BitmapImage bitmapImage = null;
-        //FilterInfoCollection videoDevices;
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
         private int PlayingRule = 0, TaskCd;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime, TaskedTime;
-        private bool UsingBing = true;
         public string Version = "Ver 3.1";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
@@ -99,7 +97,12 @@ namespace CokeeDP.Views.Windows
                 {
                     BigCountdown.Visibility = Visibility.Visible;
                 }
-                if (UsingBing)
+                if(Properties.Settings.Default.BingVideoEnable)
+                {
+                    
+                    _ = GetBingVideo();
+                }
+                else if(Properties.Settings.Default.BingWappEnable && !Properties.Settings.Default.BingVideoEnable)
                 {
                     //Using Bing Picture
                     _ = GetBingWapp();
@@ -107,7 +110,7 @@ namespace CokeeDP.Views.Windows
                 else
                 {
                     //Using Local Picture
-                    if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp")) Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
+                    if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp")) Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     DirectoryInfo AudioDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
                     ImageArray = AudioDir.GetFiles("*.png"); ChangeWapp(false);
                 }
@@ -136,7 +139,11 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if (UsingBing)
+                if(Properties.Settings.Default.BingVideoEnable)
+                {
+                    _ = GetBingVideo();
+                }    
+               else if (Properties.Settings.Default.BingWappEnable&&!Properties.Settings.Default.BingVideoEnable)
                 {
                     if (bing >= 6 || bing <= 0) bing = 0;
                     if (!direction) bing++;
@@ -235,7 +242,6 @@ namespace CokeeDP.Views.Windows
                 if (Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval) <= 9800) Properties.Settings.Default.WeatherTimeInterval = "9800";
                 if (Properties.Settings.Default.CountdownName.Length <= 1) Properties.Settings.Default.CountdownName = "高考";
                 if (Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
-                UsingBing = Properties.Settings.Default.BingWappEnable;
                 AudioFolder = Properties.Settings.Default.AudioFolder;
                 Properties.Settings.Default.Save();
                 SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval));
@@ -313,6 +319,7 @@ namespace CokeeDP.Views.Windows
             {
                 snackbarService.SetSnackbarControl(snackbar);
                 snackbarService.ShowAsync("发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24);
+                Clipboard.SetText(e.Message + e.StackTrace);
             }
             Log.Error(e, "Error");
             log.Text = e.ToString();
@@ -361,7 +368,7 @@ namespace CokeeDP.Views.Windows
                 var urlstr = "https://www.bing.com/" + dt["data"]["images"][bing]["imageUrls"]["landscape"]["highDef"];
                 CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
                 DescPara1.Text = dt["data"]["images"][bing]["description"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara2"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara3"];
-                if (Properties.Settings.Default.IsUHDWapp) urlstr = urlstr.Replace("_1920x1080", "_UHD");
+                if (Properties.Settings.Default.UHDEnable) urlstr = urlstr.Replace("_1920x1080", "_UHD");
                 Uri uri = new Uri(urlstr);
                 log.Text = bing + "/LoadBingImage:" + uri;
                 bitmapImage = new BitmapImage(uri);
@@ -378,6 +385,73 @@ namespace CokeeDP.Views.Windows
             catch (Exception ex)
             {
                 ProcessErr(ex);
+            }
+        }
+        private async Task GetBingVideo()
+        {
+            try
+            {
+                var client = new HttpClient();
+                // 从MSN获取配置Json
+                var u2 = await client.GetStringAsync("https://ntp.msn.cn/resolver/api/resolve/v3/config/?expType=AppConfig&expInstance=default&apptype=edgeChromium&v=20230428.322");
+                JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
+                //Log.Information(u2);     configs["BackgroundImageWC/default"].properties.localizedStrings.video_titles.video8
+                videoCount= dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"].Count();
+                bing = new Random().Next(videoCount);
+                Log.Information(dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing].ToString());              
+                snackbarService.ShowAsync(bing.ToString(),dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString());
+                Uri uri;
+                if(Properties.Settings.Default.UHDEnable) uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
+                else uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v1080"].ToString() + ".mp4");
+                log.Text = bing + "/LoadBingDynVideo:" + uri;
+                
+                br2.Loaded += Br2_Loaded;
+                br2.MediaEnded += Br2_MediaEnded;
+                br2.Unloaded += Br2_Unloaded;
+                br2.BufferingStarted += Br2_BufferingStarted;
+                br2.BufferingEnded += Br2_BufferingEnded;
+                br2.Source = uri;
+                //CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
+                DescPara1.Text = dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
+                //configs["BackgroundImageWC/default"].properties.video.data[28].video.v2160
+                 //BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"].ToString()+" "+ dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
+                dt["configs"]["BackgroundImageWC/default"]["properties"].ElementAt(dt["configs"]["BackgroundImageWC/default"]["properties"].Count() - 1);
+            }
+            catch(Exception e)
+            {
+                ProcessErr(e);
+            }
+        }
+
+        private void Br2_Unloaded(object sender,RoutedEventArgs e) => (sender as MediaElement).Stop();
+        private void Br2_MediaEnded(object sender,RoutedEventArgs e)
+        {
+            (sender as MediaElement).Stop(); 
+            (sender as MediaElement).Play();
+        }
+        private void Br2_Loaded(object sender,RoutedEventArgs e) =>(sender as MediaElement).Play();
+
+        private void Br2_BufferingEnded(object sender,RoutedEventArgs e) 
+        {
+            if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
+            log.Text = "DynVideo Loaded.😺 Day:" + bing;
+            DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
+            animation.EasingFunction = new CircleEase();
+            //animation.AutoReverse = true;
+            br2_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
+            br2.Play();
+        }
+        private void Br2_BufferingStarted(object sender,RoutedEventArgs e)
+        {
+            if(pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
+            DoubleAnimation animation = new DoubleAnimation(0,20,new Duration(TimeSpan.FromSeconds(5)));
+            animation.EasingFunction = new CircleEase();
+            //animation.AutoReverse = true;
+            br2_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
+            while(br2.IsBuffering)
+            {
+                pro.Value = br2.BufferingProgress;
+                log.Text = "LoadBingDynVideo (" + br2.DownloadProgress + "% )";
             }
         }
 
@@ -466,8 +540,8 @@ namespace CokeeDP.Views.Windows
                 CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                                                                //Read TimedTask Json
-                JObject jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
+                JObject jsonData=null;                                               //Read TimedTask Json
+               if(File.Exists(@"D:\CokeeDP\TimedTask.json"))jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
 
 
                 //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
@@ -890,7 +964,7 @@ namespace CokeeDP.Views.Windows
                 }
 
                 if (AudioNum >= AudioArray.Length || AudioNum < 0) AudioNum = 0;
-                AudioPath = AudioArray[AudioNum].FullName;
+                //AudioPath = AudioArray[AudioNum].FullName;
                 mediaplayer.Open(new Uri(AudioArray[AudioNum].FullName));
                 mediaplayer.Volume = 1;
                 mediaplayer.MediaOpened += MediaLoaded;
@@ -948,7 +1022,7 @@ namespace CokeeDP.Views.Windows
                 audioName.Content = AudioArray[AudioNum].Name;
                 PlaySlider.Value = 0;
                 PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
-                MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                //MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 File.WriteAllText(AudioFolder + "\\Last.DAT", AudioNum.ToString());
                 // if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));

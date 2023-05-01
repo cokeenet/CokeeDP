@@ -43,11 +43,21 @@
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        MouseDown="OnCloseWindow" Source="pack://application:,,,/Image/bg75.png" Stretch="Fill" TouchDown="TouchDown" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        MouseDown="OnCloseWindow" Source="pack://application:,,,/Image/bg75.png" Stretch="Fill" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
                 </Image>
+                <MediaElement
+                    x:Name="br2"
+                        Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
+                        Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
+                        MouseDown="OnCloseWindow" UnloadedBehavior="Manual">
+                    <MediaElement.Effect>
+                        <BlurEffect x:Name="br2_blur" Radius="0" />
+                    </MediaElement.Effect>
+                   
+                </MediaElement>
                 <Label
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
@@ -305,7 +315,7 @@
                         Content="Keep your heart alive🌟" FontFamily="Microsoft YaHei UI Light" FontSize="28" Foreground="White" MouseDoubleClick="hitokoto_MouseDown"
                         MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
-                        <ContextMenu x:Name="lik">
+                        <ContextMenu x:Name="lik" FontSize="14">
                             <ui:MenuItem Click="Viewsour" Header="查看句子源" />
                             <ui:MenuItem Click="Likeit" Header="编辑文本" />
                         </ContextMenu>
@@ -374,7 +384,7 @@
                         <DropShadowEffect />
                     </Label.Effect>
                     <Label.ContextMenu>
-                        <ContextMenu x:Name="bm">
+                        <ContextMenu x:Name="bm" FontSize="14">
                             <ui:MenuItem Click="DislikeImage" Header="不喜欢这张图" />
                             <ui:MenuItem Click="Likeit" Header="喜欢" />
                         </ContextMenu>
@@ -407,7 +417,7 @@
                         AllowDrop="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
-                        Content="循星🌟 Ver 3.1" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                        Content="循星🌟 Ver 3.5" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
                         Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
                     <Label.Effect>
                         <DropShadowEffect />
@@ -558,7 +568,7 @@
                         Canvas.Left="1661" Canvas.Top="994" Width="74" Height="26" HorizontalAlignment="Center"
                         VerticalAlignment="Top" Background="#80C5C4C4"
                         BorderBrush="{x:Null}"
-                        BorderThickness="1" Click="kbshow" Content="触摸键盘" FontSize="11" Foreground="White"
+                        BorderThickness="1" Click="kbshow" Content="DEBUG" FontSize="11" Foreground="White"
                         MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="702" Canvas.Top="934" Width="516" Height="107"
