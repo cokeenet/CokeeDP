@@ -76,7 +76,7 @@ namespace CokeeDP.Views.Windows
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
         public Thread cap;
-        public bool isloaded = false;
+        public bool isloaded = false,IsUsbOpened=false;
         public TimeTasks task;
         public MainWindow()
         {
@@ -297,7 +297,7 @@ namespace CokeeDP.Views.Windows
                 }
                 //CheckTasks();
                 /*  if (!IsWaitingTask)*/
-                //new Thread(CheckTasks).Start(); // 创建线程
+                new Thread(CheckTasks).Start(); // 创建线程
                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
                 {
                     TaskCd = TaskCd - 1;
@@ -317,8 +317,9 @@ namespace CokeeDP.Views.Windows
         {
             if (this.IsLoaded)
             {
+                if((e.Message + e.StackTrace).Contains("Http")) NetIcon.Symbol = SymbolRegular.CellularOff24;
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.ShowAsync("发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24);
+                snackbarService.ShowAsync("发生错误",e.ToString().Substring(0,50), SymbolRegular.ErrorCircle24);
                 Clipboard.SetText(e.Message + e.StackTrace);
             }
             Log.Error(e, "Error");
@@ -393,29 +394,30 @@ namespace CokeeDP.Views.Windows
             {
                 var client = new HttpClient();
                 // 从MSN获取配置Json
-                var u2 = await client.GetStringAsync("https://ntp.msn.cn/resolver/api/resolve/v3/config/?expType=AppConfig&expInstance=default&apptype=edgeChromium&v=20230428.322");
+                var u2 = await client.GetStringAsync("https://ntp.msn.cn/resolver/api/resolve/v3/config/?expType=AppConfig&expInstance=default&apptype=edgeChromium&v=20230501.202&targetScope={\"audienceMode\":\"adult\",\"browser\":{\"browserType\":\"edgeChromium\",\"version\":\"112\",\"ismobile\":\"false\"},\"deviceFormFactor\":\"desktop\",\"domain\":\"ntp.msn.cn\",\"locale\":{\"content\":{\"language\":\"zh\",\"market\":\"cn\"},\"display\":{\"language\":\"zh\",\"market\":\"cn\"}},\"os\":\"windows\",\"platform\":\"web\",\"pageType\":\"ntp\"}");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 //Log.Information(u2);     configs["BackgroundImageWC/default"].properties.localizedStrings.video_titles.video8
                 videoCount= dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"].Count();
                 bing = new Random().Next(videoCount);
-                Log.Information(dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing].ToString());              
-                snackbarService.ShowAsync(bing.ToString(),dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString());
+                Log.Information(dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing].ToString());
+                if(dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("水母")|| dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("蜜蜂")) return;
+                //snackbarService.ShowAsync(bing.ToString(),dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString());
                 Uri uri;
                 if(Properties.Settings.Default.UHDEnable) uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
                 else uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v1080"].ToString() + ".mp4");
                 log.Text = bing + "/LoadBingDynVideo:" + uri;
-                
+                br1_blur.Radius = 10;
                 br2.Loaded += Br2_Loaded;
                 br2.MediaEnded += Br2_MediaEnded;
                 br2.Unloaded += Br2_Unloaded;
                 br2.BufferingStarted += Br2_BufferingStarted;
                 br2.BufferingEnded += Br2_BufferingEnded;
                 br2.Source = uri;
-                //CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
-                DescPara1.Text = dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
+                CardInfo.Content = BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video"+bing].ToString();//.Split("\"video" + bing + "\"")[0];
+                DescPara1.Text  = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString() +Environment.NewLine+ "Copyright:"+dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
                 //configs["BackgroundImageWC/default"].properties.video.data[28].video.v2160
                  //BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"].ToString()+" "+ dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
-                dt["configs"]["BackgroundImageWC/default"]["properties"].ElementAt(dt["configs"]["BackgroundImageWC/default"]["properties"].Count() - 1);
+               // dt["configs"]["BackgroundImageWC/default"]["properties"].ElementAt(dt["configs"]["BackgroundImageWC/default"]["properties"].Count() - 1);
             }
             catch(Exception e)
             {
@@ -426,15 +428,17 @@ namespace CokeeDP.Views.Windows
         private void Br2_Unloaded(object sender,RoutedEventArgs e) => (sender as MediaElement).Stop();
         private void Br2_MediaEnded(object sender,RoutedEventArgs e)
         {
-            (sender as MediaElement).Stop(); 
+            (sender as MediaElement).Stop();
+            (sender as MediaElement).Position = TimeSpan.Zero;
             (sender as MediaElement).Play();
+            log.Text = "replay";
         }
         private void Br2_Loaded(object sender,RoutedEventArgs e) =>(sender as MediaElement).Play();
 
         private void Br2_BufferingEnded(object sender,RoutedEventArgs e) 
         {
             if(pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
-            log.Text = "DynVideo Loaded.😺 Day:" + bing;
+           log.Text = "DynVideo Loaded.😺 Day:" + bing;
             DoubleAnimation animation = new DoubleAnimation(20,0,new Duration(TimeSpan.FromSeconds(5)));
             animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
@@ -448,11 +452,7 @@ namespace CokeeDP.Views.Windows
             animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br2_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
-            while(br2.IsBuffering)
-            {
-                pro.Value = br2.BufferingProgress;
-                log.Text = "LoadBingDynVideo (" + br2.DownloadProgress + "% )";
-            }
+            log.Text = "LoadBingDynVideo (" + br2.BufferingProgress + "% )";
         }
 
         private void ImageDownloadProgress(object sender, DownloadProgressEventArgs e)
@@ -485,17 +485,24 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                /* if (CokeeDP.Properties.Settings.Default.isDebug)
+               /* if (CokeeDP.Properties.Settings.Default.isDebug)
                  {
                      return;
-                 }*/
+                 }*/    
                 var client = new HttpClient();
                 JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
+                var BlackWordList = "5LmzfOWls3zoibJ86ISxfOWVqnzlroV86KOk5a2QfOiQneiOiXzluop85aW5fOaBi+eIsQ==";
+                foreach (var word in Convert.FromBase64String(BlackWordList).ToString().Split("|")) 
+                {
+                    if(dt.ToString().Contains(word)) { hitokoto.Content = "***一言已被屏蔽。"; return; }
+                }  
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
+                if(dt["hitokoto"]!=null)NetIcon.Symbol = SymbolRegular.CellularData120;
                 hitokoto.Content = who == "null"
                     ? dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》"
                     : dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》" + dt["from_who"].ToString();
+                
             }
             catch (Exception ex)
             {
@@ -708,6 +715,16 @@ namespace CokeeDP.Views.Windows
         {
             Dispatcher.Invoke(new Action(() =>
             {
+                if(IsUsbOpened && Environment.CurrentDirectory == "C:\\Windows\\System32")
+                {
+                    Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
+                    messageBox.Content = "当前处于安全桌面模式，"+Environment.NewLine+"请确认你打开的文件均已关闭后，点击\"确认\"关闭屏保程序。"+Environment.NewLine +"如文件未关闭则可能造成文件数据损坏。";
+                    messageBox.ButtonLeftName = "确认";
+                    //messageBox.ButtonR
+                    messageBox.MicaEnabled = true;
+                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
+                    if(messageBox.ShowDialog() == true) Close();
+                }
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
@@ -715,21 +732,20 @@ namespace CokeeDP.Views.Windows
                     messageBox.ButtonLeftName = "确认";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
-
-                    //messageBox.Icon = SymbolRegular.Warning28;
-                    if ((bool)messageBox.ShowDialog()) Close();
-
+                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
+                    if (messageBox.ShowDialog()==true) Close();
                 }
                 else
-
                 {
                     //CancellationToken cancellationToken = new CancellationToken();
                     // cancellationToken.Register(cap)
                     Close();
+                    Environment.Exit(0);
                 }
             }));
         }
 
+        private void MessageBox_ButtonLeftClick(object sender,RoutedEventArgs e) => Close();
 
         private void ShowUsbCard(bool isUnplug, DriveInfo t = null)
         {
@@ -1397,6 +1413,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
+                IsUsbOpened = true;
                 Process.Start("explorer.exe", disk);
             }
             catch (Exception ex)

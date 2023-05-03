@@ -56,7 +56,7 @@
                     <MediaElement.Effect>
                         <BlurEffect x:Name="br2_blur" Radius="0" />
                     </MediaElement.Effect>
-                   
+
                 </MediaElement>
                 <Label
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -593,6 +593,9 @@
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
                         HorizontalAlignment="Left" VerticalAlignment="Center" d:IsHidden="True" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
                         DialogHeight="276" DialogWidth="516" />
+                <ui:SymbolIcon x:Name="NetIcon"
+                    Width="36" Height="36"
+                    FontSize="36" Symbol="CellularOff24" Canvas.Left="1854" Canvas.Top="74" VerticalAlignment="Top" Foreground="#E4FFFFFF" />
             </Canvas>
         </Viewbox>
     </Grid>

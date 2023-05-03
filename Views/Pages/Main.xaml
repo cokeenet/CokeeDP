@@ -48,9 +48,9 @@
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="Bing 动态视频背景(测试功能)" />
+                        FontSize="13" FontWeight="Medium" Text="Bing 动态视频背景(测试功能!!😥)" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="测试中" />
+                        FontSize="12" Opacity="0.7" Text="Cokee给你的警告:该功能超级不稳定，使用需自行担责，可能会造成软件崩溃，卡顿，闪退等问题" />
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
@@ -63,7 +63,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="加载4K分辨率背景" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P分辨率" />
+                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P分辨率背景" />
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
