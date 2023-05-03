@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -30,6 +31,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Windows.Media.Playback;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -38,6 +40,7 @@ using Button = Wpf.Ui.Controls.Button;
 using Clipboard = Wpf.Ui.Common.Clipboard;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
+using MediaPlayer = System.Windows.Media.MediaPlayer;
 //using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Point = System.Windows.Point;
 using Timer = System.Timers.Timer;
@@ -297,7 +300,7 @@ namespace CokeeDP.Views.Windows
                 }
                 //CheckTasks();
                 /*  if (!IsWaitingTask)*/
-                new Thread(CheckTasks).Start(); // 创建线程
+                //new Thread(CheckTasks).Start(); // 创建线程
                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
                 {
                     TaskCd = TaskCd - 1;
@@ -399,22 +402,27 @@ namespace CokeeDP.Views.Windows
                 //Log.Information(u2);     configs["BackgroundImageWC/default"].properties.localizedStrings.video_titles.video8
                 videoCount= dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"].Count();
                 bing = new Random().Next(videoCount);
-                Log.Information(dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing].ToString());
-                if(dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("水母")|| dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("蜜蜂")) return;
+                //Log.Information(dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing].ToString());
+                if(dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("水母")|| dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("蜂")) return;
                 //snackbarService.ShowAsync(bing.ToString(),dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString());
                 Uri uri;
                 if(Properties.Settings.Default.UHDEnable) uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
                 else uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v1080"].ToString() + ".mp4");
                 log.Text = bing + "/LoadBingDynVideo:" + uri;
                 br1_blur.Radius = 10;
-                br2.Loaded += Br2_Loaded;
-                br2.MediaEnded += Br2_MediaEnded;
-                br2.Unloaded += Br2_Unloaded;
+                br2.Loaded += (sender,e) =>  br2.Play();
+                br2.MediaEnded += (sender,e) =>
+                {
+                    br2.Position = TimeSpan.Zero;
+                    br2.Play();
+                };
+                br2.Unloaded += (sender,e) => br2.Stop();
                 br2.BufferingStarted += Br2_BufferingStarted;
                 br2.BufferingEnded += Br2_BufferingEnded;
                 br2.Source = uri;
                 CardInfo.Content = BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video"+bing].ToString();//.Split("\"video" + bing + "\"")[0];
-                DescPara1.Text  = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString() +Environment.NewLine+ "Copyright:"+dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
+                DescPara1.Text  = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString() +Environment.NewLine+Environment.NewLine+ "版权:" +dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
+                DescPara1.Text=DescPara1.Text+ Environment.NewLine + Environment.NewLine+"Cokee提示:上课期间不要打开视频！😥";
                 //configs["BackgroundImageWC/default"].properties.video.data[28].video.v2160
                  //BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"].ToString()+" "+ dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
                // dt["configs"]["BackgroundImageWC/default"]["properties"].ElementAt(dt["configs"]["BackgroundImageWC/default"]["properties"].Count() - 1);
@@ -424,16 +432,6 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(e);
             }
         }
-
-        private void Br2_Unloaded(object sender,RoutedEventArgs e) => (sender as MediaElement).Stop();
-        private void Br2_MediaEnded(object sender,RoutedEventArgs e)
-        {
-            (sender as MediaElement).Stop();
-            (sender as MediaElement).Position = TimeSpan.Zero;
-            (sender as MediaElement).Play();
-            log.Text = "replay";
-        }
-        private void Br2_Loaded(object sender,RoutedEventArgs e) =>(sender as MediaElement).Play();
 
         private void Br2_BufferingEnded(object sender,RoutedEventArgs e) 
         {
@@ -452,7 +450,7 @@ namespace CokeeDP.Views.Windows
             animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br2_blur.BeginAnimation(BlurEffect.RadiusProperty,animation);
-            log.Text = "LoadBingDynVideo (" + br2.BufferingProgress + "% )";
+            log.Text = "LoadBingDynVideo (" + br2.BufferingProgress*100 + "% )";
         }
 
         private void ImageDownloadProgress(object sender, DownloadProgressEventArgs e)
@@ -491,10 +489,11 @@ namespace CokeeDP.Views.Windows
                  }*/    
                 var client = new HttpClient();
                 JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
-                var BlackWordList = "5LmzfOWls3zoibJ86ISxfOWVqnzlroV86KOk5a2QfOiQneiOiXzluop85aW5fOaBi+eIsQ==";
-                foreach (var word in Convert.FromBase64String(BlackWordList).ToString().Split("|")) 
+                var BlackWordList = "5LmzfOWls3zoibJ86ISxfOWVqnzlroV86KOk5a2QfOiQneiOiXzluop85aW5fOaBi+eIsXx+";
+                foreach (var word in Encoding.UTF8.GetString(Convert.FromBase64String(BlackWordList)).Split("|")) 
                 {
-                    if(dt.ToString().Contains(word)) { hitokoto.Content = "***一言已被屏蔽。"; return; }
+                    Log.Information(word.ToString());
+                    if(dt.ToString().Contains(word.ToString())) { hitokoto.Content = "***一言已被屏蔽。"; return; }
                 }  
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
@@ -534,12 +533,6 @@ namespace CokeeDP.Views.Windows
                 });
                 _ = Hitoko();
                 _ = GetWeatherInfo();
-                //VideoCap();
-                //videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-                //snackbarService.ShowAsync("Found " + videoDevices.Count + " devices");
-                //VideoCaptureDevice videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-                //videoSource.NewFrame += VideoSource_NewFrame;
-                //videoSource.Start();
                 //new Thread(VideoCap).Start();
 
                 CapTimer.Elapsed += CapTimer_Elapsed;
