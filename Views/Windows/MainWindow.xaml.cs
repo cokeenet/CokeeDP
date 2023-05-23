@@ -1,4 +1,5 @@
 ﻿using CokeeDP.Class;
+using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
 using Microsoft.AppCenter.Crashes;
 using NAudio.CoreAudioApi;
@@ -80,6 +81,7 @@ namespace CokeeDP.Views.Windows
         public Thread cap;
         public bool isloaded = false, IsUsbOpened = false;
         public List<TaskConfig> tasks;
+        public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public MainWindow()
         {
             InitializeComponent();
@@ -95,16 +97,16 @@ namespace CokeeDP.Views.Windows
 
                 FillConfig();
 
-                if (Properties.Settings.Default.EnableBigTimeTo)
+                if (settings.EnableBigTimeTo)
                 {
                     BigCountdown.Visibility = Visibility.Visible;
                 }
-                if (Properties.Settings.Default.BingVideoEnable)
+                if (settings.BingVideoEnable)
                 {
 
                     _ = GetBingVideo();
                 }
-                else if (Properties.Settings.Default.BingWappEnable && !Properties.Settings.Default.BingVideoEnable)
+                else if (settings.BingWappEnable && !settings.BingVideoEnable)
                 {
                     //Using Bing Picture
                     _ = GetBingWapp();
@@ -141,11 +143,11 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if (Properties.Settings.Default.BingVideoEnable)
+                if (settings.BingVideoEnable)
                 {
                     _ = GetBingVideo();
                 }
-                else if (Properties.Settings.Default.BingWappEnable && !Properties.Settings.Default.BingVideoEnable)
+                else if (settings.BingWappEnable && !settings.BingVideoEnable)
                 {
                     if (bing >= 6 || bing <= 0) bing = 0;
                     if (!direction) bing++;
@@ -216,28 +218,29 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
+
                 //如配置文件损坏或不正确，用默认配置覆盖
-                if (Properties.Settings.Default.CountdownTime.Year <= 2000)
+                if (settings.CountdownTime.Year <= 2000)
                 {
                     CountDownTime = DateTime.Parse("2025/06/05");
-                    Properties.Settings.Default.CountdownTime = CountDownTime;
+                    settings.CountdownTime = CountDownTime;
                 }
-                else CountDownTime = Properties.Settings.Default.CountdownTime;
-                if (Properties.Settings.Default.OneWordsApi.Length == 0) { Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) <= 300) Properties.Settings.Default.OneWordsTimeInterval = "300";
-                if (Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval) <= 9800) Properties.Settings.Default.WeatherTimeInterval = "9800";
-                if (Properties.Settings.Default.CountdownName.Length <= 1) Properties.Settings.Default.CountdownName = "高考";
-                if (Properties.Settings.Default.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
-                AudioFolder = Properties.Settings.Default.AudioFolder;
-                Properties.Settings.Default.Save();
-                SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(Properties.Settings.Default.WeatherTimeInterval));
-                tasks = LoadConfig(File.ReadAllText(@"D:\英语\TaskConfig.json"));
+                else CountDownTime = settings.CountdownTime;
+                if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 300) settings.OneWordsTimeInterval = "300";
+                if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
+                if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
+                if (settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
+                AudioFolder = settings.AudioFolder;
+                AppSettingsExtensions.SaveSettings(settings);
+                SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(settings.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
+             //   tasks = LoadConfig(File.ReadAllText(@"D:\英语\TaskConfig.json"));
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
-                Properties.Settings.Default.OneWordsTimeInterval = "300";
-                Properties.Settings.Default.WeatherTimeInterval = "9800";
+                settings.OneWordsTimeInterval = "300";
+                settings.WeatherTimeInterval = "9800";
             }
         }
         public static List<TaskConfig> LoadConfig(string json)
@@ -271,13 +274,13 @@ namespace CokeeDP.Views.Windows
             {
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
-                if (Properties.Settings.Default.EnableBigTimeTo)
+                if (settings.EnableBigTimeTo)
                 {
                     tod_info.Content = "还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
                     big_tod.Content = ((int)CountDownTime.Subtract(DateTime.Now).TotalDays);
                 }
                 else
-                    CountDownLabel.Content = "距离[" + Properties.Settings.Default.CountdownName + "]还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
+                    CountDownLabel.Content = "距离[" + settings.CountdownName + "]还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
                 {
                     OnNewDay();
@@ -288,11 +291,11 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-                foreach (var item in tasks)
+               /* foreach (var item in tasks)
                 {
                     var offset= 60_000_000_000;
                     var b= TimeOnly.Parse(item.Time).Ticks;
-                    var a = Math.(TimeOnly.FromDateTime(DateTime.Now).Ticks, b); //
+                    //var a = Math.(TimeOnly.FromDateTime(DateTime.Now).Ticks, b); //
                     if (a <=offset && a>=0&&!IsWaitingTask) { TaskCd = 60; IsWaitingTask = true; ShowPlayer(null, null);IntlPlayer(); }
 
                 }
@@ -301,7 +304,7 @@ namespace CokeeDP.Views.Windows
                     TaskCd = TaskCd - 1;
                     audioTime.Content = mediaplayer.NaturalDuration.TimeSpan.ToString("mm:ss") + " 将在 " + TaskCd + " 秒后自动播放";
                     if (TaskCd == 0) { mediaplayer.Play();IsWaitingTask = false; }
-                }
+                }*/
 
             }));
             }
@@ -358,16 +361,16 @@ namespace CokeeDP.Views.Windows
                 // 从Bing获取图片Json，存在一天的时差
                 var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//旧API await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                if (Properties.Settings.Default.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
-                {
-                    ChangeWapp(false);
-                    return;
-                }
+                if (settings.BlockedImageIds!=null) { if (settings.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
+                    {
+                        ChangeWapp(false);
+                        return;
+                    } }
                 BingImageInfo.Content = dt["data"]["images"][bing]["title"].ToString() + " (" + dt["data"]["images"][bing]["copyright"] + ")  | " + dt["data"]["images"][bing]["isoDate"].ToString();
                 var urlstr = "https://www.bing.com/" + dt["data"]["images"][bing]["imageUrls"]["landscape"]["highDef"];
                 CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
                 DescPara1.Text = dt["data"]["images"][bing]["description"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara2"] + Environment.NewLine + dt["data"]["images"][bing]["descriptionPara3"];
-                if (Properties.Settings.Default.UHDEnable) urlstr = urlstr.Replace("_1920x1080", "_UHD");
+                if (settings.UHDEnable) urlstr = urlstr.Replace("_1920x1080", "_UHD");
                 Uri uri = new Uri(urlstr);
                 log.Text = bing + "/LoadBingImage:" + uri;
                 bitmapImage = new BitmapImage(uri);
@@ -401,7 +404,7 @@ namespace CokeeDP.Views.Windows
                 if (dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("水母") || dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("蜂")) return;
                 //snackbarService.ShowAsync(bing.ToString(),dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString());
                 Uri uri;
-                if (Properties.Settings.Default.UHDEnable) uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
+                if (settings.UHDEnable) uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
                 else uri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v1080"].ToString() + ".mp4");
                 log.Text = bing + "/LoadBingDynVideo:" + uri;
                 br1_blur.Radius = 10;
@@ -478,17 +481,17 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                /* if (CokeeDP.Properties.Settings.Default.isDebug)
+                /* if (CokeeDP.settings.isDebug)
                   {
                       return;
                   }*/
                 var client = new HttpClient();
-                JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
+                JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(settings.OneWordsApi));
                 var BlackWordList = "5LmzfOWls3zoibJ86ISxfOWVqnzlroV86KOk5a2QfOiQneiOiXzluop85aW5fOaBi+eIsXx+";
                 foreach (var word in Encoding.UTF8.GetString(Convert.FromBase64String(BlackWordList)).Split("|"))
                 {
-                    Log.Information(word.ToString());
-                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "***一言已被屏蔽。"; return; }
+                   // Log.Information(word.ToString());
+                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; return;_ = Hitoko(); }
                 }
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
@@ -539,7 +542,7 @@ namespace CokeeDP.Views.Windows
                 if (File.Exists(@"D:\CokeeDP\TimedTask.json")) jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
 
 
-                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
+                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(settings.OneWordsApi));
                 //string who = dt["from_who"].ToString();
                 if (jsonData != null) foreach (var item in jsonData)
                     {
@@ -550,7 +553,7 @@ namespace CokeeDP.Views.Windows
                 //timeTasks.Append(a);
                 //DEBUG Only
                 //snackbarService.ShowAsync(timeTasks.Count().ToString());
-                if (Properties.Settings.Default.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
+                if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 //isloaded = true;
             }
             catch (Exception ex)
@@ -638,23 +641,23 @@ namespace CokeeDP.Views.Windows
             try
             {
                 string u2, u3;
-                if (DateTime.Now.Subtract(Properties.Settings.Default.CachedWeatherTime).Hours > 6 || !Properties.Settings.Default.CachedWeatherData.Contains("|"))
+                if (DateTime.Now.Subtract(settings.CachedWeatherTime).Hours > 6 || !settings.CachedWeatherData.Contains("|"))
                 {
                     var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                     var client = new HttpClient(handler);
 
-                    u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
-                    u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + "&key=6572127bcec647faba394b17fbd9614f");
-                    //MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + Properties.Settings.Default.CityId + " &key=6572127bcec647faba394b17fbd9614f");
-                    Properties.Settings.Default.CachedWeatherData = u2 + "|" + u3;
-                    Properties.Settings.Default.CachedWeatherTime = DateTime.Now;
+                    u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + settings.CityId + "&key=6572127bcec647faba394b17fbd9614f");
+                    u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + settings.CityId + "&key=6572127bcec647faba394b17fbd9614f");
+                    //MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + settings.CityId + " &key=6572127bcec647faba394b17fbd9614f");
+                    settings.CachedWeatherData = u2 + "|" + u3;
+                    settings.CachedWeatherTime = DateTime.Now;
                 }
                 else
                 {
-                    u2 = Properties.Settings.Default.CachedWeatherData.Split("|")[0];
-                    u3 = Properties.Settings.Default.CachedWeatherData.Split("|")[1];
+                    u2 = settings.CachedWeatherData.Split("|")[0];
+                    u3 = settings.CachedWeatherData.Split("|")[1];
                 }
-                weaupd1.Text = Properties.Settings.Default.City + " 最近更新: " + Properties.Settings.Default.CachedWeatherTime.ToString("yyyy/MM/dd HH:mm:ss");
+                weaupd1.Text = settings.City + " 最近更新: " + settings.CachedWeatherTime.ToString("yyyy/MM/dd HH:mm:ss");
                 weaupd2.Text = weaupd1.Text;
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
                 wea1.Text = "今天 " + dt["daily"][0]["textDay"].ToString() + "," + dt["daily"][0]["tempMax"].ToString() + "°C~" + dt["daily"][0]["tempMin"].ToString() + "°C 湿度:" + dt["daily"][0]["humidity"].ToString();
@@ -693,7 +696,7 @@ namespace CokeeDP.Views.Windows
             }
             catch (Exception ex)
             {
-                Properties.Settings.Default.CachedWeatherData = "";
+                settings.CachedWeatherData = "";
                 ProcessErr(ex);
             }
         }
@@ -1273,7 +1276,7 @@ namespace CokeeDP.Views.Windows
         {
             // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
             //MainWindow.GetWindow(this).WindowState = WindowState.Normal;
-            new Thread(VideoCap).Start();// VideoCap();
+            new Task(VideoCap).Start();// VideoCap();
         }
 
         private void FuncT1(object sender, MouseButtonEventArgs e)
@@ -1351,7 +1354,7 @@ namespace CokeeDP.Views.Windows
 
         private void DislikeImage(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.BlockedImageIds += br1.Tag.ToString() + "|";
+            settings.BlockedImageIds += br1.Tag.ToString() + "|";
             snackbarService.ShowAsync("屏蔽成功", "已屏蔽日期为 " + br1.Tag.ToString() + " 的图片。", SymbolRegular.CheckmarkCircle24);
             _ = GetBingWapp();
         }

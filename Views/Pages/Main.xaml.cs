@@ -18,6 +18,7 @@ using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
 using CokeeDP.Views.Windows;
 using Wpf.Ui.Common;
+using CokeeDP.Properties;
 
 namespace CokeeDP.Views.Pages
 {
@@ -29,20 +30,20 @@ namespace CokeeDP.Views.Pages
         private SettingsWindow _Window = Application.Current.Windows
             .Cast<Window>()
             .FirstOrDefault(window => window is SettingsWindow) as SettingsWindow;
-
+        public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public Main()
         {
             InitializeComponent();
-            BingWappSwitch.IsChecked = Properties.Settings.Default.BingWappEnable;
-            BingVideoSwitch.IsChecked = Properties.Settings.Default.BingVideoEnable;
-            UHDModeSwitch.IsChecked = Properties.Settings.Default.UHDEnable;
-            SnowFlakeSwitch.IsChecked = Properties.Settings.Default.SnowEnable;
-            folderBox.Text = Properties.Settings.Default.AudioFolder;
-            timeBox.Text = (Convert.ToInt32(Properties.Settings.Default.OneWordsTimeInterval) / 60).ToString();
-            cityName.Text = "当前选择:" + Properties.Settings.Default.City;
-            oneWord.SelectedIndex = Properties.Settings.Default.OneWordsComboBoxIndex;
-            countDownBox.Text = Properties.Settings.Default.CountdownName;
-            countDownPicker.SelectedDate = Properties.Settings.Default.CountdownTime;
+            BingWappSwitch.IsChecked = settings.BingWappEnable;
+            BingVideoSwitch.IsChecked = settings.BingVideoEnable;
+            UHDModeSwitch.IsChecked = settings.UHDEnable;
+            SnowFlakeSwitch.IsChecked = settings.SnowEnable;
+            folderBox.Text = settings.AudioFolder;
+            timeBox.Text = (Convert.ToInt32(settings.OneWordsTimeInterval) / 60).ToString();
+            cityName.Text = "当前选择:" + settings.City;
+            oneWord.SelectedIndex = settings.OneWordsComboBoxIndex;
+            countDownBox.Text = settings.CountdownName;
+            countDownPicker.SelectedDate = settings.CountdownTime;
         }
 
         private void OnSwitchChecked(object sender, RoutedEventArgs e)
@@ -55,15 +56,15 @@ namespace CokeeDP.Views.Pages
             switch (textBox.Tag)
             {
                 case "audioDir":
-                    Properties.Settings.Default.AudioFolder = textBox.Text; break;
+                    settings.AudioFolder = textBox.Text; break;
                 case "time":
-                    Properties.Settings.Default.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
+                    settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
                 case "CountDownName":
-                    Properties.Settings.Default.CountdownName = textBox.Text; break;
+                    settings.CountdownName = textBox.Text; break;
                 default:
                     break;
             }
-            Properties.Settings.Default.Save();
+           AppSettingsExtensions.SaveSettings(settings);
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
@@ -80,25 +81,25 @@ namespace CokeeDP.Views.Pages
             switch (toggleSwitch.Tag)
             {
                 case "bing":
-                    Properties.Settings.Default.BingWappEnable = enable; break;
+                    settings.BingWappEnable = enable; break;
                 case "bingVideo":
-                    Properties.Settings.Default.BingVideoEnable = enable; break;
+                    settings.BingVideoEnable = enable; break;
                 case "uhd":
-                    Properties.Settings.Default.UHDEnable = enable; break;
+                    settings.UHDEnable = enable; break;
                 case "SnowFlake":
-                    Properties.Settings.Default.SnowEnable = enable; break;
+                    settings.SnowEnable = enable; break;
                 default:
                     break;
             }
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
-            Properties.Settings.Default.Save();
+            AppSettingsExtensions.SaveSettings(settings);
         }
 
         private void DatePickerHandler(object sender, RoutedEventArgs e)
         {
             DatePicker datePicker = sender as DatePicker;
             if (datePicker == null) return;
-            Properties.Settings.Default.CountdownTime = (DateTime)datePicker.SelectedDate;
+            settings.CountdownTime = (DateTime)datePicker.SelectedDate;
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
@@ -107,9 +108,9 @@ namespace CokeeDP.Views.Pages
             var comboBox = sender as ComboBox;
             var item = comboBox.SelectedItem as ComboBoxItem;
             if (item == null) return;
-            if (item.Tag.ToString() == "none") Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/";
-            else Properties.Settings.Default.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
-            Properties.Settings.Default.OneWordsComboBoxIndex = comboBox.SelectedIndex;
+            if (item.Tag.ToString() == "none") settings.OneWordsApi = "https://v1.hitokoto.cn/";
+            else settings.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
+            settings.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
     }

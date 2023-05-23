@@ -25,6 +25,7 @@ using System.Timers;
 using System.Windows.Interop;
 using Wpf.Ui.Common;
 using Timer = System.Timers.Timer;
+using CokeeDP.Properties;
 
 namespace CokeeDP.Views.Pages
 {
@@ -57,7 +58,7 @@ namespace CokeeDP.Views.Pages
 
         protected Timer timer = new Timer(30000);
         protected bool CanSearch = true;
-
+        public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public GeoSearch()
         {
             InitializeComponent();
@@ -103,11 +104,12 @@ namespace CokeeDP.Views.Pages
             try
             {
                 Button button = sender as Button;
-                Properties.Settings.Default.CityId = button.Tag.ToString().Split("|")[0];
-                Properties.Settings.Default.City = button.Tag.ToString().Split("|")[1];
-                Properties.Settings.Default.CachedWeatherData = "";
-                Properties.Settings.Default.CachedWeatherTime = DateTime.Parse("2000/01/01");
-                _Window.snackbarService.ShowAsync("设置成功", "已更换城市为" + Properties.Settings.Default.City, SymbolRegular.Checkmark32);
+                settings.CityId = button.Tag.ToString().Split("|")[0];
+                settings.City = button.Tag.ToString().Split("|")[1];
+                settings.CachedWeatherData = "";
+                settings.CachedWeatherTime = DateTime.Parse("2000/01/01");
+                _Window.snackbarService.ShowAsync("设置成功", "已更换城市为" + settings.City, SymbolRegular.Checkmark32);
+                AppSettingsExtensions.SaveSettings(settings);
             }
             catch (Exception ex)
             {
