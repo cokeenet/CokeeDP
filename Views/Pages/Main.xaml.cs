@@ -44,6 +44,7 @@ namespace CokeeDP.Views.Pages
             oneWord.SelectedIndex = settings.OneWordsComboBoxIndex;
             countDownBox.Text = settings.CountdownName;
             countDownPicker.SelectedDate = settings.CountdownTime;
+
         }
 
         private void OnSwitchChecked(object sender, RoutedEventArgs e)
@@ -70,6 +71,7 @@ namespace CokeeDP.Views.Pages
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
         {
+            AppSettingsExtensions.SaveSettings(settings);
             _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
 
@@ -100,6 +102,7 @@ namespace CokeeDP.Views.Pages
             DatePicker datePicker = sender as DatePicker;
             if (datePicker == null) return;
             settings.CountdownTime = (DateTime)datePicker.SelectedDate;
+            AppSettingsExtensions.SaveSettings(settings);
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
@@ -111,6 +114,7 @@ namespace CokeeDP.Views.Pages
             if (item.Tag.ToString() == "none") settings.OneWordsApi = "https://v1.hitokoto.cn/";
             else settings.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             settings.OneWordsComboBoxIndex = comboBox.SelectedIndex;
+            AppSettingsExtensions.SaveSettings(settings);
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
     }
