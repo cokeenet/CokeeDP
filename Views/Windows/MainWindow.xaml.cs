@@ -63,7 +63,8 @@ namespace CokeeDP.Views.Windows
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
         private static Timer CapTimer = new Timer(20 * 60 * 1000);
-        private FileInfo[] ImageArray;
+        private List<FileInfo> ImageArray=new List<FileInfo>();
+        private List<DirectoryInfo> ImageDirs;   
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
@@ -114,9 +115,18 @@ namespace CokeeDP.Views.Windows
                 else
                 {
                     //Using Local Picture
-                    if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp")) Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-                    DirectoryInfo AudioDir = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp");
-                    ImageArray = AudioDir.GetFiles("*.png"); ChangeWapp(false);
+                    var path = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\Picture";
+                    if (!Directory.Exists(path) )Directory.CreateDirectory(path);
+                    DirectoryInfo[] ImageDir = new DirectoryInfo(path).GetDirectories();
+                    foreach (var item in ImageDir)
+                    {
+                        foreach (var pic in item.GetFiles("*.jpg"))
+                        {
+                            //ImageArray.
+                            ImageArray.Add(pic);
+                        }
+                    }
+                    ChangeWapp(false);
                 }
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 //Get AudioFiles
@@ -167,12 +177,12 @@ namespace CokeeDP.Views.Windows
                         if (bgn == 0)
                         {
                             bgp = new Uri(ImageArray[1].FullName);
-                            bgn = ImageArray.Length;
+                            bgn = ImageArray.Count;
                         }
-                        else if (bgn <= ImageArray.Length)
+                        else if (bgn <= ImageArray.Count)
                         {
                             bgp = new Uri(ImageArray[1].FullName);
-                            bgn = ImageArray.Length - 1;
+                            bgn = ImageArray.Count - 1;
                         }
                         else
                         {
@@ -182,24 +192,26 @@ namespace CokeeDP.Views.Windows
                     }
                     else
                     {
-                        if (bgn == 0)
+                        if (bgn == 0 || bgn >= ImageArray.Count)
                         {
                             bgp = new Uri(ImageArray[1].FullName);
                             bgn = 1;
-                        }
-                        else if (bgn >= ImageArray.Length)
-                        {
-                            bgp = new Uri(ImageArray[1].FullName);
-                            bgn = 1;
+                            DescPara1.Text = File.ReadAllText(ImageDirs[bgn].FullName+"\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\info.txt");
+                            CardInfo.Content= File.ReadAllText(ImageDirs[bgn].FullName + "\\title.txt");
                         }
                         else
                         {
                             bgp = new Uri(ImageArray[bgn].FullName);
+                            DescPara1.Text = File.ReadAllText(ImageDirs[bgn].FullName + "\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\info.txt");
+                            CardInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\title.txt");
                             bgn++;
                         }
                     }
 
                     br1.BeginInit();
+                    
                     br1.Source = new BitmapImage(bgp);
                     br1.EndInit();
                     log.Text = bgn + "/LoadLocalPic:" + bgp.ToString();
@@ -599,7 +611,7 @@ namespace CokeeDP.Views.Windows
 
                         // 显示消息
                         await Dispatcher.InvokeAsync(() => log.Text = $"Caped! {DateTime.Now:HH-mm}");
-                        await snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
+                        //snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
                     }
                 }
             }
