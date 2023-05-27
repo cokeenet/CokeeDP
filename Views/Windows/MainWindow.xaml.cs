@@ -63,8 +63,8 @@ namespace CokeeDP.Views.Windows
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
         private static Timer CapTimer = new Timer(20 * 60 * 1000);
-        private List<FileInfo> ImageArray=new List<FileInfo>();
-        private List<DirectoryInfo> ImageDirs;   
+        private List<FileInfo> ImageArray = new List<FileInfo>();
+        private List<DirectoryInfo> ImageDirs;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
@@ -116,7 +116,7 @@ namespace CokeeDP.Views.Windows
                 {
                     //Using Local Picture
                     var path = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\Picture";
-                    if (!Directory.Exists(path) )Directory.CreateDirectory(path);
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                     DirectoryInfo[] ImageDir = new DirectoryInfo(path).GetDirectories();
                     foreach (var item in ImageDir)
                     {
@@ -174,45 +174,52 @@ namespace CokeeDP.Views.Windows
                     Uri bgp;
                     if (!direction)
                     {
-                        if (bgn == 0)
+                        bgn--;
+                        if (bgn < ImageArray.Count)
                         {
-                            bgp = new Uri(ImageArray[1].FullName);
-                            bgn = ImageArray.Count;
-                        }
-                        else if (bgn <= ImageArray.Count)
-                        {
-                            bgp = new Uri(ImageArray[1].FullName);
-                            bgn = ImageArray.Count - 1;
+                            bgn = 0;
+                            bgp = new Uri(ImageArray[0].FullName);
+                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
+                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
+                            
                         }
                         else
                         {
                             bgp = new Uri(ImageArray[bgn].FullName);
-                            bgn--;
+                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
+                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
+                            
                         }
                     }
                     else
                     {
-                        if (bgn == 0 || bgn >= ImageArray.Count)
+                        bgn++;
+                        if ( bgn>= ImageArray.Count)
                         {
-                            bgp = new Uri(ImageArray[1].FullName);
-                            bgn = 1;
-                            DescPara1.Text = File.ReadAllText(ImageDirs[bgn].FullName+"\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\info.txt");
-                            CardInfo.Content= File.ReadAllText(ImageDirs[bgn].FullName + "\\title.txt");
+                            bgn = 0;
+                            bgp = new Uri(ImageArray[bgn].FullName);
+
+                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
+                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
                         }
                         else
                         {
                             bgp = new Uri(ImageArray[bgn].FullName);
-                            DescPara1.Text = File.ReadAllText(ImageDirs[bgn].FullName + "\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\info.txt");
-                            CardInfo.Content = File.ReadAllText(ImageDirs[bgn].FullName + "\\title.txt");
-                            bgn++;
+                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
+                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
+                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
                         }
                     }
+                    BitmapImage image = new BitmapImage(bgp);
+                    // image.Rotation = Rotation.Rotate270;
 
                     br1.BeginInit();
-                    
-                    br1.Source = new BitmapImage(bgp);
+                    br1.Source = image;
+
+                    //  br1.StretchDirection = StretchDirection.UpOnly;
                     br1.EndInit();
                     log.Text = bgn + "/LoadLocalPic:" + bgp.ToString();
 
@@ -246,7 +253,7 @@ namespace CokeeDP.Views.Windows
                 AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
                 SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(settings.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
-             //   tasks = LoadConfig(File.ReadAllText(@"D:\英语\TaskConfig.json"));
+                //   tasks = LoadConfig(File.ReadAllText(@"D:\英语\TaskConfig.json"));
             }
             catch (Exception ex)
             {
@@ -303,20 +310,20 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-               /* foreach (var item in tasks)
-                {
-                    var offset= 60_000_000_000;
-                    var b= TimeOnly.Parse(item.Time).Ticks;
-                    //var a = Math.(TimeOnly.FromDateTime(DateTime.Now).Ticks, b); //
-                    if (a <=offset && a>=0&&!IsWaitingTask) { TaskCd = 60; IsWaitingTask = true; ShowPlayer(null, null);IntlPlayer(); }
+                /* foreach (var item in tasks)
+                 {
+                     var offset= 60_000_000_000;
+                     var b= TimeOnly.Parse(item.Time).Ticks;
+                     //var a = Math.(TimeOnly.FromDateTime(DateTime.Now).Ticks, b); //
+                     if (a <=offset && a>=0&&!IsWaitingTask) { TaskCd = 60; IsWaitingTask = true; ShowPlayer(null, null);IntlPlayer(); }
 
-                }
-                if (IsWaitingTask && AudioLoaded && !IsPlaying)
-                {
-                    TaskCd = TaskCd - 1;
-                    audioTime.Content = mediaplayer.NaturalDuration.TimeSpan.ToString("mm:ss") + " 将在 " + TaskCd + " 秒后自动播放";
-                    if (TaskCd == 0) { mediaplayer.Play();IsWaitingTask = false; }
-                }*/
+                 }
+                 if (IsWaitingTask && AudioLoaded && !IsPlaying)
+                 {
+                     TaskCd = TaskCd - 1;
+                     audioTime.Content = mediaplayer.NaturalDuration.TimeSpan.ToString("mm:ss") + " 将在 " + TaskCd + " 秒后自动播放";
+                     if (TaskCd == 0) { mediaplayer.Play();IsWaitingTask = false; }
+                 }*/
 
             }));
             }
@@ -373,11 +380,14 @@ namespace CokeeDP.Views.Windows
                 // 从Bing获取图片Json，存在一天的时差
                 var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");//旧API await client.GetStringAsync("https://cn.bing.com/HPImageArchive.aspx?format=js&idx=" + bing + "&n=1");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                if (settings.BlockedImageIds!=null) { if (settings.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
+                if (settings.BlockedImageIds != null)
+                {
+                    if (settings.BlockedImageIds.Contains(dt["data"]["images"][bing]["isoDate"].ToString()))
                     {
                         ChangeWapp(false);
                         return;
-                    } }
+                    }
+                }
                 BingImageInfo.Content = dt["data"]["images"][bing]["title"].ToString() + " (" + dt["data"]["images"][bing]["copyright"] + ")  | " + dt["data"]["images"][bing]["isoDate"].ToString();
                 var urlstr = "https://www.bing.com/" + dt["data"]["images"][bing]["imageUrls"]["landscape"]["highDef"];
                 CardInfo.Content = dt["data"]["images"][bing]["caption"].ToString();
@@ -502,8 +512,8 @@ namespace CokeeDP.Views.Windows
                 var BlackWordList = "5LmzfOWls3zoibJ86ISxfOWVqnzlroV86KOk5a2QfOiQneiOiXzluop85aW5fOaBi+eIsXx+";
                 foreach (var word in Encoding.UTF8.GetString(Convert.FromBase64String(BlackWordList)).Split("|"))
                 {
-                   // Log.Information(word.ToString());
-                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; return;_ = Hitoko(); }
+                    // Log.Information(word.ToString());
+                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; return; _ = Hitoko(); }
                 }
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
@@ -597,7 +607,7 @@ namespace CokeeDP.Views.Windows
                     video.Set(VideoCaptureProperties.FrameWidth, frameWidth);
                     video.Set(VideoCaptureProperties.FrameHeight, frameHeight);
 
-                    
+
                     using (var mat = new Mat())
                     {
                         video.Read(mat);
