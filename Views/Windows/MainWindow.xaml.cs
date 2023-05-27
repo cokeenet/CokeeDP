@@ -172,7 +172,7 @@ namespace CokeeDP.Views.Windows
                 else
                 {
                     Uri bgp;
-                    if (!direction)
+                    if (direction)
                     {
                         bgn--;
                         if (bgn < ImageArray.Count)
