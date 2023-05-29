@@ -68,7 +68,7 @@ namespace CokeeDP.Views.Windows
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
-        private int bgn = 0, bing = 0, videoCount = 0;
+        private int bgn = -1, bing = 0, videoCount = 0;
         private BitmapImage bitmapImage = null;
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
@@ -126,7 +126,7 @@ namespace CokeeDP.Views.Windows
                             ImageArray.Add(pic);
                         }
                     }
-                    ChangeWapp(false);
+                    ChangeWapp(true);
                 }
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 //Get AudioFiles
@@ -171,9 +171,11 @@ namespace CokeeDP.Views.Windows
 
                 else
                 {
+                    if (bgn == -1) bgn = new Random().Next(0, ImageArray.Count);
                     Uri bgp;
-                    if (direction)
+                    if (!direction)
                     {
+                        //snackbarService.ShowAsync(bgn.ToString(),ImageArray.Count().ToString());
                         bgn--;
                         if (bgn < ImageArray.Count)
                         {
@@ -653,7 +655,7 @@ namespace CokeeDP.Views.Windows
 
         private void WappChangeBtnHandler(object sender, RoutedEventArgs e)
         {
-            var a = (Button)sender; if (bing >= 8 || bing <= -1) bing = 0;
+            var a = (Button)sender; if ((bing >= 8 || bing <= -1)&&settings.BingWappEnable) bing = 0;
             if (a.Name == "left") ChangeWapp(false);
             else if (a.Name == "right") ChangeWapp(true);
         }
