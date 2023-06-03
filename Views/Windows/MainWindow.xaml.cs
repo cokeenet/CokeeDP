@@ -173,7 +173,7 @@ namespace CokeeDP.Views.Windows
                 {
                     if (bgn == -1) bgn = new Random().Next(0, ImageArray.Count);
                     Uri bgp;
-                    if (!direction)
+                    if (direction)
                     {
                         //snackbarService.ShowAsync(bgn.ToString(),ImageArray.Count().ToString());
                         bgn--;
@@ -515,7 +515,7 @@ namespace CokeeDP.Views.Windows
                 foreach (var word in Encoding.UTF8.GetString(Convert.FromBase64String(BlackWordList)).Split("|"))
                 {
                     // Log.Information(word.ToString());
-                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; return; _ = Hitoko(); }
+                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; _ = Hitoko(); return; }
                 }
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
