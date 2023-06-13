@@ -13,7 +13,7 @@ namespace CokeeDP.Properties
         public string OneWordsApi { get; set; } = "https://v1.hitokoto.cn/?c=k";
         public bool OneWordsEnable { get; set; } = false;
         public bool disable_clock1 { get; set; } = false;
-        public string OneWordsTimeInterval { get; set; } = "300";
+        public string OneWordsTimeInterval { get; set; } = "100";
         public string WeatherTimeInterval { get; set; } = "9800";
         public string City { get; set; } = "中国 北京";
         public string CountdownName { get; set; } = "高考";

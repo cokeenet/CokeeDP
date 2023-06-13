@@ -248,7 +248,7 @@ namespace CokeeDP.Views.Windows
                 }
                 else CountDownTime = settings.CountdownTime;
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 300) settings.OneWordsTimeInterval = "300";
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 300) settings.OneWordsTimeInterval = "100";
                 if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
                 if (settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
@@ -260,7 +260,7 @@ namespace CokeeDP.Views.Windows
             catch (Exception ex)
             {
                 ProcessErr(ex);
-                settings.OneWordsTimeInterval = "300";
+                settings.OneWordsTimeInterval = "100";
                 settings.WeatherTimeInterval = "9800";
             }
         }
@@ -275,7 +275,7 @@ namespace CokeeDP.Views.Windows
         {
             Dispatcher.Invoke(new Action(delegate
             {
-                ChangeWapp(false);
+                ChangeWapp(true);
                 pager.PageDown();
                 _ = Hitoko();
             }
@@ -675,6 +675,7 @@ namespace CokeeDP.Views.Windows
                     //MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + settings.CityId + " &key=6572127bcec647faba394b17fbd9614f");
                     settings.CachedWeatherData = u2 + "|" + u3;
                     settings.CachedWeatherTime = DateTime.Now;
+                    AppSettingsExtensions.SaveSettings(settings);
                 }
                 else
                 {
