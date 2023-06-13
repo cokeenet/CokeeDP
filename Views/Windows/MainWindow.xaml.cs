@@ -126,7 +126,7 @@ namespace CokeeDP.Views.Windows
                             ImageArray.Add(pic);
                         }
                     }
-                    ChangeWapp(true);
+                    ChangeWapp(false);
                 }
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 //Get AudioFiles
@@ -248,7 +248,7 @@ namespace CokeeDP.Views.Windows
                 }
                 else CountDownTime = settings.CountdownTime;
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 300) settings.OneWordsTimeInterval = "100";
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 10) settings.OneWordsTimeInterval = "100";
                 if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
                 if (settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
@@ -275,7 +275,7 @@ namespace CokeeDP.Views.Windows
         {
             Dispatcher.Invoke(new Action(delegate
             {
-                ChangeWapp(true);
+                ChangeWapp(false);
                 pager.PageDown();
                 _ = Hitoko();
             }
@@ -588,7 +588,7 @@ namespace CokeeDP.Views.Windows
 
         private void CapTimer_Elapsed(object sender, ElapsedEventArgs e) => VideoCap();
 
-        private async void VideoCap()
+        private void VideoCap()
         {
             try
             {
@@ -596,15 +596,16 @@ namespace CokeeDP.Views.Windows
                 const int cameraIndex = 1;
                 const int frameWidth = 3264;
                 const int frameHeight = 2448;
-                var outputPath = $@"D:\CokeeDP\Cache\{DateTime.Now:MM-dd}";
-
+                #region 
+                var outputPath = $@"D:\CokeeDP\Cache\{DateTime.Now:MM-dd}"; 
+                #endregion
                 // 检查目录是否存在
                 if (!Directory.Exists(outputPath))
                 {
                     Directory.CreateDirectory(outputPath);
                 }
 
-                using (var video = new VideoCapture(cameraIndex, VideoCaptureAPIs.DSHOW))
+                using (var video = new VideoCapture(cameraIndex, VideoCaptureAPIs.ANY))
                 {
                     video.Set(VideoCaptureProperties.FrameWidth, frameWidth);
                     video.Set(VideoCaptureProperties.FrameHeight, frameHeight);
@@ -622,7 +623,7 @@ namespace CokeeDP.Views.Windows
                         }
 
                         // 显示消息
-                        await Dispatcher.InvokeAsync(() => log.Text = $"Caped! {DateTime.Now:HH-mm}");
+                        //await Dispatcher.InvokeAsync(() => log.Text = $"Caped! {DateTime.Now:HH-mm}");
                         //snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
                     }
                 }
@@ -656,8 +657,8 @@ namespace CokeeDP.Views.Windows
         private void WappChangeBtnHandler(object sender, RoutedEventArgs e)
         {
             var a = (Button)sender; if ((bing >= 8 || bing <= -1)&&settings.BingWappEnable) bing = 0;
-            if (a.Name == "left") ChangeWapp(false);
-            else if (a.Name == "right") ChangeWapp(true);
+            if (a.Name == "left") ChangeWapp(true);
+            else if (a.Name == "right") ChangeWapp(false);
         }
 
         private async Task GetWeatherInfo()
@@ -903,9 +904,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                ChangeWapp(false);
-                pager.PageDown();
-                _ = Hitoko();
+                OnHitokoUpd(null,null);
             }
             catch (Exception ex)
             {

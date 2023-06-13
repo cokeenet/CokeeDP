@@ -54,6 +54,7 @@ namespace CokeeDP.Views.Pages
         private void TextBoxHandler(object sender, RoutedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
+            if (textBox.Text.Length < 1 || textBox.Text == null) return;
             switch (textBox.Tag)
             {
                 case "audioDir":
