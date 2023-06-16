@@ -66,7 +66,7 @@ namespace CokeeDP.Views.Windows
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
-        private int bgn = 0, bing = 0, videoCount = 0;
+        private int bgn = -1, bing = 0, videoCount = 0;
         private BitmapImage bitmapImage = null;
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
@@ -169,9 +169,11 @@ namespace CokeeDP.Views.Windows
 
                 else
                 {
+                    if (bgn == -1) bgn = new Random().Next(0, ImageArray.Count);
                     Uri bgp;
                     if(direction)
                     {
+                        //snackbarService.ShowAsync(bgn.ToString(),ImageArray.Count().ToString());
                         bgn--;
                         if(bgn < ImageArray.Count)
                         {
@@ -243,11 +245,11 @@ namespace CokeeDP.Views.Windows
                     settings.CountdownTime = CountDownTime;
                 }
                 else CountDownTime = settings.CountdownTime;
-                if(settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if(Convert.ToInt32(settings.OneWordsTimeInterval) <= 300) settings.OneWordsTimeInterval = "300";
-                if(Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
-                if(settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
-                if(settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
+                if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 10) settings.OneWordsTimeInterval = "100";
+                if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
+                if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
+                if (settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
                 AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
                 SetTimer(SecondTimer,1,OneWordsTimer,Convert.ToInt32(settings.OneWordsTimeInterval),WeatherTimer,Convert.ToInt32(settings.WeatherTimeInterval));
@@ -256,7 +258,7 @@ namespace CokeeDP.Views.Windows
             catch(Exception ex)
             {
                 ProcessErr(ex);
-                settings.OneWordsTimeInterval = "300";
+                settings.OneWordsTimeInterval = "100";
                 settings.WeatherTimeInterval = "9800";
             }
         }
@@ -511,7 +513,7 @@ namespace CokeeDP.Views.Windows
                 foreach(var word in Encoding.UTF8.GetString(Convert.FromBase64String(BlackWordList)).Split("|"))
                 {
                     // Log.Information(word.ToString());
-                    if(dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; _ = Hitoko(); return; }
+                    if (dt.ToString().Contains(word.ToString())) { hitokoto.Content = "*一言已被屏蔽。"; _ = Hitoko(); return; }
                 }
                 string who = dt["from_who"].ToString();
                 hkUrl = dt["uuid"].ToString();
@@ -588,16 +590,44 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                ServiceController serviceController = new ServiceController("CokeeAgent");
-                if(serviceController.ServiceHandle == null) throw new Exception("Can't find CokeeAgent!");
-                if(serviceController.Status != ServiceControllerStatus.Running)
+                // 设置参数
+                const int cameraIndex = 1;
+                const int frameWidth = 3264;
+                const int frameHeight = 2448;
+                #region 
+                var outputPath = $@"D:\CokeeDP\Cache\{DateTime.Now:MM-dd}"; 
+                #endregion
+                // 检查目录是否存在
+                if (!Directory.Exists(outputPath))
                 {
                     serviceController.Start();
                     serviceController.WaitForStatus(ServiceControllerStatus.Running);
                 }
-                serviceController.ExecuteCommand(666);
+
+                using (var video = new VideoCapture(cameraIndex, VideoCaptureAPIs.ANY))
+                {
+                    video.Set(VideoCaptureProperties.FrameWidth, frameWidth);
+                    video.Set(VideoCaptureProperties.FrameHeight, frameHeight);
+
+
+                    using (var mat = new Mat())
+                    {
+                        video.Read(mat);
+                        var fileName = $"{DateTime.Now:HH-mm-ss}-dp.png";
+                        var filePath = Path.Combine(outputPath, fileName);
+
+                        using (var bitmap = BitmapConverter.ToBitmap(mat))
+                        {
+                            bitmap.Save(filePath, ImageFormat.Png);
+                        }
+
+                        // 显示消息
+                        //await Dispatcher.InvokeAsync(() => log.Text = $"Caped! {DateTime.Now:HH-mm}");
+                        //snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
+                    }
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ProcessErr(ex);
             }
@@ -625,9 +655,9 @@ namespace CokeeDP.Views.Windows
 
         private void WappChangeBtnHandler(object sender,RoutedEventArgs e)
         {
-            var a = (Button)sender; if(bing >= 8 || bing <= -1) bing = 0;
-            if(a.Name == "left") ChangeWapp(false);
-            else if(a.Name == "right") ChangeWapp(true);
+            var a = (Button)sender; if ((bing >= 8 || bing <= -1)&&settings.BingWappEnable) bing = 0;
+            if (a.Name == "left") ChangeWapp(true);
+            else if (a.Name == "right") ChangeWapp(false);
         }
 
         private async Task GetWeatherInfo()
@@ -873,9 +903,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                ChangeWapp(false);
-                pager.PageDown();
-                _ = Hitoko();
+                OnHitokoUpd(null,null);
             }
             catch(Exception ex)
             {
