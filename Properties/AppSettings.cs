@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using Serilog;
 using Log = Serilog.Log;
+using System.Linq;
 
 namespace CokeeDP.Properties
 {
@@ -42,6 +43,9 @@ namespace CokeeDP.Properties
         {
             try
             {
+                var dir = SETTINGS_FILE_NAME.Split("config.json")[0];
+                if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                //if(!File.Exists(SETTINGS_FILE_NAME)) File.Create(SETTINGS_FILE_NAME);
                 var content = File.ReadAllText(SETTINGS_FILE_NAME);
                 return JsonSerializer.Deserialize<AppSettings>(content);
             }
@@ -58,6 +62,9 @@ namespace CokeeDP.Properties
 
             try
             {
+                var dir = SETTINGS_FILE_NAME.Split("config.json")[0];
+                if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+               // if(!File.Exists(SETTINGS_FILE_NAME)) File.Create(SETTINGS_FILE_NAME);
                 File.WriteAllText(SETTINGS_FILE_NAME, content);
             }
             catch (Exception e)
