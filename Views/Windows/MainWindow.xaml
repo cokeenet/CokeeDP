@@ -1,11 +1,81 @@
 ﻿<Window
     x:Class="CokeeDP.Views.Windows.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Name="window" Title="CokeeDP"
+    xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:local="clr-namespace:CokeeDP" x:Name="window" Title="CokeeDP" 
     AllowDrop="True"
     Foreground="{x:Null}"
     Loaded="Load" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="None" mc:Ignorable="d">
     <Window.Resources>
+        
         <ResourceDictionary>
+            <ControlTemplate x:Key="PART_Resizeable_Thumbs">
+                <Grid >
+                    <!--左-->
+                    <Thumb  Margin="-8,0,0,0" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Center" Cursor="SizeWE">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--上-->
+                    <Thumb  Margin="0,-8,0,0" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="SizeNS">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray"  BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--右-->
+                    <Thumb  Margin="0,0,-8,0" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Center" Cursor="SizeWE">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--下-->
+                    <Thumb  Margin="0,0,0,-8" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Bottom" Cursor="SizeNS">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+
+                    <!--左上-->
+                    <Thumb  Margin="-8,-8,0,0" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--右上-->
+                    <Thumb  Margin="0,-8,-8,0" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top"  Cursor="SizeNESW">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--右下-->
+                    <Thumb  Margin="0,0,-8,-8" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Cursor="SizeNWSE">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White" ></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                    <!--左下-->
+                    <Thumb  Margin="-8,0,0,-8" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="8"  Background="White"></Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Grid>
+            </ControlTemplate>
             <Storyboard x:Key="HideWindow">
                 <DoubleAnimation
                     FillBehavior="Stop" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.3" />
@@ -43,7 +113,7 @@
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        MouseDown="OnCloseWindow" Source="/Views/Windows/01 (1).jpg" Stretch="Fill" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        MouseDown="OnCloseWindow" Stretch="Fill" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
@@ -62,10 +132,11 @@
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
                         Content="00:00:00" FontFamily="Segoe UI Light" FontSize="112" Foreground="White" MouseDown="ShowPlayer"
-                        Opacity="0.8">
+                        Opacity="0.8" local:Resize.IsResizeable="True">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
+
                 </Label>
                 <pu:Carousel
                         x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
@@ -267,8 +338,8 @@
                 <Label
                         x:Name="CountDownLabel" Margin="20,802,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                         Background="{x:Null}"
-                        Content="距离[---]还有---天" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
-                        Foreground="White" Visibility="Visible">
+                        Content="距离[---]还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                        Foreground="White" Visibility="Visible"  local:Resize.ResizeTemplate="{DynamicResource PART_Resizeable_Thumbs}" local:Resize.IsResizeable="True">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -417,7 +488,7 @@
                         AllowDrop="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
-                        Content="循星🌟 Ver 3.5" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                        Content="循星🌟 Ver 3.6" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
                         Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
                     <Label.Effect>
                         <DropShadowEffect />
@@ -596,6 +667,28 @@
                 <ui:SymbolIcon x:Name="NetIcon"
                     Width="36" Height="36"
                     FontSize="36" Symbol="CellularOff24" Canvas.Left="1854" Canvas.Top="74" VerticalAlignment="Top" Foreground="#E4FFFFFF" />
+                <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585" Visibility="Collapsed">
+                    <Grid Height="553">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="201*"/>
+                            <ColumnDefinition Width="649*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            x:Name="CardInfo1"
+                            Background="{x:Null}"
+                            FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="Debug Page" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Label.Effect>
+                                <DropShadowEffect Opacity="0.4" />
+                            </Label.Effect>
+                        </Label>
+                        <ui:TextBox x:Name="textBox" TextWrapping="Wrap" Text="pack://application:,,,/Views/Pages/Main.xaml" VerticalAlignment="Top" Margin="0,34,94,0" Grid.ColumnSpan="2"/>
+                        <ui:Button x:Name="button" Content="Load" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,36,10,0" Click="LoadPage" Grid.Column="1"/>
+                        <ScrollViewer Margin="0,81,0,0" Grid.ColumnSpan="2">
+                            <Frame x:Name="frame" Content="Frame" HorizontalContentAlignment="Center" NavigationUIVisibility="Visible" Height="452" Source="/Views/Pages/Main.xaml" Navigating="Naving"/>
+                        </ScrollViewer>
+                    </Grid>
+                </ui:Card>
+                <ui:InfoBar x:Name="netBar" Canvas.Left="1737" Canvas.Top="115" Message="当前无网络。" HorizontalAlignment="Left" Severity="Error" IsClosable="False" IsOpen="False" />
             </Canvas>
         </Viewbox>
     </Grid>

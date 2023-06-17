@@ -29,7 +29,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="清除" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="建议在Excel中直接复制列数据 第一列为名称 第二轮为生日(格式yyyyMMdd)" />
+                        FontSize="12" Opacity="0.7" Text="在Excel中直接复制双列数据 第一列为名称 第二列为生日(格式yyyyMMdd)" />
                 </StackPanel>
             </ui:CardExpander.Header>
             <Grid >

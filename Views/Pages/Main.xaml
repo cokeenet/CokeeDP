@@ -124,8 +124,8 @@
             </ui:CardControl.Header>
             <DockPanel>
                 <ui:TextBox
-                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" />
-                <ui:Button Content="打开编辑器" Icon="EditProhibited16" Tag="addTask"/>
+                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="476" />
+                <ui:Button Content="选择目录" Icon="Folder32" Tag="addTask" Width="104"/>
             </DockPanel>
         </ui:CardControl>
 
