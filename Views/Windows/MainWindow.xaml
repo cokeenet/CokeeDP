@@ -132,7 +132,7 @@
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
                         Content="00:00:00" FontFamily="Segoe UI Light" FontSize="112" Foreground="White" MouseDown="ShowPlayer"
-                        Opacity="0.8" local:Resize.IsResizeable="True">
+                        Opacity="0.8">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -339,7 +339,7 @@
                         x:Name="CountDownLabel" Margin="20,802,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                         Background="{x:Null}"
                         Content="距离[---]还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
-                        Foreground="White" Visibility="Visible"  local:Resize.ResizeTemplate="{DynamicResource PART_Resizeable_Thumbs}" local:Resize.IsResizeable="True">
+                        Foreground="White" Visibility="Visible">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -440,7 +440,7 @@
                 <ProgressBar
                         x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1059" Width="150"
                         Height="11" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#22ACCD9D" Foreground="#FFD6D6D6"
-                        Visibility="Visible" />
+                        Visibility="Collapsed" />
                 <ui:Button
                         Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B3F7F7F7"
@@ -667,7 +667,7 @@
                 <ui:SymbolIcon x:Name="NetIcon"
                     Width="36" Height="36"
                     FontSize="36" Symbol="CellularOff24" Canvas.Left="1854" Canvas.Top="74" VerticalAlignment="Top" Foreground="#E4FFFFFF" />
-                <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585" Visibility="Collapsed">
+                <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585">
                     <Grid Height="553">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="201*"/>
