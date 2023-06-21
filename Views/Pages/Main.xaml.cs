@@ -73,7 +73,8 @@ namespace CokeeDP.Views.Pages
         private void CardAction_Click(object sender, RoutedEventArgs e)
         {
             AppSettingsExtensions.SaveSettings(settings);
-            _Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
+            this.NavigationService.Navigate(new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml"));
+            //_Window.RootFrame.Source = new Uri(@"pack://application:,,,/Views/Pages/GeoSearch.xaml");
         }
 
         private void SwitchEventsHandler(object sender, RoutedEventArgs e)
@@ -116,6 +117,7 @@ namespace CokeeDP.Views.Pages
             else settings.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             settings.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             AppSettingsExtensions.SaveSettings(settings);
+            
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
     }

@@ -66,14 +66,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Archived\Setting.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Image\bg75.png" />
-    <None Remove="SplashScreen.png" />
-    <Page Remove="Archived\Setting.xaml" /> 
+    <None Remove="SplashScreen.png" /> 
     <Content Include="Image\hd1.ico" /> 
     <Resource Include="Fonts\Segoe Fluent Icons.ttf" />   
     <Resource Include="Image\bg75.png" />
@@ -93,12 +88,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4" Version="4.7.0.20230115" />
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.7.0.20230115" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.7.0.20230115" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.7.0.20230115" />
     <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.7.0.20230115" />
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.9.3" />
     <PackageReference Include="Serilog" Version="2.12.1-dev-01635" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.0" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
   </ItemGroup>
 
@@ -288,11 +285,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Update="Views\Pages\About - 复制.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -309,17 +301,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="Views\Pages\About.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Birth.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="Views\Pages\TimeTask.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
@@ -328,11 +315,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Archived\Setting.xaml" />
-    <None Include="Archived\Setting.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
