@@ -735,7 +735,7 @@ namespace CokeeDP.Views.Windows
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                if (IsUsbOpened && Environment.CurrentDirectory == "C:\\Windows\\System32")
+                if (IsUsbOpened && Environment.CurrentDirectory.Contains("C:\\Windows\\System32"))
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
                     messageBox.Content = "当前处于安全桌面模式，" + Environment.NewLine + "请确认你打开的文件均已关闭后，点击\"确认\"关闭屏保程序。" + Environment.NewLine + "如文件未关闭则可能造成文件数据损坏。";
@@ -748,12 +748,12 @@ namespace CokeeDP.Views.Windows
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
-                    messageBox.Content = "有媒体正在播放。确认关闭程序吗？";
-                    messageBox.ButtonLeftName = "确认";
+                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
+                    messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
                     messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
-                    if (messageBox.ShowDialog() == true) Close();
+                   // if (messageBox.ShowDialog() == true) Close();
                 }
                 else
                 {
@@ -782,7 +782,7 @@ namespace CokeeDP.Views.Windows
                     tranUsb.BeginAnimation(TranslateTransform.XProperty, anim1);
                     disk = t.Name;
                     diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
-                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";//TODO:改进算法，这个结果是错的
+                    diskInfo.Content = (t.TotalFreeSpace / 1024/1024) + "GB/" + (t.TotalSize / 1024/1024) + "GB";//TODO:改进算法，这个结果是错的
                 }
                 else if (isUnplug)
                 {
