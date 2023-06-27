@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using Quartz.Impl;
+using Quartz;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -62,7 +64,7 @@ namespace CokeeDP.Views.Windows
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
-        private static Timer CapTimer = new Timer(20 * 60 * 1000);
+        private static Timer CapTimer = new Timer(10 * 60 * 1000);
         private List<FileInfo> ImageArray = new List<FileInfo>();
         private List<DirectoryInfo> ImageDirs;
         private FileInfo[] AudioArray;
@@ -76,13 +78,17 @@ namespace CokeeDP.Views.Windows
         private int PlayingRule = 0, TaskCd;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime, TaskedTime;
-        public string Version = "Ver 3.1";
+        public string Version = "Ver 3.5";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
         public Thread cap;
         public bool isloaded = false, IsUsbOpened = false;
         public List<TaskConfig> tasks;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
+        StdSchedulerFactory factory = new StdSchedulerFactory();
+        //创建任务调度器
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -495,7 +501,7 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private void Load(object sender,RoutedEventArgs e)
+        private async Task LoadAsync(object sender,RoutedEventArgs e)
         {
             try
             {
@@ -526,22 +532,12 @@ namespace CokeeDP.Views.Windows
                 CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                /*JObject jsonData = null;                                               //Read TimedTask Json
-               // if (File.Exists(@"D:\CokeeDP\TimedTask.json")) jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
-
-
-                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(settings.OneWordsApi));
-                //string who = dt["from_who"].ToString();
-                if (jsonData != null) foreach (var item in jsonData)
-                    {
-                        timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
-                    }
-                //var a= new TimeTasks("1", "1", DateTime.Now, "audio");
-                //timeTasks[0] = a;
-                //timeTasks.Append(a);
+                var schedulerFactory = new StdSchedulerFactory();
+                var scheduler = await schedulerFactory.GetScheduler();
+                await scheduler.Start();
                 //DEBUG Only
                 //snackbarService.ShowAsync(timeTasks.Count().ToString());             */
-                if(settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
+                if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 //isloaded = true;
             }
             catch(Exception ex)

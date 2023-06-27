@@ -667,16 +667,16 @@
                 <ui:SymbolIcon x:Name="NetIcon"
                     Width="36" Height="36"
                     FontSize="36" Symbol="CellularOff24" Canvas.Left="1854" Canvas.Top="74" VerticalAlignment="Top" Foreground="#E4FFFFFF" />
-                <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585">
+                <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585" Visibility="Collapsed">
                     <Grid Height="553">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="201*"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="649*"/>
                         </Grid.ColumnDefinitions>
                         <Label
                             x:Name="CardInfo1"
                             Background="{x:Null}"
-                            FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="Debug Page" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="Debug Page 调试页面" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
@@ -684,7 +684,7 @@
                         <ui:TextBox x:Name="textBox" TextWrapping="Wrap" Text="pack://application:,,,/Views/Pages/Main.xaml" VerticalAlignment="Top" Margin="0,34,94,0" Grid.ColumnSpan="2"/>
                         <ui:Button x:Name="button" Content="Load" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,36,10,0" Click="LoadPage" Grid.Column="1"/>
                         <ScrollViewer Margin="0,81,0,0" Grid.ColumnSpan="2">
-                            <Frame x:Name="frame" Content="Frame" HorizontalContentAlignment="Center" NavigationUIVisibility="Visible" Height="452" Source="/Views/Pages/Main.xaml" Navigating="Naving"/>
+                            <Frame x:Name="frame" Content="Frame" HorizontalContentAlignment="Center" NavigationUIVisibility="Visible" Height="452" Source="/Views/Pages/Birth.xaml" Navigating="Naving"/>
                         </ScrollViewer>
                     </Grid>
                 </ui:Card>
