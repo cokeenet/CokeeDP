@@ -54,20 +54,32 @@ namespace CokeeDP.Views.Pages
         private void TextBoxHandler(object sender, RoutedEventArgs e)
         {
             var textBox = sender as Wpf.Ui.Controls.TextBox;
-            if (textBox.Text.Length < 1 || textBox.Text == null) return;
-            switch (textBox.Tag)
+            try
             {
-                case "audioDir":
-                    settings.AudioFolder = textBox.Text; break;
-                case "time":
-                    settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
-                case "CountDownName":
-                    settings.CountdownName = textBox.Text; break;
-                default:
-                    break;
+                
+                if (textBox.Text.Length < 1 || textBox.Text == null) return;
+                switch (textBox.Tag)
+                {
+                    case "audioDir":
+                        settings.AudioFolder = textBox.Text; break;
+                    case "time":
+                        settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
+                    case "CountDownName":
+                        settings.CountdownName = textBox.Text; break;
+                    case "audioTime":
+                        settings.AudioAutoPlayTime = TimeOnly.Parse(textBox.Text); break;
+                    default:
+                        break;
+                }
+                AppSettingsExtensions.SaveSettings(settings);
+                _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
             }
-           AppSettingsExtensions.SaveSettings(settings);
-            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+            catch (Exception ex)
+            {
+                _Window.snackbarService.ShowAsync("Error:", ex.ToString(), SymbolRegular.Save28);
+                textBox.Text = null;
+            }
+
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)

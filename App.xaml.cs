@@ -4,6 +4,8 @@ using Microsoft.AppCenter.Crashes;
 using Panuon.WPF.UI;
 using Serilog;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Animation;
 using Wpf.Ui.Appearance;
@@ -27,7 +29,11 @@ namespace CokeeDP
                 );
             Log.Debug(e.Args.ToString());
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            
+            //Double process not allow
+            if (Process.GetProcessesByName("CokeeDP.exe").Length != 0 || Process.GetProcessesByName("CokeeDP.scr").Length != 0)
+            {
+                Environment.Exit(0);
+            }
         }
         private static void CurrentDomain_UnhandledException(object sender,UnhandledExceptionEventArgs e)
         {

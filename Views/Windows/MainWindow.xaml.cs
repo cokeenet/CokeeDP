@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using Quartz.Impl;
-using Quartz;
+//using Quartz.Impl;
+//using Quartz;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -85,7 +85,7 @@ namespace CokeeDP.Views.Windows
         public bool isloaded = false, IsUsbOpened = false;
         public List<TaskConfig> tasks;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
-        StdSchedulerFactory factory = new StdSchedulerFactory();
+        //StdSchedulerFactory factory = new StdSchedulerFactory();
         //创建任务调度器
 
 
@@ -300,7 +300,16 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-
+                if(settings.AudioAutoPlayTime.Hour!=00)
+                if ((settings.AudioAutoPlayTime.CompareTo(TimeOnly.FromDateTime(DateTime.Now))==0&&!IsWaitingTask))
+                {
+                    hitokoto.Content = "好心人帮你打开了听力。---鲁迅《不是我干的》";
+                    IsWaitingTask = true;
+                    ShowPlayer(null, null);
+                    //while (!AudioLoaded) Thread.Sleep(10);
+                    SetCurrentSpeakerVolume(100);
+                    OnBtnPlay(null, null);
+                }
 
             }));
             }
@@ -501,7 +510,7 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private async Task LoadAsync(object sender,RoutedEventArgs e)
+        private void Load(object sender,RoutedEventArgs e)
         {
             try
             {
@@ -532,11 +541,19 @@ namespace CokeeDP.Views.Windows
                 CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                var schedulerFactory = new StdSchedulerFactory();
+          /*      var schedulerFactory = new StdSchedulerFactory();
                 var scheduler = await schedulerFactory.GetScheduler();
                 await scheduler.Start();
-                //DEBUG Only
-                //snackbarService.ShowAsync(timeTasks.Count().ToString());             */
+                //创建作业和触发器
+                var jobDetail = JobBuilder.Create<AudioJob>().Build();
+                var trigger = TriggerBuilder.Create()
+                                            .WithSimpleSchedule(m => {
+                                                m.WithRepeatCount(3).WithIntervalInSeconds(1);
+                                            })
+                                            .Build();
+
+                //添加调度
+                await scheduler.ScheduleJob(jobDetail, trigger);*/
                 if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 //isloaded = true;
             }
@@ -545,7 +562,15 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
-
+       /* public class AudioJob : IJob
+        {
+            public Task Execute(IJobExecutionContext context)
+            {
+                return Task.Factory.StartNew(() => {
+                   
+                });
+            }
+        }*/
         private void CapTimer_Elapsed(object sender,ElapsedEventArgs e) => VideoCap();
 
         private void VideoCap()
@@ -694,27 +719,19 @@ namespace CokeeDP.Views.Windows
 
         private void OnCloseWindow(object sender,MouseButtonEventArgs e)
         {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                if (IsUsbOpened && Environment.CurrentDirectory.Contains("C:\\Windows\\System32"))
+            Dispatcher.Invoke(new Action(() => {
+
+                if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
-                    messageBox.Content = "当前处于安全桌面模式，" + Environment.NewLine + "请确认你打开的文件均已关闭后，点击\"确认\"关闭屏保程序。" + Environment.NewLine + "如文件未关闭则可能造成文件数据损坏。";
-                    messageBox.ButtonLeftName = "确认";
-                    //messageBox.ButtonR
-                    messageBox.MicaEnabled = true;
-                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
-                    if(messageBox.ShowDialog() == true) Close();
-                }
-                if(IsPlaying)
-                {
-                    Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
+                    messageBox.Title = "嘿！";
                     messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
                     messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
-                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
-                   // if (messageBox.ShowDialog() == true) Close();
+                    messageBox.Show();
+                    // messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
+                    // if (messageBox.ShowDialog() == true) Close();
                 }
                 else
                 {
