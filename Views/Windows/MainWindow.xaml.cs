@@ -269,8 +269,7 @@ namespace CokeeDP.Views.Windows
                     // audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + "/" + MediaDuring;
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
-                }
-                // new Thread(CheckTasks).Start(); // 创建线程
+                }  
             }));
             }
             catch (Exception ex)
@@ -293,7 +292,6 @@ namespace CokeeDP.Views.Windows
 
         public void SetTimer(Timer a, int ms, Timer b, int ms1, Timer c, int ms2)
         {
-            // Create timers with a interval.
             a = new Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
             b = new Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
             c = new Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWea); c.AutoReset = true; c.Enabled = true;
@@ -374,17 +372,12 @@ namespace CokeeDP.Views.Windows
             {
                 ProcessErr(ex);
             }
-            // Disappear(pro,1,20,0.5);
         }
 
         private async Task Hitoko()
         {
             try
             {
-                /* if (CokeeDP.Properties.Settings.Default.isDebug)
-                 {
-                     return;
-                 }*/
                 var client = new HttpClient();
                 JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(Properties.Settings.Default.OneWordsApi));
                 string who = dt["from_who"].ToString();
