@@ -19,6 +19,11 @@ using Wpf.Ui.Mvvm.Services;
 using CokeeDP.Views.Windows;
 using Wpf.Ui.Common;
 using CokeeDP.Properties;
+using Button = Wpf.Ui.Controls.Button;
+using System.Windows.Forms;
+using System.IO;
+using Application = System.Windows.Application;
+using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace CokeeDP.Views.Pages
 {
@@ -67,7 +72,7 @@ namespace CokeeDP.Views.Pages
                     case "CountDownName":
                         settings.CountdownName = textBox.Text; break;
                     case "audioTime":
-                        settings.AudioAutoPlayTime = TimeOnly.Parse(textBox.Text); break;
+                        settings.AudioAutoPlayTime = textBox.Text; break;
                     default:
                         break;
                 }
@@ -131,6 +136,30 @@ namespace CokeeDP.Views.Pages
             AppSettingsExtensions.SaveSettings(settings);
             
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+        }
+
+        private void BtnClickHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn=sender as Button;
+            switch (btn.Tag.ToString())
+            {
+                case "chooseDir":
+                    using (var dialog = new FolderBrowserDialog())
+                    {
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK && Directory.Exists(dialog.SelectedPath))
+                        {
+                            folderBox.Text=dialog.SelectedPath;
+                            settings.AudioFolder = dialog.SelectedPath;
+                            AppSettingsExtensions.SaveSettings(settings);
+                            _Window.snackbarService.ShowAsync("已保存", $"路径 {dialog.SelectedPath}", SymbolRegular.Save28);
+                        }
+                        else _Window.snackbarService.ShowAsync("选择失败", ">_<", SymbolRegular.Warning12);
+                    }
+                    break;
+                default: 
+                    break;
+            }
         }
     }
 }
