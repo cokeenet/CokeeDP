@@ -1320,8 +1320,9 @@ namespace CokeeDP.Views.Windows
 
         private void FuncT1(object sender, MouseButtonEventArgs e)
         {
+            Environment.Exit(0);
             //br1_blur.BeginAnimation(br1_blur.Radius,)
-            MainWindow.GetWindow(this).WindowState = WindowState.Normal;
+            //MainWindow.GetWindow(this).WindowState = WindowState.Normal;
             //StartSnowing(MainCanvas);
         }
 
