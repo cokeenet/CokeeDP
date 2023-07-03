@@ -31,6 +31,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
@@ -64,7 +65,6 @@ namespace CokeeDP.Views.Windows
         private static Timer WeatherTimer;
         private static Timer CapTimer = new Timer(20 * 60 * 1000);
         private List<FileInfo> ImageArray = new List<FileInfo>();
-        private List<DirectoryInfo> ImageDirs;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
@@ -79,9 +79,7 @@ namespace CokeeDP.Views.Windows
         public string Version = "Ver 3.1";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
-        public Thread cap;
-        public bool isloaded = false, IsUsbOpened = false;
-        public List<TaskConfig> tasks;
+        public bool IsModify = false, IsUsbOpened = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public MainWindow()
         {
@@ -164,19 +162,9 @@ namespace CokeeDP.Views.Windows
                         {
                             bgn = 0;
                             bgp = new Uri(ImageArray[0].FullName);
-                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
-                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
-
                         }
-                        else
-                        {
-                            bgp = new Uri(ImageArray[bgn].FullName);
-                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
-                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
-
-                        }
+                        else bgp = new Uri(ImageArray[bgn].FullName);
+                        SetImageText(ImageArray[bgn].DirectoryName);
                     }
                     else
                     {
@@ -185,18 +173,13 @@ namespace CokeeDP.Views.Windows
                         {
                             bgn = 0;
                             bgp = new Uri(ImageArray[bgn].FullName);
-
-                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
-                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
-                        }
+                            
+                         }
                         else
                         {
                             bgp = new Uri(ImageArray[bgn].FullName);
-                            DescPara1.Text = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\desc.txt");
-                            BingImageInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\info.txt");
-                            CardInfo.Content = File.ReadAllText(ImageArray[bgn].DirectoryName + "\\title.txt");
-                        }
+                           }
+                        SetImageText(ImageArray[bgn].DirectoryName);
                     }
                     BitmapImage image = new BitmapImage(bgp);
                     // image.Rotation = Rotation.Rotate270;
@@ -216,8 +199,28 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+        public void SetImageText(string desc, string info, string title)
+        {
+            Dispatcher.Invoke(new Action(delegate
+            {
+                DescPara1.Text = desc;
+                BingImageInfo.Content = info;
+                CardInfo.Content = title;
+            }
+       ));
+  
+        }
+        public void SetImageText(string folderPath)
+        {
+            Dispatcher.Invoke(new Action(delegate
+            {
+                DescPara1.Text = File.ReadAllText(folderPath + "\\desc.txt"); 
+                BingImageInfo.Content = File.ReadAllText(folderPath + "\\info.txt");
+                CardInfo.Content = File.ReadAllText(folderPath + "\\title.txt");
+            }
+       ));
 
-
+        }
         public void FillConfig()
         {
             try
@@ -246,12 +249,6 @@ namespace CokeeDP.Views.Windows
                 settings.OneWordsTimeInterval = "100";
                 settings.WeatherTimeInterval = "9800";
             }
-        }
-        public static List<TaskConfig> LoadConfig(string json)
-        {
-            // 解析 JSON 格式的字符串，并反序列化为 TaskConfig 对象列表
-            List<TaskConfig> taskList = JsonConvert.DeserializeObject<List<TaskConfig>>(json);
-            return taskList;
         }
         public void OnHitokoUpd(object source,ElapsedEventArgs d)
         {
@@ -294,8 +291,6 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-
-
             }));
             }
             catch(Exception ex)
@@ -580,7 +575,7 @@ namespace CokeeDP.Views.Windows
                     {
                         video.Read(mat);
                         var fileName = $"{DateTime.Now:HH-mm-ss}-dp.png";
-                        var filePath = Path.Combine(outputPath,fileName);
+                        var filePath = System.IO.Path.Combine(outputPath,fileName);
 
                         using(var bitmap = BitmapConverter.ToBitmap(mat))
                         {
@@ -722,10 +717,37 @@ namespace CokeeDP.Views.Windows
                 }
                 else
                 {
-                    //CancellationToken cancellationToken = new CancellationToken();
-                    // cancellationToken.Register(cap)
-                    Close();
-                    Environment.Exit(0);
+                    window.MouseMove -= mouseMove;
+                    Random random = new Random();
+
+                    // 获取 Colors 类中定义的颜色数量
+                    int colorCount = typeof(Colors).GetProperties().Length;
+
+                    // 生成随机索引
+                    int randomIndex = random.Next(colorCount);
+
+                    // 获取随机颜色
+                    Color randomColor = ((Color)ColorConverter.ConvertFromString(typeof(Colors).GetProperties()[randomIndex].Name));
+                    randomColor.A = (byte)(randomColor.A-100);
+                    var colorAnim = new ColorAnimation
+                    {
+                        From = closeSCB.Color,
+                        By = Colors.Pink,
+                        To=randomColor ,
+                    };
+                    var scaleAnim = new DoubleAnimation
+                    {
+                        To = 100,
+                        SpeedRatio=0.1,
+                        EasingFunction = new CircleEase()
+                     };
+                    colorAnim.Completed += (a, b) => { Close(); Environment.Exit(0);};
+                    scaleAnim.Completed += (a, b) => { scaleTran.ScaleX = 1; scaleTran.ScaleY = 1; };
+                    closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
+                    scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
+                    scaleTran.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
+                    //Close();
+                   
                 }
             }));
         }
@@ -1093,17 +1115,7 @@ namespace CokeeDP.Views.Windows
                         break;
                     default:
                         break;
-                }/*
-                if (tmp.Content.ToString() == "单曲循环")
-                {
-                    IsReplay = false;
-                    tmp.Content = "列表循环";
                 }
-                else if (tmp.Content.ToString() == "列表循环")
-                {
-                    IsReplay = true;
-                    tmp.Content = "单曲循环";
-                }*/
             }
             catch(Exception ex)
             {
@@ -1378,17 +1390,17 @@ namespace CokeeDP.Views.Windows
             Close();
         }
 
-        private void MouseMove(object sender,MouseEventArgs e)
+        private void mouseMove(object sender,MouseEventArgs e)
         {
-            /*/System.Windows.Point position = e.GetPosition(this);
+            Point position = e.GetPosition(this);
             double pX = position.X;
             double pY = position.Y;
 
             // Sets the Height/Width of the circle to the mouse coordinates.
-            Canvas.SetLeft(CloseOpin, pX);
-            Canvas.SetTop(CloseOpin, pY);
+            Canvas.SetLeft(CloseOpin, pX- CloseOpin.Width);
+            Canvas.SetTop(CloseOpin, pY - CloseOpin.Height);
             // CloseOpin.Width = pX;
-            //CloseOpin.Height = pY;   */
+            //CloseOpin.Height = pY;   
         }
 
         /// <summary>
