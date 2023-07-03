@@ -748,10 +748,10 @@ namespace CokeeDP.Views.Windows
                     var scaleAnim = new DoubleAnimation
                     {
                         To = 100,
-                        SpeedRatio = 0.1,
+                        SpeedRatio = 0.01,
                         EasingFunction = new CircleEase()
                     };
-                    colorAnim.Completed += (a, b) => { Close(); Environment.Exit(0); };
+                    //colorAnim.Completed += (a, b) => { Close(); Environment.Exit(0); };
                     scaleAnim.Completed += (a, b) => { scaleTran.ScaleX = 1; scaleTran.ScaleY = 1; };
                     closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
