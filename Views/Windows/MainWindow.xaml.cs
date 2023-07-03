@@ -67,7 +67,7 @@ namespace CokeeDP.Views.Windows
         private FileInfo[] ImageArray;
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
-        private String AudioPath, AudioFolder, MediaDuring;
+        private String AudioFolder;
         private int bgn = 0, bing = 0;
         private BitmapImage bitmapImage = null;
         private string disk, weaWr, hkUrl, nowDowning = "";
