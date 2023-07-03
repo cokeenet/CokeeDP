@@ -1306,6 +1306,10 @@ namespace CokeeDP.Views.Windows
                     {
                         child.Visibility = Visibility.Visible;
                     }
+                    else if (child is Button)
+                    {
+                        child.Visibility = Visibility.Visible;
+                    }
                     else child.Visibility = Visibility.Collapsed;
                 }
                 //OneWordsTimer.Enabled = false ;

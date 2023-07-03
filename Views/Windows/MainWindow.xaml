@@ -43,7 +43,7 @@
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Image/bg.jpg" Stretch="Fill">
+                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" Source="/Views/Windows/bg.jpg">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
@@ -60,7 +60,7 @@
                 </MediaElement>
                 <InkCanvas x:Name="inkcanvas" Width="{Binding ActualWidth, ElementName=MainGrid, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MainGrid, Mode=OneWay}" Background="#FF2B4546" Visibility="Collapsed">
                     <InkCanvas.DefaultDrawingAttributes>
-                        <DrawingAttributes Color="White"/>
+                        <DrawingAttributes Color="White" Width="5" FitToCurve="True"/>
                     </InkCanvas.DefaultDrawingAttributes>
                 </InkCanvas>
                 <pu:Carousel
