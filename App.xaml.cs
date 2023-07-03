@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Animation;
 using Wpf.Ui.Appearance;
+using Timeline = System.Windows.Media.Animation.Timeline;
 
 namespace CokeeDP
 {

@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Interfaces;
@@ -59,6 +60,12 @@ namespace CokeeDP.Views.Windows
         {
             snackbarService = new SnackbarService();
             snackbarService.SetSnackbarControl(snackbar);
+        }
+
+        private void DarkMode(object sender, RoutedEventArgs e)
+        {
+            if (Theme.GetAppTheme() == ThemeType.Light) Theme.Apply(ThemeType.Dark);
+            else Theme.Apply(ThemeType.Light);
         }
     }
 }

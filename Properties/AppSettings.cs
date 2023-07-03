@@ -33,8 +33,9 @@ namespace CokeeDP.Properties
         public DateTime CachedWeatherTime { get; set; } = new DateTime(2000, 1, 1);
         public bool SnowEnable { get; set; } = false;
         public bool BingVideoEnable { get; set; } = false;
-
-        public string AudioAutoPlayTime { get; set; }="00-00";
+        public bool DarkMode { get; set; } = false;
+        public int SpakerVolMethod { get; set; } = 0;
+        public String AudioAutoPlayTime { get; set; }="00-00";
     }
     public static class AppSettingsExtensions
     {

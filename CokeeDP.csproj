@@ -6,7 +6,7 @@
     <Authors>Cokee</Authors>
     <Product>CokeeDP</Product>
     <Description>次世代PC屏保</Description>
-    <Copyright>(c)2022 Cokee Technoliogies Ltd.</Copyright>
+    <Copyright>(c)2023 Cokee Technoliogies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
@@ -67,22 +67,20 @@
 
   <ItemGroup>
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
-    <None Remove="Image\bg75.png" />
-    <None Remove="SplashScreen.png" /> 
+    <None Remove="SplashScreen.png" />
+    <None Remove="Views\Windows\bg.jpg" /> 
     <Content Include="Image\hd1.ico" /> 
-    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />   
-    <Resource Include="Image\bg75.png" />
-    <Resource Include="Image\bg_normal.png" />
-    <Resource Include="Image\bg_setting.png" />
+    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
+    <Resource Include="Views\Windows\bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
-    <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AppCenter" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
     <PackageReference Include="NAudio" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4" Version="4.7.0.20230115" />
@@ -90,12 +88,11 @@
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.7.0.20230115" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.7.0.20230115" />
     <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.7.0.20230115" />
-    <PackageReference Include="Panuon.WPF.UI" Version="1.1.9.3" />
-    <PackageReference Include="Quartz" Version="3.6.3" />
-    <PackageReference Include="Serilog" Version="2.12.1-dev-01635" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.14" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.0" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
   </ItemGroup>
 

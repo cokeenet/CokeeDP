@@ -32,6 +32,8 @@
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
                     <ui:NavigationItem
+                        Content="深色模式" Icon="DarkTheme24" Click="DarkMode"/>
+                    <ui:NavigationItem
                         Content="关于" Icon="Info24"
                         PageType="{x:Type pages:About}" />
                 </ui:NavigationStore.Footer>
