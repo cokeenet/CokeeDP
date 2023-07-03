@@ -2,11 +2,14 @@
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Utils.Files;
 using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+//using Quartz.Impl;
+//using Quartz;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -33,6 +36,8 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Windows.Media.ClosedCaptioning;
+using Windows.UI.Core.AnimationMetrics;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -63,7 +68,7 @@ namespace CokeeDP.Views.Windows
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
-        private static Timer CapTimer = new Timer(20 * 60 * 1000);
+        private static Timer CapTimer = new Timer(10 * 60 * 1000);
         private List<FileInfo> ImageArray = new List<FileInfo>();
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
@@ -71,16 +76,21 @@ namespace CokeeDP.Views.Windows
         private int bgn = -1, bing = 0, videoCount = 0;
         private BitmapImage bitmapImage = null;
         private string disk, weaWr, hkUrl, nowDowning = "";
+
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
         private int PlayingRule = 0, TaskCd;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime, TaskedTime;
-        public string Version = "Ver 3.1";
+        public string Version = "Ver 3.5";
         public double ver = 3.1;
         public TimeTasks[] timeTasks;
         public bool IsModify = false, IsUsbOpened = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
+        //StdSchedulerFactory factory = new StdSchedulerFactory();
+        //创建任务调度器
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -521,22 +531,20 @@ namespace CokeeDP.Views.Windows
                 CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                /*JObject jsonData = null;                                               //Read TimedTask Json
-               // if (File.Exists(@"D:\CokeeDP\TimedTask.json")) jsonData = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(@"D:\CokeeDP\TimedTask.json"));
+          /*      var schedulerFactory = new StdSchedulerFactory();
+                var scheduler = await schedulerFactory.GetScheduler();
+                await scheduler.Start();
+                //创建作业和触发器
+                var jobDetail = JobBuilder.Create<AudioJob>().Build();
+                var trigger = TriggerBuilder.Create()
+                                            .WithSimpleSchedule(m => {
+                                                m.WithRepeatCount(3).WithIntervalInSeconds(1);
+                                            })
+                                            .Build();
 
-
-                //JObject dt = JsonConvert.DeserializeObject<JObject>(await client.GetStringAsync(settings.OneWordsApi));
-                //string who = dt["from_who"].ToString();
-                if (jsonData != null) foreach (var item in jsonData)
-                    {
-                        timeTasks.Append(new TimeTasks(item.Key, item.Value.ToString().Split("|")[0], DateTime.Parse(item.Value.ToString().Split("|")[1]), item.Value.ToString().Split("|")[0]));
-                    }
-                //var a= new TimeTasks("1", "1", DateTime.Now, "audio");
-                //timeTasks[0] = a;
-                //timeTasks.Append(a);
-                //DEBUG Only
-                //snackbarService.ShowAsync(timeTasks.Count().ToString());             */
-                if(settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
+                //添加调度
+                await scheduler.ScheduleJob(jobDetail, trigger);*/
+                if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 //isloaded = true;
             }
             catch(Exception ex)
@@ -544,7 +552,15 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
-
+       /* public class AudioJob : IJob
+        {
+            public Task Execute(IJobExecutionContext context)
+            {
+                return Task.Factory.StartNew(() => {
+                   
+                });
+            }
+        }*/
         private void CapTimer_Elapsed(object sender,ElapsedEventArgs e) => VideoCap();
 
         private void VideoCap()
@@ -693,27 +709,19 @@ namespace CokeeDP.Views.Windows
 
         private void OnCloseWindow(object sender,MouseButtonEventArgs e)
         {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                if(IsUsbOpened && Environment.CurrentDirectory == "C:\\Windows\\System32")
+            Dispatcher.Invoke(new Action(() => {
+
+                if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
-                    messageBox.Content = "当前处于安全桌面模式，" + Environment.NewLine + "请确认你打开的文件均已关闭后，点击\"确认\"关闭屏保程序。" + Environment.NewLine + "如文件未关闭则可能造成文件数据损坏。";
-                    messageBox.ButtonLeftName = "确认";
-                    //messageBox.ButtonR
-                    messageBox.MicaEnabled = true;
-                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
-                    if(messageBox.ShowDialog() == true) Close();
-                }
-                if(IsPlaying)
-                {
-                    Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
-                    messageBox.Content = "有媒体正在播放。确认关闭程序吗？";
-                    messageBox.ButtonLeftName = "确认";
+                    messageBox.Title = "嘿！";
+                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
+                    messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
-                    messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
-                    if(messageBox.ShowDialog() == true) Close();
+                    messageBox.Show();
+                    // messageBox.ButtonLeftClick += MessageBox_ButtonLeftClick;
+                    // if (messageBox.ShowDialog() == true) Close();
                 }
                 else
                 {
@@ -749,6 +757,7 @@ namespace CokeeDP.Views.Windows
                     //Close();
                    
                 }
+                else Close();
             }));
         }
 
@@ -769,7 +778,7 @@ namespace CokeeDP.Views.Windows
                     tranUsb.BeginAnimation(TranslateTransform.XProperty,anim1);
                     disk = t.Name;
                     diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
-                    diskInfo.Content = (t.TotalFreeSpace / 1073741824).ToString() + "GB/" + (t.TotalSize / 1073741824).ToString() + "GB";//TODO:改进算法，这个结果是错的
+                    diskInfo.Content = (t.TotalFreeSpace / 1024/1024) + "GB/" + (t.TotalSize / 1024/1024) + "GB";//TODO:改进算法，这个结果是错的
                 }
                 else if(isUnplug)
                 {

@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--<ui:InfoBar />-->
         <TextBlock
@@ -122,7 +123,7 @@
                         FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <DockPanel>
+            <DockPanel Cursor="IBeam">
                 <ui:TextBox
                     x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="476" />
                 <ui:Button Content="选择目录" Icon="Folder32" Tag="addTask" Width="104"/>
@@ -175,6 +176,19 @@
             </ui:CardControl.Header>
             <ui:ToggleSwitch
                 x:Name="SnowFlakeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="SnowFlake" />
+        </ui:CardControl>
+        <ui:CardControl
+            Grid.Row="14" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            <ui:CardControl.Header>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="音频自动播放时间" />
+                    <TextBlock
+                        FontSize="12" Opacity="0.7" Text="格式hh-mm 设置为null关闭" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <ui:TextBox
+                    x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" />
         </ui:CardControl>
     </Grid>
 </ui:UiPage>

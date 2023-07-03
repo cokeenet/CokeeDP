@@ -6,7 +6,7 @@
     <Authors>Cokee</Authors>
     <Product>CokeeDP</Product>
     <Description>次世代PC屏保</Description>
-    <Copyright>(c)2022 Cokee Technoliogies Ltd.</Copyright>
+    <Copyright>(c)2023 Cokee Technoliogies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
@@ -79,7 +79,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />

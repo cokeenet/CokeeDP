@@ -34,6 +34,7 @@ namespace CokeeDP.Properties
         public bool SnowEnable { get; set; } = false;
         public bool BingVideoEnable { get; set; } = false;
 
+        public TimeOnly AudioAutoPlayTime { get; set; }=new TimeOnly(0,0);
     }
     public static class AppSettingsExtensions
     {

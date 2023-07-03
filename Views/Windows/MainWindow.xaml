@@ -286,6 +286,7 @@
                         x:Name="CountDownLabel" Margin="20,802,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                         Background="{x:Null}"
                         Content="距离[---]还有---天" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
+                        Foreground="White" Visibility="Visible">
                         Foreground="White" Visibility="Visible" >
                     <Label.Effect>
                         <DropShadowEffect />
@@ -387,7 +388,7 @@
                 <ProgressBar
                         x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1059" Width="150"
                         Height="11" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#22ACCD9D" Foreground="#FFD6D6D6"
-                        Visibility="Visible" />
+                        Visibility="Collapsed" />
                 <ui:Button
                         Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B3F7F7F7"
@@ -614,13 +615,13 @@
                 <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585" Visibility="Collapsed">
                     <Grid Height="553">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="201*"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="649*"/>
                         </Grid.ColumnDefinitions>
                         <Label
                             x:Name="CardInfo1"
                             Background="{x:Null}"
-                            FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="Debug Page" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="Debug Page 调试页面" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.4" />
                             </Label.Effect>
