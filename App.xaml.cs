@@ -20,7 +20,7 @@ namespace CokeeDP
         private void AppStartup(object sender, StartupEventArgs e)
         {
             Log.Logger = new LoggerConfiguration().WriteTo.File("log.txt",
-               outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}").CreateLogger();
+               outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}").CreateLogger();
             if (Environment.OSVersion.Version.Major >= 10.0) AppCenter.Start("52a9c4e0-ad42-455b-b1cf-515d8a39f245", typeof(Analytics), typeof(Crashes));
             // Theme.Apply(ThemeType.Light,BackgroundType.Mica);
             Timeline.DesiredFrameRateProperty.OverrideMetadata(
@@ -30,8 +30,9 @@ namespace CokeeDP
             Log.Debug(e.Args.ToString());
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Double process not allow
-            if (Process.GetProcessesByName("CokeeDP.exe").Length != 0 || Process.GetProcessesByName("CokeeDP.scr").Length != 0)
+            if (Process.GetProcessesByName("CokeeDP.exe").Length > 1 || Process.GetProcessesByName("CokeeDP.scr").Length > 1)
             {
+                //MessageBox.Show("1");
                 Environment.Exit(0);
             }
         }

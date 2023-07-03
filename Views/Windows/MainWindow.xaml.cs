@@ -300,7 +300,7 @@ namespace CokeeDP.Views.Windows
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
                     //PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSecondTimeronds;
                 }
-                if(settings.AudioAutoPlayTime.Hour!=00)
+               /* if(settings.AudioAutoPlayTime.Hour!=00)
                 if ((settings.AudioAutoPlayTime.CompareTo(TimeOnly.FromDateTime(DateTime.Now))==0&&!IsWaitingTask))
                 {
                     hitokoto.Content = "好心人帮你打开了听力。---鲁迅《不是我干的》";
@@ -309,7 +309,7 @@ namespace CokeeDP.Views.Windows
                     //while (!AudioLoaded) Thread.Sleep(10);
                     SetCurrentSpeakerVolume(100);
                     OnBtnPlay(null, null);
-                }
+                }*/
 
             }));
             }

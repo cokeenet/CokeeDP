@@ -67,7 +67,7 @@ namespace CokeeDP.Views.Pages
                     case "CountDownName":
                         settings.CountdownName = textBox.Text; break;
                     case "audioTime":
-                        settings.AudioAutoPlayTime = TimeOnly.Parse(textBox.Text); break;
+                        settings.AudioAutoPlayTime = textBox.Text; break;
                     default:
                         break;
                 }
