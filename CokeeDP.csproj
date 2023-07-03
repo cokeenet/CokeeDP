@@ -6,7 +6,7 @@
     <Authors>Cokee</Authors>
     <Product>CokeeDP</Product>
     <Description>次世代PC屏保</Description>
-    <Copyright>(c)2022 Cokee Technoliogies Ltd.</Copyright>
+    <Copyright>(c)2023 Cokee Technoliogies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
@@ -66,14 +66,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Archived\Setting.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="Fonts\Segoe Fluent Icons.ttf" />
     <None Remove="Image\bg75.png" />
-    <None Remove="SplashScreen.png" />
-    <Page Remove="Archived\Setting.xaml" /> 
-    <Content Include="Image\hd1.ico" />   
+    <None Remove="SplashScreen.png" /> 
+    <Content Include="Image\hd1.ico" /> 
+    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />   
     <Resource Include="Image\bg75.png" />
     <Resource Include="Image\bg_normal.png" />
     <Resource Include="Image\bg_setting.png" />
@@ -82,17 +79,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
     <PackageReference Include="NAudio" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="Panuon.WPF.UI" Version="1.1.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenCvSharp4" Version="4.7.0.20230115" />
+    <PackageReference Include="OpenCvSharp4.Extensions" Version="4.7.0.20230115" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.7.0.20230115" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.7.0.20230115" />
+    <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.7.0.20230115" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.9.3" />
+    <PackageReference Include="Quartz" Version="3.6.3" />
     <PackageReference Include="Serilog" Version="2.12.1-dev-01635" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.0" />
     <PackageReference Include="WPF-UI" Version="2.0.3" />
   </ItemGroup>
 
@@ -282,10 +285,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
+    <Compile Update="Views\Pages\About - 复制.xaml.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Pages\About.xaml.cs">
       <SubType>Code</SubType>
@@ -300,27 +301,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="Views\Pages\About.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Pages\Birth.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\Pages\TimeTask.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Archived\Setting.xaml" />
-    <None Include="Archived\Setting.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>

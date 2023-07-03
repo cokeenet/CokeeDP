@@ -27,7 +27,8 @@
                         Content="设置" Icon="Home24"
                         PageType="{x:Type pages:Main}" />
                     <ui:NavigationSeparator />
-                    <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" />
+                    <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" PageType="{x:Type pages:TimeTask}"/>
+                    <ui:NavigationItem Content="生日提醒" Icon="FoodCake24" PageType="{x:Type pages:Birth}"/>
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
                     <ui:NavigationItem
@@ -37,7 +38,7 @@
             </ui:NavigationStore>
             <Border
                 Grid.Column="1" Margin="0" CornerRadius="8,0,0,0">
-                <Frame x:Name="RootFrame" Margin="4,8" />
+                <Frame x:Name="RootFrame" Margin="4,8" ScrollViewer.CanContentScroll="True" NavigationUIVisibility="Visible" />
             </Border>
         </Grid>
         <ui:Snackbar

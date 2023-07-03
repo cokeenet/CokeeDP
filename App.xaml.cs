@@ -4,6 +4,8 @@ using Microsoft.AppCenter.Crashes;
 using Panuon.WPF.UI;
 using Serilog;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Animation;
 using Wpf.Ui.Appearance;
@@ -25,6 +27,25 @@ namespace CokeeDP
                 typeof(Timeline),
                 new FrameworkPropertyMetadata { DefaultValue = 120 }
                 );
+            Log.Debug(e.Args.ToString());
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //Double process not allow
+            if (Process.GetProcessesByName("CokeeDP.exe").Length != 0 || Process.GetProcessesByName("CokeeDP.scr").Length != 0)
+            {
+                Environment.Exit(0);
+            }
+        }
+        private static void CurrentDomain_UnhandledException(object sender,UnhandledExceptionEventArgs e)
+        {
+            Exception ex = e.ExceptionObject as Exception;
+            Crashes.TrackError(ex);
+            Log.Error(string.Format("捕获到未处理异常：{0}\r\n异常信息：{1}\r\n异常堆栈：{2}",ex.GetType(),ex.Message,ex.StackTrace));
+        }
+        static void Application_ThreadException(object sender,System.Threading.ThreadExceptionEventArgs e)
+        {
+            Exception ex = e.Exception;
+            Crashes.TrackError(ex);
+            Log.Error(string.Format("捕获到未处理异常：{0}\r\n异常信息：{1}\r\n异常堆栈：{2}",ex.GetType(),ex.Message,ex.StackTrace));
         }
     }
 }
