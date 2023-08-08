@@ -26,7 +26,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Views/Windows/bg.jpg" />
+        <ImageBrush ImageSource="/Image/bg.jpg" />
     </Window.Background>
     <Window.Triggers />
     <Grid
@@ -43,7 +43,7 @@
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" Source="/Views/Windows/bg.jpg">
+                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Image/bg.jpg" Stretch="Fill">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
@@ -432,7 +432,7 @@
                         HorizontalContentAlignment="Left"
                         Background="{x:Null}"
                         Content="今天是[---]的生日" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
-                        Foreground="White" Visibility="Collapsed">
+                        Foreground="White">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -516,7 +516,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                        RenderTransformOrigin="0.5,0.5">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />

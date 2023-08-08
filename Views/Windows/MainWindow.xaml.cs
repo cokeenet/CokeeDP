@@ -1,16 +1,4 @@
-﻿using CokeeDP.Properties;
-using CokeeDP.Views.Pages;
-using Microsoft.AppCenter.Crashes;
-using NAudio.CoreAudioApi;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
-using Panuon.WPF.UI;
-//using Quartz.Impl;
-//using Quartz;
-using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -34,17 +22,28 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using CokeeDP.Properties;
+using CokeeDP.Views.Pages;
+using Microsoft.AppCenter.Crashes;
+using NAudio.CoreAudioApi;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using Panuon.WPF.UI;
+//using Quartz.Impl;
+//using Quartz;
+using Serilog;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
+
 using Button = Wpf.Ui.Controls.Button;
-using Card = Wpf.Ui.Controls.Card;
 using Clipboard = Wpf.Ui.Common.Clipboard;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 using MediaPlayer = System.Windows.Media.MediaPlayer;
-//using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Point = System.Windows.Point;
 using Timer = System.Timers.Timer;
 using Window = System.Windows.Window;
@@ -55,10 +54,7 @@ namespace CokeeDP.Views.Windows
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     ///  Made with Heart and Love
-    ///  Cokee.
-
-
-
+    ///  By Cokee. Last Edit: 20230722
     public partial class MainWindow : Window
     {
 
@@ -71,39 +67,48 @@ namespace CokeeDP.Views.Windows
         private int AudioNum = 0;
         private string AudioFolder;
         private int bgn = -1, bing = 0, videoCount = 0;
-        private BitmapImage bitmapImage = null;
+        
         private string disk, weaWr, hkUrl, nowDowning = "";
-
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
         private int PlayingRule = 0, TaskCd;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime, TaskedTime;
-        public string Version = "Ver 3.5";
-        public double ver = 3.1, AudioScroll = 0;
+        public string Version = "Ver 3.8";
+        public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement whiteboardCard;
         public bool IsWhiteBoard = false, IsUsbOpened = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
         //StdSchedulerFactory factory = new StdSchedulerFactory();
         //创建任务调度器
-
-
         public MainWindow()
         {
             InitializeComponent();
             try
             {
-                /* if(Environment.GetCommandLineArgs().Length > 0)
-                  {
-                      string[] pargs = Environment.GetCommandLineArgs();
-                      if(pargs[1] == "/p") Close();//this.Owner = pargs[2];
-                      if(pargs[1] == "/c") { this.WindowState = WindowState.Minimized; var win1 = new Settings(); win1.Show(); }
-                 }
-                */
+                /*if (Environment.GetCommandLineArgs().Length > 0)
+                {
+                    string[] pargs = Environment.GetCommandLineArgs();
+                    if (pargs.Length >= 1)
+                    {
+                        if (pargs[1] == "/p" && pargs.Length >= 2)
+                        {
+                            IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2], 16));
+                            IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
+                            // 将窗口设置为Monitor窗口的子窗口
+                            SetParent(childWindowHandle, parentWindowHandle);
+                        }
+                        if (pargs[1] == "/c")
+                        {
+                            WindowState = WindowState.Minimized;
+                            var win1 = new SettingsWindow();
+                            win1.Show();
+                        }
+                    }
 
+                }*/
                 FillConfig();
-
                 if (settings.EnableBigTimeTo) BigCountdown.Visibility = Visibility.Visible;
                 if (settings.BingVideoEnable) _ = GetBingVideo();
                 else if (settings.BingWappEnable) _ = GetBingWapp();
@@ -207,6 +212,10 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
         public void SetImageText(string desc, string info, string title)
         {
             Dispatcher.Invoke(new Action(delegate
@@ -316,7 +325,7 @@ namespace CokeeDP.Views.Windows
             {
                 if ((e.Message + e.StackTrace).Contains("Http")) { NetIcon.Symbol = SymbolRegular.CellularOff24; netBar.IsOpen = true; }
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.ShowAsync("发生错误", e.ToString().Substring(0, 50), SymbolRegular.ErrorCircle24);
+                snackbarService.ShowAsync("发生错误", e.ToString().Substring(0, 50), SymbolRegular.ErrorCircle24, ControlAppearance.Danger);
                 Clipboard.SetText(e.Message + e.StackTrace);
             }
             Log.Error(e, "Error");
@@ -353,6 +362,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
+                BitmapImage bitmapImage;
                 var client = new HttpClient();
                 // 从Bing获取图片Json，存在一天的时差
                 var u2 = await client.GetStringAsync("https://cn.bing.com/hp/api/v1/imagegallery?format=json&ensearch=0");
@@ -374,8 +384,8 @@ namespace CokeeDP.Views.Windows
                 Uri uri = new Uri(urlstr);
                 log.Text = bing + "/LoadBingImage:" + uri;
                 bitmapImage = new BitmapImage(uri);
-                bitmapImage.DownloadProgress += ImageDownloadProgress;
-                bitmapImage.DownloadCompleted += DownloadImageCompleted;
+                bitmapImage.DownloadProgress+=ImageDownloadProgress;
+                bitmapImage.DownloadCompleted += (a, b) => DownloadImageCompleted(a,b,bitmapImage);
                 br1.Tag = dt["data"]["images"][bing]["isoDate"].ToString();
                 DoubleAnimation animation = new DoubleAnimation(0, 20, new Duration(TimeSpan.FromSeconds(5)));
                 animation.EasingFunction = new CircleEase();
@@ -417,7 +427,7 @@ namespace CokeeDP.Views.Windows
                 br2.Source = videoUri;
                 CardInfo.Content = BingImageInfo.Content = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString();//.Split("\"video" + bing + "\"")[0];
                 DescPara1.Text = dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString() + Environment.NewLine + Environment.NewLine + "版权:" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["attribution"].ToString();
-                DescPara1.Text = DescPara1.Text + Environment.NewLine + Environment.NewLine + "Cokee提示:上课期间不要打开视频！😥";
+                DescPara1.Text = DescPara1.Text + Environment.NewLine + Environment.NewLine + "提示:上课期间不要打开视频！！";
             }
             catch (Exception e)
             {
@@ -452,7 +462,7 @@ namespace CokeeDP.Views.Windows
             log.Text = "LoadBingImage (" + e.Progress + "% )";
         }
 
-        private void DownloadImageCompleted(object sender, EventArgs e)
+        private void DownloadImageCompleted(object sender, EventArgs e,BitmapImage bitmap)
         {
             try
             {
@@ -462,13 +472,12 @@ namespace CokeeDP.Views.Windows
                 animation.EasingFunction = new CircleEase();
                 //animation.AutoReverse = true;
                 br1_blur.BeginAnimation(BlurEffect.RadiusProperty, animation);
-                br1.Source = bitmapImage;
+                br1.Source = bitmap;
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
             }
-            //Disappear(pro,1,20,0.5);
         }
 
         private async Task Hitoko()
@@ -505,7 +514,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                
+
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 snackbarService = new SnackbarService();
@@ -533,19 +542,6 @@ namespace CokeeDP.Views.Windows
                 CapTimer.Enabled = true;
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                /*      var schedulerFactory = new StdSchedulerFactory();
-                      var scheduler = await schedulerFactory.GetScheduler();
-                      await scheduler.Start();
-                      //创建作业和触发器
-                      var jobDetail = JobBuilder.Create<AudioJob>().Build();
-                      var trigger = TriggerBuilder.Create()
-                                                  .WithSimpleSchedule(m => {
-                                                      m.WithRepeatCount(3).WithIntervalInSeconds(1);
-                                                  })
-                                                  .Build();
-
-                      //添加调度
-                      await scheduler.ScheduleJob(jobDetail, trigger);*/
                 if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 whiteboardCard = DrawCard;
                 pager.Items.Remove(DrawCard);
@@ -556,15 +552,6 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
-        /* public class AudioJob : IJob
-         {
-             public Task Execute(IJobExecutionContext context)
-             {
-                 return Task.Factory.StartNew(() => {
-
-                 });
-             }
-         }*/
         private void CapTimer_Elapsed(object sender, ElapsedEventArgs e) => VideoCap();
 
         private void VideoCap()
@@ -640,7 +627,6 @@ namespace CokeeDP.Views.Windows
                 {
                     var handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip };
                     var client = new HttpClient(handler);
-
                     u2 = await client.GetStringAsync("https://devapi.qweather.com/v7/weather/7d?location=" + settings.CityId + "&key=6572127bcec647faba394b17fbd9614f");
                     u3 = await client.GetStringAsync("https://devapi.qweather.com/v7/warning/now?location=" + settings.CityId + "&key=6572127bcec647faba394b17fbd9614f");
                     //MessageBoxX.Show("https://devapi.qweather.com/v7/warning/now?location=" + settings.CityId + " &key=6572127bcec647faba394b17fbd9614f");
@@ -871,7 +857,7 @@ namespace CokeeDP.Views.Windows
                 // 向目标设备发送设备控制码。IOCTL_STORAGE_EJECT_MEDIA-弹出U盘
                 uint byteReturned;
                 bool result = DeviceIoControl(handle, IOCTL_STORAGE_EJECT_MEDIA, IntPtr.Zero, 0, IntPtr.Zero, 0, out byteReturned, IntPtr.Zero);
-                if (!result) snackbarService.ShowAsync("U盘退出失败", "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24);
+                if (!result) snackbarService.ShowAsync("U盘退出失败", "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24, ControlAppearance.Danger);
                 else ShowUsbCard(true);
             }
             catch (Exception ex)
@@ -1266,13 +1252,10 @@ namespace CokeeDP.Views.Windows
         private void BtnSaveHandler(object sender, RoutedEventArgs e)
         {
             if (snackbarService.GetSnackbarControl() == null) snackbarService.SetSnackbarControl(snackbar);
-            snackbarService.ShowAsync("一言已收藏", "已收藏至文件 " + filePath, SymbolRegular.Heart48);
+            snackbarService.ShowAsync("一言已收藏", "已收藏至文件 " + @"D:\cokee_hitokoto.txt", SymbolRegular.Heart48);
             //NoticeBox.Show("已收藏至文件 " + filePath, "info", MessageBoxIcon.Info, true, 1000);
             WriteInfo(hitokoto.Content.ToString(), @"D:\cokee_hitokoto.txt");
         }
-
-        private string filePath = @"D:\cokee_hitokoto.txt";
-
 
         private void WriteInfo(string info, string filepath)
         {
@@ -1287,6 +1270,7 @@ namespace CokeeDP.Views.Windows
 
         private void WhiteBoard(object sender, RoutedEventArgs e)
         {
+            //瞎写的
             // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
             //MainWindow.GetWindow(this).WindowState = WindowState.Normal;
             //new Task(VideoCap).Start();// VideoCap();
@@ -1299,7 +1283,7 @@ namespace CokeeDP.Views.Windows
                         var car = (Carousel)child;
                         car.Items.Clear();
                         car.PageTurnButtonVisibility = DecorationVisibility.Collapsed;
-                        
+
                         continue;
                     }
                     else if (child is InkCanvas)
@@ -1317,7 +1301,7 @@ namespace CokeeDP.Views.Windows
                 pager.Items.Add(whiteboardCard);
             }
         }
-
+        //测试函数 防止屏保无法退出
         private void FuncT1(object sender, MouseButtonEventArgs e)
         {
             Environment.Exit(0);
@@ -1475,7 +1459,7 @@ namespace CokeeDP.Views.Windows
         private void Dialog_ButtonLeftClick(object sender, RoutedEventArgs e) => dialog.Hide();
 
         //---目前没什么用的函数
-        private async Task CheckUpdate()
+    /*    private async Task CheckUpdate()
         {
             try
             {
@@ -1539,7 +1523,7 @@ namespace CokeeDP.Views.Windows
                 br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
                 br1.EndInit();
             }
-        }
+        }*/
 
 
     }

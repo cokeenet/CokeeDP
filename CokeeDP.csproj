@@ -8,7 +8,7 @@
     <Description>次世代PC屏保</Description>
     <Copyright>(c)2023 Cokee Technoliogies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
     <Nullable>warnings</Nullable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -31,6 +31,13 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DefineConstants />
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <DefineConstants />
     <WarningLevel>5</WarningLevel>
@@ -39,6 +46,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants />
@@ -67,13 +81,14 @@
 
   <ItemGroup>
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Image\bg.jpg" />
     <None Remove="SplashScreen.png" />
     <None Remove="Views\Windows\bg.jpg" /> 
     <Content Include="Image\hd1.ico" /> 
-    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />
+    <Resource Include="Fonts\Segoe Fluent Icons.ttf" /> 
+    <Resource Include="Image\bg.jpg" />
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
-    <Resource Include="Views\Windows\bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -90,6 +105,7 @@
     <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.7.0.20230115" />
     <PackageReference Include="Panuon.WPF.UI" Version="1.1.14" />
     <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sink.AppCenter" Version="1.5.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
@@ -282,9 +298,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\Pages\About - 复制.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Pages\About.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -308,10 +321,6 @@
     <Page Update="Views\Pages\TimeTask.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
