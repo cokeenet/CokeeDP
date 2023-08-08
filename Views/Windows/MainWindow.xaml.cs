@@ -657,7 +657,11 @@ namespace CokeeDP.Views.Windows
                 JObject dt1 = JsonConvert.DeserializeObject<JObject>(u3);
 
                 if (!dt1.ContainsKey("warning") || dt1["code"].ToString() != "200" || dt["code"].ToString() != "200")
-                    throw new HttpRequestException("天气数据加载失败。网络异常。CODE:" + dt1["code"].ToString());
+                {
+                    SpecialWeatherBtn.Visibility = Visibility.Collapsed;
+                    SpecialWeatherBtn1.Visibility = Visibility.Collapsed;
+                    throw new HttpRequestException($"天气数据加载失败。网络异常。CODE1:{dt["code"]} CODE2:{dt1["code"]}");
+                }
                 if (!dt1["warning"].HasValues)
                 {
                     SpecialWeatherBtn.Visibility = Visibility.Collapsed;
@@ -695,8 +699,8 @@ namespace CokeeDP.Views.Windows
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
-                    messageBox.Title = "嘿！";
-                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
+                    messageBox.Title = "嘿！!";
+                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。(生气)";
                     messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
@@ -798,8 +802,6 @@ namespace CokeeDP.Views.Windows
                             break;
 
                         case DBT_DEVICEREMOVECOMPLETE:
-                            //MessageBox.Show("U盘卸载");
-                            log.Text = "EVENT : Usbdrive.Uninstall";
                             ShowUsbCard(true);
                             break;
 
