@@ -39,6 +39,7 @@ namespace CokeeDP
             //Double process not allow
             if (Process.GetProcessesByName("CokeeDP.exe").Length >= 2 || Process.GetProcessesByName("CokeeDP.scr").Length >= 2)
             {
+                //MessageBox.Show("1");
                 Environment.Exit(0);
             }
         }
