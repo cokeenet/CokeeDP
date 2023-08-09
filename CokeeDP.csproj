@@ -6,7 +6,7 @@
     <Authors>Cokee</Authors>
     <Product>CokeeDP</Product>
     <Description>次世代PC屏保</Description>
-    <Copyright>(c)2023 Cokee Technoliogies</Copyright>
+    <Copyright>2023 Cokee Technologies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
     <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
@@ -22,6 +22,10 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
+    <Company>Cokee Tech</Company>
+    <PackageIcon>AppIcon.jpg</PackageIcon>
+    <AssemblyVersion>1.0.30.23221</AssemblyVersion>
+    <FileVersion>1.0.30.23221</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -325,6 +329,13 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AppIcon.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

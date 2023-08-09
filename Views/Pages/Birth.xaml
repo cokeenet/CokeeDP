@@ -1,7 +1,7 @@
 ﻿<ui:UiPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:System="clr-namespace:System;assembly=System.Runtime"
     x:Class="CokeeDP.Views.Pages.Birth" Title="Main" d:DesignHeight="450" d:DesignWidth="800"
-    Scrollable="True" mc:Ignorable="d">
+    Scrollable="True" mc:Ignorable="d" Loaded="Load">
 
     <Grid Margin="5,0,5,0">
         <Grid.RowDefinitions>
@@ -28,7 +28,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="导入生日数据" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="在Excel中复制双列数据 第一列为名称 第二列为生日 (格式: 张三 20071201)" />
+                        FontSize="12" Opacity="0.7" Text="在Excel中复制双列数据 第一列为名称 第二列为生日 (单行格式: 张三 20071201)" />
                 </StackPanel>
             </ui:CardExpander.Header>
             <Grid >
@@ -45,9 +45,12 @@
 
         </ui:CardExpander>
         <ui:Card Grid.Row="3" Margin="5">
-            <DataGrid x:Name="dataGrid" AutoGenerateColumns="True"/>
-
-
+            <DataGrid x:Name="dataGrid" CellEditEnding="DataGridEditHandler" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="姓名" Binding="{Binding Name}" MinWidth="300"/>
+                    <DataGridTextColumn Header="生日" Binding="{Binding BirthDateStr}" MinWidth="300"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </ui:Card>
     </Grid>
 </ui:UiPage>

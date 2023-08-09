@@ -74,7 +74,7 @@ namespace CokeeDP.Views.Windows
         private int PlayingRule = 0, TaskCd;
         private MediaPlayer mediaplayer = new MediaPlayer();
         private DateTime CountDownTime, TaskedTime;
-        public string Version = "Ver 3.8";
+        public Version version;
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement whiteboardCard;
@@ -128,6 +128,7 @@ namespace CokeeDP.Views.Windows
                     }
                     ChangeWapp(false);
                 }
+                verString.Content=$"循星🌟 Ver {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 //Get AudioFiles
                 if (Directory.Exists(AudioFolder))
@@ -695,7 +696,11 @@ namespace CokeeDP.Views.Windows
         {
             Dispatcher.Invoke(new Action(() =>
             {
-
+                if (IsUsbOpened)
+                {
+                    snackbarService.ShowAsync("请确认已关闭U盘内课件", "再次点击以退出", SymbolRegular.Info28);
+                    IsUsbOpened = false;
+                }
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
@@ -731,23 +736,23 @@ namespace CokeeDP.Views.Windows
                     var colorAnim = new ColorAnimation
                     {
                         From = closeSCB.Color,
-                        By = Colors.Pink,
-                        // SpeedRatio = 1.5,
+                        //By = Colors.Pink,
+                        //Duration = new Duration(new TimeSpan(0, 0, 3)),
+                        SpeedRatio = 1.3,
                         To = randomColor,
                     };
                     var scaleAnim = new DoubleAnimation
                     {
                         To = 100,
-                        SpeedRatio = 0.01,
+                        SpeedRatio = 0.1,
                         EasingFunction = new CircleEase()
                     };
-                    //colorAnim.Completed += (a, b) => { Close(); Environment.Exit(0); };
+                    colorAnim.Completed += (a, b) => { Close(); Environment.Exit(0); };
                     scaleAnim.Completed += (a, b) => { scaleTran.ScaleX = 1; scaleTran.ScaleY = 1; };
                     closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
                     //Close();
-
                 }
             }));
         }

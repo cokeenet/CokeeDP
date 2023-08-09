@@ -39,7 +39,7 @@ namespace CokeeDP.Properties
     }
     public static class AppSettingsExtensions
     {
-        private const string SETTINGS_FILE_NAME = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\config.json";
+        public const string SETTINGS_FILE_NAME = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\config.json";
 
         public static AppSettings LoadSettings()
         {

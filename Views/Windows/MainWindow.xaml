@@ -31,12 +31,16 @@
     <Window.Triggers />
     <Grid
         x:Name="MainGrid" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="271*" />
             <ColumnDefinition Width="369*" />
         </Grid.ColumnDefinitions>
         <Viewbox
-            x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Uniform">
+            x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Uniform" Grid.RowSpan="2">
             <Canvas
                     x:Name="MainCanvas" Height="1080" Width="1920">
                 <Image
@@ -427,22 +431,12 @@
                         BorderBrush="{x:Null}"
                         Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowRight20" Tag="right"
                         Visibility="Visible" />
-                <Label
-                        x:Name="birth" Canvas.Left="24" Canvas.Top="553" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        HorizontalContentAlignment="Left"
-                        Background="{x:Null}"
-                        Content="今天是[---]的生日" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal"
-                        Foreground="White">
-                    <Label.Effect>
-                        <DropShadowEffect />
-                    </Label.Effect>
-                </Label>
-                <Label
+                <Label x:Name="verString"
                         Grid.Column="1" Canvas.Left="1752" Canvas.Top="999" HorizontalAlignment="Center" VerticalAlignment="Top"
                         AllowDrop="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
-                        Content="循星🌟 Ver 3.6" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
+                        Content="循星🌟 Ver 0.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
                         Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
                     <Label.Effect>
                         <DropShadowEffect />
@@ -640,6 +634,7 @@
                     </Grid>
                 </ui:Card>
                 <ui:InfoBar x:Name="netBar" Canvas.Left="828" Canvas.Top="1006" Message="网络连接丢失 &gt;_&lt;" IsClosable="False" Width="264" VerticalAlignment="Top" FontSize="18" Severity="Error" />
+                <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" Message="🎉 今天是 闫宝怡 的生日！" IsClosable="False" FontSize="18" IsOpen="True" Severity="Success" />
             </Canvas>
         </Viewbox>
     </Grid>
