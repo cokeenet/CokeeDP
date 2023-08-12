@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,18 +20,25 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
+
 using Microsoft.AppCenter.Crashes;
+
 using NAudio.CoreAudioApi;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+
 using Panuon.WPF.UI;
 //using Quartz.Impl;
 //using Quartz;
 using Serilog;
+
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -67,7 +72,7 @@ namespace CokeeDP.Views.Windows
         private int AudioNum = 0;
         private string AudioFolder;
         private int bgn = -1, bing = 0, videoCount = 0;
-        
+
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
@@ -128,7 +133,7 @@ namespace CokeeDP.Views.Windows
                     }
                     ChangeWapp(false);
                 }
-                verString.Content=$"循星🌟 Ver {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
+                verString.Content = $"循星🌟 Ver {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(2)}";
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
                 //Get AudioFiles
                 if (Directory.Exists(AudioFolder))
@@ -139,7 +144,7 @@ namespace CokeeDP.Views.Windows
                         AudioArray = dir.GetFiles("*.mp3");
                     }
                 }
-
+                CheckBirthDay();
             }
             catch (Exception e)
             {
@@ -282,8 +287,40 @@ namespace CokeeDP.Views.Windows
         public void OnNewDay()
         {
             snackbarService.ShowAsync("是新的一天!", "哇你还没睡觉啊>_<", SymbolRegular.WeatherMoon16);
+            CheckBirthDay();
         }
-
+        public void CheckBirthDay()
+        {
+            string dataPath = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json";
+            if (File.Exists(dataPath))
+            {
+                string json = File.ReadAllText(dataPath);
+                List<Person> people = JsonConvert.DeserializeObject<List<Person>>(json);
+                Person nearest = null; int type = 0;
+                foreach (var person in people)
+                {
+                    string shortBirthStr = person.BirthDateStr.Substring(5).Replace("\r",null);
+                    if (DateTime.Now.ToString("MM-dd") == shortBirthStr)
+                    {
+                        nearest = person; type = 1; break;
+                    }
+                    else if (DateTime.Now.AddDays(1).ToString("MM-dd") == shortBirthStr)
+                    {
+                        nearest = person; type = 2; continue;
+                    }
+                }
+                if (type == 1)
+                {
+                    birthBar.IsOpen = true;
+                    birthBar.Message = $"🎉 今天是 {nearest.Name} 的生日！";
+                }
+                else if (type == 2)
+                {
+                    birthBar.IsOpen = true;
+                    birthBar.Message = $"🎉 明天是 {nearest.Name} 的生日！";
+                }
+            }
+        }
         public void OnOneSecondTimer(object source, ElapsedEventArgs e)
         {
             try
@@ -385,8 +422,8 @@ namespace CokeeDP.Views.Windows
                 Uri uri = new Uri(urlstr);
                 log.Text = bing + "/LoadBingImage:" + uri;
                 bitmapImage = new BitmapImage(uri);
-                bitmapImage.DownloadProgress+=ImageDownloadProgress;
-                bitmapImage.DownloadCompleted += (a, b) => DownloadImageCompleted(a,b,bitmapImage);
+                bitmapImage.DownloadProgress += ImageDownloadProgress;
+                bitmapImage.DownloadCompleted += (a, b) => DownloadImageCompleted(a, b, bitmapImage);
                 br1.Tag = dt["data"]["images"][bing]["isoDate"].ToString();
                 DoubleAnimation animation = new DoubleAnimation(0, 20, new Duration(TimeSpan.FromSeconds(5)));
                 animation.EasingFunction = new CircleEase();
@@ -463,7 +500,7 @@ namespace CokeeDP.Views.Windows
             log.Text = "LoadBingImage (" + e.Progress + "% )";
         }
 
-        private void DownloadImageCompleted(object sender, EventArgs e,BitmapImage bitmap)
+        private void DownloadImageCompleted(object sender, EventArgs e, BitmapImage bitmap)
         {
             try
             {
@@ -544,8 +581,6 @@ namespace CokeeDP.Views.Windows
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                 if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
-                whiteboardCard = DrawCard;
-                pager.Items.Remove(DrawCard);
                 //isloaded = true;
             }
             catch (Exception ex)
@@ -1278,35 +1313,9 @@ namespace CokeeDP.Views.Windows
         private void WhiteBoard(object sender, RoutedEventArgs e)
         {
             //瞎写的
-            // Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
+            Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
             //MainWindow.GetWindow(this).WindowState = WindowState.Normal;
             //new Task(VideoCap).Start();// VideoCap();
-            if (!IsWhiteBoard)
-            {
-                foreach (UIElement child in MainCanvas.Children)
-                {
-                    if (child is Carousel)
-                    {
-                        var car = (Carousel)child;
-                        car.Items.Clear();
-                        car.PageTurnButtonVisibility = DecorationVisibility.Collapsed;
-
-                        continue;
-                    }
-                    else if (child is InkCanvas)
-                    {
-                        child.Visibility = Visibility.Visible;
-                    }
-                    else if (child is Button)
-                    {
-                        child.Visibility = Visibility.Visible;
-                    }
-                    else child.Visibility = Visibility.Collapsed;
-                }
-                //OneWordsTimer.Enabled = false ;
-                //WeatherTimer.Enabled = false;
-                pager.Items.Add(whiteboardCard);
-            }
         }
         //测试函数 防止屏保无法退出
         private void FuncT1(object sender, MouseButtonEventArgs e)
@@ -1466,71 +1475,71 @@ namespace CokeeDP.Views.Windows
         private void Dialog_ButtonLeftClick(object sender, RoutedEventArgs e) => dialog.Hide();
 
         //---目前没什么用的函数
-    /*    private async Task CheckUpdate()
-        {
-            try
+        /*    private async Task CheckUpdate()
             {
-                var client = new HttpClient(); var a = new WebClient(); var uri = "";
-                var u2 = await client.GetStringAsync("https://gitee.com/api/v5/repos/cokee/CokeeDisplayProtect/releases?page=1&per_page=1&direction=desc ");
-                JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                if ((double)dt[0]["name"] > ver)
-                    if (dt[0]["assets"][0]["name"].ToString() != "update.zip" && dt[0]["assets"][1]["name"].ToString() == "update.zip") uri = dt[0]["assets"][1]["browser_download_url"].ToString();
-                    else uri = dt[0]["assets"][0]["browser_download_url"].ToString();
-                a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
-                a.DownloadFileCompleted += new AsyncCompletedEventHandler(Updatecb);
-                a.DownloadFileAsync(new Uri(uri), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip");
+                try
+                {
+                    var client = new HttpClient(); var a = new WebClient(); var uri = "";
+                    var u2 = await client.GetStringAsync("https://gitee.com/api/v5/repos/cokee/CokeeDisplayProtect/releases?page=1&per_page=1&direction=desc ");
+                    JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
+                    if ((double)dt[0]["name"] > ver)
+                        if (dt[0]["assets"][0]["name"].ToString() != "update.zip" && dt[0]["assets"][1]["name"].ToString() == "update.zip") uri = dt[0]["assets"][1]["browser_download_url"].ToString();
+                        else uri = dt[0]["assets"][0]["browser_download_url"].ToString();
+                    a.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressCallback);
+                    a.DownloadFileCompleted += new AsyncCompletedEventHandler(Updatecb);
+                    a.DownloadFileAsync(new Uri(uri), Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip");
+                }
+                catch (Exception ex)
+                {
+                    ProcessErr(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                ProcessErr(ex);
-            }
-        }
 
-        private void ResDwCb(object sender, AsyncCompletedEventArgs e)
-        {
-            pro.Visibility = Visibility.Collapsed;
-            ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip", ZipArchiveMode.Read);
-            if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
-            archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
-            if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) log.Text = "资源包下载成功.";
-        }
-
-        private void Updatecb(object sender, AsyncCompletedEventArgs e)
-        {
-            pro.Visibility = Visibility.Collapsed;
-            ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip", ZipArchiveMode.Read);
-            if (Directory.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
-            archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
-        }
-
-        //downing
-        private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
-            pro.Value = e.ProgressPercentage;
-            log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
-        }
-
-        private void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
-        {
-            if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
-            log.Text = "Done.";
-            if (e.Cancelled)
+            private void ResDwCb(object sender, AsyncCompletedEventArgs e)
             {
-                log.Text = "File download cancelled.";
+                pro.Visibility = Visibility.Collapsed;
+                ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\res.zip", ZipArchiveMode.Read);
+                if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
+                archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp");
+                if (File.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\ver")) log.Text = "资源包下载成功.";
             }
-            if (e.Error != null)
+
+            private void Updatecb(object sender, AsyncCompletedEventArgs e)
             {
-                log.Text = e.Error.ToString();
+                pro.Visibility = Visibility.Collapsed;
+                ZipArchive archive = ZipFile.Open(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\update\\update.zip", ZipArchiveMode.Read);
+                if (Directory.Exists(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip")) Directory.Delete(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
+                archive.ExtractToDirectory(Environment.SpecialFolder.MyDocuments + "\\CokeeWapp\\update\\unzip");
             }
-            if (e.Error == null && !e.Cancelled)
+
+            //downing
+            private void DownloadProgressCallback(object sender, DownloadProgressChangedEventArgs e)
             {
-                br1.BeginInit();
-                br1_blur.Radius = 0;
-                br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
-                br1.EndInit();
+                if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
+                pro.Value = e.ProgressPercentage;
+                log.Text = "正在加载" + nowDowning + "... " + e.ProgressPercentage + "% " + e.BytesReceived / 1048576 + "MB of" + e.TotalBytesToReceive / 1048576;
             }
-        }*/
+
+            private void DownloadFileCallback(object sender, AsyncCompletedEventArgs e)
+            {
+                if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Collapsed;
+                log.Text = "Done.";
+                if (e.Cancelled)
+                {
+                    log.Text = "File download cancelled.";
+                }
+                if (e.Error != null)
+                {
+                    log.Text = e.Error.ToString();
+                }
+                if (e.Error == null && !e.Cancelled)
+                {
+                    br1.BeginInit();
+                    br1_blur.Radius = 0;
+                    br1.Source = new BitmapImage(new Uri(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CokeeWapp\\bing.jpg"));
+                    br1.EndInit();
+                }
+            }*/
 
 
     }

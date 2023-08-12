@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,9 +29,15 @@ namespace CokeeDP.Views.Pages
         {
             get; set;
         }
+        [JsonIgnore]
+        public bool IsSelected
+        {
+            get; set;
+        }
     }
     public partial class Birth : UiPage
     {
+        public List<Person> peopleList;
         private SettingsWindow _Window = Application.Current.Windows
              .Cast<Window>()
              .FirstOrDefault(window => window is SettingsWindow) as SettingsWindow;
@@ -40,7 +46,7 @@ namespace CokeeDP.Views.Pages
             InitializeComponent();
         }
 
-        private void ImportBirthData(object sender, RoutedEventArgs e)
+        private async void ImportBirthData(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -60,65 +66,112 @@ namespace CokeeDP.Views.Pages
                         else
                         {
                             // 日期格式无效
-                            _Window.snackbarService.ShowAsync($"无效的日期格式: {cells[1]}", "错误", SymbolRegular.Warning28, ControlAppearance.Danger);
+                            await _Window.snackbarService.ShowAsync($"无效的日期格式: {cells[1]}", "错误", SymbolRegular.Warning28, ControlAppearance.Danger);
                         }
                     }
                 }
                 dataGrid.ItemsSource = people;
-                _Window.snackbarService.ShowAsync($"成功导入 {people.Count} 条数据", $"共 {lines.Length} 条数据。", SymbolRegular.Info24, ControlAppearance.Success);
+                await _Window.snackbarService.ShowAsync($"成功导入 {people.Count} 条数据", $"共 {lines.Length} 条数据。", SymbolRegular.Info24, ControlAppearance.Success);
             }
             catch (Exception ex)
             {
                 _Window.ProcessErr(ex);
             }
         }
-
-        private void DataGridEditHandler(object sender, DataGridCellEditEndingEventArgs e)
+        private async void Load(object sender, RoutedEventArgs e)
         {
-            WriteToConfig();
+            await LoadDataAsync();
         }
-        private void Load(object sender, RoutedEventArgs e)
-        {
-            new Thread(LoadData).Start();
-        }
-        public void WriteToConfig()
+        public async Task WriteToJsonAsync()
         {
             try
             {
-                List<Person> people = new List<Person>();
-                foreach (var item in dataGrid.ItemsSource)
-                {
-                    if (item is Person person)
-                    {
-                        people.Add(person);
-                    }
-                }
-                string json = JsonConvert.SerializeObject(people, Formatting.Indented);
-                File.WriteAllText("D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json", json);
-                _Window.snackbarService.ShowAsync($"数据已保存");
+                peopleList = (List<Person>)dataGrid.Items.Cast<Person>();
+                string json = JsonConvert.SerializeObject(peopleList, Formatting.Indented);
+                await File.WriteAllTextAsync("D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json", json);
+                await _Window.snackbarService.ShowAsync("数据已保存", json);
             }
             catch (Exception ex)
             {
                 _Window.ProcessErr(ex);
             }
-
         }
-        public void LoadData()
+        public async Task LoadDataAsync()
         {
             try
             {
-                string json = File.ReadAllText("D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json");
-                List<Person> people = JsonConvert.DeserializeObject<List<Person>>(json);
-                dataGrid.ItemsSource = people;
-                _Window.snackbarService.ShowAsync($"已加载 {people.Count} 条数据");
+                string json = await File.ReadAllTextAsync("D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json");
+                peopleList = JsonConvert.DeserializeObject<List<Person>>(json);
+                dataGrid.ItemsSource = peopleList;
+                await _Window.snackbarService.ShowAsync($"已加载 {peopleList.Count} 条数据");
             }
             catch (FileNotFoundException)
             {
-                _Window.snackbarService.ShowAsync("找不到生日数据文件。");
+                await _Window.snackbarService.ShowAsync("找不到生日数据文件。");
             }
             catch (Exception ex)
             {
-                _Window.snackbarService.ShowAsync("加载数据时出现错误：" + ex.Message);
+                _Window.ProcessErr(ex, "加载数据时出现错误");
+            }
+        }
+
+        private async void SaveData(object sender, RoutedEventArgs e)
+        {
+            await WriteToJsonAsync();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox && checkBox.Name == "selectAllCheckBox")
+            {
+                bool isChecked = checkBox.IsChecked ?? false;
+
+                if (dataGrid.ItemsSource is ObservableCollection<Person> people)
+                {
+                    foreach (var person in people)
+                    {
+                        person.IsSelected = isChecked;
+                    }
+                }
+            }
+        }
+
+        private async void Reload(object sender, RoutedEventArgs e)
+        {
+            peopleList = null;
+            dataGrid.ItemsSource = null;
+            await LoadDataAsync();
+        }
+        private int clickCount = 0;
+        private async void DeleteItem(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+            clickCount++;
+
+            if (clickCount == 1)
+            {
+                await _Window.snackbarService.ShowAsync("再次点击按钮以确认删除操作");
+            }
+            else if (clickCount == 2)
+            {
+                foreach (Person item in dataGrid.Items)
+                {
+                    if (item.IsSelected)
+                    {
+                        peopleList.Remove(item);
+                    }
+                }
+                // 重置计数器和确认状态
+                await WriteToJsonAsync();
+                clickCount = 0;
+            }
+
+            }
+            catch (Exception ex)
+            {
+                _Window.ProcessErr(ex);
             }
         }
     }

@@ -97,25 +97,6 @@
                             </ScrollViewer>
                         </Grid>
                     </ui:Card>
-                    <ui:Card x:Name="DrawCard">
-                        <Grid Margin="0,0,-1,0">
-                            <Label
-                                x:Name="QuickSettingCard" Margin="0,0,0,199" HorizontalContentAlignment="Left"
-                                Background="{x:Null}"
-                                FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="白板模式">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4" />
-                                </Label.Effect>
-                            </Label>
-                            <ScrollViewer Margin="0,40,0,0">
-                                <ListBox >
-                                    <ui:ToggleSwitch Content="纯净模式" />
-                                    <ui:ToggleSwitch />
-                                    <ui:ToggleSwitch />
-                                </ListBox>
-                            </ScrollViewer>
-                        </Grid>
-                    </ui:Card>
                     <Border x:Name="b2">
                         <Grid>
                             <ui:Button
@@ -432,12 +413,12 @@
                         Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowRight20" Tag="right"
                         Visibility="Visible" />
                 <Label x:Name="verString"
-                        Grid.Column="1" Canvas.Left="1752" Canvas.Top="999" HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Grid.Column="1" Canvas.Left="1752" Canvas.Top="999"
                         AllowDrop="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         Content="循星🌟 Ver 0.0" Focusable="False" FontFamily="Microsoft YaHei" FontSize="22" FontWeight="Normal"
-                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1">
+                        Foreground="#66FFFFFF" IsEnabled="False" IsTabStop="False" Opacity="1" MouseDown="testfunc1" HorizontalAlignment="Right">
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
@@ -510,7 +491,7 @@
                 <ui:Card
                         x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
                         pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
-                        RenderTransformOrigin="0.5,0.5">
+                        RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" />
@@ -589,9 +570,6 @@
                         BorderBrush="{x:Null}"
                         BorderThickness="1" Click="WhiteBoard" Content="白板" FontSize="11" Foreground="White"
                         MouseRightButtonDown="FuncT1" RenderTransformOrigin="0.474,0.269" />
-                <ui:Snackbar
-                        x:Name="snackbar" Canvas.Left="702" Canvas.Top="934" Width="516" Height="107"
-                        HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
                 <Ellipse
                         x:Name="CloseOpin" Width="100" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Ellipse.Fill>
@@ -634,7 +612,10 @@
                     </Grid>
                 </ui:Card>
                 <ui:InfoBar x:Name="netBar" Canvas.Left="828" Canvas.Top="1006" Message="网络连接丢失 &gt;_&lt;" IsClosable="False" Width="264" VerticalAlignment="Top" FontSize="18" Severity="Error" />
-                <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" Message="🎉 今天是 闫宝怡 的生日！" IsClosable="False" FontSize="18" IsOpen="True" Severity="Success" />
+                <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" IsClosable="False" FontSize="18" Severity="Success" IsManipulationEnabled="True" />
+                <ui:Snackbar
+                        x:Name="snackbar" Canvas.Left="702" Canvas.Top="934" Width="516" Height="107"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
             </Canvas>
         </Viewbox>
     </Grid>
