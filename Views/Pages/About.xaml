@@ -26,7 +26,7 @@
             Grid.Row="2"
             Background="{x:Null}"
             IsReadOnly="True"
-            Style="{x:Null}">
+            Style="{x:Null}" Margin="540,130,-540,-130" Grid.RowSpan="11" Width="790">
             <FlowDocument>
                 <Paragraph>
                     <Bold>感谢您使用CokeeDP 循星。</Bold>

@@ -24,8 +24,8 @@
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
     <Company>Cokee Tech</Company>
     <PackageIcon>AppIcon.jpg</PackageIcon>
-    <AssemblyVersion>1.0.56.23224</AssemblyVersion>
-    <FileVersion>1.0.56.23224</FileVersion>
+    <AssemblyVersion>1.0.58.23229</AssemblyVersion>
+    <FileVersion>1.0.58.23229</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

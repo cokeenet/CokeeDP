@@ -20,20 +20,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
-
 using Microsoft.AppCenter.Crashes;
-
 using NAudio.CoreAudioApi;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-
 using Panuon.WPF.UI;
 //using Quartz.Impl;
 //using Quartz;
@@ -72,7 +66,6 @@ namespace CokeeDP.Views.Windows
         private int AudioNum = 0;
         private string AudioFolder;
         private int bgn = -1, bing = 0, videoCount = 0;
-
         private string disk, weaWr, hkUrl, nowDowning = "";
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
@@ -1082,14 +1075,10 @@ namespace CokeeDP.Views.Windows
                 audioName.Content = AudioArray[AudioNum].Name;
                 PlaySlider.Value = 0;
                 PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
-                //MediaDuring = mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 File.WriteAllText(AudioFolder + "\\Last.DAT", AudioNum.ToString());
                 // if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));
                 AudioLoaded = true;
-                /* playIcon.Text = "";
-                 IsPlaying = true;
-                 mediaplayer.Play();*/
             }
             catch (Exception ex)
             {
@@ -1103,7 +1092,6 @@ namespace CokeeDP.Views.Windows
             {
                 if (PlayingRule == 1)
                 {
-                    //playIcon.Text = "";
                     IntlPlayer();
                     PlaySlider.Value = 0;
                     return;
@@ -1305,7 +1293,7 @@ namespace CokeeDP.Views.Windows
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.WriteLine($"{DateTime.Now},{info};");
+                    writer.WriteLine($"{DateTime.Now} | {info};");
                 }
             }
         }
@@ -1395,6 +1383,7 @@ namespace CokeeDP.Views.Windows
         private void DislikeImage(object sender, RoutedEventArgs e)
         {
             settings.BlockedImageIds += br1.Tag.ToString() + "|";
+            settings.SaveSettings();
             snackbarService.ShowAsync("屏蔽成功", "已屏蔽日期为 " + br1.Tag.ToString() + " 的图片。", SymbolRegular.CheckmarkCircle24);
             _ = GetBingWapp();
         }
@@ -1442,16 +1431,6 @@ namespace CokeeDP.Views.Windows
         {
             frame.Source = new Uri(textBox.Text);
             await snackbarService.ShowAsync("Loaded Page:");
-        }
-
-        private void Naving(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
-        {
-
-        }
-
-        private void BorderLoader(object sender, RoutedEventArgs e)
-        {
-
         }
 
         /// <summary>

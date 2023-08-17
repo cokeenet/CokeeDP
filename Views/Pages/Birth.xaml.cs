@@ -147,27 +147,24 @@ namespace CokeeDP.Views.Pages
         {
             try
             {
-
-            clickCount++;
-
-            if (clickCount == 1)
-            {
-                await _Window.snackbarService.ShowAsync("再次点击按钮以确认删除操作");
-            }
-            else if (clickCount == 2)
-            {
-                foreach (Person item in dataGrid.Items)
+                clickCount++;
+                if (clickCount == 1)
                 {
-                    if (item.IsSelected)
-                    {
-                        peopleList.Remove(item);
-                    }
+                    await _Window.snackbarService.ShowAsync("再次点击按钮以确认删除操作");
                 }
-                // 重置计数器和确认状态
-                await WriteToJsonAsync();
-                clickCount = 0;
-            }
-
+                else if (clickCount == 2)
+                {
+                    foreach (Person item in dataGrid.Items)
+                    {
+                        if (item.IsSelected)
+                        {
+                            peopleList.Remove(item);
+                        }
+                    }
+                    // 重置计数器和确认状态
+                    await WriteToJsonAsync();
+                    clickCount = 0;
+                }
             }
             catch (Exception ex)
             {

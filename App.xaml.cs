@@ -24,6 +24,7 @@ namespace CokeeDP
                 .WriteTo.File("log.txt",
                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                 .WriteTo.AppCenterSink(null,Serilog.Events.LogEventLevel.Information,AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
+                .WriteTo
                 .CreateLogger();
 
             if (Environment.OSVersion.Version.Major >= 10.0) AppCenter.Start("52a9c4e0-ad42-455b-b1cf-515d8a39f245", typeof(Analytics), typeof(Crashes));
