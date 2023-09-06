@@ -62,7 +62,7 @@
                     <DataGridCheckBoxColumn Binding="{Binding IsChecked}">
                         <DataGridCheckBoxColumn.HeaderTemplate>
                             <DataTemplate>
-                                <CheckBox Content="全选" Click="CheckBox_Checked"/>
+                                <CheckBox x:Name="selectAllCheckBox" Content="全选" Click="CheckBox_Checked"/>
                             </DataTemplate>
                         </DataGridCheckBoxColumn.HeaderTemplate>
                     </DataGridCheckBoxColumn>

@@ -24,6 +24,8 @@ namespace CokeeDP.Views.Pages
         public About()
         {
             InitializeComponent();
+            VerPara.ContentEnd.InsertTextInRun(
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(4));
         }
     }
 }

@@ -20,18 +20,23 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
+
 using Microsoft.AppCenter.Crashes;
+
 using NAudio.CoreAudioApi;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using Panuon.WPF.UI;
 //using Quartz.Impl;
 //using Quartz;
 using Serilog;
+using Serilog.Sink.AppCenter;
 
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
@@ -44,6 +49,7 @@ using Directory = System.IO.Directory;
 using File = System.IO.File;
 using MediaPlayer = System.Windows.Media.MediaPlayer;
 using Point = System.Windows.Point;
+using TextBox = Wpf.Ui.Controls.TextBox;
 using Timer = System.Timers.Timer;
 using Window = System.Windows.Window;
 
@@ -78,11 +84,15 @@ namespace CokeeDP.Views.Windows
         public UIElement whiteboardCard;
         public bool IsWhiteBoard = false, IsUsbOpened = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
-        //StdSchedulerFactory factory = new StdSchedulerFactory();
-        //创建任务调度器
         public MainWindow()
         {
             InitializeComponent();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.File("log.txt",
+               outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+                .WriteTo.AppCenterSink(null, Serilog.Events.LogEventLevel.Information, AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
+                .WriteTo.RichTextBox(log)
+                .CreateLogger();
             try
             {
                 /*if (Environment.GetCommandLineArgs().Length > 0)
@@ -201,7 +211,7 @@ namespace CokeeDP.Views.Windows
 
                     //  br1.StretchDirection = StretchDirection.UpOnly;
                     br1.EndInit();
-                    log.Text = bgn + "/LoadLocalPic:" + bgp.ToString();
+                    Log.Information($"{bgn} / LoadLocalPic:{bgp}");
 
                     #endregion non-bing
                 }
@@ -250,20 +260,19 @@ namespace CokeeDP.Views.Windows
                 }
                 else CountDownTime = settings.CountdownTime;
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 10) settings.OneWordsTimeInterval = "100";
-                if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = "9800";
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 10) settings.OneWordsTimeInterval = 100;
+                if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = 9800;
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
                 if (settings.isDebug) log.Visibility = Visibility.Visible;//Debug Log框
                 AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
                 SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(settings.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
-                //   tasks = LoadConfig(File.ReadAllText(@"D:\英语\TaskConfig.json"));
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
-                settings.OneWordsTimeInterval = "100";
-                settings.WeatherTimeInterval = "9800";
+                settings.OneWordsTimeInterval = 100;
+                settings.WeatherTimeInterval = 9800;
             }
         }
         public void OnHitokoUpd(object source, ElapsedEventArgs d)
@@ -292,7 +301,7 @@ namespace CokeeDP.Views.Windows
                 Person nearest = null; int type = 0;
                 foreach (var person in people)
                 {
-                    string shortBirthStr = person.BirthDateStr.Substring(5).Replace("\r",null);
+                    string shortBirthStr = person.BirthDateStr.Substring(5).Replace("\r", null);
                     if (DateTime.Now.ToString("MM-dd") == shortBirthStr)
                     {
                         nearest = person; type = 1; break;
@@ -312,6 +321,7 @@ namespace CokeeDP.Views.Windows
                     birthBar.IsOpen = true;
                     birthBar.Message = $"🎉 明天是 {nearest.Name} 的生日！";
                 }
+                else birthBar.IsOpen = false;
             }
         }
         public void OnOneSecondTimer(object source, ElapsedEventArgs e)
@@ -328,7 +338,7 @@ namespace CokeeDP.Views.Windows
                     big_tod.Content = ((int)CountDownTime.Subtract(DateTime.Now).TotalDays);
                 }
                 else
-                    CountDownLabel.Content = "距离[" + settings.CountdownName + "]还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
+                    CountDownLabel.Content = $"距离[{settings.CountdownName}]还有 {CountDownTime.Subtract(DateTime.Now).TotalDays} 天";
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
                 {
                     OnNewDay();
@@ -360,7 +370,6 @@ namespace CokeeDP.Views.Windows
                 Clipboard.SetText(e.Message + e.StackTrace);
             }
             Log.Error(e, "Error");
-            log.Text = e.ToString();
             if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
@@ -413,7 +422,7 @@ namespace CokeeDP.Views.Windows
                 DescPara1.Text = $" {dt["data"]["images"][bing]["description"]} {Environment.NewLine} {dt["data"]["images"][bing]["descriptionPara2"]} {Environment.NewLine} {dt["data"]["images"][bing]["descriptionPara3"]}";
                 if (settings.UHDEnable) urlstr = urlstr.Replace("_1920x1080", "_UHD");
                 Uri uri = new Uri(urlstr);
-                log.Text = bing + "/LoadBingImage:" + uri;
+                Log.Information($"{bing} /LoadBingImage:{uri}");
                 bitmapImage = new BitmapImage(uri);
                 bitmapImage.DownloadProgress += ImageDownloadProgress;
                 bitmapImage.DownloadCompleted += (a, b) => DownloadImageCompleted(a, b, bitmapImage);
@@ -444,7 +453,7 @@ namespace CokeeDP.Views.Windows
                 Uri videoUri;
                 if (settings.UHDEnable) videoUri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v2160"].ToString() + ".mp4");
                 else videoUri = new Uri("https://prod-streaming-video-msn-com.akamaized.net/" + dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"][bing]["video"]["v1080"].ToString() + ".mp4");
-                log.Text = bing + "/LoadBingDynVideo:" + videoUri;
+                Log.Information($"{bing} /LoadBingImage:{videoUri}");
                 br1_blur.Radius = 10;
                 br2.Loaded += (sender, e) => br2.Play();
                 br2.MediaEnded += (sender, e) =>
@@ -469,7 +478,7 @@ namespace CokeeDP.Views.Windows
         private void Br2_BufferingEnded(object sender, RoutedEventArgs e)
         {
             if (pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
-            log.Text = "DynVideo Loaded.😺 Day:" + bing;
+            Log.Information($"DynVideo Loaded.😺 Day: {bing}");
             DoubleAnimation animation = new DoubleAnimation(20, 0, new Duration(TimeSpan.FromSeconds(5)));
             animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
@@ -483,14 +492,14 @@ namespace CokeeDP.Views.Windows
             animation.EasingFunction = new CircleEase();
             //animation.AutoReverse = true;
             br2_blur.BeginAnimation(BlurEffect.RadiusProperty, animation);
-            log.Text = "LoadBingDynVideo (" + br2.BufferingProgress * 100 + "% )";
+            Log.Information($"LoadBingDynVideo {br2.BufferingProgress * 100}%");
         }
 
         private void ImageDownloadProgress(object sender, DownloadProgressEventArgs e)
         {
             if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
             pro.Value = e.Progress;
-            log.Text = "LoadBingImage (" + e.Progress + "% )";
+            Log.Information($"LoadBingImage {e.Progress}");
         }
 
         private void DownloadImageCompleted(object sender, EventArgs e, BitmapImage bitmap)
@@ -498,7 +507,7 @@ namespace CokeeDP.Views.Windows
             try
             {
                 if (pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
-                log.Text = "Image Loaded.😺 Day:" + bing;
+                Log.Information($"Image Loaded.😺 Day: {bing}");
                 DoubleAnimation animation = new DoubleAnimation(20, 0, new Duration(TimeSpan.FromSeconds(5)));
                 animation.EasingFunction = new CircleEase();
                 //animation.AutoReverse = true;
@@ -574,6 +583,7 @@ namespace CokeeDP.Views.Windows
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                 if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
+                
                 //isloaded = true;
             }
             catch (Exception ex)
@@ -1298,12 +1308,9 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-        private void WhiteBoard(object sender, RoutedEventArgs e)
+        private void DebugPage(object sender, RoutedEventArgs e)
         {
-            //瞎写的
-            Process.Start("explore.exe", @"C:\Program Files\Common Files\microsoft shared\ink\TabTip.exe");
-            //MainWindow.GetWindow(this).WindowState = WindowState.Normal;
-            //new Task(VideoCap).Start();// VideoCap();
+            
         }
         //测试函数 防止屏保无法退出
         private void FuncT1(object sender, MouseButtonEventArgs e)
@@ -1419,12 +1426,6 @@ namespace CokeeDP.Views.Windows
             {
                 ProcessErr(ex);
             }
-        }
-
-        private void testfunc1(object sender, MouseButtonEventArgs e)
-        {
-            if (debug.Visibility == Visibility.Visible) debug.Visibility = Visibility.Collapsed;
-            else debug.Visibility = Visibility.Visible;
         }
 
         private async void LoadPage(object sender, RoutedEventArgs e)

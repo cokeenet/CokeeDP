@@ -68,7 +68,7 @@ namespace CokeeDP.Views.Pages
                     case "audioDir":
                         settings.AudioFolder = textBox.Text; break;
                     case "time":
-                        settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60).ToString(); break;
+                        settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60); break;
                     case "CountDownName":
                         settings.CountdownName = textBox.Text; break;
                     case "audioTime":
