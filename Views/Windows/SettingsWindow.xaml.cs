@@ -27,14 +27,14 @@ namespace CokeeDP.Views.Windows
             InitializeComponent();
         }
 
-        public void ProcessErr(Exception e)
+        public void ProcessErr(Exception e,string msg="")
         {
             if (this.IsLoaded)
             {
                 snackbarService.SetSnackbarControl(snackbar);
-                snackbarService.ShowAsync("发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24);
+                snackbarService.ShowAsync($"{msg}发生错误", e.Message + e.StackTrace, SymbolRegular.ErrorCircle24, ControlAppearance.Danger);
             }
-            Log.Error(e, "Error");
+            Log.Error(e,"Err");
             if (Environment.OSVersion.Version.Major >= 10.0) Crashes.TrackError(e);
         }
 
@@ -64,7 +64,8 @@ namespace CokeeDP.Views.Windows
 
         private void DarkMode(object sender, RoutedEventArgs e)
         {
-            if (Theme.GetAppTheme() == ThemeType.Light) Theme.Apply(ThemeType.Dark);
+            snackbarService.Show("实验性功能");
+            if (Theme.GetAppTheme() == ThemeType.Light)Theme.Apply(ThemeType.Dark);
             else Theme.Apply(ThemeType.Light);
         }
     }

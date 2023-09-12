@@ -26,12 +26,12 @@
             Grid.Row="2"
             Background="{x:Null}"
             IsReadOnly="True"
-            Style="{x:Null}">
+            Style="{x:Null}" Margin="-5,0,5,0" Width="790" d:LayoutOverrides="HorizontalAlignment">
             <FlowDocument>
                 <Paragraph>
                     <Bold>感谢您使用CokeeDP 循星。</Bold>
                 </Paragraph>
-                <Paragraph>软件版本:Ver3.1</Paragraph>
+                <Paragraph x:Name="VerPara">软件版本:Ver </Paragraph>
                 <Paragraph>Cokee Technologies 秋坂科技 版权所有.</Paragraph>
                 <Paragraph>
                     <Bold>

@@ -6,9 +6,9 @@
     <Authors>Cokee</Authors>
     <Product>CokeeDP</Product>
     <Description>次世代PC屏保</Description>
-    <Copyright>(c)2023 Cokee Technoliogies</Copyright>
+    <Copyright>2023 Cokee Technologies</Copyright>
     <UseWindowsForms>False</UseWindowsForms>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
     <StartupObject>CokeeDP.App</StartupObject>
     <Nullable>warnings</Nullable>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -22,10 +22,21 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
+    <Company>Cokee Tech</Company>
+    <PackageIcon>AppIcon.jpg</PackageIcon>
+    <AssemblyVersion>1.0.71.23249</AssemblyVersion>
+    <FileVersion>1.0.71.23249</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants></DefineConstants>
+    <WarningLevel>5</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DefineConstants />
     <WarningLevel>5</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DebugType>portable</DebugType>
@@ -39,6 +50,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants />
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants />
@@ -67,13 +85,14 @@
 
   <ItemGroup>
     <None Remove="Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Image\bg.jpg" />
     <None Remove="SplashScreen.png" />
     <None Remove="Views\Windows\bg.jpg" /> 
     <Content Include="Image\hd1.ico" /> 
-    <Resource Include="Fonts\Segoe Fluent Icons.ttf" />
+    <Resource Include="Fonts\Segoe Fluent Icons.ttf" /> 
+    <Resource Include="Image\bg.jpg" />
     <Resource Include="Image\hd1.jpg" />
     <Resource Include="Image\head.jpg" />
-    <Resource Include="Views\Windows\bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -81,19 +100,22 @@
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
-    <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="OpenCvSharp4" Version="4.7.0.20230115" />
-    <PackageReference Include="OpenCvSharp4.Extensions" Version="4.7.0.20230115" />
-    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.7.0.20230115" />
-    <PackageReference Include="OpenCvSharp4.Windows" Version="4.7.0.20230115" />
-    <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.7.0.20230115" />
-    <PackageReference Include="Panuon.WPF.UI" Version="1.1.14" />
+    <PackageReference Include="OpenCvSharp4" Version="4.8.0.20230708" />
+    <PackageReference Include="OpenCvSharp4.Extensions" Version="4.8.0.20230708" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.8.0.20230708" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.8.0.20230708" />
+    <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.8.0.20230708" />
+    <PackageReference Include="Panuon.WPF.UI" Version="1.1.15.8" />
     <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog.Sink.AppCenter" Version="1.5.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
+    <PackageReference Include="Serilog.Sinks.RichTextBox.Wpf" Version="1.1.0" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.1" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="7.0.1" />
-    <PackageReference Include="WPF-UI" Version="2.0.3" />
+    <PackageReference Include="WPF-UI" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -282,9 +304,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\Pages\About - 复制.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Pages\About.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -311,11 +330,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <None Update="AppIcon.jpg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -14,8 +14,8 @@ namespace CokeeDP.Properties
         public string OneWordsApi { get; set; } = "https://v1.hitokoto.cn/?c=k";
         public bool OneWordsEnable { get; set; } = false;
         public bool disable_clock1 { get; set; } = false;
-        public string OneWordsTimeInterval { get; set; } = "100";
-        public string WeatherTimeInterval { get; set; } = "9800";
+        public int OneWordsTimeInterval { get; set; } = 100;
+        public int WeatherTimeInterval { get; set; } = 9800;
         public string City { get; set; } = "中国 北京";
         public string CountdownName { get; set; } = "高考";
         public DateTime CountdownTime { get; set; } = new DateTime(2025, 6, 5);
@@ -39,7 +39,7 @@ namespace CokeeDP.Properties
     }
     public static class AppSettingsExtensions
     {
-        private const string SETTINGS_FILE_NAME = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\config.json";
+        public const string SETTINGS_FILE_NAME = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\config.json";
 
         public static AppSettings LoadSettings()
         {
@@ -66,7 +66,6 @@ namespace CokeeDP.Properties
             {
                 var dir = SETTINGS_FILE_NAME.Split("config.json")[0];
                 if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-               // if(!File.Exists(SETTINGS_FILE_NAME)) File.Create(SETTINGS_FILE_NAME);
                 File.WriteAllText(SETTINGS_FILE_NAME, content);
             }
             catch (Exception e)
