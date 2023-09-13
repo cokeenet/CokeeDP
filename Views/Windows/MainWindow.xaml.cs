@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,8 @@ using Wpf.Ui.Mvvm.Services;
 
 using Button = Wpf.Ui.Controls.Button;
 using Clipboard = Wpf.Ui.Common.Clipboard;
+using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 using MediaPlayer = System.Windows.Media.MediaPlayer;
@@ -160,9 +163,9 @@ namespace CokeeDP.Views.Windows
                         DateTime a;
                         if (DateTime.TryParse(item.Name, out a))
                         {
-
+                            if (DateTime.Now.Subtract(a).Days >= 7) item.Delete();
                         }
-                        else if (dir.GetFiles().Length >= 10)
+                        else if (dir.GetFiles().Length >= 15)
                         {
                             foreach (var i in dir.GetFiles())
                             {
@@ -174,7 +177,7 @@ namespace CokeeDP.Views.Windows
                 else Directory.CreateDirectory(CACHE_DIR);
                 CheckBirthDay();
                 debugCard = debugPage;
-                pager.Items.Remove(debugCard);
+                //pager.Items.Remove(debugCard);
             }
             catch (Exception e)
             {
@@ -452,6 +455,14 @@ namespace CokeeDP.Views.Windows
                 if (File.Exists($"{CACHE_DIR}\\{dt["data"]["images"][bing]["isoDate"]}.png")) 
                 {
                     bitmapImage = new BitmapImage(new Uri($"{CACHE_DIR}\\{dt["data"]["images"][bing]["isoDate"]}.png"));
+                    if (pro.Visibility != Visibility.Collapsed) pro.Visibility = Visibility.Collapsed;
+                    Log.Information($"Image Loaded.(CACHED)😺 Day: {bing}");
+                    DoubleAnimation animation1 = new DoubleAnimation(20, 0, new Duration(TimeSpan.FromSeconds(5)));
+                    animation1.EasingFunction = new CircleEase();
+                    //animation.AutoReverse = true;
+                    br1_blur.BeginAnimation(BlurEffect.RadiusProperty, animation1);
+                    br1.Source = bitmapImage;
+                    return;
                 }
                 else 
                 {
