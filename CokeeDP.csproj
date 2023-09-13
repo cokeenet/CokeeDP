@@ -24,8 +24,8 @@
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
     <Company>Cokee Tech</Company>
     <PackageIcon>AppIcon.jpg</PackageIcon>
-    <AssemblyVersion>2.1.89.23253</AssemblyVersion>
-    <FileVersion>2.1.89.23253</FileVersion>
+    <AssemblyVersion>2.1.90.23256</AssemblyVersion>
+    <FileVersion>2.1.90.23256</FileVersion>
     <UserSecretsId>79e32a5e-50a7-4673-bfb9-2e46a815e2f0</UserSecretsId>
   </PropertyGroup>
 

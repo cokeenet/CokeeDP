@@ -22,6 +22,8 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
+using Cokee.ClassService.Views.Pages;
+
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
 
@@ -317,15 +319,15 @@ namespace CokeeDP.Views.Windows
         }
         public void CheckBirthDay()
         {
-            string dataPath = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\birth.json";
-            if (File.Exists(dataPath))
+            string DATA_FILE = "D:\\Program Files (x86)\\CokeeTech\\CokeeClass\\students.json";
+            if (File.Exists(DATA_FILE))
             {
-                string json = File.ReadAllText(dataPath);
-                List<Person> people = JsonConvert.DeserializeObject<List<Person>>(json);
-                Person nearest = null; int type = 0;
-                foreach (var person in people)
+                List<Student> students = new List<Student>();
+                students = JsonConvert.DeserializeObject<List<Student>>(File.ReadAllText(DATA_FILE));
+                Student nearest = null; int type = 0;
+                foreach (var person in students)
                 {
-                    string shortBirthStr = person.BirthDateStr.Substring(5).Replace("\r", null);
+                    string shortBirthStr = person.BirthDay.ToString("MM-dd");
                     if (DateTime.Now.ToString("MM-dd") == shortBirthStr)
                     {
                         nearest = person; type = 1; break;
