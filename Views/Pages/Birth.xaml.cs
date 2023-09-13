@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using CokeeDP.Views.Windows;
-
+using Cokee.ClassService.Views.Pages;
 using Newtonsoft.Json;
 
 using Wpf.Ui.Common;

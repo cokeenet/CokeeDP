@@ -162,9 +162,9 @@ namespace CokeeDP.Views.Windows
                         }
                         else if (dir.GetFiles().Length >= 10)
                         {
-                            foreach (var item in dir.GetFiles())
+                            foreach (var i in dir.GetFiles())
                             {
-                                item.Delete();
+                                i.Delete();
                             }
                         }
                     }

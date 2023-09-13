@@ -297,6 +297,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Cokee.ClassService">
+      <HintPath>..\Cokee.ClassService\bin\Debug\net6.0-windows\Cokee.ClassService.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <SplashScreen Include="SplashScreen.png" />
   </ItemGroup>
 
