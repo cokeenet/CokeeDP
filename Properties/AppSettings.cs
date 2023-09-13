@@ -22,7 +22,7 @@ namespace CokeeDP.Properties
         public bool BingWappEnable { get; set; } = true;
         public bool EnableBigTimeTo { get; set; } = false;
         public string Font { get; set; } = "Segoe UI, 8.25pt";
-        public bool isChildLocked { get; set; } = false;
+        public bool isPicCacheEnabled { get; set; } = true;
         public bool isDebug { get; set; } = false;
         public string AudioFolder { get; set; } = null;
         public bool UHDEnable { get; set; } = true;

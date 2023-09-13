@@ -24,8 +24,9 @@
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
     <Company>Cokee Tech</Company>
     <PackageIcon>AppIcon.jpg</PackageIcon>
-    <AssemblyVersion>1.0.71.23249</AssemblyVersion>
-    <FileVersion>1.0.71.23249</FileVersion>
+    <AssemblyVersion>2.1.89.23253</AssemblyVersion>
+    <FileVersion>2.1.89.23253</FileVersion>
+    <UserSecretsId>79e32a5e-50a7-4673-bfb9-2e46a815e2f0</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -100,6 +101,7 @@
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

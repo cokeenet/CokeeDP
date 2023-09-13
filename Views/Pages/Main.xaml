@@ -1,6 +1,11 @@
 ﻿<ui:UiPage
-    x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP.Views.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320" d:DesignWidth="794"
+    x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:CokeeDP.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320" 
+    d:DesignWidth="794"
     Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True">
 
     <Grid Margin="5,0,5,0">
@@ -51,7 +56,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="Bing 动态视频背景(测试功能!!😥)" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="警告:该功能超级不稳定，使用需自行担责，可能会造成软件崩溃，卡顿，闪退等问题😥😥" />
+                        FontSize="12" Opacity="0.7" Text="警告:该功能超级不稳定，使用需自行担责" />
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
@@ -62,9 +67,9 @@
             <ui:CardControl.Header>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
-                        FontSize="13" FontWeight="Medium" Text="加载4K分辨率背景" />
+                        FontSize="13" FontWeight="Medium" Text="加载4K分辨率背景图" />
                     <TextBlock
-                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P分辨率背景" />
+                        FontSize="12" Opacity="0.7" Text="禁用则加载1080P分辨率" />
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch

@@ -78,18 +78,40 @@
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
                     <ui:Card x:Name="debugPage" VerticalAlignment="Stretch">
-                        <Grid>
-                            <Label Margin="0,0,0,199" HorizontalContentAlignment="Left" Background="{x:Null}"
-                                    FontFamily="Microsoft YaHei UI Light" FontSize="24" Foreground="Black" Content="LogViewer">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.4" />
-                                </Label.Effect>
-                            </Label>
-                            <RichTextBox
-                        x:Name="log" Canvas.Left="1572" Canvas.Top="959" HorizontalContentAlignment="Left"
-                        FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" IsReadOnlyCaretVisible="True"
-                        Style="{x:Null}" Margin="0,39,0,0" />
-                        </Grid>
+                        <ScrollViewer>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Label FontSize="24" Foreground="Black" Content="DebugPage 调试页面" />
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <ui:Button Content="强制退出" Grid.Row="0" Margin="5" Tag="exit" Click="BtnHandler" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Appearance="Caution"/>
+                                    <ui:Button Content="资源管理器" Grid.Row="0" Margin="5" Tag="explore" Click="BtnHandler" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    <ui:Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                </Grid>
+
+                                <Label FontSize="24" Foreground="Black" Content="LogViewer" Grid.Row="2" />
+
+                                <RichTextBox
+                        x:Name="log" HorizontalContentAlignment="Left"
+                        FontFamily="Consolas" FontSize="20" Foreground="White" IsReadOnlyCaretVisible="True"
+                        Style="{x:Null}" Background="#FF424242" Grid.Row="3" />
+                            </Grid>
+                        </ScrollViewer>
                     </ui:Card>
                     <ui:Card x:Name="WappCard" VerticalAlignment="Stretch">
                         <Grid>
@@ -116,86 +138,6 @@
                             </ScrollViewer>
                         </Grid>
                     </ui:Card>
-                    <Border x:Name="b2">
-                        <Grid>
-                            <ui:Button
-                                    x:Name="SpecialWeatherBtn1" Width="315" Height="40" Margin="0,13,0,0" HorizontalAlignment="Center"
-                                    VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
-                                    pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
-                                    BorderBrush="{x:Null}"
-                                    BorderThickness="1" Click="ShowWeatherWarns" FontFamily="Microsoft YaHei UI Light" FontSize="18"
-                                    Foreground="Black" Visibility="Collapsed" />
-                            <TextBox
-                                    x:Name="wea4" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
-                                    VerticalAlignment="Top" AllowDrop="False"
-                                    Background="{x:Null}"
-                                    BorderBrush="{x:Null}"
-                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
-                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
-                                    Style="{x:Null}"
-                                    Text="网络状态不佳..." TextAlignment="Left">
-                                <TextBox.Effect>
-                                    <DropShadowEffect />
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox
-                                    x:Name="w4" Width="50" Height="50" Margin="35,58,322,160" IsHitTestVisible="False"
-                                    MessageFillBrush="White" MessageStrokeBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect />
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-                            <TextBox
-                                    x:Name="wea6" Width="280" Margin="95,191,0,52" HorizontalAlignment="Left" AllowDrop="False"
-                                    Background="{x:Null}"
-                                    BorderBrush="{x:Null}"
-                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
-                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
-                                    Style="{x:Null}"
-                                    Text="网络状态不佳..." TextAlignment="Left">
-                                <TextBox.Effect>
-                                    <DropShadowEffect />
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox
-                                    x:Name="w5" Width="50" Height="50" Margin="35,119,322,99" MessageFillBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect />
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-                            <TextBox
-                                    x:Name="wea5" Width="280" Height="26" Margin="95,134,0,0" HorizontalAlignment="Left"
-                                    VerticalAlignment="Top" AllowDrop="False"
-                                    Background="{x:Null}"
-                                    BorderBrush="{x:Null}"
-                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
-                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
-                                    Style="{x:Null}"
-                                    Text="网络状态不佳..." TextAlignment="Left">
-                                <TextBox.Effect>
-                                    <DropShadowEffect />
-                                </TextBox.Effect>
-                            </TextBox>
-                            <svgc:SvgViewbox
-                                    x:Name="w6" Width="50" Height="50" Margin="35,178,322,40" MessageFillBrush="White">
-                                <svgc:SvgViewbox.Effect>
-                                    <DropShadowEffect />
-                                </svgc:SvgViewbox.Effect>
-                            </svgc:SvgViewbox>
-                            <TextBox
-                                    x:Name="weaupd2" Width="382" Margin="25,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
-                                    Background="{x:Null}"
-                                    BorderBrush="{x:Null}"
-                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="White"
-                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
-                                    Style="{x:Null}"
-                                    TextAlignment="Right">
-                                <TextBox.Effect>
-                                    <DropShadowEffect />
-                                </TextBox.Effect>
-                            </TextBox>
-                        </Grid>
-                    </Border>
                     <Border x:Name="b1">
                         <Grid>
                             <ui:Button
@@ -265,6 +207,86 @@
                             </svgc:SvgViewbox>
                             <TextBox
                                     x:Name="weaupd1" Width="382" Margin="25,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="White"
+                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                    Style="{x:Null}"
+                                    TextAlignment="Right">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                        </Grid>
+                    </Border>
+                    <Border x:Name="b2">
+                        <Grid>
+                            <ui:Button
+                                    x:Name="SpecialWeatherBtn1" Width="315" Height="40" Margin="0,13,0,0" HorizontalAlignment="Center"
+                                    VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
+                                    pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
+                                    BorderBrush="{x:Null}"
+                                    BorderThickness="1" Click="ShowWeatherWarns" FontFamily="Microsoft YaHei UI Light" FontSize="18"
+                                    Foreground="Black" Visibility="Collapsed" />
+                            <TextBox
+                                    x:Name="wea4" Width="280" Height="26" Margin="95,82,0,0" HorizontalAlignment="Left"
+                                    VerticalAlignment="Top" AllowDrop="False"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                    Style="{x:Null}"
+                                    Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                    x:Name="w4" Width="50" Height="50" Margin="35,58,322,160" IsHitTestVisible="False"
+                                    MessageFillBrush="White" MessageStrokeBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox
+                                    x:Name="wea6" Width="280" Margin="95,191,0,52" HorizontalAlignment="Left" AllowDrop="False"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                    Style="{x:Null}"
+                                    Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                    x:Name="w5" Width="50" Height="50" Margin="35,119,322,99" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox
+                                    x:Name="wea5" Width="280" Height="26" Margin="95,134,0,0" HorizontalAlignment="Left"
+                                    VerticalAlignment="Top" AllowDrop="False"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="18" FontWeight="Normal" Foreground="White"
+                                    IsHitTestVisible="False" IsReadOnlyCaretVisible="True" IsTabStop="False"
+                                    Style="{x:Null}"
+                                    Text="网络状态不佳..." TextAlignment="Left">
+                                <TextBox.Effect>
+                                    <DropShadowEffect />
+                                </TextBox.Effect>
+                            </TextBox>
+                            <svgc:SvgViewbox
+                                    x:Name="w6" Width="50" Height="50" Margin="35,178,322,40" MessageFillBrush="White">
+                                <svgc:SvgViewbox.Effect>
+                                    <DropShadowEffect />
+                                </svgc:SvgViewbox.Effect>
+                            </svgc:SvgViewbox>
+                            <TextBox
+                                    x:Name="weaupd2" Width="382" Margin="25,246,0,0" HorizontalAlignment="Left" AllowDrop="False"
                                     Background="{x:Null}"
                                     BorderBrush="{x:Null}"
                                     Focusable="False" FontFamily="Microsoft YaHei UI Light" FontSize="14" FontWeight="Normal" Foreground="White"
@@ -509,11 +531,11 @@
                     </ui:Card.BorderBrush>
                     <Grid Width="308">
                         <ui:SymbolIcon
-                                Margin="-9,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Symbol="MusicNote2Play20" />
+                                Margin="-9,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Symbol="MusicNote2Play20" MouseDown="RepeatPointSet" />
                         <Slider
                                 x:Name="PlaySlider" Margin="6,82,8,74"
                                 BorderBrush="{x:Null}"
-                                RenderTransformOrigin="0.5,0.5" ValueChanged="SilderChanged" />
+                                RenderTransformOrigin="0.5,0.5" ValueChanged="SliderChanged" />
                         <ScrollViewer
                                 x:Name="MusicScroll" Margin="44,0,8,152" BorderThickness="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="True">
                             <Label
@@ -542,7 +564,7 @@
                                 RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
                         <ui:Button
                                 Width="97" Height="30" Margin="134,58,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
-                                Content="播完停止" FontSize="13" Icon="ArrowRepeatAllOff24" Tag="0" />
+                                Content="听两遍" FontSize="13" Icon="AnimalCat28" Tag="3" />
                         <Label
                                 x:Name="audioTime" Margin="44,27,10,126" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
@@ -564,7 +586,7 @@
                     </Grid>
                 </ui:Card>
                 <ui:Button
-                        Canvas.Left="1650" Canvas.Top="999" Width="74" Height="26"
+                        Canvas.Left="1650" Canvas.Top="998" Width="74" Height="26"
                         VerticalAlignment="Top" Background="#80C5C4C4"
                         BorderBrush="{x:Null}"
                         BorderThickness="1" Click="DebugPage" Content="Debug" FontSize="11" Foreground="White"
@@ -615,6 +637,7 @@
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="635" Canvas.Top="931" Width="590" Height="110"
                         HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+                
             </Canvas>
         </Viewbox>
     </Grid>
