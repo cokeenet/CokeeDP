@@ -6,15 +6,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CokeeDP.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="260" d:DesignWidth="500">
+             d:DesignHeight="390" d:DesignWidth="500">
 
         <ui:Card VerticalAlignment="Stretch">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-        <InkCanvas EditingMode="InkAndGesture">
+        <InkCanvas x:Name="ink" EditingMode="InkAndGesture">
                 <InkCanvas.DefaultDrawingAttributes>
                     <DrawingAttributes Color="White" Width="4.00314960629921" Height="4.00314960629921"/>
                 </InkCanvas.DefaultDrawingAttributes>
@@ -23,10 +24,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ui:Button Icon="Pen48"/>
-                <ui:Button Icon="Eraser24" Grid.Column="1"/>
+                <ui:Button x:Name="pen" Icon="Pen48" Appearance="Primary" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Click="Pen"/>
+                <ui:Button x:Name="era" Icon="Eraser24" Grid.Column="1" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="eraser"/>
+                <ui:Button Icon="Save28" Grid.Column="2" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="save"/>
             </Grid>
+            <ui:AutoSuggestBox Grid.Row="3" Margin="5" x:Name="atu" SelectionChanged="Atu_sc" />
         </Grid>
     </ui:Card>
 

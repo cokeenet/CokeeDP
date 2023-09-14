@@ -1,11 +1,12 @@
-﻿<Window
-    x:Class="CokeeDP.Views.Windows.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
+    xmlns:Controls="clr-namespace:CokeeDP.Views.Controls"
+    x:Class="CokeeDP.Views.Windows.MainWindow"
     x:Name="window" Title="CokeeDP"
     AllowDrop="True"
     Foreground="{x:Null}"
@@ -34,7 +35,6 @@
     <Window.Background>
         <ImageBrush ImageSource="/Image/bg.jpg" />
     </Window.Background>
-    <Window.Triggers />
     <Grid
         x:Name="MainGrid" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="True">
         <Grid.RowDefinitions>
@@ -637,7 +637,8 @@
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="635" Canvas.Top="931" Width="590" Height="110"
                         HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-                
+                <Controls:PostNote Height="390" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="650" Canvas.Top="300"/>
+
             </Canvas>
         </Viewbox>
     </Grid>
