@@ -24,5 +24,6 @@ namespace CokeeDP.Views.Controls
         {
             InitializeComponent();
         }
+
     }
 }
