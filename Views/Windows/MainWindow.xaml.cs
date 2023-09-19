@@ -330,7 +330,7 @@ namespace CokeeDP.Views.Windows
                 Student nearest = null; int type = 0;
                 foreach (var person in students)
                 {
-                    string shortBirthStr;
+                    string shortBirthStr=null;
                     try
                     {
                          shortBirthStr= person.BirthDay.ToString("MM-dd");
