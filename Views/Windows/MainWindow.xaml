@@ -637,8 +637,15 @@
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="635" Canvas.Top="931" Width="590" Height="110"
                         HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-                <Controls:PostNote Height="390" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="650" Canvas.Top="300"/>
+                <Controls:PostNote Height="430" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="650" Canvas.Top="300"/>
 
+                <ItemsControl>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Canvas>
         </Viewbox>
     </Grid>

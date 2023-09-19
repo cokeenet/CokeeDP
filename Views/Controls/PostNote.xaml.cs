@@ -19,6 +19,8 @@ using System.Windows.Shapes;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
+using Clipboard = Wpf.Ui.Common.Clipboard;
+using MessageBox = System.Windows.MessageBox;
 
 namespace CokeeDP.Views.Controls
 {
@@ -29,6 +31,7 @@ namespace CokeeDP.Views.Controls
     {
         public bool IsEraser=false;
         public Student stu=null;
+        public string stud = "";
         List<Student> students = new List<Student>();
         public PostNote()
         {
@@ -43,6 +46,8 @@ namespace CokeeDP.Views.Controls
                 {
                     str.Add(item.Name);
                 }
+                atu.ItemsSource = str;
+                //MessageBox.Show(str.Count.ToString());
             }
         }
 
@@ -51,7 +56,7 @@ namespace CokeeDP.Views.Controls
             if (IsEraser) 
             {
                 IsEraser = false;
-                ink.EditingMode = InkCanvasEditingMode.InkAndGesture;
+                ink.EditingMode = InkCanvasEditingMode.Ink;
                 Button btn = sender as Button;
                 btn.Appearance = ControlAppearance.Primary;
                 era.Appearance = ControlAppearance.Secondary;
@@ -60,18 +65,31 @@ namespace CokeeDP.Views.Controls
 
         private void save(object sender, RoutedEventArgs e)
         {
-            if (stu == null) return;
-            FileStream fs = new FileStream(@$"D:\Program Files (x86)\CokeeTech\CokeeDP\ink\{stu.ID}.ink",FileMode.OpenOrCreate);
-            ink.Strokes = new StrokeCollection(fs);
-            fs.Close();
-            this.Visibility= Visibility.Collapsed;
+            //  if (stu == null) return;
+            try
+            {
+
+
+                FileStream fs = new FileStream(@$"D:\Program Files (x86)\CokeeTech\CokeeDP\ink\{stud}.ink", FileMode.OpenOrCreate);
+                ink.Strokes.Save(fs);
+                fs.Close();
+                MessageBox.Show("saved.");
+                ink.Strokes=new StrokeCollection();
+                atu.Text = null;
+                //this.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                Clipboard.SetText(ex.ToString());
+                MessageBox.Show(ex.ToString()); 
+            }
         }
 
         private void eraser(object sender, RoutedEventArgs e)
         {
             if (!IsEraser)
             {
-                IsEraser = false;
+                IsEraser = true;
                 ink.EditingMode = InkCanvasEditingMode.EraseByStroke;
                 Button btn = sender as Button;
                 btn.Appearance = ControlAppearance.Primary;
@@ -82,13 +100,20 @@ namespace CokeeDP.Views.Controls
         private void Atu_sc(object sender, RoutedEventArgs e)
         {
             AutoSuggestBox atu=sender as AutoSuggestBox;
-            foreach (var item in students)
+            atu.Text=atu.Text.Trim();
+            //MessageBox.Show(atu.Text.Trim());
+            stud=atu.Text.Trim();
+           /* foreach (Student item in students)
             {
-                if (atu.Text == item.Name)
+                MessageBox.Show(atu.Text.Trim());
+                if (atu.Text.Trim() == item.Name)
                 { 
                     stu=item;
+                    name.Content = item.Name;
                 }
-            }
+            }*/
         }
+
+
     }
 }
