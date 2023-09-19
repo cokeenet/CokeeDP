@@ -47,8 +47,7 @@
         </Grid.ColumnDefinitions>
         <Viewbox
             x:Name="viewbox" Grid.ColumnSpan="2" Stretch="Uniform" Grid.RowSpan="2">
-            <Canvas
-                    x:Name="MainCanvas" Height="1080" Width="1920">
+            <Canvas x:Name="MainCanvas" Height="1080" Width="1920">
                 <Image
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
@@ -67,11 +66,6 @@
                         <BlurEffect x:Name="br2_blur" Radius="0" />
                     </MediaElement.Effect>
                 </MediaElement>
-                <InkCanvas x:Name="inkcanvas" Width="{Binding ActualWidth, ElementName=MainGrid, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MainGrid, Mode=OneWay}" Background="#FF2B4546" Visibility="Collapsed">
-                    <InkCanvas.DefaultDrawingAttributes>
-                        <DrawingAttributes Color="White" Width="5" FitToCurve="True" />
-                    </InkCanvas.DefaultDrawingAttributes>
-                </InkCanvas>
                 <pu:Carousel
                         x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
                         HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
@@ -541,7 +535,7 @@
                             <Label
                                     x:Name="audioName" Margin="0,0,-2,-6" HorizontalContentAlignment="Left"
                                     Background="{x:Null}"
-                                    DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" Content="未加载音频">
+                                    FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" Content="未加载音频">
                                 <Label.Effect>
                                     <DropShadowEffect Opacity="0.5" />
                                 </Label.Effect>
@@ -568,7 +562,7 @@
                         <Label
                                 x:Name="audioTime" Margin="44,27,10,126" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
-                                Content="00:00 / 00:00" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
+                                Content="00:00 / 00:00" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                                 Foreground="Black">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.2" />
@@ -577,7 +571,7 @@
                         <Label
                                 x:Name="VolumeText" Margin="82,98,153,56" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
-                                Content="音量:--%" DragLeave="Drag" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
+                                Content="音量:--%" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                                 Foreground="Black" Visibility="Collapsed">
                             <Label.Effect>
                                 <DropShadowEffect Opacity="0.2" />

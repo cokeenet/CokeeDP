@@ -1007,22 +1007,7 @@ namespace CokeeDP.Views.Windows
         ///元素拖动处理
         /// </summary>
         /// <param name="sender">(Label)被拖的标签</param>
-        private void Drag(object sender, DragEventArgs e)
-        {
-            // return DragEventHandler.;
-        }
 
-        /// <summary>
-        ///元素tempMaxlight处理
-        /// </summary>
-        /// <param name="sender">(Label)被拖的</param>
-        private void Light(object sender, DragEventArgs e)
-        {
-            /* for (int i = 0; i < MainGrid.Children.Count; i++)
-             {
-                 MainGrid.Children[i].DragEnter+=Drag();
-             }      */
-        }
 
         private Object locker = new Object();
         private Object locker2 = new Object();
