@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320" 
     d:DesignWidth="794"
-    Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True">
+    Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True" Unloaded="unload">
 
     <Grid Margin="5,0,5,0">
         <Grid.ColumnDefinitions />
@@ -34,7 +34,7 @@
             Grid.Row="0" Grid.Column="0" FontSize="20" Text="CokeeDP 设置" />
 
         <TextBlock
-            Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="壁纸" />
+            Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="壁纸"/>
 
         <ui:CardControl
             Grid.Row="2" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
@@ -47,7 +47,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="BingWappSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="bing" />
+                x:Name="BingWappSwitch" Click="SwitchEventsHandler" IsChecked="{Binding BingWappEnable}" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="VideoClip24">
@@ -60,7 +60,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="BingVideoSwitch" Click="SwitchEventsHandler" IsChecked="False" Tag="bingVideo" />
+                x:Name="BingVideoSwitch" Click="SwitchEventsHandler" IsChecked="{Binding BingVideoEnable}" Tag="bingVideo" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="4" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
@@ -73,7 +73,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="UHDModeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="uhd" />
+                x:Name="UHDModeSwitch" Click="SwitchEventsHandler" IsChecked="{Binding UHDEnable}" Tag="uhd" />
         </ui:CardControl>
         <TextBlock
             Grid.Row="5" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
@@ -88,7 +88,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ComboBox
-                x:Name="oneWord" Width="145" DropDownClosed="ComboBoxHandler">
+                x:Name="oneWord" Width="145" DropDownClosed="ComboBoxHandler" SelectedIndex="{Binding OneWordsComboBoxIndex}">
                 <ComboBoxItem Content="综合" Tag="none"/>
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
@@ -111,7 +111,7 @@
             </ui:CardControl.Header>
             <Grid>
                 <ui:TextBox
-                    x:Name="timeBox" Margin="52,0,50,0" LostFocus="TextBoxHandler" Tag="time" />
+                    x:Name="timeBox" Margin="52,0,50,0" LostFocus="TextBoxHandler" Tag="time" Text="{Binding OneWordsTimeInterval}"/>
                 <TextBlock
                     Margin="221,5,9,5" FontSize="16" Opacity="0.7" Text="分钟" />
             </Grid>
@@ -124,13 +124,11 @@
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
-                    <TextBlock
-                        FontSize="12" Opacity="0.7" Text="绝对路径" />
                 </StackPanel>
             </ui:CardControl.Header>
             <DockPanel Cursor="IBeam">
                 <ui:TextBox
-                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="471" Margin="0,0,10,0"/>
+                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="471" Margin="0,0,10,0" Text="{Binding AudioFolder}"/>
                 <ui:Button Content="选择目录" Icon="Folder32" Tag="chooseDir" Width="104" Click="BtnClickHandler"/>
             </DockPanel>
         </ui:CardControl>
@@ -142,8 +140,8 @@
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="选择天气城市" />
-                    <TextBlock
-                        x:Name="cityName" FontSize="12" Opacity="0.7" Text="当前选择:未选择" />
+                    <Label
+                        x:Name="cityName" FontSize="12" Opacity="0.7" ContentStringFormat="当前选择: {0}" Content="{Binding City}"/>
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
@@ -156,7 +154,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" />
+                x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" Text="{Binding CountdownName}"/>
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
@@ -167,7 +165,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <DatePicker
-                x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" />
+                x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" SelectedDate="{Binding CountdownTime}"/>
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="13" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
@@ -180,7 +178,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:ToggleSwitch
-                x:Name="SnowFlakeSwitch" Click="SwitchEventsHandler" IsChecked="True" Tag="SnowFlake" />
+                x:Name="SnowFlakeSwitch" Click="SwitchEventsHandler" IsChecked="{Binding SnowEnable}" Tag="SnowFlake" />
         </ui:CardControl>
         <ui:CardControl
             Grid.Row="14" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
@@ -193,7 +191,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                    x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" />
+                    x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" Text="{Binding AudioAutoPlayTime}"/>
         </ui:CardControl>
     </Grid>
 </ui:UiPage>
