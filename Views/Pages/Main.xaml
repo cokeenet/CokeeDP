@@ -141,7 +141,7 @@
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="选择天气城市" />
                     <Label
-                        x:Name="cityName" FontSize="12" Opacity="0.7" ContentStringFormat="当前选择: {0}" Content="{Binding City}"/>
+                        x:Name="cityName" FontSize="12" ContentStringFormat="当前选择: {0}" Content="{Binding City}" Foreground="#E4000000"/>
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
