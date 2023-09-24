@@ -177,7 +177,7 @@ namespace CokeeDP.Views.Windows
                 else Directory.CreateDirectory(CACHE_DIR);
                 CheckBirthDay();
                 debugCard = debugPage;
-                //pager.Items.Remove(debugCard);
+                pager.Items.Remove(debugCard);
             }
             catch (Exception e)
             {
@@ -314,6 +314,24 @@ namespace CokeeDP.Views.Windows
             }
        ));
         }
+
+        public void LoadInkCard()
+        {
+
+            Dispatcher.Invoke(new Action(delegate {
+            
+            
+            
+            }));
+        }
+
+
+
+
+
+
+
+
 
         public void OnNewDay()
         {

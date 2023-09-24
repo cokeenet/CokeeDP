@@ -1,6 +1,8 @@
-﻿using Cokee.ClassService.Views.Pages;
+﻿using Cokee.ClassService.Views.Controls;
+using Cokee.ClassService.Views.Pages;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,29 +21,41 @@ using System.Windows.Shapes;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
+using MessageBox = System.Windows.MessageBox;
 
 namespace CokeeDP.Views.Controls
 {
     /// <summary>
     /// PostNote.xaml 的交互逻辑
     /// </summary>
+    public class StickyItem 
+    { 
+        public string Name { get; set; }
+        public StickyItem(string _name)
+        {
+            Name = _name;
+        }
+    }
     public partial class StickyNote : UserControl
     {
-    
-        public static readonly DependencyProperty NameProperty =
-      DependencyProperty.Register("StudentName", typeof(string), typeof(StickyNote), new PropertyMetadata(0));
+        
         public StickyNote()
         {
             InitializeComponent();
-            string DATA_DIR = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\ink";
-            if (File.Exists(DATA_DIR + $"\\0.ink"))
+        }
+
+        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            string stu = e.NewValue.ToString();
+            //MessageBox.Show();
+            name.Content = stu;
+            string INK_FILE=@$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink\{stu}.ink";
+            if (File.Exists(INK_FILE))
             {
-                FileStream fs = new FileStream(DATA_DIR + $"\\0.ink", FileMode.Open);
+                FileStream fs = new FileStream(INK_FILE, FileMode.Open);
                 ink.Strokes = new StrokeCollection(fs);
                 fs.Close();
             }
         }
-
-
     }
 }

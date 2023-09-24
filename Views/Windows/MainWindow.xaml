@@ -71,6 +71,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
+                    <Controls:StickyNote Height="268" Width="407" StudentName="耿之奥"/>
                     <ui:Card x:Name="debugPage" VerticalAlignment="Stretch">
                         <ScrollViewer>
                             <Grid>
