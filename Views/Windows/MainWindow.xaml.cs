@@ -163,13 +163,18 @@ namespace CokeeDP.Views.Windows
                         DateTime a;
                         if (DateTime.TryParse(item.Name, out a))
                         {
-                            if (DateTime.Now.Subtract(a).Days >= 7) item.Delete();
+                            if (DateTime.Now.Subtract(a).Days >= 7)
+                            {
+                                item.Delete();
+                                Log.Information($"Deleted Cache image {item.FullName}");
+                            }
                         }
                         else if (dir.GetFiles().Length >= 15)
                         {
                             foreach (var i in dir.GetFiles())
                             {
                                 i.Delete();
+                                Log.Information($"Deleted Cache Dir.Count>=15.");
                             }
                         }
                     }
@@ -177,7 +182,7 @@ namespace CokeeDP.Views.Windows
                 else Directory.CreateDirectory(CACHE_DIR);
                 CheckBirthDay();
                 debugCard = debugPage;
-                //pager.Items.Remove(debugCard);
+                pager.Items.Remove(debugCard);
             }
             catch (Exception e)
             {
@@ -254,6 +259,7 @@ namespace CokeeDP.Views.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        
 
         public void SetImageText(string desc, string info, string title)
         {
@@ -310,6 +316,7 @@ namespace CokeeDP.Views.Windows
             {
                 ChangeWapp(false);
                 pager.PageDown();
+                sticky.RandomNext();
                 _ = Hitoko();
             }
        ));

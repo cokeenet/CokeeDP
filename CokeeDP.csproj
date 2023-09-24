@@ -24,8 +24,8 @@
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
     <Company>Cokee Tech</Company>
     <PackageIcon>AppIcon.jpg</PackageIcon>
-    <AssemblyVersion>2.1.95.23256</AssemblyVersion>
-    <FileVersion>2.1.95.23256</FileVersion>
+    <AssemblyVersion>2.1.103.23267</AssemblyVersion>
+    <FileVersion>2.1.103.23267</FileVersion>
     <UserSecretsId>79e32a5e-50a7-4673-bfb9-2e46a815e2f0</UserSecretsId>
   </PropertyGroup>
 
@@ -298,7 +298,7 @@
 
   <ItemGroup>
     <Reference Include="Cokee.ClassService">
-      <HintPath>..\..\CokeeClass\publish\Cokee.ClassService.dll</HintPath>
+      <HintPath>..\Cokee.ClassService\bin\Debug\net6.0-windows\Cokee.ClassService.dll</HintPath>
     </Reference>
   </ItemGroup>
 

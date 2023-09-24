@@ -47,7 +47,6 @@ namespace CokeeDP.Views.Controls
                     str.Add(item.Name);
                 }
                 atu.ItemsSource = str;
-                //MessageBox.Show(str.Count.ToString());
             }
         }
 
@@ -63,7 +62,7 @@ namespace CokeeDP.Views.Controls
             }
         }
 
-        private void save(object sender, RoutedEventArgs e)
+        private void Save(object sender, RoutedEventArgs e)
         {
             //  if (stu == null) return;
             try
@@ -85,7 +84,7 @@ namespace CokeeDP.Views.Controls
             }
         }
 
-        private void eraser(object sender, RoutedEventArgs e)
+        private void Eraser(object sender, RoutedEventArgs e)
         {
             if (!IsEraser)
             {

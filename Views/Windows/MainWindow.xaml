@@ -71,7 +71,7 @@
                         HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
-                    <ui:Card x:Name="debugPage" VerticalAlignment="Stretch">
+                    <ui:Card x:Name="debugPage" VerticalAlignment="Stretch" Margin="-2,6,2,-6">
                         <ScrollViewer>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -98,7 +98,7 @@
                                     <ui:Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                 </Grid>
 
-                                <Label FontSize="24" Foreground="Black" Content="LogViewer" Grid.Row="2" />
+                                <Label FontSize="24" Foreground="Black" Content="LogViewer 日志查看器" Grid.Row="2" />
 
                                 <RichTextBox
                         x:Name="log" HorizontalContentAlignment="Left"
@@ -422,13 +422,13 @@
                     </Label.ContextMenu>
                 </Label>
                 <ui:Button
-                        x:Name="left" Canvas.Left="25" Canvas.Top="447" Width="54" Height="54"
-                        HorizontalAlignment="Left" Background="#B3F7F7F7"
+                        x:Name="left" Canvas.Left="25" Canvas.Top="452" Width="54" Height="54"
+                        HorizontalAlignment="Center" Background="#B3F7F7F7"
                         BorderBrush="{x:Null}"
                         Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowLeft20" Tag="left"
-                        Visibility="Visible" />
+                        Visibility="Visible" VerticalAlignment="Top" />
                 <ui:Button
-                        x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="447" Width="54"
+                        x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="452" Width="54"
                         Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B3F7F7F7"
                         BorderBrush="{x:Null}"
                         Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowRight20" Tag="right"
@@ -604,7 +604,7 @@
                         DialogHeight="276" DialogWidth="516" />
                 <ui:SymbolIcon x:Name="NetIcon"
                     Width="36" Height="36"
-                    FontSize="36" Symbol="CellularOff24" Canvas.Left="1854" Canvas.Top="74" VerticalAlignment="Top" Foreground="#E4FFFFFF" />
+                    FontSize="36" Symbol="CellularOff24" Canvas.Left="25" Canvas.Top="100" VerticalAlignment="Top" Foreground="#E4FFFFFF" HorizontalAlignment="Left" />
                 <ui:Card x:Name="debug" VerticalAlignment="Stretch" Width="880" Canvas.Left="544" Canvas.Top="232" Height="585" Visibility="Collapsed">
                     <Grid Height="553">
                         <Grid.ColumnDefinitions>
@@ -631,6 +631,7 @@
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="635" Canvas.Top="931" Width="590" Height="110"
                         HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
+                <Controls:StickyNote x:Name="sticky" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1390" Canvas.Top="73"/>
             </Canvas>
         </Viewbox>
     </Grid>
