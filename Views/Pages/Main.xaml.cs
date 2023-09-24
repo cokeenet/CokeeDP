@@ -39,16 +39,17 @@ namespace CokeeDP.Views.Pages
         public Main()
         {
             InitializeComponent();
-            BingWappSwitch.IsChecked = settings.BingWappEnable;
+            DataContext = settings;
+            /*BingWappSwitch.IsChecked = settings.BingWappEnable;
             BingVideoSwitch.IsChecked = settings.BingVideoEnable;
             UHDModeSwitch.IsChecked = settings.UHDEnable;
             SnowFlakeSwitch.IsChecked = settings.SnowEnable;
             folderBox.Text = settings.AudioFolder;
-            timeBox.Text = (Convert.ToInt32(settings.OneWordsTimeInterval) / 60).ToString();
+            timeBox.Text = (Convert.ToInt32(settings.OneWordsTimeInterval)).ToString();
             cityName.Text = "当前选择:" + settings.City;
             oneWord.SelectedIndex = settings.OneWordsComboBoxIndex;
             countDownBox.Text = settings.CountdownName;
-            countDownPicker.SelectedDate = settings.CountdownTime;
+            countDownPicker.SelectedDate = settings.CountdownTime;*/
 
         }
 
@@ -68,7 +69,7 @@ namespace CokeeDP.Views.Pages
                     case "audioDir":
                         settings.AudioFolder = textBox.Text; break;
                     case "time":
-                        settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text) * 60); break;
+                        settings.OneWordsTimeInterval = (Convert.ToInt32(textBox.Text)); break;
                     case "CountDownName":
                         settings.CountdownName = textBox.Text; break;
                     case "audioTime":
@@ -160,6 +161,11 @@ namespace CokeeDP.Views.Pages
                 default: 
                     break;
             }
+        }
+
+        private void unload(object sender, RoutedEventArgs e)
+        {
+            settings.SaveSettings();
         }
     }
 }

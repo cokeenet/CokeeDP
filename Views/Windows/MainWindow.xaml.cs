@@ -163,13 +163,18 @@ namespace CokeeDP.Views.Windows
                         DateTime a;
                         if (DateTime.TryParse(item.Name, out a))
                         {
-                            if (DateTime.Now.Subtract(a).Days >= 7) item.Delete();
+                            if (DateTime.Now.Subtract(a).Days >= 7)
+                            {
+                                item.Delete();
+                                Log.Information($"Deleted Cache image {item.FullName}");
+                            }
                         }
                         else if (dir.GetFiles().Length >= 15)
                         {
                             foreach (var i in dir.GetFiles())
                             {
                                 i.Delete();
+                                Log.Information($"Deleted Cache Dir.Count>=15.");
                             }
                         }
                     }
@@ -254,6 +259,7 @@ namespace CokeeDP.Views.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+        
 
         public void SetImageText(string desc, string info, string title)
         {
@@ -290,17 +296,17 @@ namespace CokeeDP.Views.Windows
                 }
                 else CountDownTime = settings.CountdownTime;
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 10) settings.OneWordsTimeInterval = 100;
+                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 2) settings.OneWordsTimeInterval = 2;
                 if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = 9800;
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
                 AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
-                SetTimer(SecondTimer, 1, OneWordsTimer, Convert.ToInt32(settings.OneWordsTimeInterval), WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
+                SetTimer(SecondTimer, 1, OneWordsTimer, settings.OneWordsTimeInterval*60, WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
             }
             catch (Exception ex)
             {
                 ProcessErr(ex);
-                settings.OneWordsTimeInterval = 100;
+                settings.OneWordsTimeInterval = 2;
                 settings.WeatherTimeInterval = 9800;
             }
         }
@@ -310,6 +316,7 @@ namespace CokeeDP.Views.Windows
             {
                 ChangeWapp(false);
                 pager.PageDown();
+                sticky.RandomNext();
                 _ = Hitoko();
             }
        ));
