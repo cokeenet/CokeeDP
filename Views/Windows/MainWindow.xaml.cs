@@ -319,6 +319,24 @@ namespace CokeeDP.Views.Windows
        ));
         }
 
+        public void LoadInkCard()
+        {
+
+            Dispatcher.Invoke(new Action(delegate {
+            
+            
+            
+            }));
+        }
+
+
+
+
+
+
+
+
+
         public void OnNewDay()
         {
             timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
