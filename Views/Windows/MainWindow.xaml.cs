@@ -318,25 +318,6 @@ namespace CokeeDP.Views.Windows
             }
        ));
         }
-
-        public void LoadInkCard()
-        {
-
-            Dispatcher.Invoke(new Action(delegate {
-            
-            
-            
-            }));
-        }
-
-
-
-
-
-
-
-
-
         public void OnNewDay()
         {
             timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
@@ -1003,7 +984,7 @@ namespace CokeeDP.Views.Windows
                 // 向目标设备发送设备控制码。IOCTL_STORAGE_EJECT_MEDIA-弹出U盘
                 uint byteReturned;
                 bool result = DeviceIoControl(handle, IOCTL_STORAGE_EJECT_MEDIA, IntPtr.Zero, 0, IntPtr.Zero, 0, out byteReturned, IntPtr.Zero);
-                if (!result) snackbarService.ShowAsync("U盘退出失败", "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24, ControlAppearance.Danger);
+                if (!result) snackbarService.ShowAsync("U盘退出失败",  "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24, ControlAppearance.Danger);
                 else ShowUsbCard(true);
             }
             catch (Exception ex)
