@@ -1,4 +1,5 @@
-﻿using Cokee.ClassService.Views.Pages;
+﻿using Cokee.ClassService.Helper;
+using Cokee.ClassService.Views.Pages;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
