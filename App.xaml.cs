@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Threading;
+
+using CokeeDP.Views.Windows;
 
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -34,6 +37,7 @@ namespace CokeeDP
                 typeof(Timeline),
                 new FrameworkPropertyMetadata { DefaultValue = 120 }
                 );
+            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Double process not allow
             if (Process.GetProcessesByName("CokeeDP.exe").Length >= 2 || Process.GetProcessesByName("CokeeDP.scr").Length >= 2)
@@ -42,15 +46,23 @@ namespace CokeeDP
                 Environment.Exit(0);
             }
         }
+
+        private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            Exception ex = e.Exception;
+            Crashes.TrackError(ex);
+            Log.Error($"捕获到未处理异常：{ex.GetType()}\r\n异常信息：{ex.Message}\r\n异常堆栈：{ex.StackTrace}", e);
+            var a = Application.Current.MainWindow as MainWindow;
+            if (a!=null)
+            {
+                a.ProcessErr(ex);
+            }
+        }
+
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception ex = e.ExceptionObject as Exception;
-            Crashes.TrackError(ex);
-            Log.Error($"捕获到未处理异常：{ex.GetType()}\r\n异常信息：{ex.Message}\r\n异常堆栈：{ex.StackTrace}", e);
-        }
-        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
-        {
-            Exception ex = e.Exception;
             Crashes.TrackError(ex);
             Log.Error($"捕获到未处理异常：{ex.GetType()}\r\n异常信息：{ex.Message}\r\n异常堆栈：{ex.StackTrace}", e);
         }
