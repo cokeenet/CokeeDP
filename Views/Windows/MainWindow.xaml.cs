@@ -20,7 +20,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
 using Cokee.ClassService.Helper;
 using Cokee.ClassService.Views.Pages;
 
