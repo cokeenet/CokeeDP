@@ -97,6 +97,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="dotnetCampus.Ipc" Version="1.0.1" />
     <PackageReference Include="Lepo.i18n" Version="1.2.2" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
