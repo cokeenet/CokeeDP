@@ -21,7 +21,6 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Cokee.ClassService.Helper;
-using Cokee.ClassService.Views.Pages;
 
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
@@ -288,17 +287,17 @@ namespace CokeeDP.Views.Windows
                 //如配置文件损坏或不正确，用默认配置覆盖
                 if (settings.CountdownTime.Year <= 2000)
                 {
-                    CountDownTime = DateTime.Parse("2025/06/05");
+                    CountDownTime = new DateTime(2025,06,05);
                     settings.CountdownTime = CountDownTime;
                 }
                 else CountDownTime = settings.CountdownTime;
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
-                if (Convert.ToInt32(settings.OneWordsTimeInterval) <= 2) settings.OneWordsTimeInterval = 2;
-                if (Convert.ToInt32(settings.WeatherTimeInterval) <= 9800) settings.WeatherTimeInterval = 9800;
+                if (settings.OneWordsTimeInterval <= 2) settings.OneWordsTimeInterval = 2;
+                if (settings.WeatherTimeInterval <= 9800) settings.WeatherTimeInterval = 9800;
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
                 AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
-                SetTimer(SecondTimer, 1, OneWordsTimer, settings.OneWordsTimeInterval * 60, WeatherTimer, Convert.ToInt32(settings.WeatherTimeInterval));
+                SetTimer(SecondTimer, 1, OneWordsTimer, settings.OneWordsTimeInterval * 60, WeatherTimer, settings.WeatherTimeInterval);
             }
             catch (Exception ex)
             {
