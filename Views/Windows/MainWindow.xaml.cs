@@ -45,7 +45,8 @@ using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
-
+using AppSettings = CokeeDP.Properties.AppSettings;
+using AppSettingsExtensions = CokeeDP.Properties.AppSettingsExtensions;
 using Button = Wpf.Ui.Controls.Button;
 using Clipboard = Wpf.Ui.Common.Clipboard;
 using Color = System.Windows.Media.Color;
@@ -91,7 +92,7 @@ namespace CokeeDP.Views.Windows
         {
             InitializeComponent();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("log.txt",
+                .WriteTo.File($@"D:\logs\DP\{DateTime.Now.ToString("yyyy-MM-dd")}txt",
                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                 .WriteTo.AppCenterSink(null, Serilog.Events.LogEventLevel.Information, AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
                 .WriteTo.RichTextBox(log)
