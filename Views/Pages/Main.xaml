@@ -8,38 +8,19 @@
     d:DesignWidth="794"
     Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True" Unloaded="unload">
 
-    <Grid Margin="5,0,5,0">
-        <Grid.ColumnDefinitions />
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <StackPanel Margin="5,0,5,0">
+       
         <!--<ui:InfoBar />-->
         <TextBlock
-            Grid.Row="0" Grid.Column="0" FontSize="20" Text="CokeeDP 设置" />
+              FontSize="20" Text="CokeeDP 设置" />
 
         <TextBlock
-            Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="壁纸"/>
+              Margin="5,5,0,0" FontSize="16" Text="壁纸"/>
 
         <ui:CardControl
-            Grid.Row="2" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="启用 Bing 每日壁纸" />
                     <TextBlock
@@ -50,9 +31,9 @@
                 x:Name="BingWappSwitch" Click="SwitchEventsHandler" IsChecked="{Binding BingWappEnable}" Tag="bing" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="3" Margin="5,10,5,0" VerticalAlignment="Top" Icon="VideoClip24">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="VideoClip24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="Bing 动态视频背景(测试功能!!😥)" />
                     <TextBlock
@@ -63,9 +44,9 @@
                 x:Name="BingVideoSwitch" Click="SwitchEventsHandler" IsChecked="{Binding BingVideoEnable}" Tag="bingVideo" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="4" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="Hd20">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="加载4K分辨率背景图" />
                     <TextBlock
@@ -76,11 +57,11 @@
                 x:Name="UHDModeSwitch" Click="SwitchEventsHandler" IsChecked="{Binding UHDEnable}" Tag="uhd" />
         </ui:CardControl>
         <TextBlock
-            Grid.Row="5" Grid.Column="0" Margin="5,5,0,0" FontSize="16" Text="一言" />
+              Margin="5,5,0,0" FontSize="16" Text="一言" />
         <ui:CardControl
-            Grid.Row="6" Margin="5,10,5,0" VerticalAlignment="Top" Icon="SlideText24">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="SlideText24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="一言API" />
                     <TextBlock
@@ -102,9 +83,9 @@
             </ComboBox>
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="7" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Clock24">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="Clock24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="一言/壁纸更新间隔" />
                 </StackPanel>
@@ -117,11 +98,11 @@
             </Grid>
         </ui:CardControl>
         <TextBlock
-            Grid.Row="8" Margin="5,5,0,0" FontSize="16" Text="杂项" />
+             Margin="5,5,0,0" FontSize="16" Text="杂项" />
         <ui:CardControl
-            Grid.Row="9" Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="MusicNote2Play20">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="听力播放器目录" />
                 </StackPanel>
@@ -137,7 +118,7 @@
             Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click"
             Icon="WeatherCloudy24">
             <ui:CardAction.Content>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="选择天气城市" />
                     <Label
@@ -148,7 +129,7 @@
         <ui:CardControl
             Grid.Row="11" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="设置倒计时名称" />
                 </StackPanel>
@@ -159,7 +140,7 @@
         <ui:CardControl
             Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="设置倒计时日期" />
                 </StackPanel>
@@ -170,7 +151,7 @@
         <ui:CardControl
             Grid.Row="13" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="启用雪花效果" />
                     <TextBlock
@@ -183,7 +164,7 @@
         <ui:CardControl
             Grid.Row="14" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="音频自动播放时间" />
                     <TextBlock
@@ -193,5 +174,5 @@
             <ui:TextBox
                     x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" Text="{Binding AudioAutoPlayTime}"/>
         </ui:CardControl>
-    </Grid>
+    </StackPanel>
 </ui:UiPage>

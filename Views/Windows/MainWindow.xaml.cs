@@ -20,6 +20,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+
 using Cokee.ClassService.Helper;
 
 using CokeeDP.Properties;
@@ -34,6 +35,7 @@ using Newtonsoft.Json.Linq;
 
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+
 //using Quartz.Impl;
 //using Quartz;
 using Serilog;
@@ -73,18 +75,18 @@ namespace CokeeDP.Views.Windows
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
         private string AudioFolder;
-        private int bgn = -1, bing = 0, videoCount = 0;
-        private string disk, weaWr, hkUrl, nowDowning = "";
+        private int bgn = -1, bing = 0;
+        private string disk, weaWr, hkUrl;
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
-        private int PlayingRule = 0, TaskCd;
+        private int PlayingRule = 0;
         private MediaPlayer mediaplayer = new MediaPlayer();
-        private DateTime CountDownTime, TaskedTime;
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement debugCard;
         public bool IsUsbOpened = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -115,7 +117,6 @@ namespace CokeeDP.Views.Windows
                             win1.Show();
                         }
                     }
-
                 }*/
                 FillConfig();
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
@@ -226,7 +227,6 @@ namespace CokeeDP.Views.Windows
                         {
                             bgn = 0;
                             bgp = new Uri(ImageArray[bgn].FullName);
-
                         }
                         else
                         {
@@ -254,8 +254,7 @@ namespace CokeeDP.Views.Windows
         }
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
+        private static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         public void SetImageText(string desc, string info, string title)
         {
@@ -266,8 +265,8 @@ namespace CokeeDP.Views.Windows
                 CardInfo.Content = title;
             }
        ));
-
         }
+
         public void SetImageText(string folderPath)
         {
             Dispatcher.Invoke(new Action(delegate
@@ -277,20 +276,15 @@ namespace CokeeDP.Views.Windows
                 CardInfo.Content = File.ReadAllText(folderPath + "\\title.txt");
             }
        ));
-
         }
+
         public void FillConfig()
         {
             try
             {
                 //CountDownLabel.IsResizeable = true;
                 //如配置文件损坏或不正确，用默认配置覆盖
-                if (settings.CountdownTime.Year <= 2000)
-                {
-                    CountDownTime = new DateTime(2025,06,05);
-                    settings.CountdownTime = CountDownTime;
-                }
-                else CountDownTime = settings.CountdownTime;
+                if (settings.CountdownTime.Year <= 2000) settings.CountdownTime = new DateTime(2025, 06, 05);
                 if (settings.OneWordsApi.Length == 0) { settings.OneWordsApi = "https://v1.hitokoto.cn/?c=k"; }
                 if (settings.OneWordsTimeInterval <= 2) settings.OneWordsTimeInterval = 2;
                 if (settings.WeatherTimeInterval <= 9800) settings.WeatherTimeInterval = 9800;
@@ -306,6 +300,7 @@ namespace CokeeDP.Views.Windows
                 settings.WeatherTimeInterval = 9800;
             }
         }
+
         public void OnHitokoUpd(object source, ElapsedEventArgs d)
         {
             Dispatcher.Invoke(new Action(delegate
@@ -317,6 +312,7 @@ namespace CokeeDP.Views.Windows
             }
        ));
         }
+
         public void OnNewDay()
         {
             timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
@@ -324,6 +320,7 @@ namespace CokeeDP.Views.Windows
             CheckBirthDay();
             GetCalendarInfo();
         }
+
         public void CheckBirthDay()
         {
             string DATA_FILE = "D:\\Program Files (x86)\\CokeeTech\\CokeeClass\\students.json";
@@ -360,7 +357,6 @@ namespace CokeeDP.Views.Windows
             }
         }
 
-
         public void OnOneSecondTimer(object source, ElapsedEventArgs e)
         {
             try
@@ -371,11 +367,11 @@ namespace CokeeDP.Views.Windows
 
                 if (settings.EnableBigTimeTo)
                 {
-                    tod_info.Content = "还有" + CountDownTime.Subtract(DateTime.Now).TotalDays + "天";
-                    big_tod.Content = ((int)CountDownTime.Subtract(DateTime.Now).TotalDays);
+                    tod_info.Content = "还有" + settings.CountdownTime.Subtract(DateTime.Now).TotalDays + "天";
+                    big_tod.Content = ((int)settings.CountdownTime.Subtract(DateTime.Now).TotalDays);
                 }
                 else
-                    CountDownLabel.Content = $"距离[{settings.CountdownName}]还有 {CountDownTime.Subtract(DateTime.Now).TotalDays} 天";
+                    CountDownLabel.Content = $"距离[{settings.CountdownName}]还有 {settings.CountdownTime.Subtract(DateTime.Now).TotalDays} 天";
                 if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0 && DateTime.Now.Second == 0)
                 {
                     OnNewDay();
@@ -416,7 +412,6 @@ namespace CokeeDP.Views.Windows
             a = new Timer(ms * 1000); a.Elapsed += new ElapsedEventHandler(OnOneSecondTimer); a.AutoReset = true; a.Enabled = true;
             b = new Timer(ms1 * 1000); b.Elapsed += new ElapsedEventHandler(OnHitokoUpd); b.AutoReset = true; b.Enabled = true;
             c = new Timer(ms2 * 1000); c.Elapsed += new ElapsedEventHandler(OnWeatherTimer); c.AutoReset = true; c.Enabled = true;
-
         }
 
         public Stream GetWeatherIcon(int code)
@@ -434,6 +429,7 @@ namespace CokeeDP.Views.Windows
                 return null;
             }
         }
+
         public async void GetCalendarInfo()
         {
             Stopwatch sw = new Stopwatch();
@@ -451,6 +447,7 @@ namespace CokeeDP.Views.Windows
             sw.Stop();
             Log.Information($"获取节假日信息用时:{sw.Elapsed.TotalSeconds}s");
         }
+
         private async Task GetBingWapp()
         {
             try
@@ -513,6 +510,7 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+
         private async Task GetBingVideo()
         {
             try
@@ -521,7 +519,7 @@ namespace CokeeDP.Views.Windows
                 // 从MSN获取配置Json
                 var u2 = await client.GetStringAsync("https://ntp.msn.cn/resolver/api/resolve/v3/config/?expType=AppConfig&expInstance=default&apptype=edgeChromium&v=20230501.202&targetScope={\"audienceMode\":\"adult\",\"browser\":{\"browserType\":\"edgeChromium\",\"version\":\"112\",\"ismobile\":\"false\"},\"deviceFormFactor\":\"desktop\",\"domain\":\"ntp.msn.cn\",\"locale\":{\"content\":{\"language\":\"zh\",\"market\":\"cn\"},\"display\":{\"language\":\"zh\",\"market\":\"cn\"}},\"os\":\"windows\",\"platform\":\"web\",\"pageType\":\"ntp\"}");
                 JObject dt = JsonConvert.DeserializeObject<JObject>(u2);
-                videoCount = dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"].Count();
+                int videoCount = dt["configs"]["BackgroundImageWC/default"]["properties"]["video"]["data"].Count();
                 bing = new Random().Next(videoCount);
                 //if (dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("水母") || dt["configs"]["BackgroundImageWC/default"]["properties"]["localizedStrings"]["video_titles"]["video" + bing].ToString().Contains("蜂")) return;
                 Uri videoUri;
@@ -559,6 +557,7 @@ namespace CokeeDP.Views.Windows
             br2_blur.BeginAnimation(BlurEffect.RadiusProperty, animation);
             br2.Play();
         }
+
         private void Br2_BufferingStarted(object sender, RoutedEventArgs e)
         {
             if (pro.Visibility != Visibility.Visible) pro.Visibility = Visibility.Visible;
@@ -635,7 +634,6 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-
                 this.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 this.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
                 snackbarService = new SnackbarService();
@@ -672,6 +670,7 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+
         private void CapTimer_Elapsed(object sender, ElapsedEventArgs e) => VideoCap();
 
         private void VideoCap()
@@ -682,9 +681,13 @@ namespace CokeeDP.Views.Windows
                 const int cameraIndex = 1;
                 const int frameWidth = 3264;
                 const int frameHeight = 2448;
-                #region 
+
+                #region
+
                 var outputPath = $@"D:\CokeeDP\Cache\{DateTime.Now:MM-dd}";
+
                 #endregion
+
                 // 检查目录是否存在
                 /*   if (!Directory.Exists(outputPath))
                    {
@@ -696,7 +699,6 @@ namespace CokeeDP.Views.Windows
                 {
                     video.Set(VideoCaptureProperties.FrameWidth, frameWidth);
                     video.Set(VideoCaptureProperties.FrameHeight, frameHeight);
-
 
                     using (var mat = new Mat())
                     {
@@ -974,7 +976,6 @@ namespace CokeeDP.Views.Windows
 
         private void ExitUsbDrive(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 string filename = @"\\.\" + disk.Remove(2);
@@ -983,7 +984,7 @@ namespace CokeeDP.Views.Windows
                 // 向目标设备发送设备控制码。IOCTL_STORAGE_EJECT_MEDIA-弹出U盘
                 uint byteReturned;
                 bool result = DeviceIoControl(handle, IOCTL_STORAGE_EJECT_MEDIA, IntPtr.Zero, 0, IntPtr.Zero, 0, out byteReturned, IntPtr.Zero);
-                if (!result) snackbarService.ShowAsync("U盘退出失败",  "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24, ControlAppearance.Danger);
+                if (!result) snackbarService.ShowAsync("U盘退出失败", "请检查程序占用，关闭已打开的文件夹，PPT，WORD等。", SymbolRegular.Warning24, ControlAppearance.Danger);
                 else ShowUsbCard(true);
             }
             catch (Exception ex)
@@ -1035,7 +1036,6 @@ namespace CokeeDP.Views.Windows
         ///元素拖动处理
         /// </summary>
         /// <param name="sender">(Label)被拖的标签</param>
-
 
         private Object locker = new Object();
         private Object locker2 = new Object();
@@ -1110,6 +1110,7 @@ namespace CokeeDP.Views.Windows
                 ProcessErr(ex);
             }
         }
+
         private void RepeatPointSet(object sender, MouseButtonEventArgs e)
         {
             Log.Information($"已设置Repeat Point:{mediaplayer.Position.ToString(@"mm\:ss")}");
@@ -1173,8 +1174,6 @@ namespace CokeeDP.Views.Windows
                             Log.Information("成功跳转至指定时间戳。");
                         }
                         else snackbarService.ShowAsync("未检测到时间戳文件", "咕咕咕", SymbolRegular.Info12);
-
-
                     }
                 }
             }
@@ -1229,24 +1228,28 @@ namespace CokeeDP.Views.Windows
                         PlayingRule = 1;
                         tmp.Tag = "1";
                         break;
+
                     case "1":
                         tmp.Content = "列表循环";
                         tmp.Icon = SymbolRegular.ArrowRepeatAll24;
                         tmp.Tag = "2";
                         PlayingRule = 2;
                         break;
+
                     case "2":
                         tmp.Content = "听两遍";
                         tmp.Tag = "3";
                         tmp.Icon = SymbolRegular.AnimalCat16;
                         PlayingRule = 3;
                         break;
+
                     case "3":
                         tmp.Content = "播完停止";
                         tmp.Tag = "0";
                         tmp.Icon = SymbolRegular.ArrowRepeatAllOff24;
                         PlayingRule = 0;
                         break;
+
                     default:
                         break;
                 }
@@ -1410,6 +1413,7 @@ namespace CokeeDP.Views.Windows
         {
             pager.Items.Insert(0, debugCard);
         }
+
         //测试函数 防止屏保无法退出
         private void FuncT1(object sender, MouseButtonEventArgs e)
         {
@@ -1427,16 +1431,16 @@ namespace CokeeDP.Views.Windows
                 case "exit":
                     Environment.Exit(0);
                     break;
+
                 case "explore":
                     Process.Start("C:\\Windows\\explorer.exe");
                     break;
+
                 case "cap":
                     VideoCap();
                     break;
             }
         }
-
-
 
         private void FuncT2(object sender, MouseButtonEventArgs e)
         {
@@ -1631,7 +1635,5 @@ namespace CokeeDP.Views.Windows
                     br1.EndInit();
                 }
             }*/
-
-
     }
 }
