@@ -64,7 +64,7 @@ namespace CokeeDP.Views.Controls
             var files = directoryInfo.GetFiles("*.ink");
             string stu = files[new Random().Next(files.Length)].Name.Replace(".ink","");
             name.Content = stu;
-            Log.Information(stu);
+            
             string INK_FILE = @$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink\{stu}.ink";
             if (File.Exists(INK_FILE))
             {

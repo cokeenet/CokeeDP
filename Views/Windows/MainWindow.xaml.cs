@@ -119,6 +119,7 @@ namespace CokeeDP.Views.Windows
 
                 }*/
                 FillConfig();
+                Log.Information(Environment.ProcessPath);
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if (settings.EnableBigTimeTo) BigCountdown.Visibility = Visibility.Visible;
                 if (settings.BingVideoEnable) _ = GetBingVideo();
