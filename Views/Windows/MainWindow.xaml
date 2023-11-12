@@ -1,6 +1,6 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
@@ -72,7 +72,7 @@
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
                     <ui:Card x:Name="debugPage" VerticalAlignment="Stretch" Margin="-2,6,2,-6">
-                        <ScrollViewer>
+                        <ScrollViewer x:Name="scl">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -89,13 +89,13 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <ui:Button Content="强制退出" Grid.Row="0" Margin="5" Tag="exit" Click="BtnHandler" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Appearance="Caution"/>
-                                    <ui:Button Content="资源管理器" Grid.Row="0" Margin="5" Tag="explore" Click="BtnHandler" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                    <ui:Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    <ui:Button Content="强制退出" Grid.Row="0" Margin="5" Tag="exit" Click="BtnHandler" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Appearance="Caution" />
+                                    <ui:Button Content="资源管理器" Grid.Row="0" Margin="5" Tag="explore" Click="BtnHandler" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                    <ui:Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                                 </Grid>
 
                                 <Label FontSize="24" Foreground="Black" Content="LogViewer 日志查看器" Grid.Row="2" />
@@ -103,7 +103,7 @@
                                 <RichTextBox
                         x:Name="log" HorizontalContentAlignment="Left"
                         FontFamily="Consolas" FontSize="20" Foreground="White" IsReadOnlyCaretVisible="True"
-                        Style="{x:Null}" Background="#FF424242" Grid.Row="3" />
+                        Style="{x:Null}" Background="#FF424242" Grid.Row="3" TextChanged="log_TextChanged" />
                             </Grid>
                         </ScrollViewer>
                     </ui:Card>
@@ -515,7 +515,7 @@
                         RenderTransformOrigin="0.5,0.5" d:Visibility="Visible" Visibility="Collapsed">
                     <ui:Card.RenderTransform>
                         <TransformGroup>
-                            <TranslateTransform x:Name="tranT" X="-365" d:X="0"/>
+                            <TranslateTransform x:Name="tranT" X="-365" d:X="0" />
                         </TransformGroup>
                     </ui:Card.RenderTransform>
                     <ui:Card.BorderBrush>
@@ -536,9 +536,6 @@
                                     x:Name="audioName" Margin="0,0,-2,-6" HorizontalContentAlignment="Left"
                                     Background="{x:Null}"
                                     FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" Content="未加载音频">
-                                <Label.Effect>
-                                    <DropShadowEffect Opacity="0.5" />
-                                </Label.Effect>
                             </Label>
                         </ScrollViewer>
                         <ui:Button
@@ -564,9 +561,6 @@
                                 Background="{x:Null}"
                                 Content="00:00 / 00:00" FontFamily="Microsoft YaHei UI Light" FontSize="16" FontWeight="Normal"
                                 Foreground="Black">
-                            <Label.Effect>
-                                <DropShadowEffect Opacity="0.2" />
-                            </Label.Effect>
                         </Label>
                         <Label
                                 x:Name="VolumeText" Margin="82,98,153,56" HorizontalContentAlignment="Left"
@@ -606,11 +600,11 @@
                     Width="36" Height="36"
                     FontSize="36" Symbol="CellularOff24" Canvas.Left="25" Canvas.Top="100" VerticalAlignment="Top" Foreground="#E4FFFFFF" HorizontalAlignment="Left" />
                 <ui:InfoBar x:Name="netBar" Canvas.Left="828" Canvas.Top="1006" Message="网络连接丢失 &gt;_&lt;" IsClosable="False" Width="264" VerticalAlignment="Top" FontSize="18" Severity="Error" />
-                <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" IsClosable="False" FontSize="18" Severity="Success" IsManipulationEnabled="True" d:IsOpen="True" d:Message="🎉 明天是 0000 的生日！"/>
+                <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" IsClosable="False" FontSize="18" Severity="Success" IsManipulationEnabled="True" d:IsOpen="True" d:Message="🎉 明天是 0000 的生日！" />
                 <ui:Snackbar
                         x:Name="snackbar" Canvas.Left="635" Canvas.Top="931" Width="590" Height="110"
                         HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" />
-                <Controls:StickyNote x:Name="sticky" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1390" Canvas.Top="73"/>
+                <Controls:StickyNote x:Name="sticky" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1390" Canvas.Top="73" />
             </Canvas>
         </Viewbox>
     </Grid>

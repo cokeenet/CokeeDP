@@ -3,38 +3,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="GeoSearch" d:DesignHeight="432"
     d:DesignWidth="794" Scrollable="True" mc:Ignorable="d">
 
-    <Grid Margin="5,0,5,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Margin="5,0,5,0">
+        
 
-        <Grid Grid.Row="0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <ui:Button
-                Grid.Column="0" Width="100" Height="30" Click="Button_Click" Content="返回"
+                 Margin="5" Click="Button_Click" Content="返回"
                 FontSize="14" Icon="ArrowLeft20" />
 
             <TextBlock
-                Grid.Column="1" Margin="10,0,0,0" FontSize="20" Text="城市搜索" />
+              Grid.Column="1"   Margin="10,0,0,0" FontSize="20" Text="城市搜索" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Grid>
         <ui:CardControl
-            Grid.Row="5" Margin="5,10,5,0" VerticalAlignment="Top" Icon="Earth32">
+             Margin="5,10,5,0" VerticalAlignment="Top" Icon="Earth32">
             <ui:CardControl.Header>
-                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="搜索城市" />
                 </StackPanel>
@@ -45,14 +32,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <ui:TextBox
-                    x:Name="searchBox" Grid.Column="0" Grid.ColumnSpan="2" Margin="19,0,139,0" />
+                    x:Name="searchBox"  Grid.ColumnSpan="2" Margin="19,0,139,0" />
                 <ui:Button
-                    x:Name="SearchBtn" Grid.Column="1" Width="124" Height="36" Margin="376,0,0,0"
+                    x:Name="SearchBtn"  Width="124" Height="36" Margin="376,0,0,0"
                     Click="SearchBtnHandle" Content="搜索" Icon="Search24" Tag="search" />
             </Grid>
         </ui:CardControl>
         <ItemsControl
-            x:Name="CityList" Grid.Row="6" Margin="0,0,10,30">
+            x:Name="CityList"  Margin="0,0,10,30">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ui:CardControl Margin="5,5,5,5" Icon="City24">
@@ -73,5 +60,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+    </StackPanel>
 </ui:UiPage>

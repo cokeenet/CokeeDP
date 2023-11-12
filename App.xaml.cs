@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 using CokeeDP.Views.Windows;
@@ -26,11 +27,11 @@ namespace CokeeDP
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("log.txt",
                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
-                .WriteTo.AppCenterSink(null,Serilog.Events.LogEventLevel.Information,AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
+                .WriteTo.AppCenterSink(null, Serilog.Events.LogEventLevel.Information, AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
                 .CreateLogger();
 
             if (Environment.OSVersion.Version.Major >= 10.0) AppCenter.Start("52a9c4e0-ad42-455b-b1cf-515d8a39f245", typeof(Analytics), typeof(Crashes));
-            
+
             // Theme.Apply(ThemeType.Light,BackgroundType.Mica);
 
             Timeline.DesiredFrameRateProperty.OverrideMetadata(
@@ -54,7 +55,7 @@ namespace CokeeDP
             Crashes.TrackError(ex);
             Log.Error($"捕获到未处理异常：{ex.GetType()}\r\n异常信息：{ex.Message}\r\n异常堆栈：{ex.StackTrace}", e);
             var a = Application.Current.MainWindow as MainWindow;
-            if (a!=null)
+            if (a != null)
             {
                 a.ProcessErr(ex);
             }
