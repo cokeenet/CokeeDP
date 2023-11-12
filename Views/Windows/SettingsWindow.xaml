@@ -27,15 +27,14 @@
                         Content="设置" Icon="Home24"
                         PageType="{x:Type pages:Main}" />
                     <ui:NavigationSeparator />
-                    <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" PageType="{x:Type pages:TimeTask}"/>
-                    <ui:NavigationItem Content="生日提醒" Icon="FoodCake24" PageType="{x:Type pages:Birth}"/>
+                    <ui:NavigationItem Content="定时任务" Icon="ClockAlarm32" PageType="{x:Type pages:TimeTask}" />
                 </ui:NavigationStore.Items>
                 <ui:NavigationStore.Footer>
                     <ui:NavigationItem
-                        Content="深色模式" Icon="DarkTheme24" Click="DarkMode"/>
+                        Content="深色模式" Icon="DarkTheme24" Click="DarkMode" />
                     <ui:NavigationItem
                         Content="关于" Icon="Info24"
-                        PageType="{x:Type pages:About}"/>
+                        PageType="{x:Type pages:About}" />
                 </ui:NavigationStore.Footer>
             </ui:NavigationStore>
             <Border
@@ -43,7 +42,7 @@
                 <Frame x:Name="RootFrame" Margin="4,8" ScrollViewer.CanContentScroll="True" NavigationUIVisibility="Visible" />
             </Border>
         </Grid>
-        
+
         <ui:Snackbar
             x:Name="snackbar" Grid.Row="1" Width="370" Height="68" Margin="0,0,0,20"
             HorizontalAlignment="Center" VerticalAlignment="Bottom" />

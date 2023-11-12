@@ -24,8 +24,8 @@
     <PackageProjectUrl>https://github.com/cokeenet/CokeeDP/</PackageProjectUrl>
     <Company>Cokee Tech</Company>
     <PackageIcon>AppIcon.jpg</PackageIcon>
-    <AssemblyVersion>4.0.125.23272</AssemblyVersion>
-    <FileVersion>4.0.125.23272</FileVersion>
+    <AssemblyVersion>4.0.129.23316</AssemblyVersion>
+    <FileVersion>4.0.129.23316</FileVersion>
     <UserSecretsId>79e32a5e-50a7-4673-bfb9-2e46a815e2f0</UserSecretsId>
   </PropertyGroup>
 
@@ -97,13 +97,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotnetCampus.Ipc" Version="1.0.1" />
-    <PackageReference Include="Lepo.i18n" Version="1.2.2" />
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.8.4" />
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4" Version="4.8.0.20230708" />
@@ -299,12 +300,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Cokee.ClassService">
-      <HintPath>..\Cokee.ClassService\bin\Release\net6.0-windows\Cokee.ClassService.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <SplashScreen Include="SplashScreen.png" />
   </ItemGroup>
 
@@ -330,9 +325,6 @@
     <Page Update="Views\Pages\About.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\Birth.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="Views\Pages\TimeTask.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

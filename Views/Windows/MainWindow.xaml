@@ -72,7 +72,7 @@
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
                     <ui:Card x:Name="debugPage" VerticalAlignment="Stretch" Margin="-2,6,2,-6">
-                        <ScrollViewer>
+                        <ScrollViewer x:Name="scl">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -103,7 +103,7 @@
                                 <RichTextBox
                         x:Name="log" HorizontalContentAlignment="Left"
                         FontFamily="Consolas" FontSize="20" Foreground="White" IsReadOnlyCaretVisible="True"
-                        Style="{x:Null}" Background="#FF424242" Grid.Row="3" />
+                        Style="{x:Null}" Background="#FF424242" Grid.Row="3" TextChanged="log_TextChanged" />
                             </Grid>
                         </ScrollViewer>
                     </ui:Card>

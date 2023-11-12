@@ -19,7 +19,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
+
+using AutoUpdaterDotNET;
 
 using Cokee.ClassService.Helper;
 
@@ -45,6 +48,7 @@ using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
+
 using AppSettings = CokeeDP.Properties.AppSettings;
 using AppSettingsExtensions = CokeeDP.Properties.AppSettingsExtensions;
 using Button = Wpf.Ui.Controls.Button;
@@ -172,7 +176,7 @@ namespace CokeeDP.Views.Windows
                             foreach (var i in dir.GetFiles())
                             {
                                 i.Delete();
-                                Log.Information($"Deleted All FIles.Count>=25.");
+                                Log.Information($"Deleted All Files.Count>=25.");
                             }
                         }
                     }
@@ -204,7 +208,6 @@ namespace CokeeDP.Views.Windows
                 }
 
                 #region non-bing
-
                 else
                 {
                     if (bgn == -1) bgn = new Random().Next(0, ImageArray.Count);
@@ -380,7 +383,7 @@ namespace CokeeDP.Views.Windows
                 if (IsPlaying)
                 {
                     if (AudioScroll > MusicScroll.ScrollableWidth) AudioScroll = 0;
-                    else AudioScroll = AudioScroll + 5;
+                    else AudioScroll = AudioScroll + 10;
                     MusicScroll.ScrollToHorizontalOffset(AudioScroll);
                     // audioTime.Content = mediaplayer.Position.ToString(@"mm\:ss") + "/" + MediaDuring;
                     PlaySlider.Value = mediaplayer.Position.TotalSeconds;
@@ -654,7 +657,7 @@ namespace CokeeDP.Views.Windows
                     return false;
                 });
                 Hitoko();
-                _ = GetWeatherInfo();
+                GetWeatherInfo();
                 //new Thread(VideoCap).Start();
 
                 CapTimer.Elapsed += CapTimer_Elapsed;
@@ -663,7 +666,10 @@ namespace CokeeDP.Views.Windows
 
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
                 if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
-
+                AutoUpdater.ShowSkipButton = false;
+                AutoUpdater.ShowRemindLaterButton = true;
+                AutoUpdater.RunUpdateAsAdmin = false;
+                AutoUpdater.Start("https://gitee.com/cokee/CokeeDisplayProtect/raw/main/update.xml");
                 //isloaded = true;
             }
             catch (Exception ex)
@@ -695,7 +701,8 @@ namespace CokeeDP.Views.Windows
                        serviceController.Start();
                        serviceController.WaitForStatus(ServiceControllerStatus.Running);
                    }           */
-
+                var fileName = $"{DateTime.Now:MMdd-HH-mm-ss}-dp.png";
+                var filePath = System.IO.Path.Combine(outputPath, fileName);
                 using (var video = new VideoCapture(cameraIndex, VideoCaptureAPIs.ANY))
                 {
                     video.Set(VideoCaptureProperties.FrameWidth, frameWidth);
@@ -704,8 +711,6 @@ namespace CokeeDP.Views.Windows
                     using (var mat = new Mat())
                     {
                         video.Read(mat);
-                        var fileName = $"{DateTime.Now:HH-mm-ss}-dp.png";
-                        var filePath = System.IO.Path.Combine(outputPath, fileName);
 
                         using (var bitmap = BitmapConverter.ToBitmap(mat))
                         {
@@ -717,6 +722,15 @@ namespace CokeeDP.Views.Windows
                         //snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
                     }
                 }
+                Log.Information($"Caped.");
+                string copyPath = "C:\\Users\\seewo\\OneDrive - Cokee Technologies\\CokeeDP\\Cache";
+                if (Directory.Exists(copyPath))
+                {
+                    if (!Directory.Exists(copyPath)) Directory.CreateDirectory(copyPath);
+                    File.Copy(filePath, copyPath + "\\" + fileName);
+                    Log.Information($"Try to copy file.");
+                }
+                else Log.Information($"Failed to find copypath.");
             }
             catch (Exception ex)
             {
@@ -729,7 +743,7 @@ namespace CokeeDP.Views.Windows
             //async get http wea info
             Dispatcher.Invoke(new Action(delegate
             {
-                _ = GetWeatherInfo();
+                GetWeatherInfo();
             }
             ));
         }
@@ -741,7 +755,7 @@ namespace CokeeDP.Views.Windows
             else if (a.Name == "right") ChangeWapp(false);
         }
 
-        private async Task GetWeatherInfo()
+        private async void GetWeatherInfo()
         {
             try
             {
@@ -1515,6 +1529,11 @@ namespace CokeeDP.Views.Windows
             settings.SaveSettings();
             snackbarService.ShowAsync("屏蔽成功", "已屏蔽日期为 " + br1.Tag.ToString() + " 的图片。", SymbolRegular.CheckmarkCircle24);
             _ = GetBingWapp();
+        }
+
+        private void log_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            scl.ScrollToEnd();
         }
 
         /// <summary>
