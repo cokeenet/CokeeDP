@@ -19,7 +19,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 using AutoUpdaterDotNET;
@@ -71,7 +70,7 @@ namespace CokeeDP.Views.Windows
     ///  By Cokee. Last Edit: 20230722
     public partial class MainWindow : Window
     {
-        public const string CACHE_DIR = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\Cache";
+        public const string CACHE_DIR = "D:\\CokeeTech\\CokeeDP\\Cache";
         private static Timer OneWordsTimer;
         private static Timer SecondTimer;
         private static Timer WeatherTimer;
@@ -79,9 +78,7 @@ namespace CokeeDP.Views.Windows
         private List<FileInfo> ImageArray = new List<FileInfo>();
         private FileInfo[] AudioArray;
         private int AudioNum = 0;
-        private string AudioFolder;
         private int bgn = -1, bing = 0;
-        private string disk, weaWr, hkUrl;
         private SnackbarService snackbarService;
         private bool IsPlaying = false, AudioLoaded = false, IsWaitingTask = false;
         private int PlayingRule = 0;
@@ -131,7 +128,7 @@ namespace CokeeDP.Views.Windows
                 else
                 {
                     //Using Local Picture
-                    var path = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\Picture";
+                    var path = "D:\\CokeeTech\\CokeeDP\\Picture";
                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                     DirectoryInfo[] ImageDir = new DirectoryInfo(path).GetDirectories();
                     foreach (var item in ImageDir)
@@ -149,9 +146,9 @@ namespace CokeeDP.Views.Windows
                 TimeLabel.Content = DateTime.Now.ToString("HH:mm:ss");
 
                 //Get AudioFiles
-                if (Directory.Exists(AudioFolder))
+                if (Directory.Exists(settings.AudioFolder))
                 {
-                    DirectoryInfo dir = new DirectoryInfo(AudioFolder);
+                    DirectoryInfo dir = new DirectoryInfo(settings.AudioFolder);
                     if (dir.Exists)
                     {
                         AudioArray = dir.GetFiles("*.mp3");
@@ -293,7 +290,6 @@ namespace CokeeDP.Views.Windows
                 if (settings.OneWordsTimeInterval <= 2) settings.OneWordsTimeInterval = 2;
                 if (settings.WeatherTimeInterval <= 9800) settings.WeatherTimeInterval = 9800;
                 if (settings.CountdownName.Length <= 1) settings.CountdownName = "高考";
-                AudioFolder = settings.AudioFolder;
                 AppSettingsExtensions.SaveSettings(settings);
                 SetTimer(SecondTimer, 1, OneWordsTimer, settings.OneWordsTimeInterval * 60, WeatherTimer, settings.WeatherTimeInterval);
             }
@@ -608,7 +604,7 @@ namespace CokeeDP.Views.Windows
 
         private async void Hitoko()
         {
-            try
+            await Dispatcher.BeginInvoke(new Action(async delegate
             {
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
@@ -620,18 +616,15 @@ namespace CokeeDP.Views.Windows
                     if (dt.ToString().Contains(word.ToString())) { Log.Information("一言已被屏蔽"); hitokoto.Content = "*一言已被屏蔽。"; Hitoko(); return; }
                 }
                 string who = dt["from_who"].ToString();
-                hkUrl = dt["uuid"].ToString();
+                hitokoto.Tag = dt["uuid"].ToString();
                 if (dt["hitokoto"] != null) { NetIcon.Symbol = SymbolRegular.CellularData120; netBar.IsOpen = false; }
                 hitokoto.Content = who == "null"
-                    ? dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》"
-                    : dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》" + dt["from_who"].ToString();
+                        ? dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》"
+                        : dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》" + dt["from_who"].ToString();
                 sw.Stop();
                 Log.Information($"获取一言用时:{sw.Elapsed.TotalSeconds}s");
             }
-            catch (Exception ex)
-            {
-                ProcessErr(ex);
-            }
+        ), DispatcherPriority.Normal);
         }
 
         private void Load(object sender, RoutedEventArgs e)
@@ -814,7 +807,7 @@ namespace CokeeDP.Views.Windows
                     else TextShort = t.Substring(t.IndexOf("新") + 1);
                     SpecialWeatherBtn.Content = TextShort;
                     SpecialWeatherBtn1.Content = TextShort;
-                    weaWr = dt1["warning"][0]["text"].ToString();
+                    SpecialWeatherBtn.Tag = dt1["warning"][0]["text"].ToString();
                 }
             }
             catch (Exception ex)
@@ -908,7 +901,7 @@ namespace CokeeDP.Views.Windows
                 {
                     usb.Visibility = Visibility.Visible;
                     tranUsb.BeginAnimation(TranslateTransform.XProperty, anim1);
-                    disk = t.Name;
+                    usb.Tag = t.Name;
                     diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
                     diskInfo.Content = (t.TotalFreeSpace / 1024 / 1024 / 1000) + "GB/" + (t.TotalSize / 1024 / 1024 / 1000) + "GB";//TODO:改进算法，这个结果是错的
                 }
@@ -993,7 +986,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                string filename = @"\\.\" + disk.Remove(2);
+                string filename = @"\\.\" + usb.Tag.ToString().Remove(2);
                 //打开设备，得到设备的句柄handle.
                 IntPtr handle = CreateFile(filename, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, IntPtr.Zero, 0x3, 0, IntPtr.Zero);
                 // 向目标设备发送设备控制码。IOCTL_STORAGE_EJECT_MEDIA-弹出U盘
@@ -1061,7 +1054,7 @@ namespace CokeeDP.Views.Windows
             {
                 lock (locker)
                 {
-                    if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));
+                    if (File.Exists(settings.AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(settings.AudioFolder + "\\Last.DAT"));
                     if (IsWaitingTask) AudioNum++;
                     DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
                     DoubleAnimation anim2 = new DoubleAnimation(-365, TimeSpan.FromSeconds(1));
@@ -1096,13 +1089,13 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                if (!Directory.Exists(AudioFolder))
+                if (!Directory.Exists(settings.AudioFolder))
                 {
-                    throw new DirectoryNotFoundException("听力文件夹未找到:" + AudioFolder);
+                    throw new DirectoryNotFoundException("听力文件夹未找到:" + settings.AudioFolder);
                 }
-                if (Directory.Exists(AudioFolder) && AudioArray.Length == 0)
+                if (Directory.Exists(settings.AudioFolder) && AudioArray.Length == 0)
                 {
-                    DirectoryInfo dir = new DirectoryInfo(AudioFolder);
+                    DirectoryInfo dir = new DirectoryInfo(settings.AudioFolder);
                     AudioArray = dir.GetFiles("*.mp3");
                     if (AudioArray.Length == 0) throw new FileNotFoundException("听力文件夹内没有.mp3文件。请转换音频为.mp3格式。");
                 }
@@ -1129,7 +1122,7 @@ namespace CokeeDP.Views.Windows
         private void RepeatPointSet(object sender, MouseButtonEventArgs e)
         {
             Log.Information($"已设置Repeat Point:{mediaplayer.Position.ToString(@"mm\:ss")}");
-            File.WriteAllText(AudioFolder + "\\Repeat.DAT", mediaplayer.Position.ToString());
+            File.WriteAllText(settings.AudioFolder + "\\Repeat.DAT", mediaplayer.Position.ToString());
         }
 
         private void SliderChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -1173,15 +1166,15 @@ namespace CokeeDP.Views.Windows
                 audioName.Content = AudioArray[AudioNum].Name;
                 PlaySlider.Maximum = mediaplayer.NaturalDuration.TimeSpan.TotalSeconds;
                 audioTime.Content = "00:00/" + mediaplayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-                File.WriteAllText(AudioFolder + "\\Last.DAT", AudioNum.ToString());// if (File.Exists(AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(AudioFolder + "\\Last.DAT"));
+                File.WriteAllText(settings.AudioFolder + "\\Last.DAT", AudioNum.ToString());// if (File.Exists(settings.AudioFolder + "\\Last.DAT")) AudioNum = Convert.ToInt32(File.ReadAllText(settings.AudioFolder + "\\Last.DAT"));
                 AudioLoaded = true;
                 PlaySlider.Value = mediaplayer.Position.Seconds;
                 if (PlayingRule == 3)
                 {
-                    if (File.Exists(AudioFolder + "\\Repeat.DAT"))
+                    if (File.Exists(settings.AudioFolder + "\\Repeat.DAT"))
                     {
                         TimeSpan tp;
-                        var res = TimeSpan.TryParse(File.ReadAllText(AudioFolder + "\\Repeat.DAT"), out tp);
+                        var res = TimeSpan.TryParse(File.ReadAllText(settings.AudioFolder + "\\Repeat.DAT"), out tp);
                         if (res)
                         {
                             mediaplayer.Position = tp;
@@ -1541,8 +1534,8 @@ namespace CokeeDP.Views.Windows
         /// </summary>
         private void ViewHitokoSource(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText("https://hitokoto.cn/?uuid=" + hkUrl);
-            snackbarService.ShowAsync("链接已复制", "https://hitokoto.cn/?uuid=" + hkUrl, SymbolRegular.CopyAdd24);
+            Clipboard.SetText("https://hitokoto.cn/?uuid=" + hitokoto.Tag);
+            snackbarService.ShowAsync("链接已复制", "https://hitokoto.cn/?uuid=" + hitokoto.Tag, SymbolRegular.CopyAdd24);
         }
 
         private void EditText(object sender, RoutedEventArgs e)
@@ -1561,7 +1554,7 @@ namespace CokeeDP.Views.Windows
             try
             {
                 IsUsbOpened = true;
-                Process.Start("explorer.exe", disk);
+                Process.Start("explorer.exe", usb.Tag.ToString());
             }
             catch (Exception ex)
             {
@@ -1577,7 +1570,7 @@ namespace CokeeDP.Views.Windows
         {
             try
             {
-                dialog.Show((string)SpecialWeatherBtn.Content, weaWr);
+                dialog.Show((string)SpecialWeatherBtn.Content, SpecialWeatherBtn.Tag.ToString());
                 dialog.ButtonLeftClick += Dialog_ButtonLeftClick;
             }
             catch (Exception ex)

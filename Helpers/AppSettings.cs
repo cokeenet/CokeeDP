@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace CokeeDP.Properties
 {
-
     public class AppSettings
     {
         public string OneWordsApi { get; set; } = "https://v1.hitokoto.cn/?c=k";
@@ -35,25 +34,26 @@ namespace CokeeDP.Properties
         public bool BingVideoEnable { get; set; } = false;
         public bool DarkMode { get; set; } = false;
         public int SpakerVolMethod { get; set; } = 0;
-        public String AudioAutoPlayTime { get; set; }="00-00";
+        public String AudioAutoPlayTime { get; set; } = "00-00";
     }
+
     public static class AppSettingsExtensions
     {
-        public const string SETTINGS_FILE_NAME = "D:\\Program Files (x86)\\CokeeTech\\CokeeDP\\config.json";
+        public const string SETTINGS_FILE_NAME = "D:\\CokeeTech\\CokeeDP\\config.json";
 
         public static AppSettings LoadSettings()
         {
             try
             {
                 var dir = SETTINGS_FILE_NAME.Split("config.json")[0];
-                if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 //if(!File.Exists(SETTINGS_FILE_NAME)) File.Create(SETTINGS_FILE_NAME);
                 var content = File.ReadAllText(SETTINGS_FILE_NAME);
                 return JsonSerializer.Deserialize<AppSettings>(content);
             }
             catch (Exception e)
             {
-                Log.Error($"Error while loading settings:"+e.ToString());
+                Log.Error($"Error while loading settings:" + e.ToString());
                 return new AppSettings();
             }
         }
@@ -65,14 +65,13 @@ namespace CokeeDP.Properties
             try
             {
                 var dir = SETTINGS_FILE_NAME.Split("config.json")[0];
-                if(!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 File.WriteAllText(SETTINGS_FILE_NAME, content);
             }
             catch (Exception e)
             {
-                Log.Error($"Error while saving settings: "+e.ToString());
+                Log.Error($"Error while saving settings: " + e.ToString());
             }
         }
-
     }
 }

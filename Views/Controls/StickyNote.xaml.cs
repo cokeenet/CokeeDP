@@ -1,7 +1,7 @@
-﻿
+﻿using Newtonsoft.Json;
 
-using Newtonsoft.Json;
 using Serilog;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,14 +40,15 @@ namespace CokeeDP.Views.Controls
         {
             get; set;
         }
+
         public StickyItem(string _name)
         {
             Name = _name;
         }
     }
+
     public partial class StickyNote : UserControl
     {
-
         public StickyNote()
         {
             InitializeComponent();
@@ -59,13 +60,13 @@ namespace CokeeDP.Views.Controls
 
         public void RandomNext()
         {
-            string INK_DIR = @$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink";
+            string INK_DIR = @$"D:\CokeeTech\CokeeClass\ink";
             DirectoryInfo directoryInfo = new DirectoryInfo(INK_DIR);
             var files = directoryInfo.GetFiles("*.ink");
-            string stu = files[new Random().Next(files.Length)].Name.Replace(".ink","");
+            string stu = files[new Random().Next(files.Length)].Name.Replace(".ink", "");
             name.Content = stu;
-            Log.Information(stu);
-            string INK_FILE = @$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink\{stu}.ink";
+            //Log.Information(stu);
+            string INK_FILE = @$"{INK_DIR}\{stu}.ink";
             if (File.Exists(INK_FILE))
             {
                 FileStream fs = new FileStream(INK_FILE, FileMode.Open);

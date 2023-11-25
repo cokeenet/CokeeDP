@@ -23,7 +23,7 @@
                     FillBehavior="Stop" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" From="1" To="0.8"
                     Duration="0:0:0.3" />
             </Storyboard>
-            <Color x:Key="CardBackground">Black</Color>
+            
             <!--     <Storyboard x:Key="ShowWindow">
                 <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" FillBehavior="Stop" />
                 <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid" />
