@@ -89,9 +89,9 @@ namespace CokeeDP.Views.Windows
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement debugCard;
-        public bool IsUsbOpened = false;
+        public bool IsUsbOpened = false,IsSecureDESKTOP=false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
-
+        public Process classService = new Process();
         public MainWindow()
         {
             InitializeComponent();
@@ -124,7 +124,13 @@ namespace CokeeDP.Views.Windows
                     }
                 }*/
                 FillConfig();
-                Log.Information(Environment.ProcessPath);
+                Log.Information(Environment.CurrentDirectory);
+                if(Environment.CurrentDirectory== "C:\\Windows\\system32")IsSecureDESKTOP= true;
+                if(IsSecureDESKTOP)
+                {
+                    classService.StartInfo=new ProcessStartInfo(settings.ClassServicePath); 
+                    classService.Start();
+                }
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if (settings.EnableBigTimeTo) BigCountdown.Visibility = Visibility.Visible;
                 if (settings.BingVideoEnable) _ = GetBingVideo();
@@ -837,12 +843,13 @@ namespace CokeeDP.Views.Windows
                 {
                     snackbarService.ShowAsync("请确认已关闭U盘内课件", "再次点击以退出", SymbolRegular.Info28);
                     IsUsbOpened = false;
+                    return;
                 }
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
                     messageBox.Title = "嘿！!";
-                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。(生气)";
+                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
                     messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
@@ -852,6 +859,10 @@ namespace CokeeDP.Views.Windows
                 }
                 else
                 {
+                    if (IsSecureDESKTOP)
+                    {
+                        classService.Kill();
+                    }
                     Point position = e.GetPosition(this);
                     double pX = position.X;
                     double pY = position.Y;
@@ -889,7 +900,7 @@ namespace CokeeDP.Views.Windows
                     closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
-                    //Close();
+                    
                 }
             }));
         }

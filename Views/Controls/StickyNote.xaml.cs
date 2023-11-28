@@ -51,7 +51,12 @@ namespace CokeeDP.Views.Controls
         public StickyNote()
         {
             InitializeComponent();
-            RandomNext();
+            try 
+            { 
+                RandomNext();
+            } 
+            catch { }
+            
             name.MouseDown += Upd;
         }
 
@@ -59,13 +64,13 @@ namespace CokeeDP.Views.Controls
 
         public void RandomNext()
         {
-            string INK_DIR = @$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink";
+            string INK_DIR = @$"D:\CokeeTech\CokeeClass\ink";
             DirectoryInfo directoryInfo = new DirectoryInfo(INK_DIR);
             var files = directoryInfo.GetFiles("*.ink");
             string stu = files[new Random().Next(files.Length)].Name.Replace(".ink","");
             name.Content = stu;
             
-            string INK_FILE = @$"D:\Program Files (x86)\CokeeTech\CokeeClass\ink\{stu}.ink";
+            string INK_FILE = @$"D:\CokeeTech\CokeeClass\ink\{stu}.ink";
             if (File.Exists(INK_FILE))
             {
                 FileStream fs = new FileStream(INK_FILE, FileMode.Open);
