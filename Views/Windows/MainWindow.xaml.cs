@@ -128,7 +128,7 @@ namespace CokeeDP.Views.Windows
                 if(Environment.CurrentDirectory== "C:\\Windows\\system32")IsSecureDESKTOP= true;
                 if(IsSecureDESKTOP)
                 {
-                    classService.StartInfo=new ProcessStartInfo(settings.ClassServicePath); 
+                    classService.StartInfo=new ProcessStartInfo(settings.ClassServicePath,"-scrsave"); 
                     classService.Start();
                 }
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
