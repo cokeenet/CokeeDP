@@ -1,21 +1,21 @@
 ﻿<ui:UiPage
-    x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CokeeDP.Views.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320"
     d:DesignWidth="794"
     Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True" Unloaded="unload">
 
     <StackPanel Margin="5,0,5,0">
-       
+
         <!--<ui:InfoBar />-->
         <TextBlock
               FontSize="20" Text="CokeeDP 设置" />
 
         <TextBlock
-              Margin="5,5,0,0" FontSize="16" Text="壁纸"/>
+              Margin="5,5,0,0" FontSize="16" Text="壁纸" />
 
         <ui:CardControl
              Margin="5,10,5,0" VerticalAlignment="Top" Icon="Wallpaper24">
@@ -70,7 +70,7 @@
             </ui:CardControl.Header>
             <ComboBox
                 x:Name="oneWord" Width="145" DropDownClosed="ComboBoxHandler" SelectedIndex="{Binding OneWordsComboBoxIndex}">
-                <ComboBoxItem Content="综合" Tag="none"/>
+                <ComboBoxItem Content="综合" Tag="none" />
                 <ComboBoxItem Content="文学" Tag="d" />
                 <ComboBoxItem Content="影视" Tag="h" />
                 <ComboBoxItem Content="诗词" Tag="i" />
@@ -92,7 +92,7 @@
             </ui:CardControl.Header>
             <Grid>
                 <ui:TextBox
-                    x:Name="timeBox" Margin="52,0,50,0" LostFocus="TextBoxHandler" Tag="time" Text="{Binding OneWordsTimeInterval}"/>
+                    x:Name="timeBox" Margin="52,0,50,0" LostFocus="TextBoxHandler" Tag="time" Text="{Binding OneWordsTimeInterval}" />
                 <TextBlock
                     Margin="221,5,9,5" FontSize="16" Opacity="0.7" Text="分钟" />
             </Grid>
@@ -109,25 +109,38 @@
             </ui:CardControl.Header>
             <DockPanel Cursor="IBeam">
                 <ui:TextBox
-                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="471" Margin="0,0,10,0" Text="{Binding AudioFolder}"/>
-                <ui:Button Content="选择目录" Icon="Folder32" Tag="chooseDir" Width="104" Click="BtnClickHandler"/>
+                    x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="471" Margin="0,0,10,0" Text="{Binding AudioFolder}" />
+                <ui:Button Content="选择目录" Icon="Folder32" Tag="chooseDir" Width="104" Click="BtnClickHandler" />
+            </DockPanel>
+        </ui:CardControl>
+        <ui:CardControl Icon="EarthLeaf48" Margin="5">
+            <ui:CardControl.Header>
+                <StackPanel  VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="13" FontWeight="Medium" Text="ClassService路径" />
+                </StackPanel>
+            </ui:CardControl.Header>
+            <DockPanel Cursor="IBeam">
+                <ui:TextBox
+                    x:Name="folderBox1" Width="471" Margin="0,0,10,0" Text="{Binding ClassServicePath,Mode=TwoWay}" />
+                <ui:Button Content="选择文件" Icon="Folder32" Tag="chooseCS" Width="104" Click="BtnClickHandler" />
             </DockPanel>
         </ui:CardControl>
 
         <ui:CardAction
-            Grid.Row="10" Margin="5,10,5,0" VerticalAlignment="Top" Click="CardAction_Click"
+            Grid.Row="10" Margin="5" VerticalAlignment="Top" Click="CardAction_Click"
             Icon="WeatherCloudy24">
             <ui:CardAction.Content>
                 <StackPanel  VerticalAlignment="Center">
                     <TextBlock
                         FontSize="13" FontWeight="Medium" Text="选择天气城市" />
                     <Label
-                        x:Name="cityName" FontSize="12" ContentStringFormat="当前选择: {0}" Content="{Binding City}" Foreground="#E4000000"/>
+                        x:Name="cityName" FontSize="12" ContentStringFormat="当前选择: {0}" Content="{Binding City}" Foreground="#E4000000" />
                 </StackPanel>
             </ui:CardAction.Content>
         </ui:CardAction>
         <ui:CardControl
-            Grid.Row="11" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            Grid.Row="11" Margin="5" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
                 <StackPanel  VerticalAlignment="Center">
                     <TextBlock
@@ -135,10 +148,10 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" Text="{Binding CountdownName}"/>
+                x:Name="countDownBox" Width="164" LostFocus="TextBoxHandler" Tag="CountDownName" Text="{Binding CountdownName}" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="12" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            Grid.Row="12" Margin="5" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
                 <StackPanel  VerticalAlignment="Center">
                     <TextBlock
@@ -146,10 +159,10 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <DatePicker
-                x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" SelectedDate="{Binding CountdownTime}"/>
+                x:Name="countDownPicker" Width="224" CalendarClosed="DatePickerHandler" Tag="CountDownTime" SelectedDate="{Binding CountdownTime}" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="13" Margin="5,10,5,0" VerticalAlignment="Top" Icon="WeatherSnowflake24">
+            Grid.Row="13" Margin="5" VerticalAlignment="Top" Icon="WeatherSnowflake24">
             <ui:CardControl.Header>
                 <StackPanel  VerticalAlignment="Center">
                     <TextBlock
@@ -162,7 +175,7 @@
                 x:Name="SnowFlakeSwitch" Click="SwitchEventsHandler" IsChecked="{Binding SnowEnable}" Tag="SnowFlake" />
         </ui:CardControl>
         <ui:CardControl
-            Grid.Row="14" Margin="5,10,5,0" VerticalAlignment="Top" Icon="TextEditStyle24">
+            Grid.Row="14" Margin="5" VerticalAlignment="Top" Icon="TextEditStyle24">
             <ui:CardControl.Header>
                 <StackPanel  VerticalAlignment="Center">
                     <TextBlock
@@ -172,7 +185,7 @@
                 </StackPanel>
             </ui:CardControl.Header>
             <ui:TextBox
-                    x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" Text="{Binding AudioAutoPlayTime}"/>
+                    x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" Text="{Binding AudioAutoPlayTime}" />
         </ui:CardControl>
     </StackPanel>
 </ui:UiPage>

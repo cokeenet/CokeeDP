@@ -35,7 +35,9 @@ namespace CokeeDP.Views.Pages
         private SettingsWindow _Window = Application.Current.Windows
             .Cast<Window>()
             .FirstOrDefault(window => window is SettingsWindow) as SettingsWindow;
+
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
+
         public Main()
         {
             InitializeComponent();
@@ -50,7 +52,6 @@ namespace CokeeDP.Views.Pages
             oneWord.SelectedIndex = settings.OneWordsComboBoxIndex;
             countDownBox.Text = settings.CountdownName;
             countDownPicker.SelectedDate = settings.CountdownTime;*/
-
         }
 
         private void OnSwitchChecked(object sender, RoutedEventArgs e)
@@ -62,7 +63,6 @@ namespace CokeeDP.Views.Pages
             var textBox = sender as Wpf.Ui.Controls.TextBox;
             try
             {
-                
                 if (textBox.Text.Length < 1 || textBox.Text == null) return;
                 switch (textBox.Tag)
                 {
@@ -85,7 +85,6 @@ namespace CokeeDP.Views.Pages
                 _Window.snackbarService.ShowAsync("Error:", ex.ToString(), SymbolRegular.Save28);
                 textBox.Text = null;
             }
-
         }
 
         private void CardAction_Click(object sender, RoutedEventArgs e)
@@ -135,13 +134,13 @@ namespace CokeeDP.Views.Pages
             else settings.OneWordsApi = "https://v1.hitokoto.cn/?c=" + item.Tag;
             settings.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             AppSettingsExtensions.SaveSettings(settings);
-            
+
             _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
         }
 
         private void BtnClickHandler(object sender, RoutedEventArgs e)
         {
-            Button btn=sender as Button;
+            Button btn = sender as Button;
             switch (btn.Tag.ToString())
             {
                 case "chooseDir":
@@ -150,7 +149,7 @@ namespace CokeeDP.Views.Pages
                         DialogResult result = dialog.ShowDialog();
                         if (result == DialogResult.OK && Directory.Exists(dialog.SelectedPath))
                         {
-                            folderBox.Text=dialog.SelectedPath;
+                            folderBox.Text = dialog.SelectedPath;
                             settings.AudioFolder = dialog.SelectedPath;
                             AppSettingsExtensions.SaveSettings(settings);
                             _Window.snackbarService.ShowAsync("已保存", $"路径 {dialog.SelectedPath}", SymbolRegular.Save28);
@@ -158,7 +157,24 @@ namespace CokeeDP.Views.Pages
                         else _Window.snackbarService.ShowAsync("选择失败", ">_<", SymbolRegular.Warning12);
                     }
                     break;
-                default: 
+
+                case "chooseCS":
+                    using (var dialog = new OpenFileDialog())
+                    {
+                        dialog.Filter = "可执行文件|*.exe";
+                        DialogResult result = dialog.ShowDialog();
+                        if (result == DialogResult.OK && File.Exists(dialog.FileName))
+                        {
+                            folderBox1.Text = dialog.FileName;
+                            settings.ClassServicePath = dialog.FileName;
+                            AppSettingsExtensions.SaveSettings(settings);
+                            _Window.snackbarService.ShowAsync("已保存", $"路径 {dialog.FileName}", SymbolRegular.Save28);
+                        }
+                        else _Window.snackbarService.ShowAsync("选择失败", ">_<", SymbolRegular.Warning12);
+                    }
+                    break;
+
+                default:
                     break;
             }
         }

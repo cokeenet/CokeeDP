@@ -1,17 +1,25 @@
 ﻿using AutoUpdaterDotNET;
+
 using Cokee.ClassService.Helper;
+
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
+
 using Microsoft.AppCenter.Crashes;
+
 using NAudio.CoreAudioApi;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+
 //using Quartz.Impl;
 //using Quartz;
 using Serilog;
 using Serilog.Sink.AppCenter;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,10 +42,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
+
 using AppSettings = CokeeDP.Properties.AppSettings;
 using AppSettingsExtensions = CokeeDP.Properties.AppSettingsExtensions;
 using Button = Wpf.Ui.Controls.Button;
@@ -79,6 +89,7 @@ namespace CokeeDP.Views.Windows
         public bool IsUsbOpened = false, IsSecureDESKTOP = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public Process classService = new Process();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -97,24 +108,24 @@ namespace CokeeDP.Views.Windows
                 }
                 if (pargs.Length > 1)
                 {
-                    if (pargs.Contains("p")&&pargs.Length>2)
+                    if (pargs.Contains("/p") && pargs.Length > 2)
                     {
                         IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2]));
                         IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
                         // 将窗口设置为Monitor窗口的子窗口
                         SetParent(childWindowHandle, parentWindowHandle);
                     }
-                    if (pargs.Contains("c"))
+                    if (pargs.Contains("/c"))
                     {
                         WindowState = WindowState.Minimized;
                         new SettingsWindow().Show();
                     }
-                    if(pargs.Contains("s")) IsSecureDESKTOP= true;
+                    if (pargs.Contains("/s")) IsSecureDESKTOP = true;
                 }
                 FillConfig();
                 Log.Information(Environment.CurrentDirectory);
                 if (Environment.CurrentDirectory == "C:\\Windows\\system32") IsSecureDESKTOP = true;
-                if (IsSecureDESKTOP)
+                if (IsSecureDESKTOP && settings.ClassServicePath.Length > 0)
                 {
                     classService.StartInfo = new ProcessStartInfo(settings.ClassServicePath, "-scrsave");
                     classService.Start();
@@ -884,7 +895,6 @@ namespace CokeeDP.Views.Windows
                     closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
-
                 }
             }));
         }
