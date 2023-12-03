@@ -1,10 +1,7 @@
-﻿using Microsoft.AppCenter.Ingestion.Models;
-using System;
+﻿using System;
 using System.IO;
 using System.Text.Json;
-using Serilog;
 using Log = Serilog.Log;
-using System.Linq;
 
 namespace CokeeDP.Properties
 {
@@ -34,7 +31,8 @@ namespace CokeeDP.Properties
         public bool BingVideoEnable { get; set; } = false;
         public bool DarkMode { get; set; } = false;
         public int SpakerVolMethod { get; set; } = 0;
-        public String AudioAutoPlayTime { get; set; } = "00-00";
+        public string AudioAutoPlayTime { get; set; } = "00-00";
+        public string ClassServicePath { get; set; } = @"D:\CokeeTech\CokeeClass\publish\Cokee.ClassService.exe";
     }
 
     public static class AppSettingsExtensions

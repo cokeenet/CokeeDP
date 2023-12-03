@@ -1,4 +1,18 @@
-﻿using System;
+﻿using AutoUpdaterDotNET;
+using Cokee.ClassService.Helper;
+using CokeeDP.Properties;
+using CokeeDP.Views.Pages;
+using Microsoft.AppCenter.Crashes;
+using NAudio.CoreAudioApi;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OpenCvSharp;
+using OpenCvSharp.Extensions;
+//using Quartz.Impl;
+//using Quartz;
+using Serilog;
+using Serilog.Sink.AppCenter;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -20,34 +34,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
-using AutoUpdaterDotNET;
-
-using Cokee.ClassService.Helper;
-
-using CokeeDP.Properties;
-using CokeeDP.Views.Pages;
-
-using Microsoft.AppCenter.Crashes;
-
-using NAudio.CoreAudioApi;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-using OpenCvSharp;
-using OpenCvSharp.Extensions;
-
-//using Quartz.Impl;
-//using Quartz;
-using Serilog;
-using Serilog.Sink.AppCenter;
-
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Mvvm.Services;
-
 using AppSettings = CokeeDP.Properties.AppSettings;
 using AppSettingsExtensions = CokeeDP.Properties.AppSettingsExtensions;
 using Button = Wpf.Ui.Controls.Button;
@@ -86,9 +76,9 @@ namespace CokeeDP.Views.Windows
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement debugCard;
-        public bool IsUsbOpened = false;
+        public bool IsUsbOpened = false, IsSecureDESKTOP = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
-
+        public Process classService = new Process();
         public MainWindow()
         {
             InitializeComponent();
@@ -100,28 +90,35 @@ namespace CokeeDP.Views.Windows
                 .CreateLogger();
             try
             {
-                /*if (Environment.GetCommandLineArgs().Length > 0)
+                string[] pargs = Environment.GetCommandLineArgs();
+                foreach (var item in pargs)
                 {
-                    string[] pargs = Environment.GetCommandLineArgs();
-                    if (pargs.Length >= 1)
+                    Log.Information(item);
+                }
+                if (pargs.Length > 1)
+                {
+                    if (pargs.Contains("p")&&pargs.Length>2)
                     {
-                        if (pargs[1] == "/p" && pargs.Length >= 2)
-                        {
-                            IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2], 16));
-                            IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
-                            // 将窗口设置为Monitor窗口的子窗口
-                            SetParent(childWindowHandle, parentWindowHandle);
-                        }
-                        if (pargs[1] == "/c")
-                        {
-                            WindowState = WindowState.Minimized;
-                            var win1 = new SettingsWindow();
-                            win1.Show();
-                        }
+                        IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2]));
+                        IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
+                        // 将窗口设置为Monitor窗口的子窗口
+                        SetParent(childWindowHandle, parentWindowHandle);
                     }
-                }*/
+                    if (pargs.Contains("c"))
+                    {
+                        WindowState = WindowState.Minimized;
+                        new SettingsWindow().Show();
+                    }
+                    if(pargs.Contains("s")) IsSecureDESKTOP= true;
+                }
                 FillConfig();
-                Log.Information(Environment.ProcessPath);
+                Log.Information(Environment.CurrentDirectory);
+                if (Environment.CurrentDirectory == "C:\\Windows\\system32") IsSecureDESKTOP = true;
+                if (IsSecureDESKTOP)
+                {
+                    classService.StartInfo = new ProcessStartInfo(settings.ClassServicePath, "-scrsave");
+                    classService.Start();
+                }
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if (settings.EnableBigTimeTo) BigCountdown.Visibility = Visibility.Visible;
                 if (settings.BingVideoEnable) _ = GetBingVideo();
@@ -830,12 +827,13 @@ namespace CokeeDP.Views.Windows
                 {
                     snackbarService.ShowAsync("请确认已关闭U盘内课件", "再次点击以退出", SymbolRegular.Info28);
                     IsUsbOpened = false;
+                    return;
                 }
                 if (IsPlaying)
                 {
                     Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
                     messageBox.Title = "嘿！!";
-                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。(生气)";
+                    messageBox.Content = "有媒体正在播放。请先暂停媒体后重试。";
                     messageBox.ButtonLeftName = "取消";
                     messageBox.ButtonRightName = "取消";
                     messageBox.MicaEnabled = true;
@@ -845,6 +843,10 @@ namespace CokeeDP.Views.Windows
                 }
                 else
                 {
+                    if (IsSecureDESKTOP)
+                    {
+                        classService.Kill();
+                    }
                     Point position = e.GetPosition(this);
                     double pX = position.X;
                     double pY = position.Y;
@@ -882,7 +884,7 @@ namespace CokeeDP.Views.Windows
                     closeSCB.BeginAnimation(SolidColorBrush.ColorProperty, colorAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnim);
                     scaleTran.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnim);
-                    //Close();
+
                 }
             }));
         }
