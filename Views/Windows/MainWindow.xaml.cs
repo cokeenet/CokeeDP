@@ -76,7 +76,7 @@ namespace CokeeDP.Views.Windows
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement debugCard;
-        public bool IsUsbOpened = false, IsSecureDESKTOP = false;
+        public bool IsUsbOpened = false, IsSecureDESKTOP = true;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public Process classService = new Process();
         public MainWindow()
@@ -115,7 +115,7 @@ namespace CokeeDP.Views.Windows
                 FillConfig();
                 Log.Information(Environment.CurrentDirectory);
                 if (Environment.CurrentDirectory == "C:\\Windows\\system32") IsSecureDESKTOP = true;
-                if (IsSecureDESKTOP&&File.Exists(settings.ClassServicePath)
+                if (IsSecureDESKTOP&&File.Exists(settings.ClassServicePath))
                 {
                     classService.StartInfo = new ProcessStartInfo(settings.ClassServicePath, "-scrsave");
                     classService.Start();
