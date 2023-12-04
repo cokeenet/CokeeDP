@@ -97,24 +97,25 @@ namespace CokeeDP.Views.Windows
                 }
                 if (pargs.Length > 1)
                 {
-                    if (pargs.Contains("p")&&pargs.Length>2)
+                    if (pargs.Contains("/p")&&pargs.Length>2)
                     {
                         IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2]));
                         IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
                         // 将窗口设置为Monitor窗口的子窗口
                         SetParent(childWindowHandle, parentWindowHandle);
                     }
-                    if (pargs.Contains("c"))
+                    if (pargs.Contains("/c"))
                     {
-                        WindowState = WindowState.Minimized;
+                        
                         new SettingsWindow().Show();
+                        Close();
                     }
-                    if(pargs.Contains("s")) IsSecureDESKTOP= true;
+                    if(pargs.Contains("/s")) IsSecureDESKTOP= true;
                 }
                 FillConfig();
                 Log.Information(Environment.CurrentDirectory);
                 if (Environment.CurrentDirectory == "C:\\Windows\\system32") IsSecureDESKTOP = true;
-                if (IsSecureDESKTOP)
+                if (IsSecureDESKTOP&&File.Exists(settings.ClassServicePath)
                 {
                     classService.StartInfo = new ProcessStartInfo(settings.ClassServicePath, "-scrsave");
                     classService.Start();
@@ -843,7 +844,7 @@ namespace CokeeDP.Views.Windows
                 }
                 else
                 {
-                    if (IsSecureDESKTOP)
+                    if (IsSecureDESKTOP&&!classService.HasExited)
                     {
                         classService.Kill();
                     }
