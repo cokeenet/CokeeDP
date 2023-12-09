@@ -76,7 +76,7 @@ namespace CokeeDP.Views.Windows
         public double AudioScroll = 0;
         public TimeTasks[] timeTasks;
         public UIElement debugCard;
-        public bool IsUsbOpened = false, IsSecureDESKTOP = true;
+        public bool IsUsbOpened = false, IsSecureDESKTOP = false;
         public AppSettings settings = AppSettingsExtensions.LoadSettings();
         public Process classService = new Process();
         public MainWindow()
@@ -97,7 +97,7 @@ namespace CokeeDP.Views.Windows
                 }
                 if (pargs.Length > 1)
                 {
-                    if (pargs.Contains("/p")&&pargs.Length>2)
+                    if (pargs.Contains("/p") && pargs.Length > 2)
                     {
                         IntPtr parentWindowHandle = new IntPtr(Convert.ToInt32(pargs[2]));
                         IntPtr childWindowHandle = new WindowInteropHelper(this).Handle;
@@ -106,16 +106,16 @@ namespace CokeeDP.Views.Windows
                     }
                     if (pargs.Contains("/c"))
                     {
-                        
+
                         new SettingsWindow().Show();
                         Close();
                     }
-                    if(pargs.Contains("/s")) IsSecureDESKTOP= true;
+                    //if (pargs.Contains("/s")) IsSecureDESKTOP = true;
                 }
                 FillConfig();
                 Log.Information(Environment.CurrentDirectory);
                 if (Environment.CurrentDirectory == "C:\\Windows\\system32") IsSecureDESKTOP = true;
-                if (IsSecureDESKTOP&&File.Exists(settings.ClassServicePath))
+                if (IsSecureDESKTOP && File.Exists(settings.ClassServicePath))
                 {
                     classService.StartInfo = new ProcessStartInfo(settings.ClassServicePath, "-scrsave");
                     classService.Start();
@@ -844,7 +844,7 @@ namespace CokeeDP.Views.Windows
                 }
                 else
                 {
-                    if (IsSecureDESKTOP&&!classService.HasExited)
+                    if (IsSecureDESKTOP && !classService.HasExited)
                     {
                         classService.Kill();
                     }
