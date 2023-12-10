@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
+
 using Log = Serilog.Log;
 
 namespace CokeeDP.Properties
@@ -27,10 +28,10 @@ namespace CokeeDP.Properties
         public string CachedWeatherData { get; set; } = null;
         public int OneWordsComboBoxIndex { get; set; } = 0;
         public DateTime CachedWeatherTime { get; set; } = new DateTime(2000, 1, 1);
-        public bool SnowEnable { get; set; } = false;
+        public bool SnowEnable { get; set; } = true;
         public bool BingVideoEnable { get; set; } = false;
         public bool DarkMode { get; set; } = false;
-        public int SpakerVolMethod { get; set; } = 0;
+        public bool StickyEnable { get; set; } = true;
         public string AudioAutoPlayTime { get; set; } = "00-00";
         public string ClassServicePath { get; set; } = @"D:\CokeeTech\CokeeClass\publish\Cokee.ClassService.exe";
     }

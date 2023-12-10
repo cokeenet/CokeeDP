@@ -23,7 +23,7 @@
                     FillBehavior="Stop" Storyboard.TargetName="MainGrid" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleY)" From="1" To="0.8"
                     Duration="0:0:0.3" />
             </Storyboard>
-            
+
             <!--     <Storyboard x:Key="ShowWindow">
                 <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="Opacity" FillBehavior="Stop" />
                 <DoubleAnimation Duration="0:0:0.3" From="0.8" To="1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleX)" FillBehavior="Stop" Storyboard.TargetName="MainGrid" />
@@ -33,7 +33,8 @@
         </ResourceDictionary>
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="/Image/bg.jpg" />
+        <ImageBrush x:Name="bgBrush" ImageSource="/Image/bg.jpg">
+        </ImageBrush>
     </Window.Background>
     <Grid
         x:Name="MainGrid" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="True">
@@ -52,7 +53,7 @@
                         x:Name="br1"
                         Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
                         Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/Image/bg.jpg" Stretch="Fill">
+                        MouseDown="OnCloseWindow" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Fill" Source="/Image/bg.jpg">
                     <Image.Effect>
                         <BlurEffect x:Name="br1_blur" Radius="0" />
                     </Image.Effect>
@@ -332,7 +333,7 @@
                 <Label
                         x:Name="timeTo" Height="39" Margin="20,850,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
-                        Background="{x:Null}" d:Content="周一,12月31日 国庆节"
+                        Background="{x:Null}" d:Content="周一,12月32日 圣诞节"
                         Content="周---,--月--日" FontFamily="Microsoft YaHei UI Light" FontSize="24" FontWeight="Normal" Foreground="White"
                         MouseDown="DateLabelClick">
                     <Label.Effect>
@@ -354,6 +355,9 @@
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
+                    <Label.RenderTransform>
+                        <ScaleTransform ScaleX="100" />
+                    </Label.RenderTransform>
                 </Label>
                 <ui:Card
                         x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"

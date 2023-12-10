@@ -65,17 +65,25 @@ namespace CokeeDP.Views.Controls
 
         public void RandomNext()
         {
-            string INK_DIR = @$"D:\CokeeTech\CokeeClass\ink";
-            DirectoryInfo directoryInfo = new DirectoryInfo(INK_DIR);
-            var files = directoryInfo.GetFiles("*.ink");
-            string stu = files[new Random().Next(files.Length)].Name.Replace(".ink", "");
-            name.Content = stu;
-            string INK_FILE = @$"{INK_DIR}\{stu}.ink";
-            if (File.Exists(INK_FILE))
+            try
             {
-                FileStream fs = new FileStream(INK_FILE, FileMode.Open);
-                ink.Strokes = new StrokeCollection(fs);
-                fs.Close();
+                string INK_DIR = @$"D:\CokeeTech\CokeeClass\ink";
+                DirectoryInfo directoryInfo = new DirectoryInfo(INK_DIR);
+                if (!directoryInfo.Exists) directoryInfo.Create();
+                var files = directoryInfo.GetFiles("*.ink");
+                if (files.Length == 0) return;
+                string stu = files[new Random().Next(files.Length)].Name.Replace(".ink", "");
+                name.Content = stu;
+                string INK_FILE = @$"{INK_DIR}\{stu}.ink";
+                if (File.Exists(INK_FILE))
+                {
+                    FileStream fs = new FileStream(INK_FILE, FileMode.Open);
+                    ink.Strokes = new StrokeCollection(fs);
+                    fs.Close();
+                }
+            }
+            catch
+            {
             }
         }
     }

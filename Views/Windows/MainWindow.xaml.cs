@@ -94,7 +94,7 @@ namespace CokeeDP.Views.Windows
         {
             InitializeComponent();
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.File($@"D:\logs\DP\{DateTime.Now.ToString("yyyy-MM-dd")}txt",
+                .WriteTo.File($@"log.txt",
                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                 .WriteTo.AppCenterSink(null, Serilog.Events.LogEventLevel.Information, AppCenterTarget.ExceptionsAsCrashes, "52a9c4e0-ad42-455b-b1cf-515d8a39f245")
                 .WriteTo.RichTextBox(log)
@@ -117,7 +117,6 @@ namespace CokeeDP.Views.Windows
                     }
                     if (pargs.Contains("/c"))
                     {
-
                         new SettingsWindow().Show();
                         Close();
                     }
@@ -133,6 +132,7 @@ namespace CokeeDP.Views.Windows
                 }
                 timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
                 if (settings.EnableBigTimeTo) BigCountdown.Visibility = Visibility.Visible;
+                if (!settings.StickyEnable) sticky.Visibility = Visibility.Collapsed;
                 if (settings.BingVideoEnable) _ = GetBingVideo();
                 else if (settings.BingWappEnable) _ = GetBingWapp();
                 else
@@ -317,7 +317,7 @@ namespace CokeeDP.Views.Windows
             {
                 ChangeWapp(false);
                 pager.PageDown();
-                sticky.RandomNext();
+                if (settings.StickyEnable) sticky.RandomNext();
                 Hitoko();
             }
        ));
@@ -661,19 +661,14 @@ namespace CokeeDP.Views.Windows
                 });
                 Hitoko();
                 GetWeatherInfo();
-                //new Thread(VideoCap).Start();
-
                 CapTimer.Elapsed += CapTimer_Elapsed;
                 CapTimer.AutoReset = true;
                 CapTimer.Enabled = true;
-
                 hwndSource.AddHook(new HwndSourceHook(WndProc));//挂钩
-                if (settings.SnowEnable) { StartSnowing(MainCanvas); } //雪花效果，不成熟
                 AutoUpdater.ShowSkipButton = false;
                 AutoUpdater.ShowRemindLaterButton = true;
                 AutoUpdater.RunUpdateAsAdmin = false;
                 AutoUpdater.Start("https://gitee.com/cokee/CokeeDisplayProtect/raw/main/update.xml");
-                //isloaded = true;
             }
             catch (Exception ex)
             {
@@ -719,13 +714,9 @@ namespace CokeeDP.Views.Windows
                         {
                             bitmap.Save(filePath, ImageFormat.Png);
                         }
-
-                        // 显示消息
-                        //await Dispatcher.InvokeAsync(() => log.Text = $"Caped! {DateTime.Now:HH-mm}");
-                        //snackbarService.ShowAsync($"Captured! {DateTime.Now:HH-mm}");
                     }
                 }
-                Log.Information($"Caped.");
+                Log.Information($"Caped. {DateTime.Now:HH-mm-ss}");
                 string copyPath = "C:\\Users\\seewo\\OneDrive - Cokee Technologies\\CokeeDP\\Cache";
                 if (Directory.Exists(copyPath))
                 {
@@ -819,6 +810,7 @@ namespace CokeeDP.Views.Windows
                     SpecialWeatherBtn1.Content = TextShort;
                     SpecialWeatherBtn.Tag = dt1["warning"][0]["text"].ToString();
                 }
+                if (wea1.Text.Contains("雪") && settings.SnowEnable) StartSnowing(MainCanvas);
             }
             catch (Exception ex)
             {
@@ -1481,6 +1473,13 @@ namespace CokeeDP.Views.Windows
             Random random = new Random();
             Task.Factory.StartNew(new Action(() =>
             {
+                #region doki
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (random.Next(1, 100) >= 80) hitokoto.Content = "张万森，下雪了。--《一闪一闪亮星星》";
+                    //nm去哪找会写代码的恋爱脑
+                }));
+                #endregion
                 for (int j = 0; j < 25; j++)
                 {
                     Thread.Sleep(j * 100);
