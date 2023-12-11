@@ -355,9 +355,6 @@
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
-                    <Label.RenderTransform>
-                        <ScaleTransform ScaleX="100" />
-                    </Label.RenderTransform>
                 </Label>
                 <ui:Card
                         x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"
