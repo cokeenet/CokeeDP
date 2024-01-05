@@ -333,7 +333,8 @@ namespace CokeeDP.Views.Windows
 
         public void CheckBirthDay()
         {
-            string DATA_FILE = "D:\\Program Files (x86)\\CokeeTech\\CokeeClass\\students.json";
+            
+            string DATA_FILE = "D:\\CokeeTech\\CokeeClass\\students.json";
             if (File.Exists(DATA_FILE))
             {
                 List<Student> students = new List<Student>();
@@ -628,9 +629,10 @@ namespace CokeeDP.Views.Windows
                 string who = dt["from_who"].ToString();
                 hitokoto.Tag = dt["uuid"].ToString();
                 if (dt["hitokoto"] != null) { NetIcon.Symbol = SymbolRegular.CellularData120; netBar.IsOpen = false; }
-                hitokoto.Content = who == "null"
+                var hk = who == "null"
                         ? dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》"
                         : dt["hitokoto"].ToString() + "--《" + dt["from"].ToString() + "》" + dt["from_who"].ToString();
+                ApplyOptAnimation(hitokoto, hk);
                 sw.Stop();
                 Log.Information($"获取一言用时:{sw.Elapsed.TotalSeconds}s");
             }
@@ -821,7 +823,21 @@ namespace CokeeDP.Views.Windows
 
         private void hitokoto_MouseDown(object sender, MouseButtonEventArgs e) => Hitoko();
 
-        private Object locker1 = new Object();
+        public void ApplyOptAnimation(Label ele, string text)
+        {
+            if (ele == null) return;
+            DoubleAnimation anim1 = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
+            DoubleAnimation anim2=new DoubleAnimation(0,1,TimeSpan.FromSeconds(0.5));
+            anim1.EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut };
+            anim2.EasingFunction=new CubicEase() { EasingMode=EasingMode.EaseIn };
+            anim1.Completed += async (a, b) =>
+            {
+               //await Task.Delay(500);
+                ele.Content = text;
+                ele.BeginAnimation(Label.OpacityProperty, anim2);
+            };
+            ele.BeginAnimation(Label.OpacityProperty, anim1);
+        }
 
         private void OnCloseWindow(object sender, MouseButtonEventArgs e)
         {
@@ -896,8 +912,8 @@ namespace CokeeDP.Views.Windows
 
         private void ShowUsbCard(bool isUnplug, DriveInfo t = null)
         {
-            lock (locker1)
-            {
+           // lock (locker1)
+            
                 DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
                 DoubleAnimation anim2 = new DoubleAnimation(368, TimeSpan.FromSeconds(1));
                 anim1.EasingFunction = new CircleEase();
@@ -915,7 +931,7 @@ namespace CokeeDP.Views.Windows
                 {
                     tranUsb.BeginAnimation(TranslateTransform.XProperty, anim2);
                 }
-            }
+            
         }
 
         private void Anim3_Completed(object sender, EventArgs e) => usb.Visibility = Visibility.Collapsed;
@@ -1451,7 +1467,7 @@ namespace CokeeDP.Views.Windows
                     break;
 
                 case "cap":
-                    VideoCap();
+                    StartSnowing(MainCanvas);
                     break;
             }
         }
@@ -1480,6 +1496,7 @@ namespace CokeeDP.Views.Windows
                     //nm去哪找会写代码的恋爱脑
                 }));
                 #endregion
+                snackbarService.Show("今日有雪", "____,下雪了", SymbolRegular.WeatherSnowflake32);
                 for (int j = 0; j < 25; j++)
                 {
                     Thread.Sleep(j * 100);
@@ -1488,7 +1505,7 @@ namespace CokeeDP.Views.Windows
                         int snowCount = random.Next(0, 10);
                         for (int i = 0; i < snowCount; i++)
                         {
-                            int width = random.Next(10, 50);
+                            int width = random.Next(20, 70);
                             SymbolIcon pack = new SymbolIcon();
                             int snowType = random.Next(3);
                             switch (snowType)
@@ -1501,7 +1518,7 @@ namespace CokeeDP.Views.Windows
                             }
                             pack.Width = width;
                             pack.Height = width;
-                            pack.FontSize = random.Next(10, 40); ;
+                            pack.FontSize = random.Next(10, 48); ;
                             pack.Foreground = System.Windows.Media.Brushes.White;
                             pack.BorderThickness = new Thickness(0);
                             pack.RenderTransform = new RotateTransform();
