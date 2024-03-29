@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace CokeeDP.Helpers
 {
-    internal class EnumToBooleanConverter : IValueConverter
+    /*internal class EnumToBooleanConverter : IValueConverter
     {
         public EnumToBooleanConverter()
         {
@@ -15,10 +15,11 @@ namespace CokeeDP.Helpers
             if (parameter is not String enumString)
                 throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
 
+            
             if (!Enum.IsDefined(typeof(Wpf.Ui.Appearance.ThemeType), value))
                 throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum");
 
-            var enumValue = Enum.Parse(typeof(Wpf.Ui.Appearance.ThemeType), enumString);
+            var enumValue = Enum.Parse(typeof(ThemeType), enumString);
 
             return enumValue.Equals(value);
         }
@@ -30,5 +31,5 @@ namespace CokeeDP.Helpers
 
             return Enum.Parse(typeof(Wpf.Ui.Appearance.ThemeType), enumString);
         }
-    }
+    }*/
 }

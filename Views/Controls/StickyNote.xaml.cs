@@ -21,7 +21,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
-using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
 using static System.Windows.Forms.LinkLabel;

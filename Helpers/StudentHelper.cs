@@ -8,7 +8,8 @@ using System.Windows.Data;
 
 using Newtonsoft.Json;
 
-using Wpf.Ui.Common;
+using Wpf.Ui.Appearance;
+using Wpf.Ui.Controls;
 
 namespace Cokee.ClassService.Helper
 {

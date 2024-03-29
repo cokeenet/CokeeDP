@@ -48,7 +48,7 @@ namespace CokeeDP.Views.Pages
             Action=action;
         }
     }
-    public partial class TimeTask : UiPage
+    public partial class TimeTask : Page
     {
         public TimeTask()
         {

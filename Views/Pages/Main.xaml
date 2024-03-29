@@ -1,4 +1,4 @@
-﻿<ui:UiPage
+﻿<Page
     x:Class="CokeeDP.Views.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -203,4 +203,4 @@
                     x:Name="audioTimeBox" LostFocus="TextBoxHandler" Tag="audioTime" Width="150" Text="{Binding AudioAutoPlayTime,Mode=TwoWay}" />
         </ui:CardControl>
     </StackPanel>
-</ui:UiPage>
+</Page>

@@ -18,12 +18,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Mvvm.Services;
 using Button = Wpf.Ui.Controls.Button;
 using System.Threading;
 using System.Timers;
 using System.Windows.Interop;
-using Wpf.Ui.Common;
 using Timer = System.Timers.Timer;
 using CokeeDP.Properties;
 
@@ -50,7 +48,7 @@ namespace CokeeDP.Views.Pages
         }
     }
 
-    public partial class GeoSearch : UiPage
+    public partial class GeoSearch : Page
     {
         private SettingsWindow _Window = Application.Current.Windows
              .Cast<Window>()

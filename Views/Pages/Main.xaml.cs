@@ -30,7 +30,7 @@ namespace CokeeDP.Views.Pages
     /// <summary>
     /// Main.xaml 的交互逻辑
     /// </summary>
-    public partial class Main : UiPage
+    public partial class Main : Page
     {
         private SettingsWindow _Window = Application.Current.Windows
             .Cast<Window>()
