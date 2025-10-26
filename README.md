@@ -15,15 +15,6 @@
 
 下载最新版：<https://github.com/Cokeenet/CokeeDP/releases/latest> 后，解压文件，找到CokeeDP.scr，右键选择”安装“即可
 
-
-## 发电
-
-> 如果觉得这个软件对你很有帮助的话可以稍微鼓励一下,我会很感谢你的(*￣3￣)╭❤
-<details>
-  <summary>发电链接</summary> <https://afdian.net/a/cokee>
-  <img src="https://github.com/cokeenet/cokeenet/raw/main/afdian-Cokee.jpg">
-</details>
-
 ## 运行环境
   
 > 低于Win7的系统版本不保证能正常运行
@@ -31,10 +22,4 @@ Win7或WinServer2012以上，安装.NET Desktop Runtime 6.0 x86
 
 ## 使用的SDK
   
->本软件使用微软App Center进行错误日志收集，可以在设置中关闭开关。(关跟不关其实没啥区别ψ(._. )>)
-  
-## 额外限制和例外 Additional limitations and exceptions
-- 本软件不得被用于商业用途。
-- 作者Cokee 保留一切权利。
-- 如果您不遵守上述条例，作者保留追究您法律责任的权利。
-- （软件内的条例仅作参考）
+>本软件使用微软App Center进行错误日志收集
