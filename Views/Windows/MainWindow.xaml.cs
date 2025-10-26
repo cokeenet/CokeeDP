@@ -5,6 +5,8 @@ using Cokee.ClassService.Helper;
 using CokeeDP.Properties;
 using CokeeDP.Views.Pages;
 
+using iNKORE.UI.WPF.Modern.Controls;
+
 using Microsoft.AppCenter.Crashes;
 
 using NAudio.CoreAudioApi;
@@ -316,7 +318,7 @@ namespace CokeeDP.Views.Windows
             Dispatcher.Invoke(new Action(delegate
             {
                 ChangeWapp(false);
-                pager.PageDown();
+                pager.();
                 if (settings.StickyEnable) sticky.RandomNext();
                 Hitoko();
             }
@@ -326,14 +328,13 @@ namespace CokeeDP.Views.Windows
         public void OnNewDay()
         {
             timeTo.Content = DateTime.Now.ToString("ddd,M月dd日");
-            snackbarService.ShowAsync("是新的一天!", "哇你还没睡觉啊>_<", SymbolRegular.WeatherMoon16);
+            snackbarService.ShowAsync("是新的一天!", "哇你还没睡觉啊>_<", Symbol.WeatherMoon16);
             CheckBirthDay();
             GetCalendarInfo();
         }
 
         public void CheckBirthDay()
         {
-            
             string DATA_FILE = "D:\\CokeeTech\\CokeeClass\\students.json";
             if (File.Exists(DATA_FILE))
             {
@@ -827,12 +828,12 @@ namespace CokeeDP.Views.Windows
         {
             if (ele == null) return;
             DoubleAnimation anim1 = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.5));
-            DoubleAnimation anim2=new DoubleAnimation(0,1,TimeSpan.FromSeconds(0.5));
+            DoubleAnimation anim2 = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             anim1.EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut };
-            anim2.EasingFunction=new CubicEase() { EasingMode=EasingMode.EaseIn };
+            anim2.EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseIn };
             anim1.Completed += async (a, b) =>
             {
-               //await Task.Delay(500);
+                //await Task.Delay(500);
                 ele.Content = text;
                 ele.BeginAnimation(Label.OpacityProperty, anim2);
             };
@@ -912,26 +913,25 @@ namespace CokeeDP.Views.Windows
 
         private void ShowUsbCard(bool isUnplug, DriveInfo t = null)
         {
-           // lock (locker1)
-            
-                DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
-                DoubleAnimation anim2 = new DoubleAnimation(368, TimeSpan.FromSeconds(1));
-                anim1.EasingFunction = new CircleEase();
-                anim2.Completed += Anim3_Completed;
-                anim2.EasingFunction = new CircleEase();
-                if (!isUnplug)
-                {
-                    usb.Visibility = Visibility.Visible;
-                    tranUsb.BeginAnimation(TranslateTransform.XProperty, anim1);
-                    usb.Tag = t.Name;
-                    diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
-                    diskInfo.Content = (t.TotalFreeSpace / 1024 / 1024 / 1000) + "GB/" + (t.TotalSize / 1024 / 1024 / 1000) + "GB";//TODO:改进算法，这个结果是错的
-                }
-                else if (isUnplug)
-                {
-                    tranUsb.BeginAnimation(TranslateTransform.XProperty, anim2);
-                }
-            
+            // lock (locker1)
+
+            DoubleAnimation anim1 = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
+            DoubleAnimation anim2 = new DoubleAnimation(368, TimeSpan.FromSeconds(1));
+            anim1.EasingFunction = new CircleEase();
+            anim2.Completed += Anim3_Completed;
+            anim2.EasingFunction = new CircleEase();
+            if (!isUnplug)
+            {
+                usb.Visibility = Visibility.Visible;
+                tranUsb.BeginAnimation(TranslateTransform.XProperty, anim1);
+                usb.Tag = t.Name;
+                diskName.Content = t.VolumeLabel + "(" + t.Name + ")";
+                diskInfo.Content = (t.TotalFreeSpace / 1024 / 1024 / 1000) + "GB/" + (t.TotalSize / 1024 / 1024 / 1000) + "GB";//TODO:改进算法，这个结果是错的
+            }
+            else if (isUnplug)
+            {
+                tranUsb.BeginAnimation(TranslateTransform.XProperty, anim2);
+            }
         }
 
         private void Anim3_Completed(object sender, EventArgs e) => usb.Visibility = Visibility.Collapsed;

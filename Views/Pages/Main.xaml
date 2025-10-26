@@ -5,8 +5,7 @@
     xmlns:local="clr-namespace:CokeeDP.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="4320"
-    d:DesignWidth="794"
-    Scrollable="True" mc:Ignorable="d" ShowsNavigationUI="True" Unloaded="unload">
+    d:DesignWidth="794" mc:Ignorable="d" ShowsNavigationUI="True" Unloaded="unload">
 
     <StackPanel Margin="5,0,5,0">
 
@@ -123,7 +122,7 @@
             <DockPanel Cursor="IBeam">
                 <ui:TextBox
                     x:Name="folderBox" LostFocus="TextBoxHandler" Tag="audioDir" Width="471" Margin="0,0,10,0" Text="{Binding AudioFolder,Mode=TwoWay}" />
-                <ui:Button Content="选择目录" Icon="Folder32" Tag="chooseDir" Width="104" Click="BtnClickHandler" />
+                <Button Content="选择目录" Icon="Folder32" Tag="chooseDir" Width="104" Click="BtnClickHandler" />
             </DockPanel>
         </ui:CardControl>
         <ui:CardControl Icon="EarthLeaf48" Margin="5">
@@ -138,7 +137,7 @@
             <DockPanel Cursor="IBeam">
                 <ui:TextBox
                     x:Name="folderBox1" Width="471" Margin="0,0,10,0" Text="{Binding ClassServicePath,Mode=TwoWay}" />
-                <ui:Button Content="选择文件" Icon="Folder32" Tag="chooseCS" Width="104" Click="BtnClickHandler" />
+                <Button Content="选择文件" Icon="Folder32" Tag="chooseCS" Width="104" Click="BtnClickHandler" />
             </DockPanel>
         </ui:CardControl>
 

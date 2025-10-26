@@ -102,6 +102,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.28" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.3" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
@@ -111,16 +112,12 @@
     <PackageReference Include="OpenCvSharp4.Extensions" Version="4.9.0.20240103" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.9.0.20240103" />
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.9.0.20240103" />
-    <PackageReference Include="OpenCvSharp4.WpfExtensions" Version="4.9.0.20240103" />
-    <PackageReference Include="Panuon.WPF.UI" Version="1.2.1.1" />
     <PackageReference Include="Serilog" Version="4.0.0-dev-02122" />
     <PackageReference Include="Serilog.Sink.AppCenter" Version="1.5.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00972" />
     <PackageReference Include="Serilog.Sinks.RichTextBox.Wpf" Version="1.1.0" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4" />
-    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.0-preview.2.24128.5" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0-preview.2.24128.5" />
-    <PackageReference Include="WPF-UI" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup>

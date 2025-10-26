@@ -1,7 +1,7 @@
 ﻿<Page
     x:Class="CokeeDP.Views.Pages.TimeTask" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:CokeeDP.Views.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" Title="Main" d:DesignHeight="450" d:DesignWidth="800"
-    Scrollable="True" mc:Ignorable="d">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern" Title="Main" d:DesignHeight="450" d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <Grid Margin="5,0,5,0">
         <Grid.ColumnDefinitions />
@@ -35,9 +35,9 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ui:TextBox
+                <TextBox
                     x:Name="searchBox" Grid.Column="0" Grid.ColumnSpan="2" />
-                <ui:Button
+                <Button
                     x:Name="AddTaskBtn" Grid.Column="1" Width="124" Height="36" Margin="376,0,0,0"
                     Content="新建任务" Icon="AddCircle28" Tag="addTask" />
             </Grid>
@@ -53,7 +53,7 @@
                                     Text="{Binding Desc}" />
                 </StackPanel>
             </ui:CardControl.Header>
-            <ui:Button
+            <Button
                             Width="85" Height="35" Content="删除" Icon="Delete48"
                             Tag="{Binding CityCode}" />
         </ui:CardControl>
@@ -61,7 +61,6 @@
             x:Name="TaskList" Grid.Row="2" Margin="0,65,16,230">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                   
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

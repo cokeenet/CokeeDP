@@ -4,21 +4,20 @@
     d:DesignWidth="794" mc:Ignorable="d">
 
     <StackPanel Margin="5,0,5,0">
-        
 
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ui:Button
+            <Button
                  Margin="5" Click="Button_Click" Content="返回"
                 FontSize="14" Icon="ArrowLeft20" />
 
             <TextBlock
               Grid.Column="1"   Margin="10,0,0,0" FontSize="20" Text="城市搜索" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Grid>
-        <ui:CardControl
+        <Border
              Margin="5,10,5,0" VerticalAlignment="Top" Icon="Earth32">
             <ui:CardControl.Header>
                 <StackPanel  VerticalAlignment="Center">
@@ -33,11 +32,11 @@
                 </Grid.ColumnDefinitions>
                 <ui:TextBox
                     x:Name="searchBox"  Grid.ColumnSpan="2" Margin="19,0,139,0" />
-                <ui:Button
+                <Button
                     x:Name="SearchBtn"  Width="124" Height="36" Margin="376,0,0,0"
                     Click="SearchBtnHandle" Content="搜索" Icon="Search24" Tag="search" />
             </Grid>
-        </ui:CardControl>
+        </Border>
         <ItemsControl
             x:Name="CityList"  Margin="0,0,10,30">
             <ItemsControl.ItemTemplate>
@@ -53,7 +52,7 @@
                                     Text="{Binding Desc}" />
                             </StackPanel>
                         </ui:CardControl.Header>
-                        <ui:Button
+                        <Button
                             Width="125" Height="35" Click="SetCurrentGeoId" Content="选择" Icon="Checkmark24"
                             Tag="{Binding CityCode}" />
                     </ui:CardControl>

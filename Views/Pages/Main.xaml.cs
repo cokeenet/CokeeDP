@@ -15,15 +15,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Mvvm.Services;
 using CokeeDP.Views.Windows;
-using Wpf.Ui.Common;
 using CokeeDP.Properties;
 using Button = Wpf.Ui.Controls.Button;
 using System.Windows.Forms;
 using System.IO;
 using Application = System.Windows.Application;
 using ComboBox = System.Windows.Controls.ComboBox;
+using Wpf.Ui.Extensions;
 
 namespace CokeeDP.Views.Pages
 {
@@ -78,11 +77,11 @@ namespace CokeeDP.Views.Pages
                         break;
                 }
                 AppSettingsExtensions.SaveSettings(settings);
-                _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+                _Window.snackbarService.Show("已保存", "(●'◡'●)", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28), TimeSpan.FromSeconds(1));
             }
             catch (Exception ex)
             {
-                _Window.snackbarService.ShowAsync("Error:", ex.ToString(), SymbolRegular.Save28);
+                _Window.snackbarService.Show("Error:", ex.ToString(), ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28), TimeSpan.FromSeconds(1));
                 textBox.Text = null;
             }
         }
@@ -112,7 +111,7 @@ namespace CokeeDP.Views.Pages
                 default:
                     break;
             }
-            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+            _Window.snackbarService.Show("已保存", "(●'◡'●)", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28));
             AppSettingsExtensions.SaveSettings(settings);
         }
 
@@ -122,7 +121,7 @@ namespace CokeeDP.Views.Pages
             if (datePicker == null) return;
             settings.CountdownTime = (DateTime)datePicker.SelectedDate;
             AppSettingsExtensions.SaveSettings(settings);
-            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+            _Window.snackbarService.Show("已保存", "(●'◡'●)", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28));
         }
 
         private void ComboBoxHandler(object sender, EventArgs e)
@@ -135,7 +134,7 @@ namespace CokeeDP.Views.Pages
             settings.OneWordsComboBoxIndex = comboBox.SelectedIndex;
             AppSettingsExtensions.SaveSettings(settings);
 
-            _Window.snackbarService.ShowAsync("已保存", "(●'◡'●)", SymbolRegular.Save28);
+            _Window.snackbarService.Show("已保存", "(●'◡'●)", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28));
         }
 
         private void BtnClickHandler(object sender, RoutedEventArgs e)
@@ -152,9 +151,9 @@ namespace CokeeDP.Views.Pages
                             folderBox.Text = dialog.SelectedPath;
                             settings.AudioFolder = dialog.SelectedPath;
                             AppSettingsExtensions.SaveSettings(settings);
-                            _Window.snackbarService.ShowAsync("已保存", $"路径 {dialog.SelectedPath}", SymbolRegular.Save28);
+                            _Window.snackbarService.Show("已保存", $"路径 {dialog.SelectedPath}", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28));
                         }
-                        else _Window.snackbarService.ShowAsync("选择失败", ">_<", SymbolRegular.Warning12);
+                        else _Window.snackbarService.Show("选择失败", ">_<", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning12));
                     }
                     break;
 
@@ -168,9 +167,9 @@ namespace CokeeDP.Views.Pages
                             folderBox1.Text = dialog.FileName;
                             settings.ClassServicePath = dialog.FileName;
                             AppSettingsExtensions.SaveSettings(settings);
-                            _Window.snackbarService.ShowAsync("已保存", $"路径 {dialog.FileName}", SymbolRegular.Save28);
+                            _Window.snackbarService.Show("已保存", $"路径 {dialog.FileName}", ControlAppearance.Light, new SymbolIcon(SymbolRegular.Save28));
                         }
-                        else _Window.snackbarService.ShowAsync("选择失败", ">_<", SymbolRegular.Warning12);
+                        else _Window.snackbarService.Show("选择失败", ">_<", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning32));
                     }
                     break;
 

@@ -1,15 +1,19 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-    xmlns:pu="clr-namespace:Panuon.WPF.UI;assembly=Panuon.WPF.UI"
     xmlns:Controls="clr-namespace:CokeeDP.Views.Controls"
     x:Class="CokeeDP.Views.Windows.MainWindow"
     x:Name="window" Title="CokeeDP"
     AllowDrop="True"
     Foreground="{x:Null}"
+    ui:ThemeManager.IsThemeAware="True"
+     ui:TitleBar.ExtendViewIntoTitleBar="True"
+     ui:WindowHelper.SystemBackdropType="Mica"
+     ui:TitleBar.IsBackButtonVisible="False"
+     ui:WindowHelper.UseModernWindowStyle="True"
     Loaded="Load" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="None" mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -67,12 +71,12 @@
                         <BlurEffect x:Name="br2_blur" Radius="0" />
                     </MediaElement.Effect>
                 </MediaElement>
-                <pu:Carousel
+                <ui:FlipView
                         x:Name="pager" Canvas.Left="1495" Canvas.Top="509" Width="407" Height="268"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" Animation="Scale,Fade" AnimationDuration="0:0:1"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
                         Foreground="{x:Null}"
                         TextBlock.FontSize="40" TextBlock.Foreground="White">
-                    <ui:Card x:Name="debugPage" VerticalAlignment="Stretch" Margin="-2,6,2,-6">
+                    <ui:FlipViewItem x:Name="debugPage" VerticalAlignment="Stretch" Margin="-2,6,2,-6">
                         <ScrollViewer x:Name="scl">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -94,9 +98,9 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <ui:Button Content="强制退出" Grid.Row="0" Margin="5" Tag="exit" Click="BtnHandler" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Appearance="Caution" />
-                                    <ui:Button Content="资源管理器" Grid.Row="0" Margin="5" Tag="explore" Click="BtnHandler" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                                    <ui:Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                    <Button Content="强制退出" Grid.Row="0" Margin="5" Tag="exit" Click="BtnHandler" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                    <Button Content="资源管理器" Grid.Row="0" Margin="5" Tag="explore" Click="BtnHandler" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                    <Button Content="CapService" Grid.Row="0" Margin="5" Tag="cap" Click="BtnHandler" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                                 </Grid>
 
                                 <Label FontSize="24" Foreground="Black" Content="LogViewer 日志查看器" Grid.Row="2" />
@@ -107,8 +111,8 @@
                         Style="{x:Null}" Background="#FF424242" Grid.Row="3" TextChanged="log_TextChanged" />
                             </Grid>
                         </ScrollViewer>
-                    </ui:Card>
-                    <ui:Card x:Name="WappCard" VerticalAlignment="Stretch">
+                    </ui:FlipViewItem>
+                    <ui:FlipViewItem x:Name="WappCard" VerticalAlignment="Stretch">
                         <Grid>
                             <Label
                                     x:Name="CardInfo" Margin="0,0,0,199" HorizontalContentAlignment="Left"
@@ -132,13 +136,12 @@
                                 </TextBox>
                             </ScrollViewer>
                         </Grid>
-                    </ui:Card>
-                    <Border x:Name="b1">
+                    </ui:FlipViewItem>
+                    <ui:FlipViewItem x:Name="b1">
                         <Grid>
-                            <ui:Button
+                            <Button
                                     x:Name="SpecialWeatherBtn" Width="315" Height="40" Margin="0,13,0,0" HorizontalAlignment="Center"
-                                    VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
-                                    pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
+                                    VerticalAlignment="Top" Background="#B2FFFFFF"
                                     BorderBrush="{x:Null}"
                                     BorderThickness="1" Click="ShowWeatherWarns" Content="寒潮蓝色预警[IV级/严重]" FontFamily="Microsoft YaHei UI Light" FontSize="18"
                                     Foreground="Black" Visibility="Visible" />
@@ -213,13 +216,12 @@
                                 </TextBox.Effect>
                             </TextBox>
                         </Grid>
-                    </Border>
-                    <Border x:Name="b2">
+                    </ui:FlipViewItem>
+                    <ui:FlipViewItem x:Name="b2">
                         <Grid>
-                            <ui:Button
+                            <Button
                                     x:Name="SpecialWeatherBtn1" Width="315" Height="40" Margin="0,13,0,0" HorizontalAlignment="Center"
-                                    VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="2" pu:ButtonHelper.ShadowColor="#6CBCEA" pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240"
-                                    pu:ShadowHelper.ShadowDepth="4" Background="#B2FFFFFF"
+                                    VerticalAlignment="Top" Background="#B2FFFFFF"
                                     BorderBrush="{x:Null}"
                                     BorderThickness="1" Click="ShowWeatherWarns" FontFamily="Microsoft YaHei UI Light" FontSize="18"
                                     Foreground="Black" Visibility="Collapsed" />
@@ -293,8 +295,8 @@
                                 </TextBox.Effect>
                             </TextBox>
                         </Grid>
-                    </Border>
-                </pu:Carousel>
+                    </ui:FlipViewItem>
+                </ui:FlipView>
                 <Label
                         x:Name="TimeLabel" Margin="20,875,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Background="{x:Null}"
@@ -348,35 +350,45 @@
                         MouseRightButtonDown="Like_menu">
                     <Label.ContextMenu>
                         <ContextMenu x:Name="lik" FontSize="14">
-                            <ui:MenuItem Click="ViewHitokoSource" Header="查看句子源" />
-                            <ui:MenuItem Click="EditText" Header="编辑文本" />
+                            <MenuItem Click="ViewHitokoSource" Header="查看句子源" />
+                            <MenuItem Click="EditText" Header="编辑文本" />
                         </ContextMenu>
                     </Label.ContextMenu>
                     <Label.Effect>
                         <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <ui:Card
+                <Border
                         x:Name="usb" Grid.Column="1" Canvas.Left="1553" Canvas.Top="807" Width="349"
                         HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B2FFFFFF" BorderBrush="#FFE0BFBF" BorderThickness="2,2,2,2"
                         RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" d:Visibility="Visible">
-                    <ui:Card.RenderTransform>
+                    <Border.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranUsb" X="368" />
                         </TransformGroup>
-                    </ui:Card.RenderTransform>
+                    </Border.RenderTransform>
                     <Grid>
-                        <ui:SymbolIcon
+                        <ui:FontIcon
                                 Width="72" Height="72" Margin="-9,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                FontSize="72" Symbol="UsbStick20" />
-                        <ui:Button
+                                FontSize="72" Glyph="{x:Static ui:SegoeIcons.USB}" />
+                        <Button
                                 x:Name="open" Width="97" Height="40" Margin="220,9,0,0" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" Background="#CCFFFFFF" BorderBrush="#6CBCEA" BorderThickness="1" Click="OpenUsb"
-                                Content="打开" FontSize="16" Icon="HardDrive20" Tag="" />
-                        <ui:Button
+                                 FontSize="16"  Tag="">
+                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="5">
+                                <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.FolderOpen}" />
+                                <TextBlock Text="打开" />
+                            </ui:SimpleStackPanel>
+                        </Button>
+                        <Button
                                 x:Name="remove" Width="97" Height="44" Margin="219,64,0,0" HorizontalAlignment="Left"
-                                VerticalAlignment="Top" pu:ButtonHelper.CornerRadius="5" Background="#FFFFFEFE" BorderBrush="#6CBCEA" BorderThickness="1"
-                                Click="ExitUsbDrive" Content="弹出" FontSize="16" Icon="UsbPlug20" />
+                                VerticalAlignment="Top" Background="#FFFFFEFE" BorderBrush="#6CBCEA" BorderThickness="1"
+                                Click="ExitUsbDrive" FontSize="16">
+                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="5">
+                                <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.USB}" />
+                                <TextBlock Text="弹出" />
+                            </ui:SimpleStackPanel>
+                        </Button>
                         <Label
                                 x:Name="diskName" Margin="68,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
@@ -396,17 +408,22 @@
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </ui:Card>
+                </Border>
 
                 <ProgressBar
                         x:Name="pro" Grid.Column="1" Canvas.Left="885" Canvas.Top="1059" Width="150"
                         Height="11" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#22ACCD9D" Foreground="#FFD6D6D6"
                         Visibility="Collapsed" />
-                <ui:Button
+                <Button
                         Grid.Column="1" Canvas.Left="1752" Canvas.Top="14" Width="138" Height="45"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Background="#B3F7F7F7"
                         BorderBrush="{x:Null}"
-                        Click="ShowSetting" Content="设置" FontSize="20" Icon="Settings48" />
+                        Click="ShowSetting" FontSize="20">
+                    <ui:SimpleStackPanel>
+                        <ui:FontIcon />
+                        <TextBlock />
+                    </ui:SimpleStackPanel>
+                </Button>
                 <Label
                         x:Name="BingImageInfo" Grid.ColumnSpan="2" Canvas.Left="25" Canvas.Top="19" HorizontalAlignment="Center"
                         VerticalAlignment="Top" HorizontalContentAlignment="Left"
@@ -417,18 +434,18 @@
                     </Label.Effect>
                     <Label.ContextMenu>
                         <ContextMenu x:Name="bm" FontSize="14">
-                            <ui:MenuItem Click="DislikeImage" Header="不喜欢这张图" />
-                            <ui:MenuItem Click="EditText" Header="喜欢" />
+                            <MenuItem Click="DislikeImage" Header="不喜欢这张图" />
+                            <MenuItem Click="EditText" Header="喜欢" />
                         </ContextMenu>
                     </Label.ContextMenu>
                 </Label>
-                <ui:Button
+                <Button
                         x:Name="left" Canvas.Left="25" Canvas.Top="452" Width="54" Height="54"
                         HorizontalAlignment="Center" Background="#B3F7F7F7"
                         BorderBrush="{x:Null}"
                         Click="WappChangeBtnHandler" FontSize="36" Foreground="#E4000000" Icon="ArrowLeft20" Tag="left"
                         Visibility="Visible" VerticalAlignment="Top" />
-                <ui:Button
+                <Button
                         x:Name="right" Grid.Column="1" Canvas.Left="1836" Canvas.Top="452" Width="54"
                         Height="54" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#B3F7F7F7"
                         BorderBrush="{x:Null}"
@@ -445,14 +462,14 @@
                         <DropShadowEffect />
                     </Label.Effect>
                 </Label>
-                <ui:Card
+                <Border
                         x:Name="BigCountdown" Grid.Column="1" Canvas.Left="1380" Canvas.Top="14" Width="319"
                         Height="153" HorizontalAlignment="Left" Visibility="Collapsed">
-                    <ui:Card.BorderBrush>
+                    <Border.BorderBrush>
                         <RadialGradientBrush Center="5,5">
                             <GradientStop Offset="1" Color="#FFE0BFBF" />
                         </RadialGradientBrush>
-                    </ui:Card.BorderBrush>
+                    </Border.BorderBrush>
                     <Grid
                             Width="305" Height="131" VerticalAlignment="Top">
                         <Label
@@ -504,29 +521,27 @@
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </ui:Card>
+                </Border>
                 <TextBox
                         x:Name="hkself" Canvas.Left="446" Canvas.Top="974" Width="411" Height="40"
-                        pu:TextBoxHelper.Watermark="Input Text Here..." pu:TextBoxHelper.WatermarkForeground="Gainsboro"
                         Background="{x:Null}"
                         FontSize="16" Foreground="White" TextChanged="Textbox_Chg" TextWrapping="Wrap" Visibility="Collapsed" />
-                <ui:Card
-                        x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214"
-                        pu:ShadowHelper.BlurRadius="10" pu:ShadowHelper.Direction="240" pu:ShadowHelper.ShadowDepth="4" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
+                <Border
+                        x:Name="music" Canvas.Left="25" Canvas.Top="583" Width="340" Height="214" Background="#D2FFFFFF" BorderThickness="2,2,2,2"
                         RenderTransformOrigin="0.5,0.5" d:Visibility="Visible" Visibility="Collapsed">
-                    <ui:Card.RenderTransform>
+                    <Border.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform x:Name="tranT" X="-365" d:X="0" />
                         </TransformGroup>
-                    </ui:Card.RenderTransform>
-                    <ui:Card.BorderBrush>
+                    </Border.RenderTransform>
+                    <Border.BorderBrush>
                         <RadialGradientBrush Center="5,5">
                             <GradientStop Offset="1" Color="#FFE0BFBF" />
                         </RadialGradientBrush>
-                    </ui:Card.BorderBrush>
+                    </Border.BorderBrush>
                     <Grid Width="308">
                         <ui:SymbolIcon
-                                Margin="-9,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Symbol="MusicNote2Play20" MouseDown="RepeatPointSet" />
+                                Margin="-9,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Symbol="MusicInfo" MouseDown="RepeatPointSet" />
                         <Slider
                                 x:Name="PlaySlider" Margin="6,82,8,74"
                                 BorderBrush="{x:Null}"
@@ -539,24 +554,40 @@
                                     FontFamily="Microsoft YaHei UI Light" FontSize="20" FontWeight="Normal" Foreground="Black" Content="未加载音频">
                             </Label>
                         </ScrollViewer>
-                        <ui:Button
+                        <Button
                                 Margin="59,134,204,2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayerBtnProc" FontSize="20"
                                 Icon="Previous48" Tag="prev" />
-                        <ui:Button
+                        <Button
                                 x:Name="playbtn" Height="50" Margin="128,128,128,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                                BorderThickness="1" Click="OnBtnPlay" FontSize="24" Icon="Play48" />
-                        <ui:Button
+                                BorderThickness="1" Click="OnBtnPlay" FontSize="24">
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Play}" />
+                        </Button>
+                        <Button
                                 Height="42" Margin="202,134,61,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderThickness="1"
-                                Click="PlayerBtnProc" FontSize="20" Icon="Next48" Tag="next" />
-                        <ui:Button
+                                Click="PlayerBtnProc" FontSize="20" Tag="next">
+                            <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.Next}" />
+                        </Button>
+                        <Button
                                 Width="72" Height="30" Margin="0,58,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                Click="ChangeVolume" Content="音量" FontSize="13" Icon="Speaker228" />
+                                Click="ChangeVolume" FontSize="13">
+                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="5">
+                                <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.SpatialVolume0}" />
+                                <!--Speaker228-->
+                                <TextBlock Text="音量" />
+                            </ui:SimpleStackPanel>
+                        </Button>
                         <Slider
                                 x:Name="VolumeSlider" Margin="160,98,8,58" Background="#FF868686" LargeChange="10" Maximum="100"
                                 RenderTransformOrigin="0.5,0.5" SmallChange="1" Tag="volume" ValueChanged="VolumeChanged" Visibility="Collapsed" />
-                        <ui:Button
+                        <Button
                                 Width="97" Height="30" Margin="134,58,0,0" VerticalAlignment="Top" Click="BtnReplayHandler"
-                                Content="播完停止" FontSize="13" Icon="ArrowRepeatAllOff24" Tag="0" />
+                                FontSize="13" Tag="0">
+                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="5">
+                                <ui:FontIcon Glyph="{x:Static ui:SegoeIcons.ArrowDown8}" />
+                                <!--ArrowRepeatAllOff24-->
+                                <TextBlock Text="播完停止" />
+                            </ui:SimpleStackPanel>
+                        </Button>
                         <Label
                                 x:Name="audioTime" Margin="44,27,10,126" HorizontalContentAlignment="Left"
                                 Background="{x:Null}"
@@ -573,8 +604,8 @@
                             </Label.Effect>
                         </Label>
                     </Grid>
-                </ui:Card>
-                <ui:Button
+                </Border>
+                <Button
                         Canvas.Left="1650" Canvas.Top="998" Width="74" Height="26"
                         VerticalAlignment="Top" Background="#80C5C4C4"
                         BorderBrush="{x:Null}"
@@ -591,15 +622,13 @@
                         </TransformGroup>
                     </Ellipse.RenderTransform>
                 </Ellipse>
-                <ui:Dialog
+                <ui:ContentDialog
                         x:Name="dialog" Title="提示"
-                        Width="{Binding ActualWidth, ElementName=MainCanvas, Mode=OneWay}"
-                        Height="{Binding ActualHeight, ElementName=MainCanvas, Mode=OneWay}"
-                        HorizontalAlignment="Left" VerticalAlignment="Center" ButtonLeftName="确定" ButtonRightVisibility="Collapsed"
-                        DialogHeight="276" DialogWidth="516" d:IsHidden="True" />
-                <ui:SymbolIcon x:Name="NetIcon"
+                        HorizontalAlignment="Left" VerticalAlignment="Center" PrimaryButtonText="确定" IsSecondaryButtonEnabled="False"
+                        Height="276" Width="516" d:IsHidden="True" />
+                <ui:FontIcon x:Name="NetIcon"
                     Width="36" Height="36"
-                    FontSize="36" Symbol="CellularOff24" Canvas.Left="25" Canvas.Top="100" VerticalAlignment="Top" Foreground="#E4FFFFFF" HorizontalAlignment="Left" />
+                    FontSize="36" Glyph="{x:Static ui:SegoeIcons.Rain}" Canvas.Left="25" Canvas.Top="100" VerticalAlignment="Top" Foreground="#E4FFFFFF" HorizontalAlignment="Left" />
                 <ui:InfoBar x:Name="netBar" Canvas.Left="828" Canvas.Top="1006" Message="网络连接丢失 &gt;_&lt;" IsClosable="False" Width="264" VerticalAlignment="Top" FontSize="18" Severity="Error" />
                 <ui:InfoBar x:Name="birthBar" Canvas.Left="25" Canvas.Top="520" IsClosable="False" FontSize="18" Severity="Success" IsManipulationEnabled="True" d:IsOpen="True" d:Message="🎉 明天是 0000 的生日！" />
                 <ui:Snackbar
