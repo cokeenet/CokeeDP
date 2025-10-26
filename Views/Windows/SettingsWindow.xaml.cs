@@ -65,5 +65,7 @@ namespace CokeeDP.Views.Windows
             if (ApplicationThemeManager.GetAppTheme() == ApplicationTheme.Light) ApplicationThemeManager.Apply(ApplicationTheme.Dark);
             else ApplicationThemeManager.Apply(ApplicationTheme.Light);
         }
+
+
     }
 }
